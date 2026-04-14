@@ -31,6 +31,13 @@
 
     .category-pill { transition: transform .2s ease; }
     .category-pill:hover { transform: scale(1.05); }
+    @media (max-width: 420px){
+      #categoriesMenu{
+        min-width: calc(100vw - 32px) !important;
+        left: 50%;
+        transform: translateX(-50%);
+      }
+    }
   </style>
 </head>
 

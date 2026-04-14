@@ -71,6 +71,13 @@
       text-underline-offset: 3px;
       font-weight:800;
     }
+    .summary-grid{
+      grid-template-columns:1fr 1fr;
+      gap:12px;
+    }
+    @media (max-width: 760px){
+      .summary-grid{ grid-template-columns:1fr; }
+    }
 
   </style>
 
@@ -159,7 +166,7 @@
 
     <section class="card" aria-labelledby="cmpTitle">
       <h2 id="cmpTitle">Resumen rápido</h2>
-      <div class="grid" style="grid-template-columns:1fr 1fr;gap:12px">
+      <div class="grid summary-grid">
         <div>
           <h3>Gratis</h3>
           <ul>

@@ -1,4 +1,4 @@
-<!doctype html>
+ï»¿<!doctype html>
 <html lang="es-CR" class="h-full">
 <head>
   <meta charset="UTF-8" />
@@ -9,7 +9,7 @@
 
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Registro Emprendedor — TuyoMall</title>
+  <title>Registro Emprendedor â€” TuyoMall</title>
   <link rel="stylesheet" href="assets/css/base.css">
   <link rel="stylesheet" href="assets/css/layout.css">
   <link rel="stylesheet" href="assets/css/components.css">
@@ -119,7 +119,7 @@
     .btn-purple{ background:var(--primary-action); color:#fff; }
     .btn-ghost{ background:transparent; border-color:var(--border); color:#111827; }
 
-    /* Hero strip (estética imagen 3) */
+    /* Hero strip (estÃ©tica imagen 3) */
     .hero{
       background: linear-gradient(135deg, var(--bg-primary), var(--bg-secondary));
       padding: 46px 0;
@@ -212,7 +212,7 @@
       flex-wrap:wrap;
     }
     .btn-enter{
-      background: #b7d70a; /* verde limón tipo tu marca */
+      background: #b7d70a; /* verde limÃ³n tipo tu marca */
       color:#0b1220;
       border:none;
       padding: 10px 16px;
@@ -317,13 +317,37 @@
       .hero h1{ font-size:30px; }
       .menu{ justify-content:flex-end; }
     }
+    @media (max-width: 640px){
+      .nav{
+        height: auto;
+        padding: 10px 0;
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+      .menu{
+        width: 100%;
+        justify-content: center;
+        gap: 8px;
+        flex-wrap: wrap;
+      }
+      .dropmenu{
+        right: auto;
+        left: 50%;
+        transform: translateX(-50%);
+        min-width: 88vw;
+      }
+      .card{ padding: 18px 14px; }
+      .title{ font-size: 22px; }
+      .grid{ grid-template-columns: 1fr; }
+      .row-actions > *{ width: 100%; text-align: center; }
+    }
   </style>
   
 <html lang="es-CR">
 
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Registro Emprendedor — TuyoMall</title>
+  <title>Registro Emprendedor â€” TuyoMall</title>
   <link rel="stylesheet" href="assets/css/base.css">
   <link rel="stylesheet" href="assets/css/layout.css">
   <link rel="stylesheet" href="assets/css/components.css">
@@ -333,13 +357,13 @@
   <header class="site-header" role="navigation" aria-label="Barra superior">
     <div class="container nav">
        <a href="new-index.html" class="flex items-center">
-          <!-- Cambiá este SVG  logo real  -->
+          <!-- CambiÃ¡ este SVG  logo real  -->
           <img src="assets/img/TuyoMall-Logo.png" width="150" height="100">
          
           
         </a>
       <!-- Reconstruido por header-state.js -->
-      <nav class="main-menu" aria-label="Navegación principal">
+      <nav class="main-menu" aria-label="NavegaciÃ³n principal">
         <a href="acceso-cliente.html">Volver</a>
         <a href="Principal.html#categorias">Inicio</a>
       </nav>
@@ -369,20 +393,20 @@
           </div>
           <div>
             <label for="password">Contrasena*</label>
-            <input id="password" name="password" type="password" autocomplete="new-password" required placeholder="mínimo 8 caracteres" />
+            <input id="password" name="password" type="password" autocomplete="new-password" required placeholder="mÃ­nimo 8 caracteres" />
           </div>
         </div>
 
         <div class="row row-2">
           <div>
-            <label for="country">País*</label>
+            <label for="country">PaÃ­s*</label>
             <select id="country" name="country" required>
-              <option value="" disabled selected>País…</option>
+              <option value="" disabled selected>PaÃ­sâ€¦</option>
               <option>Argentina</option><option>Bolivia</option><option>Chile</option><option>Colombia</option>
               <option>Costa Rica</option><option>Ecuador</option><option>El Salvador</option><option>Guatemala</option>
-              <option>Haití</option><option>Honduras</option><option>México</option><option>Nicaragua</option>
-              <option>Panamá</option><option>Paraguay</option><option>Perú</option>
-              <option>República Dominicana</option><option>Uruguay</option>
+              <option>HaitÃ­</option><option>Honduras</option><option>MÃ©xico</option><option>Nicaragua</option>
+              <option>PanamÃ¡</option><option>Paraguay</option><option>PerÃº</option>
+              <option>RepÃºblica Dominicana</option><option>Uruguay</option>
             </select>
           </div>
           <div>
@@ -412,7 +436,7 @@
   </main>
 
   <footer class="site-footer">
-    <p class="copy">© <span id="year"></span> TuyoMall</p>
+    <p class="copy">Â© <span id="year"></span> TuyoMall</p>
   </footer>
 
   <script src="assets/js/main.js?v=4" defer></script>
@@ -469,7 +493,7 @@
      </div>
  </footer>
 <script>
-  // Año
+  // AÃ±o
   document.getElementById('year').textContent = new Date().getFullYear();
 
   // Dropdown
@@ -499,3 +523,4 @@
 
 </body>
 </html>
+

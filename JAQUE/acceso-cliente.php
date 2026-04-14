@@ -426,6 +426,20 @@ input.success { border-color: var(--success); }
   .left { display: none; }
   .right { padding: 32px 24px; align-items: flex-start; padding-top: 48px; }
 }
+@media (max-width: 560px) {
+  .right { padding: 22px 14px; padding-top: 26px; }
+  .form-box { max-width: 100%; }
+  .tabs { margin-bottom: 24px; }
+  .tab { font-size: 13px; padding: 10px 6px; }
+  .form-title { font-size: 22px; }
+  .field-row { grid-template-columns: 1fr; gap: 10px; }
+  input[type=text], input[type=email],
+  input[type=password], input[type=tel] {
+    font-size: 16px;
+  }
+  .modal-header,
+  .modal-body { padding: 16px; }
+}
 </style>
 </head>
 <body>

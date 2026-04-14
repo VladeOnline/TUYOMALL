@@ -655,9 +655,23 @@ select {
   .sidebar-left { display: none; }
   .feed { padding: 14px 12px; }
   .topnav { gap: 8px; padding: 0 12px; }
+  .nav-search { min-width: 0; }
+  .nav-right { gap: 6px; }
+  .nav-btn { padding: 8px 10px; font-size: 12px; }
   .nav-logo-text { display: none; }
+  .field-row { grid-template-columns: 1fr; }
   .upload-fab span { display: none; }
   .upload-fab { padding: 14px; border-radius: 50%; }
+}
+@media (max-width: 560px) {
+  .topnav { gap: 6px; }
+  .nav-search input {
+    padding: 9px 10px 9px 34px;
+    font-size: 13px;
+  }
+  .nav-right .btn-ghost,
+  .nav-avatar { display: none; }
+  .nav-btn { padding: 7px 9px; font-size: 11px; }
 }
 </style>
 </head>

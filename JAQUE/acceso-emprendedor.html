@@ -419,9 +419,79 @@ input.error, select.error { border-color: var(--danger); }
 
 /* ── RESPONSIVE ── */
 @media (max-width: 860px) {
-  body { grid-template-columns: 1fr; }
-  .left { display: none; }
-  .right { padding: 32px 24px; align-items: flex-start; padding-top: 48px; }
+  body {
+    grid-template-columns: minmax(190px, 40%) 1fr;
+    min-height: 100vh;
+  }
+  .left {
+    display: block;
+    min-height: 100vh;
+    padding: 18px 18px 14px;
+  }
+  .left::before {
+    width: 240px; height: 240px;
+    top: -80px; right: -80px;
+  }
+  .left::after {
+    width: 180px; height: 180px;
+    bottom: -60px; left: -60px;
+  }
+  .left-logo { margin-bottom: 8px; }
+  .logo-mark { width: 46px; height: 46px; }
+  .logo-text { font-size: 20px; }
+  .left-body { padding: 6px 0 0; }
+  .left-badge { margin-bottom: 14px; }
+  .left h2 {
+    font-size: clamp(24px, 7vw, 32px);
+    margin-bottom: 10px;
+  }
+  .left-desc {
+    margin-bottom: 16px;
+    max-width: none;
+    font-size: 14px;
+  }
+  .left-perks {
+    gap: 10px;
+    margin-bottom: 14px;
+  }
+  .perk { font-size: 13px; }
+  .plan-preview {
+    margin-top: 10px;
+    grid-template-columns: 1fr 1fr;
+  }
+  .left-footer { display: none; }
+  .right {
+    padding: 20px 18px 28px;
+    align-items: flex-start;
+    min-height: 100vh;
+  }
+}
+@media (max-width: 560px) {
+  body { grid-template-columns: minmax(130px, 34%) 1fr; }
+  .left { padding: 14px 14px 10px; }
+  .left-logo { margin-bottom: 2px; }
+  .logo-mark { width: 38px; height: 38px; }
+  .logo-text { font-size: 16px; }
+  .left-badge span { font-size: 11px; }
+  .left h2 { font-size: 22px; line-height: 1.08; }
+  .left-desc,
+  .left-perks,
+  .plan-preview { display: none; }
+  .left-body { justify-content: flex-start; padding-top: 10px; }
+  .right { padding: 22px 14px; padding-top: 26px; }
+  .form-box { max-width: 100%; }
+  .tabs { margin-bottom: 24px; }
+  .tab { font-size: 13px; padding: 10px 6px; }
+  .form-title { font-size: 22px; }
+  .field-row,
+  .plan-grid { grid-template-columns: 1fr; }
+  input[type=text], input[type=email],
+  input[type=password], input[type=tel],
+  select, textarea {
+    font-size: 16px;
+  }
+  .modal-header,
+  .modal-body { padding: 16px; }
 }
 </style>
 </head>

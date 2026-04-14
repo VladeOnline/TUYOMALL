@@ -571,10 +571,22 @@ body {
   font-size: 24px;
   margin-bottom: 22px;
 }
+.feat-icon svg {
+  width: 24px;
+  height: 24px;
+  stroke: currentColor;
+  stroke-width: 2;
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
 
 .fi-coral { background: rgba(255,107,71,0.15); }
 .fi-gold  { background: rgba(240,180,41,0.15); }
 .fi-blue  { background: rgba(100,160,255,0.15); }
+.fi-coral svg { color: #FF8A6A; }
+.fi-gold svg { color: #F0B429; }
+.fi-blue svg { color: #78A8FF; }
 
 .feat-card h3 {
   font-family: 'Clash Display', sans-serif;
@@ -946,7 +958,20 @@ footer {
   font-size: 13px; color: var(--muted);
   font-weight: 500;
 }
-.trust-item span { font-size: 15px; }
+.trust-badge {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 800;
+  line-height: 1;
+}
+.trust-badge.ok { background: rgba(16,185,129,0.2); color: #10B981; }
+.trust-badge.no-card { background: rgba(239,68,68,0.16); color: #EF4444; }
+.trust-badge.fast { background: rgba(245,158,11,0.2); color: #F59E0B; }
 
 /* ─── CTA FINAL SECTION ──────────────────────────────── */
 .cta-final {
@@ -1006,6 +1031,21 @@ footer {
   font-size: 13px; color: rgba(255,255,255,0.65);
   display: flex; align-items: center; gap: 5px;
 }
+.trust-icon {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 800;
+  line-height: 1;
+}
+.trust-icon.ok { background: rgba(16,185,129,0.2); color: #A7F3D0; }
+.trust-icon.card { background: rgba(59,130,246,0.2); color: #BFDBFE; }
+.trust-icon.fast { background: rgba(245,158,11,0.2); color: #FDE68A; }
+.trust-icon.latam { background: rgba(34,197,94,0.2); color: #BBF7D0; }
 
 /* ─── WHATSAPP FLOAT ─────────────────────────────────── */
 .wa-float {
@@ -1022,9 +1062,17 @@ footer {
   box-shadow: 0 8px 28px rgba(37,211,102,0.45);
   transition: all 0.25s cubic-bezier(.34,1.56,.64,1);
   animation: waAppear 0.6s 1.5s ease both;
+  touch-action: none;
+  user-select: none;
 }
 .wa-float:hover { transform: translateY(-3px) scale(1.04); box-shadow: 0 12px 36px rgba(37,211,102,0.55); }
 .wa-float svg { width: 20px; height: 20px; flex-shrink: 0; }
+.wa-float.dragging {
+  transition: none;
+  transform: none;
+  cursor: grabbing;
+  box-shadow: 0 10px 28px rgba(37,211,102,0.45);
+}
 @keyframes waAppear {
   from { opacity: 0; transform: translateY(20px) scale(0.8); }
   to   { opacity: 1; transform: translateY(0) scale(1); }
@@ -1036,9 +1084,18 @@ footer {
 }
 @media (max-width: 1000px) {
   .hero { grid-template-columns: 1fr; text-align: center; padding: 100px 40px 60px; }
-  .hero-right { display: none; }
+  .hero-right {
+    display: flex;
+    margin-top: 8px;
+  }
+  .browser-mockup {
+    width: min(100%, 360px);
+    margin: 0 auto;
+  }
+  .float-chip { display: none; }
   .hero-desc { margin: 0 auto 40px; }
   .hero-ctas { justify-content: center; }
+  .trust-line { justify-content: center; }
   .hero-stats { justify-content: center; }
   .steps-grid { grid-template-columns: 1fr; gap: 40px; }
   .steps-grid::before { display: none; }
@@ -1051,7 +1108,103 @@ footer {
   footer { padding: 48px 32px 24px; }
   .footer-top { flex-direction: column; }
   .nav { padding: 0 20px; }
-  .nav-center { display: none; }
+  .nav-center {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    overflow-x: auto;
+    padding-bottom: 6px;
+  }
+}
+@media (max-width: 760px) {
+  .nav {
+    height: auto;
+    min-height: 68px;
+    padding: 10px 14px;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .logo-mark { width: 48px; height: 48px; }
+  .logo-text { font-size: 20px; }
+  .nav-actions {
+    margin-left: auto;
+    gap: 8px;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+  }
+  .nav-center {
+    order: 3;
+    justify-content: flex-start;
+    gap: 8px;
+    padding-bottom: 0;
+  }
+  .nav-link {
+    flex: 0 0 auto;
+    white-space: nowrap;
+    background: var(--sand);
+    color: var(--navy);
+  }
+  .nav.scrolled .nav-link {
+    background: rgba(255,255,255,0.92);
+    color: var(--navy);
+  }
+  .nav.scrolled .nav-link:hover {
+    background: var(--sand);
+    color: var(--coral);
+  }
+  .nav-actions .btn { padding: 9px 12px; font-size: 12px; }
+  .hero {
+    padding: 124px 20px 48px;
+    min-height: auto;
+  }
+  .hero-right { margin-top: 4px; }
+  .browser-mockup { max-width: 320px; }
+  .hero-ctas { margin-bottom: 34px; }
+  .hero-ctas .btn {
+    width: 100%;
+    max-width: 320px;
+    justify-content: center;
+  }
+  .hero-stats {
+    flex-direction: column;
+    gap: 14px;
+    align-items: center;
+  }
+  .stat-divider { display: none; }
+  .section,
+  .features-section,
+  .plans-section,
+  .terms-strip,
+  .cta-final,
+  footer {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+  .modal-header,
+  .modal-body { padding: 18px; }
+}
+@media (max-width: 480px) {
+  .hero-h1 { letter-spacing: -1px; }
+  .hero-desc { font-size: 16px; }
+  .nav-actions .btn-ghost { display: none; }
+  .nav-center { margin-top: 2px; }
+  .nav-link {
+    padding: 6px 12px;
+    font-size: 13px;
+  }
+  .cta-final-trust {
+    width: 100%;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+  }
+  .cta-final-trust span {
+    width: 100%;
+    justify-content: center;
+    text-align: center;
+  }
+  .plan-card { padding: 34px 20px; }
 }
 </style>
 </head>
@@ -1107,9 +1260,9 @@ footer {
     </div>
 
     <div class="trust-line">
-      <div class="trust-item"><span>✅</span> Gratis para siempre</div>
-      <div class="trust-item"><span>🚫</span> Sin tarjeta de crédito</div>
-      <div class="trust-item"><span>⚡</span> Listo en 2 minutos</div>
+      <div class="trust-item"><i class="trust-badge ok">✓</i> Gratis para siempre</div>
+      <div class="trust-item"><i class="trust-badge no-card">⊘</i> Sin tarjeta de crédito</div>
+      <div class="trust-item"><i class="trust-badge fast">⏱</i> Listo en 2 minutos</div>
     </div>
 
     <div class="hero-stats">
@@ -1301,32 +1454,44 @@ footer {
 
     <div class="features-grid">
       <div class="feat-card reveal reveal-delay-1">
-        <div class="feat-icon fi-coral">🎯</div>
+        <div class="feat-icon fi-coral" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"></circle><circle cx="12" cy="12" r="4"></circle><circle cx="12" cy="12" r="1.5"></circle></svg>
+        </div>
         <h3>Feed social público</h3>
         <p>Tus productos aparecen en el inicio de TuyoMall — visible para todos, sin registro. Como una red social pero de ventas.</p>
       </div>
       <div class="feat-card reveal reveal-delay-2">
-        <div class="feat-icon fi-gold">💰</div>
+        <div class="feat-icon fi-gold" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="7"></circle><path d="M9.5 10.5c0-1.2 1-2.1 2.5-2.1s2.5.8 2.5 2c0 1-.6 1.7-2 2l-1 .2c-1 .2-1.5.7-1.5 1.5 0 1.2 1 2 2.5 2s2.5-.8 2.5-2"></path><path d="M12 7.5v9"></path></svg>
+        </div>
         <h3>Sin comisiones</h3>
         <p>Mantén el 100% de tus ganancias. Tú decides cómo y cuánto cobrar. TuyoMall nunca toca tu dinero.</p>
       </div>
       <div class="feat-card reveal reveal-delay-3">
-        <div class="feat-icon fi-blue">📱</div>
+        <div class="feat-icon fi-blue" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><path d="M7 8a4 4 0 0 1 4-4h2a4 4 0 0 1 4 4v6a4 4 0 0 1-4 4h-1.5L8 21v-3a4 4 0 0 1-1-2.7V8z"></path><path d="M10 10h4"></path><path d="M10 13h4"></path></svg>
+        </div>
         <h3>WhatsApp integrado</h3>
         <p>Un botón directo en tu perfil. Los clientes te escriben al instante sin formularios ni esperas.</p>
       </div>
       <div class="feat-card reveal reveal-delay-4">
-        <div class="feat-icon fi-coral">✨</div>
+        <div class="feat-icon fi-coral" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><path d="M12 3l2.2 4.6L19 9l-3.5 3.4.8 4.9-4.3-2.3-4.3 2.3.8-4.9L5 9l4.8-1.4L12 3z"></path></svg>
+        </div>
         <h3>Plan Premium</h3>
         <p>Destacate en el feed, aparece primero en búsquedas y accede a estadísticas avanzadas por solo $5/mes.</p>
       </div>
       <div class="feat-card reveal reveal-delay-5">
-        <div class="feat-icon fi-gold">📍</div>
+        <div class="feat-icon fi-gold" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><path d="M12 20s6-5.8 6-10a6 6 0 1 0-12 0c0 4.2 6 10 6 10z"></path><circle cx="12" cy="10" r="2.2"></circle></svg>
+        </div>
         <h3>Filtros por zona</h3>
         <p>Los clientes filtran por provincia y cantón. Tu negocio llega a la gente correcta en el lugar correcto.</p>
       </div>
       <div class="feat-card reveal reveal-delay-3">
-        <div class="feat-icon fi-blue">🌎</div>
+        <div class="feat-icon fi-blue" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"></circle><path d="M3.8 9h16.4"></path><path d="M3.8 15h16.4"></path><path d="M12 3c2.8 2.6 4.2 5.6 4.2 9S14.8 18.4 12 21"></path><path d="M12 3C9.2 5.6 7.8 8.6 7.8 12S9.2 18.4 12 21"></path></svg>
+        </div>
         <h3>Alcance LATAM</h3>
         <p>Abierto para emprendedores de toda América Latina. Tu perfil es visible internacionalmente.</p>
       </div>
@@ -1396,10 +1561,10 @@ footer {
       <a href="principal.html" class="btn btn-white-outline">🛍️ Explorar productos</a>
     </div>
     <div class="cta-final-trust">
-      <span>✅ Gratis para siempre</span>
-      <span>🚫 Sin tarjeta de crédito</span>
-      <span>⚡ Listo en 2 minutos</span>
-      <span>🌎 Disponible en toda LATAM</span>
+      <span><i class="trust-icon ok">✓</i> Gratis para siempre</span>
+      <span><i class="trust-icon card">◉</i> Sin tarjeta de crédito</span>
+      <span><i class="trust-icon fast">↯</i> Listo en 2 minutos</span>
+      <span><i class="trust-icon latam">◎</i> Disponible en toda LATAM</span>
     </div>
   </div>
 </section>
@@ -1573,7 +1738,8 @@ footer {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
         entry.target.classList.add('visible');
-        observer.unobserve(entry.target);
+      } else {
+        entry.target.classList.remove('visible');
       }
     });
   }, { threshold: 0.12 });
@@ -1620,6 +1786,116 @@ footer {
   }
 
   setInterval(rotateCurrency, 2800);
+
+  // WhatsApp draggable button (mouse + touch)
+  (function initWhatsAppDrag() {
+    const wa = document.querySelector('.wa-float');
+    if (!wa) return;
+
+    const POS_KEY = 'tuyomall_wa_float_pos_v1';
+    const MARGIN = 12;
+
+    let pointerId = null;
+    let startX = 0;
+    let startY = 0;
+    let startLeft = 0;
+    let startTop = 0;
+    let moved = false;
+
+    function maxLeft() {
+      return Math.max(MARGIN, window.innerWidth - wa.offsetWidth - MARGIN);
+    }
+
+    function maxTop() {
+      return Math.max(MARGIN, window.innerHeight - wa.offsetHeight - MARGIN);
+    }
+
+    function clampPosition(left, top) {
+      return {
+        left: Math.min(maxLeft(), Math.max(MARGIN, left)),
+        top: Math.min(maxTop(), Math.max(MARGIN, top))
+      };
+    }
+
+    function applyPosition(left, top) {
+      wa.style.left = left + 'px';
+      wa.style.top = top + 'px';
+      wa.style.right = 'auto';
+      wa.style.bottom = 'auto';
+    }
+
+    function persistPosition(left, top) {
+      localStorage.setItem(POS_KEY, JSON.stringify({ left, top }));
+    }
+
+    function restorePosition() {
+      try {
+        const raw = localStorage.getItem(POS_KEY);
+        if (!raw) return;
+        const parsed = JSON.parse(raw);
+        if (typeof parsed.left !== 'number' || typeof parsed.top !== 'number') return;
+        const pos = clampPosition(parsed.left, parsed.top);
+        applyPosition(pos.left, pos.top);
+      } catch (_) {}
+    }
+
+    wa.addEventListener('pointerdown', (e) => {
+      if (e.button !== 0) return;
+      pointerId = e.pointerId;
+      moved = false;
+      startX = e.clientX;
+      startY = e.clientY;
+
+      const rect = wa.getBoundingClientRect();
+      startLeft = rect.left;
+      startTop = rect.top;
+
+      wa.classList.add('dragging');
+      wa.setPointerCapture(pointerId);
+      e.preventDefault();
+    });
+
+    wa.addEventListener('pointermove', (e) => {
+      if (pointerId !== e.pointerId) return;
+      const dx = e.clientX - startX;
+      const dy = e.clientY - startY;
+      if (Math.abs(dx) > 3 || Math.abs(dy) > 3) moved = true;
+      const pos = clampPosition(startLeft + dx, startTop + dy);
+      applyPosition(pos.left, pos.top);
+    });
+
+    function finishDrag(e) {
+      if (pointerId !== e.pointerId) return;
+      wa.classList.remove('dragging');
+      wa.releasePointerCapture(pointerId);
+      pointerId = null;
+
+      const rect = wa.getBoundingClientRect();
+      const pos = clampPosition(rect.left, rect.top);
+      applyPosition(pos.left, pos.top);
+      persistPosition(pos.left, pos.top);
+    }
+
+    wa.addEventListener('pointerup', finishDrag);
+    wa.addEventListener('pointercancel', finishDrag);
+
+    // Avoid opening WhatsApp when the user was dragging.
+    wa.addEventListener('click', (e) => {
+      if (moved) {
+        e.preventDefault();
+        moved = false;
+      }
+    });
+
+    window.addEventListener('resize', () => {
+      const rect = wa.getBoundingClientRect();
+      const pos = clampPosition(rect.left, rect.top);
+      applyPosition(pos.left, pos.top);
+      persistPosition(pos.left, pos.top);
+    });
+
+    restorePosition();
+  })();
 
 
 
