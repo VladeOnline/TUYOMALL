@@ -1,0 +1,207 @@
+<!doctype html>
+<html lang="es" class="h-full">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tuyomall - Tu espacio para emprender</title>
+
+  <!-- Tailwind CDN (para pruebas rápidas; luego te digo cómo optimizarlo) -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <style>
+    :root{
+      --bg-primary:#6366f1;
+      --bg-secondary:#8b5cf6;
+      --surface:#ffffff;
+      --text:#1f2937;
+      --primary-action:#4f46e5;
+      --secondary-action:#10b981;
+      --base-size:16px;
+      --font: system-ui, -apple-system, sans-serif;
+    }
+
+    .gradient-bg {
+      background: linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
+    }
+    .feature-card { transition: transform .3s ease, box-shadow .3s ease; }
+    .feature-card:hover { transform: translateY(-8px); box-shadow: 0 20px 40px rgba(0,0,0,.15); }
+
+    .nav-button { transition: all .25s ease; }
+    .nav-button:hover { transform: translateY(-2px); }
+
+    .category-pill { transition: transform .2s ease; }
+    .category-pill:hover { transform: scale(1.05); }
+  </style>
+</head>
+
+<body class="h-full overflow-auto" style="background:var(--surface); color:var(--text); font-family: var(--font);">
+  <!-- Header -->
+  <header class="w-full" style="background:var(--surface); box-shadow:0 2px 8px rgba(0,0,0,.1);">
+    <nav class="max-w-7xl mx-auto px-4 py-4">
+      <div class="flex items-center justify-between flex-wrap gap-4">
+        <!-- Logo -->
+        <a href="index.html" class="flex items-center">
+          <!-- Cambiá este SVG por tu logo real si querés -->
+          <div class="w-10 h-10 rounded-lg flex items-center justify-center mr-3" style="background:var(--primary-action);">
+            <span class="text-white font-bold">TM</span>
+          </div>
+          <h1 class="font-bold" style="font-size: calc(var(--base-size) * 1.5);">Tuyomall</h1>
+        </a>
+
+        <!-- Nav -->
+        <div class="flex items-center gap-3 flex-wrap">
+          <a class="nav-button px-4 py-2 rounded-lg font-medium" href="index.html">Inicio</a>
+
+          <div class="relative">
+            <button id="categoriesBtn" class="nav-button px-4 py-2 rounded-lg flex items-center gap-2 font-medium">
+              Categorías
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                <path d="M4 6L8 10L12 6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+              </svg>
+            </button>
+
+            <div id="categoriesMenu" class="hidden absolute top-full mt-2 rounded-lg shadow-xl p-4 z-10"
+                 style="background:var(--surface); min-width:200px;">
+              <div class="flex flex-col gap-2">
+                <a href="#"
+                   class="category-pill px-4 py-2 rounded-lg text-center"
+                   style="background: color-mix(in srgb, var(--bg-primary) 12%, transparent);">
+                  Moda
+                </a>
+                <a href="#" class="category-pill px-4 py-2 rounded-lg text-center"
+                   style="background: color-mix(in srgb, var(--bg-primary) 12%, transparent);">
+                  Tecnología
+                </a>
+                <a href="#" class="category-pill px-4 py-2 rounded-lg text-center"
+                   style="background: color-mix(in srgb, var(--bg-primary) 12%, transparent);">
+                  Alimentos
+                </a>
+                <a href="#" class="category-pill px-4 py-2 rounded-lg text-center"
+                   style="background: color-mix(in srgb, var(--bg-primary) 12%, transparent);">
+                  Arte
+                </a>
+                <a href="#" class="category-pill px-4 py-2 rounded-lg text-center"
+                   style="background: color-mix(in srgb, var(--bg-primary) 12%, transparent);">
+                  Servicios
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <a class="nav-button px-4 py-2 rounded-lg font-semibold"
+             style="background:var(--secondary-action); color:var(--surface);"
+             href="login.html">
+            Iniciar sesión
+          </a>
+
+          <a class="nav-button px-5 py-2 rounded-lg font-semibold"
+             style="background:var(--primary-action); color:var(--surface);"
+             href="registro.html">
+            Registrarse
+          </a>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <!-- Hero -->
+  <section class="w-full gradient-bg py-20 px-4">
+    <div class="max-w-5xl mx-auto text-center">
+      <h2 class="font-extrabold text-white mb-6" style="font-size: calc(var(--base-size) * 3);">
+        Tu espacio para emprender
+      </h2>
+      <p class="text-white/95 mb-10 max-w-xl mx-auto" style="font-size: calc(var(--base-size) * 1.25);">
+        Conecta emprendedores con clientes en un solo lugar
+      </p>
+
+      <div class="flex gap-4 justify-center flex-wrap">
+        <a class="px-8 py-4 rounded-lg font-semibold"
+           style="background:var(--surface); color:var(--primary-action); box-shadow: 0 4px 12px rgba(0,0,0,.15);"
+           href="soy-emprendedor.html">
+          Soy Emprendedor
+        </a>
+        <a class="px-8 py-4 rounded-lg font-semibold text-white"
+           style="background:transparent; border:3px solid var(--surface);"
+           href="soy-cliente.html">
+          Soy Cliente
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features -->
+  <section class="w-full py-20 px-4">
+    <div class="max-w-6xl mx-auto">
+      <h3 class="font-bold text-center mb-12" style="font-size: calc(var(--base-size) * 2);">
+        ¿Por qué elegir Tuyomall?
+      </h3>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div class="feature-card p-8 rounded-2xl" style="background:var(--surface); box-shadow:0 4px 12px rgba(0,0,0,.08);">
+          <div class="w-16 h-16 rounded-full flex items-center justify-center mb-6"
+               style="background: color-mix(in srgb, var(--primary-action) 14%, transparent);">
+            ✅
+          </div>
+          <h4 class="font-semibold mb-3" style="font-size: calc(var(--base-size) * 1.25);">Fácil de usar</h4>
+          <p class="opacity-75 leading-relaxed" style="font-size: calc(var(--base-size) * .9);">
+            Crea tu tienda en minutos sin conocimientos técnicos
+          </p>
+        </div>
+
+        <div class="feature-card p-8 rounded-2xl" style="background:var(--surface); box-shadow:0 4px 12px rgba(0,0,0,.08);">
+          <div class="w-16 h-16 rounded-full flex items-center justify-center mb-6"
+               style="background: color-mix(in srgb, var(--secondary-action) 14%, transparent);">
+            💰
+          </div>
+          <h4 class="font-semibold mb-3" style="font-size: calc(var(--base-size) * 1.25);">Sin comisiones ocultas</h4>
+          <p class="opacity-75 leading-relaxed" style="font-size: calc(var(--base-size) * .9);">
+            Mantén el 100% de tus ganancias
+          </p>
+        </div>
+
+        <div class="feature-card p-8 rounded-2xl" style="background:var(--surface); box-shadow:0 4px 12px rgba(0,0,0,.08);">
+          <div class="w-16 h-16 rounded-full flex items-center justify-center mb-6"
+               style="background: color-mix(in srgb, var(--primary-action) 14%, transparent);">
+            👥
+          </div>
+          <h4 class="font-semibold mb-3" style="font-size: calc(var(--base-size) * 1.25);">Comunidad activa</h4>
+          <p class="opacity-75 leading-relaxed" style="font-size: calc(var(--base-size) * .9);">
+            Miles de clientes esperándote
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="w-full py-8 px-4 mt-20" style="background:var(--text);">
+    <div class="max-w-6xl mx-auto text-center">
+      <p class="text-white/80" style="font-size: calc(var(--base-size) * .9);">
+        © <span id="year"></span> Tuyomall. Todos los derechos reservados.
+      </p>
+    </div>
+  </footer>
+
+  <script>
+    // Año
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Dropdown categorías
+    const categoriesBtn = document.getElementById('categoriesBtn');
+    const categoriesMenu = document.getElementById('categoriesMenu');
+
+    if (categoriesBtn && categoriesMenu) {
+      categoriesBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        categoriesMenu.classList.toggle('hidden');
+      });
+
+      document.addEventListener('click', (e) => {
+        if (!categoriesBtn.contains(e.target) && !categoriesMenu.contains(e.target)) {
+          categoriesMenu.classList.add('hidden');
+        }
+      });
+    }
+  </script>
+</body>
+</html>

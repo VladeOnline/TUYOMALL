@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="es-CR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Perfil público | TuyoMall</title>
+  <meta name="description" content="Perfil público de un emprendimiento en TuyoMall.">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;800&family=Sansita:wght@700;800&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="assets/css/base.css?v=20">
+  <link rel="stylesheet" href="assets/css/layout.css?v=20">
+  <link rel="stylesheet" href="assets/css/components.css?v=20">
+
+  <style>
+    /* Ajustes visuales rápidos para el perfil público */
+    .public-hero {
+      margin: 16px 0 12px;
+    }
+    .cover {
+      width: 100%;
+      height: 180px;
+      border-radius: 12px;
+      background-color: #eee;
+      background-size: cover;
+      background-position: center center;
+      margin-bottom: 16px;
+    }
+    .logo-wrap {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 12px;
+    }
+    .logo {
+      width: 96px;
+      height: 96px;
+      border-radius: 16px;
+      background-color: #ddd;
+      background-size: cover;
+      background-position: center center;
+      flex-shrink: 0;
+    }
+    .social-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 12px 0;
+    }
+    .social-links a {
+      padding: 6px 10px;
+      border-radius: 999px;
+      border: 1px solid #40E0D0;
+      font-size: 0.9rem;
+      text-decoration: none;
+    }
+    .products-section {
+      margin-top: 24px;
+    }
+    .product-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 12px;
+    }
+    .product-card {
+      border-radius: 12px;
+      border: 1px solid #eee;
+      padding: 10px 12px;
+      background: #fff;
+    }
+    .product-card h3 {
+      margin: 0 0 6px;
+    }
+    .product-card .price {
+      font-weight: 700;
+      margin-top: 4px;
+    }
+    #perfilError {
+      color: #c0392b;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container nav">
+      <a class="brand" href="index.html">
+        <span class="brand__logo"></span><span class="brand__name">TuyoMall</span>
+      </a>
+      <nav class="main-menu">
+        <a href="index.html#categorias">Categorías</a>
+        <a href="planes.html">Planes</a>
+        <a href="acceso-cliente.html" class="btn btn-outline">Entrar</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container" id="top" tabindex="-1">
+    <section class="card">
+      <div id="bizCover" class="cover"></div>
+
+      <div class="logo-wrap">
+        <div id="bizLogo" class="logo"></div>
+        <div>
+          <h1 id="bizName" class="public-hero">Cargando emprendimiento…</h1>
+          <p id="bizLoc" class="hint"></p>
+        </div>
+      </div>
+
+      <p id="bizAbout"></p>
+
+      <div class="social-links">
+        <a id="waLink"  href="#" target="_blank" rel="noopener noreferrer">WhatsApp</a>
+        <a id="igLink"  href="#" target="_blank" rel="noopener noreferrer">Instagram</a>
+        <a id="fbLink"  href="#" target="_blank" rel="noopener noreferrer">Facebook</a>
+        <a id="ttLink"  href="#" target="_blank" rel="noopener noreferrer">TikTok</a>
+      </div>
+
+      <p id="perfilError" class="hint"></p>
+
+      <section class="products-section">
+        <h2>Productos y servicios</h2>
+        <ul id="productList" class="product-list">
+          <li class="hint">Cargando catálogo…</li>
+        </ul>
+      </section>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>© <span id="year"></span> TuyoMall · Costa Rica</p>
+  </footer>
+
+  <script>
+    const yearEl = document.getElementById('year');
+    if (yearEl) yearEl.textContent = new Date().getFullYear();
+  </script>
+
+  <!-- JS del perfil público -->
+  <script src="assets/js/pages/perfil-publico.js?v=1" defer></script>
+</body>
+</html>

@@ -1,0 +1,2 @@
+RewriteEngine On
+RewriteRule ^perfil/.*$ /perfil-publico.html [L]

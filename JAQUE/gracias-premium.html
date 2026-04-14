@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="es-CR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Gracias — Premium activado | TuyoMall</title>
+  <meta name="theme-color" content="#C4D814" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;800&family=Sansita:wght@700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/base.css">
+  <link rel="stylesheet" href="assets/css/layout.css">
+  <link rel="stylesheet" href="assets/css/components.css">
+</head>
+<body>
+<header class="site-header">
+  <div class="container nav">
+    <a class="brand" href="index.html"><span class="brand__logo"></span><span class="brand__name">TuyoMall</span></a>
+    <nav class="main-menu"><a href="dashboard-emprendedor.html">Volver al panel</a></nav>
+  </div>
+</header>
+
+<main class="container" tabindex="-1">
+  <section class="hero">
+    <span class="badge">Premium</span>
+    <h1 class="hero-title">¡Gracias por suscribirte!</h1>
+    <p class="hero-sub">Estamos activando tu plan Premium…</p>
+  </section>
+
+  <section class="card">
+    <p>En unos segundos te redirigiremos a tu panel. Si no ocurre, podés continuar manualmente.</p>
+    <div class="actions">
+      <a class="btn btn-primary" href="dashboard-emprendedor.html">Ir a mi panel</a>
+    </div>
+    <p id="gAlert" class="hint" role="status" aria-live="polite"></p>
+  </section>
+</main>
+
+<footer class="site-footer"><p>© <span id="year"></span> TuyoMall · Costa Rica</p></footer>
+
+<script src="assets/js/main.js" defer></script>
+<script src="assets/js/pages/gracias-premium.js" defer></script>
+<script src="assets/js/auth/auth-utils.js" defer></script>
+<script src="assets/js/auth/header-state.js" defer></script>
+</body>
+</html>
