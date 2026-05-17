@@ -75,6 +75,13 @@
       grid-template-columns:1fr 1fr;
       gap:12px;
     }
+    .nav a img {
+      transition: transform 0.2s;
+      transform-origin: center;
+    }
+    .nav a:hover img {
+      transform: rotate(-6deg) scale(1.05);
+    }
     @media (max-width: 760px){
       .summary-grid{ grid-template-columns:1fr; }
     }

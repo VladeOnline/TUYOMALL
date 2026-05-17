@@ -28,6 +28,8 @@
 
     .nav-button { transition: all .25s ease; }
     .nav-button:hover { transform: translateY(-2px); }
+    .tm-logo-mark { transition: transform .2s ease; transform-origin: center; }
+    a:hover .tm-logo-mark { transform: rotate(-6deg) scale(1.05); }
 
     .category-pill { transition: transform .2s ease; }
     .category-pill:hover { transform: scale(1.05); }
@@ -49,7 +51,7 @@
         <!-- Logo -->
         <a href="index.html" class="flex items-center">
           <!-- Cambiá este SVG por tu logo real si querés -->
-          <div class="w-10 h-10 rounded-lg flex items-center justify-center mr-3" style="background:var(--primary-action);">
+          <div class="tm-logo-mark w-10 h-10 rounded-lg flex items-center justify-center mr-3" style="background:var(--primary-action);">
             <span class="text-white font-bold">TM</span>
           </div>
           <h1 class="font-bold" style="font-size: calc(var(--base-size) * 1.5);">Tuyomall</h1>

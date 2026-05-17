@@ -54,11 +54,18 @@
       color: rgba(226,232,240,.9);
       font-family:var(--font-body);
     }
-    .tm-footer__copy a{
+.tm-footer__copy a{
       color: rgba(64,224,208,.95);
       text-decoration: underline;
       text-underline-offset: 3px;
       font-weight:800;
+    }
+    .nav a img {
+      transition: transform 0.2s;
+      transform-origin: center;
+    }
+    .nav a:hover img {
+      transform: rotate(-6deg) scale(1.05);
     }
 
 </style>

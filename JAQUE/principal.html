@@ -5,7 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>TuyoMall — Explorar productos</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Clash+Display:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.14.0/dist/tabler-icons.min.css">
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -13,640 +14,814 @@
   --coral:   #FF6B47;
   --coral-2: #FF8A6A;
   --coral-3: #FFF0EC;
-  --sand:    #F5EFE6;
-  --sand-2:  #EDE4D8;
+  --coral-4: #FFD6C8;
+  --sand:    #F7F1E8;
+  --sand-2:  #EDE4D5;
   --navy:    #14213D;
   --navy-2:  #1E2F50;
   --slate:   #4A5568;
-  --muted:   #8899AA;
-  --gray-l:  #F0F2F5;
-  --gold:    #F0B429;
+  --muted:   #9AA5B4;
+  --gray-l:  #F4F6F9;
+  --gold:    #F5A623;
   --white:   #FFFFFF;
-  --surface: #FDFBF8;
+  --surface: #FDFAF6;
   --success: #10B981;
-  --nav-h:   66px;
-  --side-w:  240px;
-  --right-w: 248px;
-  --r:       12px;
-  --r-lg:    18px;
+  --nav-h:   64px;
+  --side-w:  236px;
+  --right-w: 256px;
+  --r:       10px;
+  --r-lg:    16px;
+  --r-xl:    20px;
+}
+
+body.dark-mode {
+  --coral-3: #33201B;
+  --coral-4: #5B2C22;
+  --sand:    #2A2520;
+  --sand-2:  #3B342D;
+  --navy:    #F8FAFC;
+  --navy-2:  #E5E7EB;
+  --slate:   #CBD5E1;
+  --muted:   #8A98AA;
+  --gray-l:  #0F1720;
+  --white:   #17202B;
+  --surface: #0B1118;
 }
 
 body {
-  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-family: 'DM Sans', sans-serif;
   background: var(--gray-l);
   color: var(--navy);
   min-height: 100vh;
+  transition: background 0.2s, color 0.2s;
 }
 
-/* ══ TOPNAV ══════════════════════════════════════════ */
+/* ══ TOPNAV ══ */
 .topnav {
   position: fixed; top: 0; left: 0; right: 0; z-index: 200;
   height: var(--nav-h);
   background: var(--white);
-  border-bottom: 1px solid rgba(20,33,61,0.07);
+  border-bottom: 1px solid rgba(20,33,61,0.06);
   display: flex; align-items: center;
-  padding: 0 20px; gap: 14px;
-  box-shadow: 0 2px 12px rgba(20,33,61,0.06);
+  padding: 0 22px; gap: 16px;
+  box-shadow: 0 1px 16px rgba(20,33,61,0.05);
 }
 
+/* ══ LOGO ══ */
 .nav-logo {
-  display: flex; align-items: center; gap: 8px;
+  display: flex; align-items: center; gap: 10px;
   text-decoration: none; flex-shrink: 0;
 }
 .nav-logo-mark {
-  width: 60px; height: 40px;
-  background: var(--coral); border-radius: 8px;
+  width: 38px; height: 38px;
+  background: var(--coral); border-radius: 10px;
   display: flex; align-items: center; justify-content: center;
-  font-size: 16px;
-  box-shadow: 0 3px 8px rgba(255,107,71,0.3);
+  color: white; font-size: 20px;
+  box-shadow: 0 4px 12px rgba(255,107,71,0.3);
+  transition: transform 0.2s;
 }
+.nav-logo:hover .nav-logo-mark { transform: rotate(-6deg) scale(1.05); }
 .nav-logo-text {
-  font-family: 'Clash Display', sans-serif;
-  font-size: 19px; font-weight: 700;
-  color: var(--navy); letter-spacing: -0.4px;
+  font-family: 'Syne', sans-serif;
+  font-size: 20px; font-weight: 800;
+  letter-spacing: -0.5px; line-height: 1.1;
+  color: var(--navy);
+  display: inline-flex;
+  align-items: baseline;
 }
-.nav-logo-text span { color: var(--coral); }
-
-/* Search bar */
-.nav-search {
-  flex: 1; max-width: 560px;
+.logo-tuyo { color: var(--navy); }
+.logo-mall-wrap {
   position: relative;
+  display: inline-block;
+  line-height: 1;
 }
-.nav-search input {
-  width: 100%; padding: 10px 16px 10px 40px;
-  border: 1.5px solid var(--sand-2);
-  border-radius: 100px;
-  font-family: 'Plus Jakarta Sans', sans-serif;
+.logo-mall { color: var(--coral); }
+/* Línea cursiva SVG bajo "Mall" */
+.logo-underline {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: calc(100% + 2px);
+  display: block;
+  width: 100%;
+  height: 7px;
+  pointer-events: none;
+}
+
+.nav-search {
+  flex: 1; max-width: 520px; position: relative;
+}
+.topnav .nav-search input {
+  width: 100%; padding: 10px 18px 10px 50px;
+  border: 1.5px solid var(--sand-2); border-radius: 100px;
+  font-family: 'DM Sans', sans-serif;
   font-size: 14px; color: var(--navy);
-  background: var(--gray-l);
-  outline: none;
-  transition: all 0.2s;
+  background: var(--gray-l); outline: none; transition: all 0.2s;
 }
-.nav-search input:focus {
-  border-color: var(--coral);
-  background: var(--white);
-  box-shadow: 0 0 0 3px rgba(255,107,71,0.1);
+.topnav .nav-search input:focus {
+  border-color: var(--coral); background: var(--white);
+  box-shadow: 0 0 0 4px rgba(255,107,71,0.08);
 }
-.nav-search input::placeholder { color: var(--muted); }
-.search-ico {
-  position: absolute; left: 14px; top: 50%;
+.topnav .nav-search input::placeholder { color: var(--muted); }
+.topnav .search-ico {
+  position: absolute; left: 18px; top: 50%;
   transform: translateY(-50%);
-  font-size: 15px; pointer-events: none;
+  width: 18px;
+  color: var(--muted); pointer-events: none; font-size: 17px;
+  line-height: 1;
 }
 
-.nav-right {
-  display: flex; align-items: center; gap: 10px;
-  margin-left: auto; flex-shrink: 0;
-}
-
+.nav-right { display: flex; align-items: center; gap: 8px; margin-left: auto; flex-shrink: 0; }
 .nav-btn {
   padding: 8px 18px; border-radius: 100px;
-  font-family: 'Plus Jakarta Sans', sans-serif;
-  font-size: 13px; font-weight: 600;
-  cursor: pointer; text-decoration: none;
-  border: none; transition: all 0.2s;
+  font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 600;
+  cursor: pointer; text-decoration: none; border: none; transition: all 0.2s;
   display: inline-flex; align-items: center; gap: 6px;
 }
-.btn-ghost {
-  background: transparent;
-  border: 1.5px solid var(--sand-2);
-  color: var(--slate);
-}
+.btn-ghost { background: transparent; border: 1.5px solid var(--sand-2); color: var(--slate); }
 .btn-ghost:hover { border-color: var(--coral); color: var(--coral); }
-.btn-coral {
-  background: var(--coral); color: var(--white);
-  box-shadow: 0 3px 10px rgba(255,107,71,0.3);
-}
-.btn-coral:hover { background: #e55a38; transform: translateY(-1px); }
-
+.btn-coral { background: var(--coral); color: var(--white); box-shadow: 0 4px 12px rgba(255,107,71,0.28); }
+.btn-coral:hover { background: #e85a35; transform: translateY(-1px); }
 .nav-avatar {
-  width: 34px; height: 34px; border-radius: 50%;
-  background: var(--coral-3);
-  border: 2px solid rgba(255,107,71,0.2);
+  width: 36px; height: 36px; border-radius: 50%;
+  background: var(--coral-3); border: 2px solid rgba(255,107,71,0.2);
   display: flex; align-items: center; justify-content: center;
-  font-size: 13px; font-weight: 700; color: var(--coral);
+  font-size: 13px; font-weight: 700; color: var(--coral); cursor: pointer; flex-shrink: 0;
+}
+.theme-toggle {
+  width: 36px; height: 36px; border-radius: 50%;
+  border: 1.5px solid var(--sand-2);
+  background: var(--white);
+  color: var(--slate);
+  display: flex; align-items: center; justify-content: center;
   cursor: pointer; flex-shrink: 0;
+  transition: all 0.2s;
+}
+.theme-toggle:hover {
+  color: var(--coral);
+  border-color: rgba(255,107,71,0.35);
+  background: var(--coral-3);
+}
+.theme-toggle .ti { font-size: 18px; }
+
+body.dark-mode .topnav,
+body.dark-mode .sidebar-left,
+body.dark-mode .sidebar-right,
+body.dark-mode .prod-card,
+body.dark-mode .highlight-card,
+body.dark-mode .premium-banner,
+body.dark-mode .modal,
+body.dark-mode .sort-select,
+body.dark-mode .post-menu {
+  box-shadow: none;
 }
 
-/* ══ LAYOUT ══════════════════════════════════════════ */
+body.dark-mode .prod-card,
+body.dark-mode .highlight-card,
+body.dark-mode .modal,
+body.dark-mode .topnav,
+body.dark-mode .sidebar-left,
+body.dark-mode .sidebar-right {
+  border-color: rgba(255,255,255,0.08);
+}
+
+/* ══ LAYOUT ══ */
 .layout {
   display: grid;
   grid-template-columns: var(--side-w) 1fr var(--right-w);
   padding-top: var(--nav-h);
   min-height: 100vh;
-  max-width: 1400px;
-  margin: 0 auto;
+  max-width: 1440px; margin: 0 auto;
 }
 
-/* ══ LEFT SIDEBAR ══════════════════════════════════════════ */
+/* ══ LEFT SIDEBAR ══ */
 .sidebar-left {
-  padding: 20px 14px;
+  padding: 18px 12px;
   position: sticky; top: var(--nav-h);
   height: calc(100vh - var(--nav-h));
   overflow-y: auto; background: var(--white);
-  border-right: 1px solid rgba(20,33,61,0.06);
+  border-right: 1px solid rgba(20,33,61,0.05);
 }
-
-.sidebar-left::-webkit-scrollbar { width: 4px; }
+.sidebar-left::-webkit-scrollbar { width: 3px; }
 .sidebar-left::-webkit-scrollbar-thumb { background: var(--sand-2); border-radius: 4px; }
 
-.side-section { margin-bottom: 28px; }
-
+.side-section { margin-bottom: 24px; }
 .side-label {
-  font-size: 10px; font-weight: 700; letter-spacing: 1.5px;
+  font-size: 10px; font-weight: 700; letter-spacing: 1.8px;
   text-transform: uppercase; color: var(--muted);
-  padding: 0 8px; margin-bottom: 8px; display: block;
+  padding: 0 10px; margin-bottom: 6px; display: block;
 }
-
 .side-item {
   display: flex; align-items: center; gap: 10px;
   padding: 9px 10px; border-radius: var(--r);
   font-size: 13px; font-weight: 500; color: var(--slate);
   cursor: pointer; text-decoration: none;
-  transition: all 0.15s; border: none;
-  background: none; width: 100%; text-align: left;
+  transition: all 0.15s; border: none; background: none; width: 100%; text-align: left;
 }
 .side-item:hover { background: var(--gray-l); color: var(--navy); }
 .side-item.active { background: var(--coral-3); color: var(--coral); font-weight: 600; }
-.side-item-icon { font-size: 16px; width: 22px; text-align: center; flex-shrink: 0; }
+.side-item .ti { font-size: 18px; flex-shrink: 0; }
 .side-item-count {
-  margin-left: auto; font-size: 11px;
+  margin-left: auto; font-size: 10px;
   background: var(--gray-l); color: var(--muted);
-  padding: 1px 7px; border-radius: 100px;
+  padding: 2px 7px; border-radius: 100px;
 }
 .side-item.active .side-item-count { background: rgba(255,107,71,0.15); color: var(--coral); }
 
-/* Filter group */
-.filter-group { margin-bottom: 20px; }
+.filter-group { margin-bottom: 18px; }
 .filter-title {
-  font-size: 12px; font-weight: 700;
-  color: var(--navy); margin-bottom: 10px;
-  padding: 0 8px; display: flex;
-  align-items: center; justify-content: space-between;
+  font-size: 11px; font-weight: 700; color: var(--navy); margin-bottom: 8px;
+  padding: 0 10px; display: flex; align-items: center; justify-content: space-between;
 }
 .filter-clear {
-  font-size: 11px; color: var(--coral);
-  cursor: pointer; font-weight: 500;
-  background: none; border: none;
-  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 11px; color: var(--coral); cursor: pointer; font-weight: 500;
+  background: none; border: none; font-family: 'DM Sans', sans-serif;
 }
 .filter-clear:hover { text-decoration: underline; }
 
 .filter-pill {
   display: flex; align-items: center; gap: 8px;
-  padding: 8px 10px; border-radius: var(--r);
+  padding: 7px 10px; border-radius: var(--r);
   font-size: 13px; color: var(--slate);
-  cursor: pointer; margin-bottom: 3px;
+  cursor: pointer; margin-bottom: 2px;
   transition: all 0.15s; user-select: none;
 }
 .filter-pill:hover { background: var(--gray-l); }
 .filter-pill.active { color: var(--coral); font-weight: 600; }
-
 .filter-check {
   width: 16px; height: 16px; border-radius: 4px;
   border: 1.5px solid var(--sand-2);
   display: flex; align-items: center; justify-content: center;
-  font-size: 9px; flex-shrink: 0;
-  transition: all 0.15s;
+  font-size: 10px; flex-shrink: 0; transition: all 0.15s;
 }
-.filter-pill.active .filter-check {
-  background: var(--coral); border-color: var(--coral); color: white;
-}
+.filter-pill.active .filter-check { background: var(--coral); border-color: var(--coral); color: white; }
+.filter-pill .ti { font-size: 14px; }
 
-.divider-line {
-  height: 1px; background: var(--sand-2);
-  margin: 16px 8px;
-}
+.divider-line { height: 1px; background: var(--sand-2); margin: 14px 10px; }
 
-/* ══ MAIN FEED ══════════════════════════════════════════ */
-.feed {
-  padding: 20px 18px;
-  min-height: calc(100vh - var(--nav-h));
-}
+/* ══ FEED ══ */
+.feed { padding: 20px; min-height: calc(100vh - var(--nav-h)); }
 
 .feed-header {
-  display: flex; align-items: center; justify-content: space-between;
-  margin-bottom: 18px; flex-wrap: wrap; gap: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 14px;
+  flex-wrap: wrap;
+  gap: 10px;
 }
-
+.feed-heading {
+  min-width: 180px;
+}
 .feed-title {
-  font-family: 'Clash Display', sans-serif;
-  font-size: 20px; font-weight: 700; letter-spacing: -0.5px;
+  font-family: 'Syne', sans-serif;
+  font-size: 18px;
+  font-weight: 800;
+  letter-spacing: -0.25px;
+  line-height: 1.15;
+  color: var(--navy);
 }
-.feed-count { font-size: 13px; color: var(--muted); margin-top: 2px; }
-
+.feed-count {
+  margin-top: 2px;
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 600;
+}
 .feed-controls { display: flex; align-items: center; gap: 8px; }
-
 .sort-select {
-  padding: 7px 14px; border-radius: 100px;
-  border: 1.5px solid var(--sand-2);
-  font-family: 'Plus Jakarta Sans', sans-serif;
+  padding: 8px 14px; border-radius: 100px;
+  border: 1.5px solid var(--sand-2); font-family: 'DM Sans', sans-serif;
   font-size: 13px; color: var(--navy);
-  background: var(--white); outline: none; cursor: pointer;
-  appearance: none;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 24 24' fill='none' stroke='%238899AA' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
-  background-repeat: no-repeat; background-position: right 10px center;
-  padding-right: 28px;
+  background: var(--white); outline: none; cursor: pointer; appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 24 24' fill='none' stroke='%239AA5B4' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat; background-position: right 10px center; padding-right: 28px;
 }
-
-.view-toggle {
-  display: flex; background: var(--gray-l);
-  border-radius: 8px; padding: 3px; gap: 2px;
-}
+.view-toggle { display: flex; background: var(--gray-l); border-radius: 8px; padding: 3px; gap: 2px; }
 .view-btn {
   width: 30px; height: 28px; border: none;
   background: transparent; border-radius: 6px;
-  cursor: pointer; font-size: 14px; color: var(--muted);
+  cursor: pointer; color: var(--muted);
   display: flex; align-items: center; justify-content: center;
-  transition: all 0.15s;
+  transition: all 0.15s; font-size: 16px;
 }
-.view-btn.active { background: var(--white); color: var(--navy); box-shadow: 0 1px 4px rgba(0,0,0,0.1); }
+.view-btn.active { background: var(--white); color: var(--navy); box-shadow: 0 1px 4px rgba(0,0,0,0.08); }
 
-/* ── Category pills strip ── */
+/* Category strip */
 .cat-strip {
   display: flex; gap: 8px; margin-bottom: 18px;
   overflow-x: auto; padding-bottom: 4px;
 }
 .cat-strip::-webkit-scrollbar { height: 0; }
-
 .cat-pill {
-  padding: 6px 14px; border-radius: 100px;
-  border: 1.5px solid var(--sand-2);
-  background: var(--white);
-  font-size: 12px; font-weight: 600;
-  color: var(--slate); cursor: pointer;
-  white-space: nowrap;
-  transition: all 0.18s;
-  display: flex; align-items: center; gap: 5px;
-  flex-shrink: 0;
+  padding: 7px 16px; border-radius: 100px;
+  border: 1.5px solid var(--sand-2); background: var(--white);
+  font-size: 12px; font-weight: 600; color: var(--slate);
+  cursor: pointer; white-space: nowrap; transition: all 0.18s;
+  display: flex; align-items: center; gap: 6px; flex-shrink: 0;
 }
 .cat-pill:hover { border-color: var(--coral); color: var(--coral); }
-.cat-pill.active {
-  background: var(--coral); border-color: var(--coral);
-  color: var(--white);
-}
+.cat-pill.active { background: var(--coral); border-color: var(--coral); color: var(--white); }
+.cat-pill .ti { font-size: 14px; }
 
-/* ── Product grid ── */
+/* ══ PRODUCT CARDS — estilo publicación social ══ */
 .products-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
-  gap: 14px;
+  grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+  gap: 16px;
 }
+.products-grid.list-view { grid-template-columns: 1fr; }
 
-.products-grid.list-view {
-  grid-template-columns: 1fr;
-}
-
-/* Product card */
 .prod-card {
   background: var(--white);
   border-radius: var(--r-lg);
   overflow: hidden;
-  border: 1px solid rgba(20,33,61,0.07);
-  cursor: pointer;
+  border: 1px solid rgba(20,33,61,0.06);
   transition: all 0.25s;
+  display: flex;
+  flex-direction: column;
   position: relative;
 }
+.prod-card.menu-open {
+  overflow: visible;
+  z-index: 20;
+}
 .prod-card:hover {
-  border-color: rgba(255,107,71,0.3);
-  transform: translateY(-3px);
-  box-shadow: 0 12px 32px rgba(20,33,61,0.1);
+  border-color: rgba(255,107,71,0.2);
+  box-shadow: 0 8px 28px rgba(20,33,61,0.08);
 }
 
+/* Cabecera: avatar + vendedor + fecha */
+.prod-header {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 3;
+  display: flex; align-items: center; gap: 10px;
+  padding: 12px 12px 18px;
+  background: linear-gradient(180deg, rgba(8,14,25,0.78) 0%, rgba(8,14,25,0.42) 58%, transparent 100%);
+}
+.prod-avatar {
+  width: 34px; height: 34px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 13px; font-weight: 700; color: white; flex-shrink: 0;
+  border: 2px solid rgba(255,255,255,0.72);
+  box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+}
+.prod-header-info { flex: 1; min-width: 0; }
+.prod-seller-name {
+  font-size: 12px; font-weight: 800; color: white;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.prod-seller-meta { font-size: 10px; color: rgba(255,255,255,0.72); margin-top: 1px; }
+.prod-premium-badge {
+  background: rgba(255,246,216,0.92);
+  color: #7A4500;
+  border: 1px solid rgba(255,255,255,0.48);
+  font-size: 9px; font-weight: 800; letter-spacing: 0.7px;
+  padding: 4px 9px; border-radius: 100px;
+  display: flex; align-items: center; gap: 4px;
+  text-transform: uppercase; flex-shrink: 0;
+}
+.prod-premium-badge .ti { font-size: 11px; color: var(--gold); }
+.prod-menu {
+  width: 28px;
+  height: 28px;
+  border: none;
+  border-radius: 50%;
+  background: transparent;
+  color: white;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: all 0.18s;
+  margin-left: auto;
+}
+.prod-menu:hover {
+  background: rgba(255,255,255,0.16);
+  color: white;
+}
+.prod-menu .ti { font-size: 18px; }
+.post-menu {
+  position: absolute;
+  top: 46px;
+  right: 12px;
+  z-index: 6;
+  width: 188px;
+  padding: 6px;
+  background: var(--white);
+  border: 1px solid rgba(20,33,61,0.08);
+  border-radius: 12px;
+  box-shadow: 0 18px 48px rgba(20,33,61,0.18);
+  display: none;
+}
+.prod-card.menu-open .post-menu {
+  display: block;
+}
+.post-menu button {
+  width: 100%;
+  border: none;
+  background: transparent;
+  color: var(--navy);
+  border-radius: 8px;
+  padding: 9px 10px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  text-align: left;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  transition: all 0.15s;
+}
+.post-menu button:hover {
+  background: var(--gray-l);
+}
+.post-menu .ti {
+  color: var(--muted);
+  font-size: 17px;
+}
+.post-menu button.report-action {
+  color: #DC2626;
+}
+.post-menu button.report-action .ti {
+  color: #DC2626;
+}
+
+/* Imagen */
 .prod-img-wrap {
   position: relative; overflow: hidden;
-  height: 160px; background: var(--sand);
+  aspect-ratio: 4/4.85; background: var(--sand);
 }
 .prod-img {
   width: 100%; height: 100%;
   object-fit: cover; display: block;
   transition: transform 0.4s ease;
 }
-.prod-card:hover .prod-img { transform: scale(1.04); }
-
+.prod-card:hover .prod-img { transform: scale(1.03); }
 .prod-img-placeholder {
   width: 100%; height: 100%;
   display: flex; align-items: center; justify-content: center;
-  font-size: 48px; background: var(--sand);
+  background: var(--sand); font-size: 40px;
 }
-
-.prod-premium-badge {
-  position: absolute; top: 8px; left: 8px;
-  background: var(--gold);
-  color: var(--navy);
-  font-size: 9px; font-weight: 800; letter-spacing: 0.5px;
+.prod-type-badge {
+  position: absolute; bottom: 10px; left: 10px;
+  background: rgba(20,33,61,0.76); backdrop-filter: blur(4px);
+  color: white; font-size: 10px; font-weight: 600;
   padding: 3px 9px; border-radius: 100px;
+  display: flex; align-items: center; gap: 4px;
 }
+.prod-type-badge .ti { font-size: 11px; }
 
-.prod-save {
-  position: absolute; top: 8px; right: 8px;
-  width: 30px; height: 30px; border-radius: 50%;
-  background: rgba(255,255,255,0.9);
-  border: none; cursor: pointer;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 14px;
-  opacity: 0; transition: all 0.2s;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+/* Cuerpo */
+.prod-body {
+  padding: 2px 14px 14px;
+  min-height: 78px;
 }
-.prod-card:hover .prod-save { opacity: 1; }
-.prod-save:hover { transform: scale(1.1); }
-.prod-save.saved { opacity: 1; }
-
-.prod-body { padding: 12px 14px; }
-
+.prod-caption-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 8px;
+}
 .prod-price {
-  font-family: 'Clash Display', sans-serif;
-  font-size: 17px; font-weight: 700;
-  color: var(--navy); margin-bottom: 4px;
+  display: inline-flex;
+  align-items: center;
+  width: fit-content;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px;
+  font-weight: 800;
+  color: var(--coral);
+  background: var(--coral-3);
+  border-radius: 999px;
+  padding: 4px 9px;
+  margin-bottom: 0;
+  letter-spacing: 0;
 }
-
 .prod-name {
   font-size: 13px; font-weight: 500; color: var(--navy);
-  margin-bottom: 6px; line-height: 1.35;
+  line-height: 1.45;
   display: -webkit-box; -webkit-line-clamp: 2;
   -webkit-box-orient: vertical; overflow: hidden;
+  min-height: 38px;
+}
+.prod-name strong {
+  font-weight: 800;
+  color: var(--navy);
 }
 
-.prod-seller {
-  display: flex; align-items: center; gap: 6px;
-  font-size: 11px; color: var(--muted);
-  margin-bottom: 10px;
-}
-.seller-avatar {
-  width: 18px; height: 18px; border-radius: 50%;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 9px; font-weight: 700; color: white;
-  flex-shrink: 0;
-}
-
+/* Acciones: me gusta, guardar, contactar */
 .prod-actions {
-  display: flex; gap: 6px;
+  display: grid;
+  grid-template-columns: auto auto minmax(0, 1fr);
+  align-items: center;
+  gap: 6px;
+  padding: 10px 12px 8px;
+  margin-top: 0;
 }
-.prod-btn {
-  flex: 1; padding: 7px;
-  border-radius: 8px;
-  font-family: 'Plus Jakarta Sans', sans-serif;
-  font-size: 12px; font-weight: 600;
+.action-btn {
+  display: flex; align-items: center; gap: 5px;
+  min-width: 34px;
+  height: 34px;
+  padding: 7px 6px; border-radius: 8px;
   border: none; cursor: pointer;
-  transition: all 0.18s; text-align: center;
-  text-decoration: none;
-  display: flex; align-items: center; justify-content: center; gap: 4px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 12px; font-weight: 600;
+  transition: all 0.18s; background: transparent; color: var(--slate);
 }
-.btn-ver { background: var(--coral); color: white; }
-.btn-ver:hover { background: #e55a38; }
-.btn-wa {
-  background: #25D366; color: white;
-  flex: 0; padding: 7px 10px;
+.action-btn .ti { font-size: 18px; line-height: 1; }
+.action-btn:hover { background: var(--gray-l); }
+.action-btn.liked { color: #e55a35; }
+.action-btn.saved { color: #3B82F6; }
+.action-like-count { font-size: 12px; color: var(--muted); }
+.action-contact {
+  background: #22c55e; color: white;
+  min-width: 0;
+  height: 34px;
+  padding: 7px 10px; border-radius: 8px;
+  border: none; cursor: pointer; text-decoration: none;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 12px; font-weight: 700;
+  display: flex; align-items: center; justify-content: center; gap: 5px;
+  transition: all 0.18s;
+  white-space: nowrap;
+  overflow: hidden;
 }
-.btn-wa:hover { background: #1da851; }
+.action-contact .ti { font-size: 16px; line-height: 1; }
+.action-contact:hover { background: #16a34a; }
 
-/* List view card */
-.products-grid.list-view .prod-card {
-  display: grid; grid-template-columns: 140px 1fr;
-}
-.products-grid.list-view .prod-img-wrap { height: 120px; }
-.products-grid.list-view .prod-body {
-  display: flex; flex-direction: column; justify-content: space-between;
-}
+/* List view */
+.products-grid.list-view .prod-card { display: grid; grid-template-columns: 180px 1fr; }
+.products-grid.list-view .prod-img-wrap { grid-row: 1 / 4; grid-column: 1; aspect-ratio: auto; min-height: 220px; }
+.products-grid.list-view .prod-header { grid-column: 1; width: 180px; }
+.products-grid.list-view .prod-body { grid-column: 2; }
+.products-grid.list-view .prod-actions { grid-column: 2; }
 
-/* Load more */
 .load-more {
   width: 100%; padding: 13px;
-  background: var(--white);
-  border: 1.5px solid var(--sand-2);
-  border-radius: var(--r-lg);
-  font-family: 'Plus Jakarta Sans', sans-serif;
+  background: var(--white); border: 1.5px solid var(--sand-2);
+  border-radius: var(--r-lg); font-family: 'DM Sans', sans-serif;
   font-size: 14px; font-weight: 600; color: var(--coral);
-  cursor: pointer; margin-top: 20px;
-  transition: all 0.2s;
+  cursor: pointer; margin-top: 20px; transition: all 0.2s;
+  display: flex; align-items: center; justify-content: center; gap: 6px;
 }
 .load-more:hover { background: var(--coral-3); border-color: var(--coral); }
+.load-more .ti { font-size: 16px; }
 
-/* Empty state */
-.empty-state {
-  text-align: center; padding: 60px 20px;
-  display: none;
-}
+.empty-state { text-align: center; padding: 60px 20px; display: none; }
 .empty-state.show { display: block; }
-.empty-icon { font-size: 52px; margin-bottom: 16px; }
-.empty-title { font-family: 'Clash Display', sans-serif; font-size: 20px; font-weight: 700; margin-bottom: 8px; }
+.empty-icon .ti { font-size: 52px; color: var(--muted); display: block; }
+.empty-title { font-family: 'Syne', sans-serif; font-size: 20px; font-weight: 700; margin: 14px 0 8px; }
 .empty-sub { font-size: 14px; color: var(--muted); }
 
-/* ══ RIGHT SIDEBAR ══════════════════════════════════════════ */
+/* ══ RIGHT SIDEBAR ══ */
 .sidebar-right {
-  padding: 20px 14px;
+  padding: 18px 14px;
   position: sticky; top: var(--nav-h);
   height: calc(100vh - var(--nav-h));
   overflow-y: auto;
-  border-left: 1px solid rgba(20,33,61,0.06);
+  border-left: 1px solid rgba(20,33,61,0.05);
   background: var(--white);
 }
-.sidebar-right::-webkit-scrollbar { width: 4px; }
+.sidebar-right::-webkit-scrollbar { width: 3px; }
 .sidebar-right::-webkit-scrollbar-thumb { background: var(--sand-2); border-radius: 4px; }
 
-.right-section { margin-bottom: 28px; }
-
+.right-section { margin-bottom: 26px; }
 .right-title {
-  font-size: 12px; font-weight: 700; letter-spacing: 1px;
+  font-size: 10px; font-weight: 700; letter-spacing: 1.8px;
   text-transform: uppercase; color: var(--muted);
   margin-bottom: 12px; display: flex; align-items: center; gap: 6px;
 }
+.right-title .ti { font-size: 14px; }
 
-/* Premium highlight card */
-.highlight-card {
-  background: var(--white);
-  border: 1px solid rgba(20,33,61,0.07);
-  border-radius: var(--r);
-  padding: 10px 12px;
-  display: flex; align-items: center; gap: 10px;
-  margin-bottom: 8px; cursor: pointer;
-  transition: all 0.2s;
-}
-.highlight-card:hover { border-color: var(--coral); transform: translateX(2px); }
-
-.hl-img {
-  width: 44px; height: 44px; border-radius: 10px;
-  object-fit: cover; flex-shrink: 0;
-  background: var(--sand);
-  display: flex; align-items: center; justify-content: center;
-  font-size: 20px;
-}
-
-.hl-info { min-width: 0; flex: 1; }
-.hl-name {
-  font-size: 12px; font-weight: 600; color: var(--navy);
-  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
-  margin-bottom: 2px;
-}
-.hl-meta { font-size: 10px; color: var(--muted); }
-.hl-price { font-size: 12px; font-weight: 700; color: var(--coral); flex-shrink: 0; }
-
-/* Premium CTA banner */
+/* Premium CTA */
 .premium-banner {
-  background: var(--navy);
-  border-radius: var(--r-lg); padding: 18px 16px;
-  text-align: center; margin-bottom: 20px;
-  position: relative; overflow: hidden;
+  background: linear-gradient(180deg, var(--white), var(--coral-3));
+  border: 1px solid rgba(255,107,71,0.16);
+  border-radius: var(--r);
+  padding: 14px;
+  text-align: left;
+  margin-bottom: 18px;
+  position: relative;
+  overflow: hidden;
 }
 .premium-banner::before {
   content: '';
-  position: absolute; top: -30px; right: -30px;
-  width: 100px; height: 100px;
-  background: radial-gradient(circle, rgba(255,107,71,0.2) 0%, transparent 70%);
+  position: absolute;
+  top: -38px;
+  right: -34px;
+  width: 96px;
+  height: 96px;
+  background: rgba(255,107,71,0.1);
   border-radius: 50%;
 }
+.premium-banner::after {
+  content: none;
+}
+.premium-banner-icon {
+  width: 34px; height: 34px; border-radius: 10px;
+  background: rgba(255,107,71,0.12);
+  display: flex; align-items: center; justify-content: center;
+  margin-bottom: 10px; position: relative; z-index: 1;
+  color: var(--coral); font-size: 18px;
+}
 .premium-banner h4 {
-  font-family: 'Clash Display', sans-serif;
-  font-size: 15px; font-weight: 700; color: var(--white);
-  margin-bottom: 6px; position: relative; z-index: 1;
+  font-family: 'Syne', sans-serif;
+  font-size: 13px;
+  font-weight: 800;
+  line-height: 1.25;
+  color: var(--navy);
+  margin-bottom: 6px;
+  position: relative;
+  z-index: 1;
+  max-width: 150px;
 }
 .premium-banner p {
-  font-size: 12px; color: rgba(255,255,255,0.5);
-  margin-bottom: 14px; line-height: 1.5; position: relative; z-index: 1;
+  font-size: 12px; color: var(--slate);
+  margin-bottom: 12px; line-height: 1.45; position: relative; z-index: 1;
 }
 .premium-banner a {
-  display: block; padding: 9px;
-  background: var(--coral); color: white;
-  border-radius: 8px; text-decoration: none;
-  font-size: 12px; font-weight: 700;
-  transition: all 0.2s; position: relative; z-index: 1;
+  display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+  padding: 8px 11px; background: var(--coral); color: white;
+  border-radius: 999px; text-decoration: none;
+  font-size: 12px; font-weight: 700; transition: all 0.2s; position: relative; z-index: 1;
+  white-space: nowrap;
 }
-.premium-banner a:hover { background: #e55a38; }
+.premium-banner a:hover { background: #e85a35; transform: translateY(-1px); }
 
-/* Trending tags */
+/* Destacados Premium */
+.highlight-card {
+  background: var(--white); border: 1px solid rgba(20,33,61,0.07);
+  border-radius: var(--r); padding: 10px 12px;
+  display: flex; align-items: center; gap: 10px;
+  margin-bottom: 8px; cursor: pointer; transition: all 0.2s;
+  position: relative; overflow: hidden;
+}
+.highlight-card::before {
+  content: ''; position: absolute; left: 0; top: 0; bottom: 0;
+  width: 3px; background: transparent; border-radius: 3px 0 0 3px; transition: background 0.2s;
+}
+.highlight-card:hover { border-color: rgba(255,107,71,0.25); }
+.highlight-card:hover::before { background: var(--coral); }
+.hl-img {
+  width: 42px; height: 42px; border-radius: 10px;
+  flex-shrink: 0; overflow: hidden; background: var(--sand);
+  display: flex; align-items: center; justify-content: center; font-size: 18px;
+}
+.hl-info { min-width: 0; flex: 1; }
+.hl-name {
+  font-size: 12px; font-weight: 600; color: var(--navy);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-bottom: 2px;
+}
+.hl-meta { font-size: 10px; color: var(--muted); }
+.hl-right { display: flex; flex-direction: column; align-items: flex-end; gap: 4px; }
+.hl-pro-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--gold); }
+.hl-price {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 12px;
+  font-weight: 800;
+  color: var(--navy);
+  flex-shrink: 0;
+}
+
+/* Tendencias */
 .tag-cloud { display: flex; flex-wrap: wrap; gap: 6px; }
 .trend-tag {
-  padding: 5px 11px; border-radius: 100px;
+  padding: 5px 12px; border-radius: 100px;
   background: var(--gray-l); color: var(--slate);
-  font-size: 11px; font-weight: 500; cursor: pointer;
-  border: 1px solid transparent;
-  transition: all 0.18s;
+  font-size: 11px; font-weight: 600; cursor: pointer;
+  border: 1px solid transparent; transition: all 0.18s;
+  display: flex; align-items: center; gap: 4px;
 }
+.trend-tag .ti { font-size: 12px; }
 .trend-tag:hover { background: var(--coral-3); color: var(--coral); border-color: rgba(255,107,71,0.2); }
 
-/* ══ UPLOAD BUTTON (floating) ══════════════════════════════════════════ */
+/* ══ FAB ══ */
+/* ══ MODAL ══ */
 .upload-fab {
-  position: fixed; bottom: 28px; right: 28px; z-index: 300;
-  background: var(--navy); color: white;
-  padding: 14px 22px; border-radius: 100px;
-  font-family: 'Plus Jakarta Sans', sans-serif;
-  font-size: 14px; font-weight: 700;
-  display: flex; align-items: center; gap: 8px;
-  box-shadow: 0 8px 28px rgba(20,33,61,0.3);
-  cursor: pointer; text-decoration: none;
-  transition: all 0.25s cubic-bezier(.34,1.56,.64,1);
-  animation: fabIn 0.5s 0.3s ease both;
-  border: none;
+  position: fixed;
+  right: 26px;
+  bottom: 24px;
+  z-index: 300;
+  height: 50px;
+  padding: 0 18px;
+  border: 1px solid rgba(255,255,255,0.38);
+  border-radius: 999px;
+  background: var(--coral);
+  color: white;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px;
+  font-weight: 800;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  box-shadow: 0 10px 26px rgba(255,107,71,0.28);
+  cursor: grab;
+  touch-action: none;
+  user-select: none;
+  transition: background 0.18s, box-shadow 0.18s, transform 0.18s;
 }
-.upload-fab:hover { background: var(--coral); transform: translateY(-3px) scale(1.03); box-shadow: 0 12px 32px rgba(255,107,71,0.4); }
-
-@keyframes fabIn {
-  from { opacity: 0; transform: translateY(20px) scale(0.85); }
-  to   { opacity: 1; transform: translateY(0) scale(1); }
+.upload-fab .ti {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.18);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+}
+.upload-fab:hover {
+  background: #e85a35;
+  box-shadow: 0 12px 30px rgba(255,107,71,0.36);
+}
+.upload-fab.dragging {
+  cursor: grabbing;
+  transform: scale(1.02);
+}
+.upload-fab:focus-visible {
+  outline: 3px solid rgba(255,107,71,0.26);
+  outline-offset: 3px;
 }
 
-/* ══ UPLOAD MODAL ══════════════════════════════════════════ */
 .modal-overlay {
   position: fixed; inset: 0; z-index: 999;
-  background: rgba(14,20,35,0.6); backdrop-filter: blur(8px);
+  background: rgba(14,20,35,0.55); backdrop-filter: blur(8px);
   display: flex; align-items: center; justify-content: center;
-  padding: 20px; opacity: 0; pointer-events: none;
-  transition: opacity 0.3s;
+  padding: 20px; opacity: 0; pointer-events: none; transition: opacity 0.3s;
 }
 .modal-overlay.open { opacity: 1; pointer-events: all; }
-
 .modal {
   background: var(--white); border-radius: 24px;
   width: 100%; max-width: 520px;
   transform: translateY(20px); transition: transform 0.3s;
-  box-shadow: 0 32px 80px rgba(0,0,0,0.2);
-  overflow: hidden;
+  box-shadow: 0 32px 80px rgba(0,0,0,0.18); overflow: hidden;
 }
 .modal-overlay.open .modal { transform: translateY(0); }
-
 .modal-header {
   display: flex; align-items: center; justify-content: space-between;
   padding: 22px 28px; border-bottom: 1px solid var(--sand-2);
 }
-.modal-title {
-  font-family: 'Clash Display', sans-serif;
-  font-size: 20px; font-weight: 700;
+.modal-header-left { display: flex; align-items: center; gap: 10px; }
+.modal-header-icon {
+  width: 38px; height: 38px; border-radius: 10px;
+  background: var(--coral-3); color: var(--coral);
+  display: flex; align-items: center; justify-content: center; font-size: 20px;
 }
+.modal-title { font-family: 'Syne', sans-serif; font-size: 18px; font-weight: 800; }
 .modal-close {
   width: 34px; height: 34px; border-radius: 50%;
   background: var(--gray-l); border: none; cursor: pointer;
-  font-size: 16px; color: var(--slate);
-  display: flex; align-items: center; justify-content: center;
-  transition: all 0.2s;
+  font-size: 18px; color: var(--slate);
+  display: flex; align-items: center; justify-content: center; transition: all 0.2s;
 }
 .modal-close:hover { background: var(--coral-3); color: var(--coral); }
-
-.modal-body { padding: 24px 28px 28px; }
-
-/* Upload drop zone */
+.modal-body { padding: 24px 28px 28px; max-height: 75vh; overflow-y: auto; }
 .drop-zone {
-  border: 2px dashed var(--sand-2);
-  border-radius: var(--r-lg); padding: 32px 20px;
-  text-align: center; cursor: pointer;
-  transition: all 0.2s; margin-bottom: 20px;
+  border: 2px dashed var(--sand-2); border-radius: var(--r-lg); padding: 28px 20px;
+  text-align: center; cursor: pointer; transition: all 0.2s;
+  margin-bottom: 20px; background: var(--surface);
 }
-.drop-zone:hover, .drop-zone.dragging {
-  border-color: var(--coral);
-  background: var(--coral-3);
-}
-.drop-icon { font-size: 36px; margin-bottom: 10px; }
+.drop-zone:hover, .drop-zone.dragging { border-color: var(--coral); background: var(--coral-3); }
+.drop-zone-icon { font-size: 30px; color: var(--coral); margin-bottom: 10px; }
 .drop-text { font-size: 14px; font-weight: 600; color: var(--navy); margin-bottom: 4px; }
 .drop-sub { font-size: 12px; color: var(--muted); }
 .drop-zone input[type=file] { display: none; }
-
-/* Preview thumbnails */
-.img-previews {
-  display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 16px;
-}
-.img-thumb {
-  width: 72px; height: 72px; border-radius: 10px;
-  object-fit: cover; border: 2px solid var(--sand-2);
-  position: relative;
-}
-
+.img-previews { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 16px; }
+.img-thumb { width: 72px; height: 72px; border-radius: 10px; object-fit: cover; border: 2px solid var(--sand-2); }
 .field { margin-bottom: 16px; }
 label { display: block; font-size: 13px; font-weight: 600; color: var(--navy); margin-bottom: 7px; }
 input[type=text], input[type=number], select, textarea {
-  width: 100%; padding: 11px 14px;
-  border: 1.5px solid var(--sand-2); border-radius: var(--r);
-  font-family: 'Plus Jakarta Sans', sans-serif;
-  font-size: 14px; color: var(--navy); background: var(--white);
-  outline: none; transition: border-color 0.2s, box-shadow 0.2s;
-  appearance: none;
+  width: 100%; padding: 11px 14px; border: 1.5px solid var(--sand-2); border-radius: var(--r);
+  font-family: 'DM Sans', sans-serif; font-size: 14px; color: var(--navy); background: var(--white);
+  outline: none; transition: border-color 0.2s, box-shadow 0.2s; appearance: none;
 }
-input:focus, select:focus, textarea:focus {
-  border-color: var(--coral);
-  box-shadow: 0 0 0 3px rgba(255,107,71,0.1);
-}
+input:focus, select:focus, textarea:focus { border-color: var(--coral); box-shadow: 0 0 0 4px rgba(255,107,71,0.08); }
 textarea { resize: vertical; min-height: 80px; }
 select {
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 24 24' fill='none' stroke='%238899AA' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 24 24' fill='none' stroke='%239AA5B4' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
   background-repeat: no-repeat; background-position: right 12px center;
   padding-right: 32px; cursor: pointer;
 }
-
 .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
 .field-row .field { margin-bottom: 0; }
-
 .btn-publish {
-  width: 100%; padding: 14px;
-  background: var(--coral); color: white;
-  border: none; border-radius: var(--r);
-  font-family: 'Plus Jakarta Sans', sans-serif;
-  font-size: 15px; font-weight: 700;
-  cursor: pointer; margin-top: 8px;
+  width: 100%; padding: 14px; background: var(--coral); color: white;
+  border: none; border-radius: var(--r); font-family: 'DM Sans', sans-serif;
+  font-size: 15px; font-weight: 700; cursor: pointer; margin-top: 8px;
   transition: all 0.22s cubic-bezier(.34,1.56,.64,1);
   display: flex; align-items: center; justify-content: center; gap: 8px;
 }
-.btn-publish:hover { background: #e55a38; transform: translateY(-2px); box-shadow: 0 8px 24px rgba(255,107,71,0.35); }
+.btn-publish .ti { font-size: 18px; }
+.btn-publish:hover { background: #e85a35; transform: translateY(-2px); box-shadow: 0 8px 24px rgba(255,107,71,0.35); }
 
-/* ══ RESPONSIVE ══════════════════════════════════════════ */
-@media (max-width: 1100px) {
+/* ══ RESPONSIVE ══ */
+@media (max-width: 1120px) {
   .layout { grid-template-columns: var(--side-w) 1fr; }
   .sidebar-right { display: none; }
 }
@@ -654,179 +829,217 @@ select {
   .layout { grid-template-columns: 1fr; }
   .sidebar-left { display: none; }
   .feed { padding: 14px 12px; }
+  .feed-header { align-items: flex-start; }
+  .feed-controls { width: 100%; align-self: stretch; flex-wrap: wrap; }
+  .sort-select { flex: 1; min-width: 0; }
   .topnav { gap: 8px; padding: 0 12px; }
-  .nav-search { min-width: 0; }
-  .nav-right { gap: 6px; }
-  .nav-btn { padding: 8px 10px; font-size: 12px; }
   .nav-logo-text { display: none; }
   .field-row { grid-template-columns: 1fr; }
-  .upload-fab span { display: none; }
-  .upload-fab { padding: 14px; border-radius: 50%; }
-}
-@media (max-width: 560px) {
-  .topnav { gap: 6px; }
-  .nav-search input {
-    padding: 9px 10px 9px 34px;
-    font-size: 13px;
+  .upload-fab {
+    height: 48px;
+    padding: 0 14px;
+    font-size: 12px;
   }
-  .nav-right .btn-ghost,
-  .nav-avatar { display: none; }
-  .nav-btn { padding: 7px 9px; font-size: 11px; }
 }
 </style>
 </head>
 <body>
 
-<!-- ══ TOP NAV ══ -->
+<!-- TOP NAV -->
 <nav class="topnav">
   <a href="index.html" class="nav-logo">
     <div class="nav-logo-mark">
-         <img src="assets/img/Logo_TuyoMall.2.png" alt="Logo TuyoMall" width="70" height="70">
+      <span class="ti ti-shopping-bag" style="font-size:20px;"></span>
+    </div>
+    <div class="nav-logo-text">
+      <span class="logo-tuyo">Tuyo</span><span class="logo-mall-wrap">
+        <span class="logo-mall">Mall</span>
+        <!-- Línea cursiva coral bajo "Mall" -->
+        <svg class="logo-underline" viewBox="0 0 46 7" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+          <path d="M2 4.5 C8 1.5, 16 6.5, 23 3.5 C30 0.5, 38 6, 44 3" stroke="#FF6B47" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </span>
     </div>
   </a>
 
   <div class="nav-search">
-  <span class="search-ico" id="searchIcon">🔍</span>
-  <input type="text" 
-         placeholder=   "      Buscar productos, servicios o emprendedores..." 
-         id="searchInput"
-         onfocus="document.getElementById('searchIcon').style.display='none'"
-         onblur="document.getElementById('searchIcon').style.display='inline'">
-</div>
+    <span class="ti ti-search search-ico"></span>
+    <input type="text"
+           placeholder="Buscar productos, servicios o emprendedores..."
+           id="searchInput"
+           oninput="handleSearch(this.value)">
+  </div>
 
   <div class="nav-right">
-    <a href="acceso-emprendedor.html" class="nav-btn btn-ghost">🚀 Emprendedor</a>
-    <a href="acceso-cliente.php" class="nav-btn btn-coral">Iniciar sesión</a>
+    <a href="acceso-emprendedor.html" class="nav-btn btn-ghost">
+      <span class="ti ti-rocket"></span> Emprendedor
+    </a>
+    <a href="acceso-cliente.php" class="nav-btn btn-coral">
+      <span class="ti ti-login"></span> Iniciar sesión
+    </a>
+    <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()" title="Cambiar modo">
+      <span class="ti ti-moon"></span>
+    </button>
     <div class="nav-avatar" title="Mi cuenta">U</div>
   </div>
 </nav>
 
-<!-- ══ LAYOUT ══ -->
+<!-- LAYOUT -->
 <div class="layout">
 
-  <!-- ══ LEFT SIDEBAR ══ -->
+  <!-- LEFT SIDEBAR -->
   <aside class="sidebar-left">
-
     <div class="side-section">
       <span class="side-label">Explorar</span>
       <button class="side-item active" onclick="setNav(this)">
-        <span class="side-item-icon">🏠</span> Inicio
+        <span class="ti ti-home"></span> Inicio
       </button>
       <button class="side-item" onclick="setNav(this)">
-        <span class="side-item-icon">⭐</span> Destacados
+        <span class="ti ti-star"></span> Destacados
+        <span class="side-item-count">12</span>
       </button>
       <button class="side-item" onclick="setNav(this)">
-        <span class="side-item-icon">🕐</span> Recientes
+        <span class="ti ti-clock"></span> Recientes
       </button>
       <button class="side-item" onclick="setNav(this)">
-        <span class="side-item-icon">❤️</span> Guardados
+        <span class="ti ti-bookmark"></span> Guardados
+        <span class="side-item-count" id="savedCount">0</span>
       </button>
     </div>
 
     <div class="divider-line"></div>
 
- <div class="filter-group">
-  <div class="filter-title">
-    Categoría
-    <button class="filter-clear" onclick="clearFilter('cat')">Limpiar</button>
-  </div>
-  <div id="cat-filters">
-    <div class="filter-pill active" onclick="toggleFilter(this,'cat','')">
-      <div class="filter-check">✓</div> Todas
+    <!-- CATEGORÍA: single select -->
+    <div class="filter-group">
+      <div class="filter-title">
+        Categoría
+        <button class="filter-clear" onclick="clearFilter('cat')">Limpiar</button>
+      </div>
+      <div id="cat-filters">
+        <div class="filter-pill active" onclick="toggleCatFilter(this,'')">
+          <div class="filter-check">✓</div> Todas
+        </div>
+        <div class="filter-pill" onclick="toggleCatFilter(this,'Alimentos')">
+          <div class="filter-check"></div>
+          <span class="ti ti-tools-kitchen-2"></span> Alimentos
+        </div>
+        <div class="filter-pill" onclick="toggleCatFilter(this,'Arte')">
+          <div class="filter-check"></div>
+          <span class="ti ti-palette"></span> Arte
+        </div>
+        <div class="filter-pill" onclick="toggleCatFilter(this,'Moda')">
+          <div class="filter-check"></div>
+          <span class="ti ti-hanger"></span> Moda
+        </div>
+        <div class="filter-pill" onclick="toggleCatFilter(this,'Servicios')">
+          <div class="filter-check"></div>
+          <span class="ti ti-briefcase"></span> Servicios
+        </div>
+        <div class="filter-pill" onclick="toggleCatFilter(this,'Tecnología')">
+          <div class="filter-check"></div>
+          <span class="ti ti-cpu"></span> Tecnología
+        </div>
+        <div class="filter-pill" onclick="toggleCatFilter(this,'Hogar')">
+          <div class="filter-check"></div>
+          <span class="ti ti-home-2"></span> Hogar
+        </div>
+        <div class="filter-pill" onclick="toggleCatFilter(this,'Belleza')">
+          <div class="filter-check"></div>
+          <span class="ti ti-sparkles"></span> Belleza
+        </div>
+      </div>
     </div>
-    <div class="filter-pill" onclick="toggleFilter(this,'cat','Alimentos')">
-      <div class="filter-check"></div> 🍽️ Alimentos
-    </div>
-    <div class="filter-pill" onclick="toggleFilter(this,'cat','Arte')">
-      <div class="filter-check"></div> 🎨 Arte
-    </div>
-    <div class="filter-pill" onclick="toggleFilter(this,'cat','Moda')">
-      <div class="filter-check"></div> 👗 Moda
-    </div>
-    <div class="filter-pill" onclick="toggleFilter(this,'cat','Servicios')">
-      <div class="filter-check"></div> ⚡ Servicios
-    </div>
-    <div class="filter-pill" onclick="toggleFilter(this,'cat','Tecnología')">
-      <div class="filter-check"></div> 💻 Tecnología
-    </div>
-    <div class="filter-pill" onclick="toggleFilter(this,'cat','Hogar')">
-      <div class="filter-check"></div> 🏡 Hogar
-    </div>
-    <div class="filter-pill" onclick="toggleFilter(this,'cat','Belleza')">
-      <div class="filter-check"></div> 💄 Belleza
-    </div>
-  </div>
-</div>
+
+    <!-- PROVINCIA: MULTI select — el usuario puede seleccionar varias y desmarcar individualmente -->
     <div class="filter-group">
       <div class="filter-title">
         Provincia
         <button class="filter-clear" onclick="clearFilter('prov')">Limpiar</button>
       </div>
       <div id="prov-filters">
-        <div class="filter-pill active" onclick="toggleFilter(this,'prov','')">
-          <div class="filter-check">✓</div> Todas
+        <div class="filter-pill" onclick="toggleProvFilter(this,'San José')">
+          <div class="filter-check"></div>
+          <span class="ti ti-map-pin"></span> San José
         </div>
-        <div class="filter-pill" onclick="toggleFilter(this,'prov','San José')">
-          <div class="filter-check"></div> San José
+        <div class="filter-pill" onclick="toggleProvFilter(this,'Alajuela')">
+          <div class="filter-check"></div>
+          <span class="ti ti-map-pin"></span> Alajuela
         </div>
-        <div class="filter-pill" onclick="toggleFilter(this,'prov','Alajuela')">
-          <div class="filter-check"></div> Alajuela
+        <div class="filter-pill" onclick="toggleProvFilter(this,'Cartago')">
+          <div class="filter-check"></div>
+          <span class="ti ti-map-pin"></span> Cartago
         </div>
-        <div class="filter-pill" onclick="toggleFilter(this,'prov','Cartago')">
-          <div class="filter-check"></div> Cartago
+        <div class="filter-pill" onclick="toggleProvFilter(this,'Heredia')">
+          <div class="filter-check"></div>
+          <span class="ti ti-map-pin"></span> Heredia
         </div>
-        <div class="filter-pill" onclick="toggleFilter(this,'prov','Heredia')">
-          <div class="filter-check"></div> Heredia
+        <div class="filter-pill" onclick="toggleProvFilter(this,'Guanacaste')">
+          <div class="filter-check"></div>
+          <span class="ti ti-map-pin"></span> Guanacaste
         </div>
-        <div class="filter-pill" onclick="toggleFilter(this,'prov','Guanacaste')">
-          <div class="filter-check"></div> Guanacaste
+        <div class="filter-pill" onclick="toggleProvFilter(this,'Puntarenas')">
+          <div class="filter-check"></div>
+          <span class="ti ti-map-pin"></span> Puntarenas
         </div>
-        <div class="filter-pill" onclick="toggleFilter(this,'prov','Puntarenas')">
-          <div class="filter-check"></div> Puntarenas
-        </div>
-        <div class="filter-pill" onclick="toggleFilter(this,'prov','Limón')">
-          <div class="filter-check"></div> Limón
+        <div class="filter-pill" onclick="toggleProvFilter(this,'Limón')">
+          <div class="filter-check"></div>
+          <span class="ti ti-map-pin"></span> Limón
         </div>
       </div>
     </div>
 
+    <!-- TIPO: single select -->
     <div class="filter-group">
       <div class="filter-title">Tipo</div>
       <div id="type-filters">
-        <div class="filter-pill active" onclick="toggleFilter(this,'type','')">
+        <div class="filter-pill active" onclick="toggleTypeFilter(this,'')">
           <div class="filter-check">✓</div> Todos
         </div>
-        <div class="filter-pill" onclick="toggleFilter(this,'type','Producto')">
-          <div class="filter-check"></div> 📦 Producto
+        <div class="filter-pill" onclick="toggleTypeFilter(this,'Producto')">
+          <div class="filter-check"></div>
+          <span class="ti ti-package"></span> Producto
         </div>
-        <div class="filter-pill" onclick="toggleFilter(this,'type','Servicio')">
-          <div class="filter-check"></div> 🛠️ Servicio
+        <div class="filter-pill" onclick="toggleTypeFilter(this,'Servicio')">
+          <div class="filter-check"></div>
+          <span class="ti ti-briefcase"></span> Servicio
         </div>
       </div>
     </div>
-
   </aside>
 
-  <!-- ══ MAIN FEED ══ -->
+  <!-- MAIN FEED -->
   <main class="feed">
-
-    <!-- Category pill strip -->
     <div class="cat-strip" id="catStrip">
-      <div class="cat-pill active" onclick="setCatPill(this,'')">✨ Todos</div>
-      <div class="cat-pill" onclick="setCatPill(this,'Alimentos')">🍽️ Alimentos</div>
-      <div class="cat-pill" onclick="setCatPill(this,'Arte')">🎨 Arte</div>
-      <div class="cat-pill" onclick="setCatPill(this,'Moda')">👗 Moda</div>
-      <div class="cat-pill" onclick="setCatPill(this,'Servicios')">⚡ Servicios</div>
-      <div class="cat-pill" onclick="setCatPill(this,'Tecnología')">💻 Tecnología</div>
-      <div class="cat-pill" onclick="setCatPill(this,'Hogar')">🏡 Hogar</div>
-      <div class="cat-pill" onclick="setCatPill(this,'Belleza')">💄 Belleza</div>
+      <div class="cat-pill active" onclick="setCatPill(this,'')">
+        <span class="ti ti-layout-grid"></span> Todos
+      </div>
+      <div class="cat-pill" onclick="setCatPill(this,'Alimentos')">
+        <span class="ti ti-tools-kitchen-2"></span> Alimentos
+      </div>
+      <div class="cat-pill" onclick="setCatPill(this,'Arte')">
+        <span class="ti ti-palette"></span> Arte
+      </div>
+      <div class="cat-pill" onclick="setCatPill(this,'Moda')">
+        <span class="ti ti-hanger"></span> Moda
+      </div>
+      <div class="cat-pill" onclick="setCatPill(this,'Servicios')">
+        <span class="ti ti-briefcase"></span> Servicios
+      </div>
+      <div class="cat-pill" onclick="setCatPill(this,'Tecnología')">
+        <span class="ti ti-cpu"></span> Tecnología
+      </div>
+      <div class="cat-pill" onclick="setCatPill(this,'Hogar')">
+        <span class="ti ti-home-2"></span> Hogar
+      </div>
+      <div class="cat-pill" onclick="setCatPill(this,'Belleza')">
+        <span class="ti ti-sparkles"></span> Belleza
+      </div>
     </div>
 
-    <!-- Header -->
     <div class="feed-header">
-      <div>
-        <h1 class="feed-title">Explorando productos</h1>
-        <p class="feed-count" id="resultCount">Mostrando 12 productos</p>
+      <div class="feed-heading">
+        <h1 class="feed-title">Publicaciones</h1>
+        <p class="feed-count" id="resultCount">Mostrando 12 publicaciones</p>
       </div>
       <div class="feed-controls">
         <select class="sort-select" onchange="sortProducts(this.value)">
@@ -836,89 +1049,96 @@ select {
           <option value="az">A → Z</option>
         </select>
         <div class="view-toggle">
-          <button class="view-btn active" id="gridBtn" onclick="setView('grid')" title="Grid">⊞</button>
-          <button class="view-btn" id="listBtn" onclick="setView('list')" title="Lista">☰</button>
+          <button class="view-btn active" id="gridBtn" onclick="setView('grid')" title="Cuadrícula">
+            <span class="ti ti-layout-grid"></span>
+          </button>
+          <button class="view-btn" id="listBtn" onclick="setView('list')" title="Lista">
+            <span class="ti ti-list"></span>
+          </button>
         </div>
       </div>
     </div>
 
-    <!-- Products grid -->
     <div class="products-grid" id="productsGrid"></div>
 
-    <!-- Empty state -->
     <div class="empty-state" id="emptyState">
-      <div class="empty-icon">🔍</div>
+      <div class="empty-icon"><span class="ti ti-search-off"></span></div>
       <h3 class="empty-title">Sin resultados</h3>
       <p class="empty-sub">Intentá con otros filtros o términos de búsqueda</p>
     </div>
 
-    <button class="load-more" id="loadMoreBtn" onclick="loadMore()">Ver más productos →</button>
-
+    <button class="load-more" id="loadMoreBtn" onclick="loadMore()">
+      <span class="ti ti-refresh"></span> Ver más publicaciones
+    </button>
   </main>
 
-  <!-- ══ RIGHT SIDEBAR ══ -->
+  <!-- RIGHT SIDEBAR -->
   <aside class="sidebar-right">
-
     <div class="right-section">
       <div class="premium-banner">
-        <h4>✨ Publicá tu negocio</h4>
+        <div class="premium-banner-icon">
+          <span class="ti ti-rocket"></span>
+        </div>
+        <h4>Publicá tu negocio</h4>
         <p>Llegá a miles de clientes con tu perfil Premium por solo $5/mes</p>
-        <a href="acceso-emprendedor.html">Empezar ahora →</a>
+        <a href="acceso-emprendedor.html">
+          <span class="ti ti-arrow-right"></span> Empezar ahora
+        </a>
       </div>
     </div>
 
     <div class="right-section">
-      <div class="right-title">⭐ Destacados Premium</div>
+      <div class="right-title">
+        <span class="ti ti-crown"></span> Destacados Premium
+      </div>
       <div id="premiumHighlights"></div>
     </div>
 
     <div class="right-section">
-      <div class="right-title">🔥 Tendencias</div>
+      <div class="right-title">
+        <span class="ti ti-trending-up"></span> Tendencias
+      </div>
       <div class="tag-cloud" id="trendTags"></div>
     </div>
-
-    <div class="right-section">
-      <div class="right-title">📍 Nuevos cerca de vos</div>
-      <div id="recentHighlights"></div>
-    </div>
-
   </aside>
 
 </div>
 
-<!-- ══ UPLOAD FAB ══ -->
-<button class="upload-fab" onclick="openUpload()">
-  <span>➕</span>
-  <span>Publicar producto</span>
+<!-- FAB -->
+<button class="upload-fab" id="uploadFab" type="button" aria-label="Publicar">
+  <span class="ti ti-plus"></span>
+  <span class="fab-label">Publicar</span>
 </button>
 
-<!-- ══ UPLOAD MODAL ══ -->
+<!-- MODAL -->
 <div class="modal-overlay" id="uploadModal">
   <div class="modal">
     <div class="modal-header">
-      <span class="modal-title">📦 Publicar producto</span>
-      <button class="modal-close" onclick="closeUpload()">✕</button>
+      <div class="modal-header-left">
+        <div class="modal-header-icon">
+          <span class="ti ti-camera-plus"></span>
+        </div>
+        <span class="modal-title">Nueva publicación</span>
+      </div>
+      <button class="modal-close" onclick="closeUpload()">
+        <span class="ti ti-x"></span>
+      </button>
     </div>
     <div class="modal-body">
-
-      <!-- Drop zone -->
       <div class="drop-zone" id="dropZone" onclick="document.getElementById('fileInput').click()"
            ondragover="event.preventDefault();this.classList.add('dragging')"
            ondragleave="this.classList.remove('dragging')"
            ondrop="handleDrop(event)">
-        <div class="drop-icon">📸</div>
+        <div class="drop-zone-icon"><span class="ti ti-camera-plus"></span></div>
         <div class="drop-text">Arrastrá tus fotos aquí</div>
-        <div class="drop-sub">o hacé clic para seleccionar · JPG, PNG · máx. 3 imágenes</div>
+        <div class="drop-sub">o hacé clic · JPG, PNG · máx. 3 imágenes</div>
         <input type="file" id="fileInput" accept="image/*" multiple onchange="previewImages(this.files)">
       </div>
-
       <div class="img-previews" id="imgPreviews"></div>
-
       <div class="field">
         <label>Nombre del producto o servicio *</label>
         <input type="text" id="up-name" placeholder="Ej: Pizza artesanal al horno de leña">
       </div>
-
       <div class="field-row">
         <div class="field">
           <label>Precio</label>
@@ -928,88 +1148,97 @@ select {
           <label>Categoría *</label>
           <select id="up-cat">
             <option value="">Seleccioná</option>
-            <option>Alimentos</option>
-            <option>Arte</option>
-            <option>Moda</option>
-            <option>Servicios</option>
-            <option>Tecnología</option>
-            <option>Hogar</option>
-            <option>Belleza</option>
+            <option>Alimentos</option><option>Arte</option><option>Moda</option>
+            <option>Servicios</option><option>Tecnología</option><option>Hogar</option><option>Belleza</option>
           </select>
         </div>
       </div>
-
       <div class="field">
         <label>Descripción</label>
         <textarea id="up-desc" placeholder="Describí tu producto o servicio..."></textarea>
       </div>
-
       <div class="field-row">
         <div class="field">
           <label>Tipo</label>
           <select id="up-type">
-            <option value="Producto">📦 Producto</option>
-            <option value="Servicio">🛠️ Servicio</option>
+            <option value="Producto">Producto</option>
+            <option value="Servicio">Servicio</option>
           </select>
         </div>
         <div class="field">
           <label>Provincia</label>
           <select id="up-prov">
             <option value="">Seleccioná</option>
-            <option>San José</option>
-            <option>Alajuela</option>
-            <option>Cartago</option>
-            <option>Heredia</option>
-            <option>Guanacaste</option>
-            <option>Puntarenas</option>
-            <option>Limón</option>
+            <option>San José</option><option>Alajuela</option><option>Cartago</option>
+            <option>Heredia</option><option>Guanacaste</option><option>Puntarenas</option><option>Limón</option>
           </select>
         </div>
       </div>
-
       <button class="btn-publish" onclick="publishProduct()">
-        🚀 Publicar en el feed
+        <span class="ti ti-rocket"></span> Publicar en el feed
       </button>
-
     </div>
   </div>
 </div>
 
 <script>
-// ══ DATA ══════════════════════════════════════════
+const catIconMap = {
+  'Alimentos':  'ti-tools-kitchen-2',
+  'Arte':       'ti-palette',
+  'Moda':       'ti-hanger',
+  'Servicios':  'ti-briefcase',
+  'Tecnología': 'ti-cpu',
+  'Hogar':      'ti-home-2',
+  'Belleza':    'ti-sparkles',
+};
+function catIcon(cat) {
+  return `<span class="ti ${catIconMap[cat]||'ti-package'}" style="font-size:20px;color:var(--coral)"></span>`;
+}
+
 const allProducts = [
-  { id:1,  name:'Pizza artesanal al horno de leña',  price:'₡4.500',  cat:'Alimentos', prov:'San José',  type:'Producto', seller:'Pizzas Don Tavo',      sellerColor:'#FF6B47', sellerInit:'P', premium:true,  img:'https://images.unsplash.com/photo-1513104890138-7c749659a591?w=300&h=200&fit=crop&q=80' },
-  { id:2,  name:'Vestido boho estampado a mano',     price:'₡18.000', cat:'Moda',      prov:'Alajuela',  type:'Producto', seller:'Moda Pura Vida',        sellerColor:'#C084FC', sellerInit:'M', premium:false, img:'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=300&h=200&fit=crop&q=80' },
-  { id:3,  name:'Canasta tejida a mano en fibra',    price:'₡12.000', cat:'Arte',      prov:'Cartago',   type:'Producto', seller:'Artesanías La Ceiba',   sellerColor:'#10B981', sellerInit:'A', premium:true,  img:'https://images.unsplash.com/photo-1606722590583-6951b5ea92ad?w=300&h=200&fit=crop&q=80' },
-  { id:4,  name:'Café artesanal tostado oscuro',     price:'₡2.800',  cat:'Alimentos', prov:'San José',  type:'Producto', seller:'Café Don Pepe',         sellerColor:'#92400E', sellerInit:'C', premium:false, img:'https://images.unsplash.com/photo-1447933601403-0c6688de566e?w=300&h=200&fit=crop&q=80' },
-  { id:5,  name:'Collar artesanal de plata 925',     price:'₡22.000', cat:'Arte',      prov:'Heredia',   type:'Producto', seller:'Joyas Tica',            sellerColor:'#6366F1', sellerInit:'J', premium:true,  img:'https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?w=300&h=200&fit=crop&q=80' },
-  { id:6,  name:'Repostería artesanal personalizada',price:'₡3.200',  cat:'Alimentos', prov:'Alajuela',  type:'Producto', seller:'Dulces Doña Ana',       sellerColor:'#F59E0B', sellerInit:'D', premium:false, img:'https://images.unsplash.com/photo-1571115177098-24ec42ed204d?w=300&h=200&fit=crop&q=80' },
-  { id:7,  name:'Diseño de logo profesional',        price:'₡35.000', cat:'Servicios', prov:'San José',  type:'Servicio', seller:'Logos & Marcas CR',     sellerColor:'#3B82F6', sellerInit:'L', premium:true,  img:'https://images.unsplash.com/photo-1561070791-2526d30994b5?w=300&h=200&fit=crop&q=80' },
-  { id:8,  name:'Clases de inglés online',           price:'₡8.000',  cat:'Servicios', prov:'Heredia',   type:'Servicio', seller:'English with Ana',      sellerColor:'#EC4899', sellerInit:'E', premium:false, img:'https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=300&h=200&fit=crop&q=80' },
-  { id:9,  name:'Muebles de madera artesanales',     price:'₡85.000', cat:'Hogar',     prov:'Cartago',   type:'Producto', seller:'Madera Viva CR',        sellerColor:'#78716C', sellerInit:'M', premium:false, img:'https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=300&h=200&fit=crop&q=80' },
-  { id:10, name:'Reparación de celulares y tablets', price:'₡5.000',  cat:'Tecnología',prov:'San José',  type:'Servicio', seller:'TechFix Express',       sellerColor:'#8B5CF6', sellerInit:'T', premium:false, img:'https://images.unsplash.com/photo-1601784551446-20c9e07cdbdb?w=300&h=200&fit=crop&q=80' },
-  { id:11, name:'Arreglos florales para eventos',    price:'₡15.000', cat:'Hogar',     prov:'Heredia',   type:'Servicio', seller:'Flores del Valle',      sellerColor:'#F43F5E', sellerInit:'F', premium:true,  img:'https://images.unsplash.com/photo-1487530811015-780ef70e6cc3?w=300&h=200&fit=crop&q=80' },
-  { id:12, name:'Maquillaje artístico profesional',  price:'₡12.000', cat:'Belleza',   prov:'San José',  type:'Servicio', seller:'Glam Studio CR',        sellerColor:'#DB2777', sellerInit:'G', premium:false, img:'https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=300&h=200&fit=crop&q=80' },
+  { id:1,  name:'Pizza artesanal al horno de leña',   price:'₡4.500',  cat:'Alimentos', prov:'San José',  type:'Producto', seller:'Pizzas Don Tavo',    sellerColor:'#FF6B47', sellerInit:'P', premium:true,  img:'https://images.unsplash.com/photo-1513104890138-7c749659a591?w=400&h=300&fit=crop&q=80', likes:24 },
+  { id:2,  name:'Vestido boho estampado a mano',      price:'₡18.000', cat:'Moda',      prov:'Alajuela',  type:'Producto', seller:'Moda Pura Vida',      sellerColor:'#C084FC', sellerInit:'M', premium:false, img:'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=400&h=300&fit=crop&q=80', likes:11 },
+  { id:3,  name:'Canasta tejida a mano en fibra',     price:'₡12.000', cat:'Arte',      prov:'Cartago',   type:'Producto', seller:'Artesanías La Ceiba', sellerColor:'#10B981', sellerInit:'A', premium:true,  img:'https://images.unsplash.com/photo-1606722590583-6951b5ea92ad?w=400&h=300&fit=crop&q=80', likes:38 },
+  { id:4,  name:'Café artesanal tostado oscuro',      price:'₡2.800',  cat:'Alimentos', prov:'San José',  type:'Producto', seller:'Café Don Pepe',       sellerColor:'#92400E', sellerInit:'C', premium:false, img:'https://images.unsplash.com/photo-1447933601403-0c6688de566e?w=400&h=300&fit=crop&q=80', likes:7 },
+  { id:5,  name:'Collar artesanal de plata 925',      price:'₡22.000', cat:'Arte',      prov:'Heredia',   type:'Producto', seller:'Joyas Tica',          sellerColor:'#6366F1', sellerInit:'J', premium:true,  img:'https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?w=400&h=300&fit=crop&q=80', likes:52 },
+  { id:6,  name:'Repostería artesanal personalizada', price:'₡3.200',  cat:'Alimentos', prov:'Alajuela',  type:'Producto', seller:'Dulces Doña Ana',     sellerColor:'#F59E0B', sellerInit:'D', premium:false, img:'https://images.unsplash.com/photo-1571115177098-24ec42ed204d?w=400&h=300&fit=crop&q=80', likes:19 },
+  { id:7,  name:'Diseño de logo profesional',         price:'₡35.000', cat:'Servicios', prov:'San José',  type:'Servicio', seller:'Logos & Marcas CR',   sellerColor:'#3B82F6', sellerInit:'L', premium:true,  img:'https://images.unsplash.com/photo-1561070791-2526d30994b5?w=400&h=300&fit=crop&q=80', likes:33 },
+  { id:8,  name:'Clases de inglés online',            price:'₡8.000',  cat:'Servicios', prov:'Heredia',   type:'Servicio', seller:'English with Ana',    sellerColor:'#EC4899', sellerInit:'E', premium:false, img:'https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=400&h=300&fit=crop&q=80', likes:5 },
+  { id:9,  name:'Muebles de madera artesanales',      price:'₡85.000', cat:'Hogar',     prov:'Cartago',   type:'Producto', seller:'Madera Viva CR',      sellerColor:'#78716C', sellerInit:'M', premium:false, img:'https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=400&h=300&fit=crop&q=80', likes:14 },
+  { id:10, name:'Reparación de celulares y tablets',  price:'₡5.000',  cat:'Tecnología',prov:'San José',  type:'Servicio', seller:'TechFix Express',     sellerColor:'#8B5CF6', sellerInit:'T', premium:false, img:'https://images.unsplash.com/photo-1601784551446-20c9e07cdbdb?w=400&h=300&fit=crop&q=80', likes:9 },
+  { id:11, name:'Arreglos florales para eventos',     price:'₡15.000', cat:'Hogar',     prov:'Heredia',   type:'Servicio', seller:'Flores del Valle',    sellerColor:'#F43F5E', sellerInit:'F', premium:true,  img:'https://images.unsplash.com/photo-1487530811015-780ef70e6cc3?w=400&h=300&fit=crop&q=80', likes:28 },
+  { id:12, name:'Maquillaje artístico profesional',   price:'₡12.000', cat:'Belleza',   prov:'San José',  type:'Servicio', seller:'Glam Studio CR',      sellerColor:'#DB2777', sellerInit:'G', premium:false, img:'https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=400&h=300&fit=crop&q=80', likes:41 },
 ];
 
-let activeCat  = '';
-let activeProv = '';
-let activeType = '';
-let searchQ    = '';
-let currentView = 'grid';
-let visibleCount = 12;
-let savedIds = new Set();
+let activeCat='', activeProvs=new Set(), activeType='', searchQ='';
+let currentView='grid', visibleCount=12;
+let likedIds=new Set(), savedIds=new Set();
 
-// ══ RENDER ══════════════════════════════════════════
+function applyTheme(theme) {
+  const isDark = theme === 'dark';
+  document.body.classList.toggle('dark-mode', isDark);
+  const icon = document.querySelector('#themeToggle .ti');
+  if (icon) icon.className = `ti ${isDark ? 'ti-sun' : 'ti-moon'}`;
+  localStorage.setItem('tuyomall_theme', isDark ? 'dark' : 'light');
+}
+
+function toggleTheme() {
+  applyTheme(document.body.classList.contains('dark-mode') ? 'light' : 'dark');
+}
+
 function getFiltered() {
   return allProducts.filter(p => {
-    const mCat   = !activeCat  || p.cat  === activeCat;
-    const mProv  = !activeProv || p.prov === activeProv;
+    const mCat   = !activeCat || p.cat === activeCat;
+    const mProv  = activeProvs.size === 0 || activeProvs.has(p.prov);
     const mType  = !activeType || p.type === activeType;
-    const mSearch = !searchQ   || p.name.toLowerCase().includes(searchQ) || p.seller.toLowerCase().includes(searchQ) || p.cat.toLowerCase().includes(searchQ);
+    const mSearch = !searchQ || p.name.toLowerCase().includes(searchQ)
+                  || p.seller.toLowerCase().includes(searchQ)
+                  || p.cat.toLowerCase().includes(searchQ);
     return mCat && mProv && mType && mSearch;
   });
 }
+
+const timeLabels = ['hace 2 min','hace 15 min','hace 1 h','hace 3 h','hace 5 h','hace 8 h','hace 1 d','hace 2 d','hace 3 d','hace 4 d','hace 5 d','hace 1 sem'];
 
 function renderProducts() {
   const grid    = document.getElementById('productsGrid');
@@ -1019,316 +1248,383 @@ function renderProducts() {
   const filtered = getFiltered();
   const visible  = filtered.slice(0, visibleCount);
 
-  count.textContent = `Mostrando ${visible.length} de ${filtered.length} producto${filtered.length !== 1 ? 's' : ''}`;
+  count.textContent = `Mostrando ${visible.length} de ${filtered.length} publicación${filtered.length!==1?'es':''}`;
 
   if (filtered.length === 0) {
-    grid.innerHTML = '';
-    empty.classList.add('show');
-    loadBtn.style.display = 'none';
-    return;
+    grid.innerHTML=''; empty.classList.add('show'); loadBtn.style.display='none'; return;
   }
-
   empty.classList.remove('show');
-  loadBtn.style.display = filtered.length > visibleCount ? 'block' : 'none';
+  loadBtn.style.display = filtered.length > visibleCount ? 'flex' : 'none';
 
-  grid.innerHTML = visible.map(p => `
-    <div class="prod-card" onclick="viewProduct(${p.id})">
+  grid.innerHTML = visible.map(p => {
+    const liked   = likedIds.has(p.id);
+    const saved   = savedIds.has(p.id);
+    const total   = p.likes + (liked ? 1 : 0);
+    const timeAgo = timeLabels[(p.id-1) % timeLabels.length];
+    return `
+    <div class="prod-card">
+      <div class="prod-header">
+        <div class="prod-avatar" style="background:${p.sellerColor}">${p.sellerInit}</div>
+        <div class="prod-header-info">
+          <div class="prod-seller-name">${p.seller}</div>
+          <div class="prod-seller-meta">${p.prov} · ${timeAgo}</div>
+        </div>
+        <button class="prod-menu" onclick="togglePostMenu(event, ${p.id}, this)" title="Más opciones">
+          <span class="ti ti-dots"></span>
+        </button>
+        <div class="post-menu">
+          <button onclick="viewDetails(${p.id})"><span class="ti ti-eye"></span> Ver detalles</button>
+          <button onclick="viewBusiness(${p.id})"><span class="ti ti-building-store"></span> Ver perfil del negocio</button>
+          <button onclick="sharePost(${p.id})"><span class="ti ti-share-3"></span> Compartir</button>
+          <button onclick="copyPostLink(${p.id})"><span class="ti ti-link"></span> Copiar enlace</button>
+          <button class="report-action" onclick="reportPost(${p.id})"><span class="ti ti-flag"></span> Reportar</button>
+        </div>
+      </div>
       <div class="prod-img-wrap">
         <img class="prod-img" src="${p.img}" alt="${p.name}" loading="lazy"
              onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-        <div class="prod-img-placeholder" style="display:none">${p.cat === 'Alimentos' ? '🍽️' : p.cat === 'Moda' ? '👗' : p.cat === 'Arte' ? '🎨' : p.cat === 'Servicios' ? '⚡' : p.cat === 'Tecnología' ? '💻' : p.cat === 'Hogar' ? '🏡' : '💄'}</div>
-        ${p.premium ? '<span class="prod-premium-badge">⭐ PRO</span>' : ''}
-        <button class="prod-save ${savedIds.has(p.id) ? 'saved' : ''}"
-                onclick="event.stopPropagation();toggleSave(${p.id}, this)"
-                title="${savedIds.has(p.id) ? 'Guardado' : 'Guardar'}">
-          ${savedIds.has(p.id) ? '❤️' : '🤍'}
-        </button>
+        <div class="prod-img-placeholder" style="display:none">${catIcon(p.cat)}</div>
+        <span class="prod-type-badge">
+          <span class="ti ${p.type==='Servicio'?'ti-briefcase':'ti-package'}"></span> ${p.type}
+        </span>
       </div>
       <div class="prod-body">
-        <div class="prod-price">${p.price}</div>
+        <div class="prod-caption-row">
+          <div class="prod-price">${p.price}</div>
+          ${p.premium ? `<span class="prod-premium-badge"><span class="ti ti-crown"></span> PRO</span>` : ''}
+        </div>
         <div class="prod-name">${p.name}</div>
-        <div class="prod-seller">
-          <div class="seller-avatar" style="background:${p.sellerColor}">${p.sellerInit}</div>
-          ${p.seller} · ${p.prov}
-        </div>
-        <div class="prod-actions">
-          <button class="prod-btn btn-ver" onclick="event.stopPropagation();viewProduct(${p.id})">Ver perfil</button>
-          <a class="prod-btn btn-wa" href="https://wa.me/50688027022" target="_blank"
-             onclick="event.stopPropagation()" title="WhatsApp">💬</a>
-        </div>
       </div>
-    </div>
-  `).join('');
+      <div class="prod-actions">
+        <button class="action-btn ${liked?'liked':''}" onclick="toggleLike(${p.id},this)" title="Me gusta">
+          <span class="ti ${liked?'ti-heart-filled':'ti-heart'}"></span>
+          <span class="action-like-count">${total}</span>
+        </button>
+        <button class="action-btn ${saved?'saved':''}" onclick="toggleSave(${p.id},this)" title="Guardar">
+          <span class="ti ${saved?'ti-bookmark-filled':'ti-bookmark'}"></span>
+        </button>
+        <a class="action-contact" href="https://wa.me/50688027022" target="_blank" title="WhatsApp">
+          <span class="ti ti-brand-whatsapp"></span> WhatsApp
+        </a>
+      </div>
+    </div>`;
+  }).join('');
 
-//Limpiar los checks
-function toggleFilter(element, group, value) {
-  // Selecciona todos los filtros dentro del grupo
-  const filters = document.querySelectorAll(`#${group}-filters .filter-pill`);
+  renderSidebar();
+}
 
-  // Limpia todos los checks y la clase active
-  filters.forEach(f => {
-    f.classList.remove("active");
-    const check = f.querySelector(".filter-check");
-    if (check) check.textContent = "";
+function renderSidebar() {
+  const premDiv = document.getElementById('premiumHighlights');
+  const tagDiv  = document.getElementById('trendTags');
+  const premium = allProducts.filter(p=>p.premium).slice(0,4);
+  const cats    = [...new Set(allProducts.map(p=>p.cat))];
+
+  premDiv.innerHTML = premium.map(p=>`
+    <div class="highlight-card">
+      <div class="hl-img">${catIcon(p.cat)}</div>
+      <div class="hl-info">
+        <div class="hl-name">${p.name}</div>
+        <div class="hl-meta">${p.seller} · ${p.prov}</div>
+      </div>
+      <div class="hl-right">
+        <div class="hl-pro-dot"></div>
+        <div class="hl-price">${p.price}</div>
+      </div>
+    </div>`).join('');
+
+  tagDiv.innerHTML = cats.map(c=>`
+    <span class="trend-tag" onclick="setCatPill(null,'${c}')">
+      <span class="ti ${catIconMap[c]||'ti-tag'}"></span>${c}
+    </span>`).join('');
+}
+
+/* ── FILTROS ── */
+function toggleCatFilter(el, val) {
+  document.querySelectorAll('#cat-filters .filter-pill').forEach(p=>{
+    p.classList.remove('active');
+    const c=p.querySelector('.filter-check'); if(c) c.textContent='';
   });
+  el.classList.add('active');
+  const c=el.querySelector('.filter-check'); if(c) c.textContent='✓';
+  activeCat=val; syncCatPills(val); visibleCount=12; renderProducts();
+}
 
-  // Activa solo el filtro clicado
-  element.classList.add("active");
-  const check = element.querySelector(".filter-check");
-  if (check) check.textContent = "✓";
+/* PROVINCIA: toggle individual — se puede seleccionar varias, desmarcar individualmente o con Limpiar */
+function toggleProvFilter(el, val) {
+  if (activeProvs.has(val)) {
+    activeProvs.delete(val);
+    el.classList.remove('active');
+    const c=el.querySelector('.filter-check'); if(c) c.textContent='';
+  } else {
+    activeProvs.add(val);
+    el.classList.add('active');
+    const c=el.querySelector('.filter-check'); if(c) c.textContent='✓';
+  }
+  visibleCount=12; renderProducts();
+}
 
-  console.log("Filtro seleccionado:", value);
+function toggleTypeFilter(el, val) {
+  document.querySelectorAll('#type-filters .filter-pill').forEach(p=>{
+    p.classList.remove('active');
+    const c=p.querySelector('.filter-check'); if(c) c.textContent='';
+  });
+  el.classList.add('active');
+  const c=el.querySelector('.filter-check'); if(c) c.textContent='✓';
+  activeType=val; visibleCount=12; renderProducts();
 }
 
 function clearFilter(group) {
-  const filters = document.querySelectorAll(`#${group}-filters .filter-pill`);
-  filters.forEach(f => {
-    f.classList.remove("active");
-    const check = f.querySelector(".filter-check");
-    if (check) check.textContent = "";
-  });
-
-  // Activa "Todas" por defecto
-  const allFilter = document.querySelector(`#${group}-filters .filter-pill:first-child`);
-  allFilter.classList.add("active");
-  const check = allFilter.querySelector(".filter-check");
-  if (check) check.textContent = "✓";
-}
-
-  renderHighlights(filtered);
-}
-
-function renderHighlights(filtered) {
-  const premDiv   = document.getElementById('premiumHighlights');
-  const recentDiv = document.getElementById('recentHighlights');
-  const tagDiv    = document.getElementById('trendTags');
-
-  const premium = allProducts.filter(p => p.premium).slice(0,4);
-  const recent  = allProducts.filter(p => !p.premium).slice(0,3);
-  const cats    = [...new Set(allProducts.map(p => p.cat))];
-
-  premDiv.innerHTML = premium.map(p => `
-    <div class="highlight-card" onclick="viewProduct(${p.id})">
-      <div class="hl-img">${p.cat === 'Alimentos' ? '🍽️' : p.cat === 'Moda' ? '👗' : p.cat === 'Arte' ? '🎨' : p.cat === 'Servicios' ? '⚡' : p.cat === 'Tecnología' ? '💻' : p.cat === 'Hogar' ? '🏡' : '💄'}</div>
-      <div class="hl-info">
-        <div class="hl-name">${p.name}</div>
-        <div class="hl-meta">${p.seller} · ${p.prov}</div>
-      </div>
-      <div class="hl-price">${p.price}</div>
-    </div>
-  `).join('');
-
-  recentDiv.innerHTML = recent.map(p => `
-    <div class="highlight-card" onclick="viewProduct(${p.id})">
-      <div class="hl-img">${p.cat === 'Alimentos' ? '🍽️' : p.cat === 'Moda' ? '👗' : p.cat === 'Arte' ? '🎨' : p.cat === 'Servicios' ? '⚡' : p.cat === 'Tecnología' ? '💻' : p.cat === 'Hogar' ? '🏡' : '💄'}</div>
-      <div class="hl-info">
-        <div class="hl-name">${p.name}</div>
-        <div class="hl-meta">${p.seller} · ${p.prov}</div>
-      </div>
-      <div class="hl-price">${p.price}</div>
-    </div>
-  `).join('');
-
-  tagDiv.innerHTML = cats.map(c => `
-    <span class="trend-tag" onclick="setCatPill(null,'${c}')">${c}</span>
-  `).join('');
-}
-
-// ══ FILTERS ══════════════════════════════════════════
-function toggleFilter(el, type, val) {
-  const container = el.closest('[id$="-filters"]');
-
-  // 1. Quitar "active" y limpiar todos los checks
-  container.querySelectorAll('.filter-pill').forEach(p => {
-    p.classList.remove('active');
-    const check = p.querySelector('.filter-check');
-    if (check) check.textContent = "";
-  });
-
-  // 2. Activar solo el filtro clicado
-  el.classList.add('active');
-  const check = el.querySelector('.filter-check');
-  if (check) check.textContent = "✓";
-
-  // 3. Mantener tu lógica original
-  if (type === 'cat')  { activeCat  = val; syncCatPills(val); }
-  if (type === 'prov') activeProv = val;
-  if (type === 'type') activeType = val;
-  visibleCount = 12;
-  renderProducts();
+  if (group==='cat') {
+    document.querySelectorAll('#cat-filters .filter-pill').forEach(p=>{
+      p.classList.remove('active');
+      const c=p.querySelector('.filter-check'); if(c) c.textContent='';
+    });
+    const first=document.querySelector('#cat-filters .filter-pill:first-child');
+    first.classList.add('active');
+    const c=first.querySelector('.filter-check'); if(c) c.textContent='✓';
+    activeCat=''; syncCatPills('');
+  }
+  if (group==='prov') {
+    document.querySelectorAll('#prov-filters .filter-pill').forEach(p=>{
+      p.classList.remove('active');
+      const c=p.querySelector('.filter-check'); if(c) c.textContent='';
+    });
+    activeProvs.clear();
+  }
+  visibleCount=12; renderProducts();
 }
 
 function setCatPill(el, cat) {
-  document.querySelectorAll('.cat-pill').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.cat-pill').forEach(p=>p.classList.remove('active'));
   if (el) el.classList.add('active');
-  else {
-    document.querySelectorAll('.cat-pill').forEach(p => {
-      if (p.textContent.includes(cat)) p.classList.add('active');
-    });
-  }
-  activeCat = cat;
-  syncSidebarCat(cat);
-  visibleCount = 12;
-  renderProducts();
+  else document.querySelectorAll('.cat-pill').forEach(p=>{
+    if(p.textContent.trim().includes(cat)) p.classList.add('active');
+  });
+  activeCat=cat; syncSidebarCat(cat); visibleCount=12; renderProducts();
 }
-
 function syncCatPills(cat) {
-  document.querySelectorAll('.cat-pill').forEach(p => {
-    p.classList.toggle('active', cat === '' ? p.textContent.includes('Todos') : p.textContent.includes(cat));
+  document.querySelectorAll('.cat-pill').forEach(p=>{
+    const t=p.textContent.trim();
+    p.classList.toggle('active', cat===''? t.includes('Todos') : t.includes(cat));
   });
 }
-
 function syncSidebarCat(cat) {
-  document.querySelectorAll('#cat-filters .filter-pill').forEach(p => {
-    const matches = cat === '' ? p.textContent.trim().startsWith('Todas') : p.textContent.includes(cat);
-    p.classList.toggle('active', matches);
+  document.querySelectorAll('#cat-filters .filter-pill').forEach(p=>{
+    const t=p.textContent.trim();
+    const m=cat===''? t.startsWith('Todas') : t.includes(cat);
+    p.classList.toggle('active',m);
+    const c=p.querySelector('.filter-check'); if(c) c.textContent=m?'✓':'';
   });
 }
 
-function handleSearch(val) {
-  searchQ = val.toLowerCase().trim();
-  visibleCount = 12;
-  renderProducts();
-}
-
+function handleSearch(val) { searchQ=val.toLowerCase().trim(); visibleCount=12; renderProducts(); }
 function sortProducts(val) {
-  if (val === 'premium') allProducts.sort((a,b) => b.premium - a.premium);
-  else if (val === 'recent') allProducts.sort((a,b) => b.id - a.id);
-  else if (val === 'az') allProducts.sort((a,b) => a.name.localeCompare(b.name));
-  else allProducts.sort((a,b) => b.premium - a.premium || a.id - b.id);
+  if(val==='premium') allProducts.sort((a,b)=>b.premium-a.premium);
+  else if(val==='recent') allProducts.sort((a,b)=>b.id-a.id);
+  else if(val==='az') allProducts.sort((a,b)=>a.name.localeCompare(b.name));
+  else allProducts.sort((a,b)=>b.premium-a.premium||a.id-b.id);
   renderProducts();
 }
-
 function setView(view) {
-  currentView = view;
-  const grid = document.getElementById('productsGrid');
-  grid.classList.toggle('list-view', view === 'list');
-  document.getElementById('gridBtn').classList.toggle('active', view === 'grid');
-  document.getElementById('listBtn').classList.toggle('active', view === 'list');
+  currentView=view;
+  document.getElementById('productsGrid').classList.toggle('list-view',view==='list');
+  document.getElementById('gridBtn').classList.toggle('active',view==='grid');
+  document.getElementById('listBtn').classList.toggle('active',view==='list');
 }
-
 function setNav(btn) {
-  document.querySelectorAll('.side-item').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.side-item').forEach(b=>b.classList.remove('active'));
   btn.classList.add('active');
 }
+function loadMore() { visibleCount+=8; renderProducts(); }
 
-function loadMore() {
-  visibleCount += 8;
-  renderProducts();
+function closePostMenus() {
+  document.querySelectorAll('.prod-card.menu-open').forEach(card => card.classList.remove('menu-open'));
 }
 
-function toggleSave(id, btn) {
-  if (savedIds.has(id)) { savedIds.delete(id); btn.textContent = '🤍'; btn.classList.remove('saved'); }
-  else { savedIds.add(id); btn.textContent = '❤️'; btn.classList.add('saved'); }
+function togglePostMenu(event, id, btn) {
+  event.stopPropagation();
+  const card = btn.closest('.prod-card');
+  const wasOpen = card.classList.contains('menu-open');
+  closePostMenus();
+  if (!wasOpen) card.classList.add('menu-open');
 }
 
-function viewProduct(id) {
-  window.location.href = `perfil-emprendedor.html?id=${id}`;
+function getPost(id) {
+  return allProducts.find(p => p.id === id);
 }
 
-// ══ UPLOAD MODAL ══════════════════════════════════════════
-function openUpload() {
-  document.getElementById('uploadModal').classList.add('open');
-  document.body.style.overflow = 'hidden';
-}
-function closeUpload() {
-  document.getElementById('uploadModal').classList.remove('open');
-  document.body.style.overflow = '';
+function postUrl(id) {
+  return `${window.location.origin}${window.location.pathname}?producto=${id}`;
 }
 
-function previewImages(files) {
-  const container = document.getElementById('imgPreviews');
-  container.innerHTML = '';
-  const max = Math.min(files.length, 3);
-  for (let i = 0; i < max; i++) {
-    const reader = new FileReader();
-    reader.onload = e => {
-      const img = document.createElement('img');
-      img.src = e.target.result;
-      img.className = 'img-thumb';
-      container.appendChild(img);
-    };
-    reader.readAsDataURL(files[i]);
+function viewDetails(id) {
+  closePostMenus();
+  const p = getPost(id);
+  if (!p) return;
+  alert(`${p.name}\n${p.price}\n${p.seller} · ${p.prov}`);
+}
+
+function viewBusiness(id) {
+  closePostMenus();
+  window.location.href = `perfil-publico.html?id=${id}`;
+}
+
+async function sharePost(id) {
+  closePostMenus();
+  const p = getPost(id);
+  if (!p) return;
+  const url = postUrl(id);
+  const data = {
+    title: p.name,
+    text: `${p.name} de ${p.seller} en TuyoMall`,
+    url
+  };
+  if (navigator.share) {
+    await navigator.share(data);
+    return;
   }
-  document.getElementById('dropZone').querySelector('.drop-text').textContent = `${max} imagen${max > 1 ? 'es' : ''} seleccionada${max > 1 ? 's' : ''}`;
+  await navigator.clipboard.writeText(url);
+  alert('Enlace copiado para compartir.');
 }
 
+async function copyPostLink(id) {
+  closePostMenus();
+  await navigator.clipboard.writeText(postUrl(id));
+  alert('Enlace copiado.');
+}
+
+function reportPost(id) {
+  closePostMenus();
+  const p = getPost(id);
+  if (!p) return;
+  alert(`Gracias. Revisaremos la publicación "${p.name}".`);
+}
+
+function toggleLike(id,btn) {
+  const p=allProducts.find(x=>x.id===id); if(!p) return;
+  if(likedIds.has(id)) {
+    likedIds.delete(id); btn.classList.remove('liked');
+    btn.querySelector('.ti').className='ti ti-heart';
+    btn.querySelector('.action-like-count').textContent=p.likes;
+  } else {
+    likedIds.add(id); btn.classList.add('liked');
+    btn.querySelector('.ti').className='ti ti-heart-filled';
+    btn.querySelector('.action-like-count').textContent=p.likes+1;
+  }
+}
+function toggleSave(id,btn) {
+  if(savedIds.has(id)) {
+    savedIds.delete(id); btn.classList.remove('saved');
+    btn.querySelector('.ti').className='ti ti-bookmark';
+  } else {
+    savedIds.add(id); btn.classList.add('saved');
+    btn.querySelector('.ti').className='ti ti-bookmark-filled';
+  }
+  document.getElementById('savedCount').textContent=savedIds.size;
+}
+
+function openUpload() { document.getElementById('uploadModal').classList.add('open'); document.body.style.overflow='hidden'; }
+function closeUpload() { document.getElementById('uploadModal').classList.remove('open'); document.body.style.overflow=''; }
+function initDraggableFab() {
+  const fab = document.getElementById('uploadFab');
+  if (!fab) return;
+  const margin = 12;
+  const saved = JSON.parse(localStorage.getItem('tuyomall_fab_position') || 'null');
+  let startX = 0, startY = 0, originX = 0, originY = 0, moved = false;
+
+  function clampPosition(x, y) {
+    const maxX = window.innerWidth - fab.offsetWidth - margin;
+    const maxY = window.innerHeight - fab.offsetHeight - margin;
+    return {
+      x: Math.min(Math.max(margin, x), maxX),
+      y: Math.min(Math.max(margin, y), maxY)
+    };
+  }
+
+  function setPosition(x, y, save = true) {
+    const pos = clampPosition(x, y);
+    fab.style.left = `${pos.x}px`;
+    fab.style.top = `${pos.y}px`;
+    fab.style.right = 'auto';
+    fab.style.bottom = 'auto';
+    if (save) localStorage.setItem('tuyomall_fab_position', JSON.stringify(pos));
+  }
+
+  if (saved && Number.isFinite(saved.x) && Number.isFinite(saved.y)) {
+    requestAnimationFrame(() => setPosition(saved.x, saved.y, false));
+  }
+
+  fab.addEventListener('pointerdown', e => {
+    startX = e.clientX;
+    startY = e.clientY;
+    const rect = fab.getBoundingClientRect();
+    originX = rect.left;
+    originY = rect.top;
+    moved = false;
+    fab.classList.add('dragging');
+    fab.setPointerCapture(e.pointerId);
+  });
+
+  fab.addEventListener('pointermove', e => {
+    if (!fab.classList.contains('dragging')) return;
+    const dx = e.clientX - startX;
+    const dy = e.clientY - startY;
+    if (Math.abs(dx) + Math.abs(dy) > 5) moved = true;
+    setPosition(originX + dx, originY + dy);
+  });
+
+  fab.addEventListener('pointerup', e => {
+    fab.classList.remove('dragging');
+    if (!moved) openUpload();
+  });
+
+  fab.addEventListener('pointercancel', () => fab.classList.remove('dragging'));
+  fab.addEventListener('keydown', e => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      openUpload();
+    }
+  });
+  window.addEventListener('resize', () => {
+    const rect = fab.getBoundingClientRect();
+    setPosition(rect.left, rect.top);
+  });
+}
+function previewImages(files) {
+  const c=document.getElementById('imgPreviews'); c.innerHTML='';
+  const max=Math.min(files.length,3);
+  for(let i=0;i<max;i++){
+    const r=new FileReader();
+    r.onload=e=>{ const img=document.createElement('img'); img.src=e.target.result; img.className='img-thumb'; c.appendChild(img); };
+    r.readAsDataURL(files[i]);
+  }
+  document.getElementById('dropZone').querySelector('.drop-text').textContent=`${max} imagen${max>1?'es':''} seleccionada${max>1?'s':''}`;
+}
 function handleDrop(e) {
   e.preventDefault();
   document.getElementById('dropZone').classList.remove('dragging');
-  if (e.dataTransfer.files.length) previewImages(e.dataTransfer.files);
+  if(e.dataTransfer.files.length) previewImages(e.dataTransfer.files);
 }
-
 function publishProduct() {
-  const name = document.getElementById('up-name').value.trim();
-  const cat  = document.getElementById('up-cat').value;
-  if (!name || !cat) { alert('Por favor completá el nombre y la categoría.'); return; }
-  closeUpload();
-  alert(`✅ ¡"${name}" publicado en el feed!`);
+  const name=document.getElementById('up-name').value.trim();
+  const cat=document.getElementById('up-cat').value;
+  if(!name||!cat){ alert('Por favor completá el nombre y la categoría.'); return; }
+  closeUpload(); alert(`¡"${name}" publicado en el feed!`);
 }
 
-document.getElementById('uploadModal').addEventListener('click', function(e) {
-  if (e.target === this) closeUpload();
-});
-document.addEventListener('keydown', e => {
-  if (e.key === 'Escape') closeUpload();
-});
-
-// ══ INIT ══════════════════════════════════════════
-// Premium products first by default
-allProducts.sort((a,b) => b.premium - a.premium);
-renderProducts();
-
-const searchInput = document.getElementById('searchInput');
-const searchIcon  = document.getElementById('searchIcon');
-
-// Función que decide si mostrar u ocultar el icono
-function updateIcon() {
-  if (document.activeElement === searchInput || searchInput.value.trim() !== "") {
-    searchIcon.style.display = 'none';   // Ocultar si hay foco o texto
-  } else {
-    searchIcon.style.display = 'inline'; // Mostrar si está vacío y sin foco
+document.getElementById('uploadModal').addEventListener('click',function(e){ if(e.target===this) closeUpload(); });
+document.addEventListener('click', closePostMenus);
+document.addEventListener('keydown',e=>{
+  if(e.key==='Escape') {
+    closeUpload();
+    closePostMenus();
   }
-}
+});
 
-// Eventos que disparan la función
-searchInput.addEventListener('focus', updateIcon);
-searchInput.addEventListener('blur', updateIcon);
-searchInput.addEventListener('input', updateIcon);
+applyTheme(localStorage.getItem('tuyomall_theme') || 'light');
+initDraggableFab();
+allProducts.sort((a,b)=>b.premium-a.premium);
+renderProducts();
 </script>
-
-<?php
-// Conexión
-$servername = "localhost";
-$username = "usuario_db";
-$password = "tu_contraseña";
-$dbname = "wcbgdnal_tuyomall";
-
-$conn = new mysqli($servername, $username, $password, $dbname);
-if ($conn->connect_error) {
-    die("Error de conexión: " . $conn->connect_error);
-}
-
-// Procesar formulario
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $email = $_POST['email'];
-    $password = $_POST['password'];
-
-    // Hashear la contraseña antes de guardar
-    $password_hash = password_hash($password, PASSWORD_BCRYPT);
-
-    // Insertar en la tabla users
-    $stmt = $conn->prepare("INSERT INTO users (email, password_hash) VALUES (?, ?)");
-    $stmt->bind_param("ss", $email, $password_hash);
-
-    if ($stmt->execute()) {
-        echo "Usuario registrado correctamente";
-    } else {
-        echo "Error: " . $stmt->error;
-    }
-}
-?>
-
-
 </body>
 </html>
