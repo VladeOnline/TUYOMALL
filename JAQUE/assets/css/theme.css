@@ -238,6 +238,66 @@ html.tm-dark .footer-divider {
   background: rgba(255,255,255,0.1) !important;
 }
 
+html.tm-dark .left {
+  background: linear-gradient(155deg, #111827 0%, #14213D 55%, #0B1118 100%) !important;
+}
+
+html.tm-dark .left::before {
+  background: radial-gradient(circle, rgba(255,107,71,0.2) 0%, transparent 70%) !important;
+}
+
+html.tm-dark .left::after {
+  background: radial-gradient(circle, rgba(255,255,255,0.06) 0%, transparent 70%) !important;
+}
+
+html.tm-dark .right {
+  background: #0B1118 !important;
+}
+
+html.tm-dark .left .logo-text,
+html.tm-dark .left h2,
+html.tm-dark .left .preview-text strong {
+  color: #FFFFFF !important;
+}
+
+html.tm-dark .left .logo-text span,
+html.tm-dark .left h2 em {
+  color: #FF6B47 !important;
+}
+
+html.tm-dark .left-desc,
+html.tm-dark .left .perk,
+html.tm-dark .left .preview-text {
+  color: rgba(248,250,252,0.72) !important;
+}
+
+html.tm-dark .left-badge {
+  background: rgba(255,107,71,0.16) !important;
+  border-color: rgba(255,107,71,0.32) !important;
+}
+
+html.tm-dark .left-badge span {
+  color: #FF8A6A !important;
+}
+
+html.tm-dark .left .perk-icon {
+  background: rgba(255,107,71,0.18) !important;
+}
+
+html.tm-dark .left-preview,
+html.tm-dark .plan-mini {
+  background: rgba(255,255,255,0.06) !important;
+  border-color: rgba(255,255,255,0.12) !important;
+}
+
+html.tm-dark .preview-avatar {
+  border-color: #14213D !important;
+}
+
+html.tm-dark .left-footer {
+  color: rgba(248,250,252,0.38) !important;
+}
+
 html.tm-dark .logo-tuyo,
 html.tm-dark .brand,
 html.tm-dark .brand span,
