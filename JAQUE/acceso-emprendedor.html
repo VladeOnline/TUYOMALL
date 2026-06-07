@@ -147,17 +147,17 @@ body {
 }
 .plan-mini-label {
   font-size: 10px; font-weight: 700; letter-spacing: 1.5px;
-  text-transform: uppercase; color: rgba(255,255,255,0.4);
+  text-transform: uppercase; color: rgba(255,255,255,0.68);
   margin-bottom: 6px;
 }
 .plan-mini.premium .plan-mini-label { color: var(--gold); }
 .plan-mini-price {
   font-family: 'Clash Display', sans-serif;
-  font-size: 22px; font-weight: 700; color: var(--white);
+  font-size: 22px; font-weight: 700; color: #FFFFFF;
 }
-.plan-mini-price sub { font-size: 12px; font-weight: 400; color: rgba(255,255,255,0.4); }
-.plan-mini-desc { font-size: 11px; color: rgba(255,255,255,0.4); margin-top: 4px; }
-.plan-mini.premium .plan-mini-desc { color: rgba(255,255,255,0.6); }
+.plan-mini-price sub { font-size: 12px; font-weight: 500; color: rgba(255,255,255,0.74); }
+.plan-mini-desc { font-size: 11px; color: rgba(255,255,255,0.72); margin-top: 4px; }
+.plan-mini.premium .plan-mini-desc { color: rgba(255,255,255,0.82); }
 
 .left-footer {
   position: relative; z-index: 1;
@@ -166,7 +166,7 @@ body {
 
 /* ── RIGHT PANEL ── */
 .right {
-  display: flex; align-items: flex-start; justify-content: center;
+  display: flex; align-items: center; justify-content: center;
   padding: 40px 52px; min-height: 100vh; overflow-y: auto;
   background: var(--surface);
 }
@@ -174,6 +174,11 @@ body {
 .form-box {
   width: 100%; max-width: 420px;
   padding: 8px 0;
+}
+
+.right:has(#view-register.active),
+.right:has(#view-recover.active) {
+  align-items: flex-start;
 }
 
 /* ── TABS ── */
@@ -434,6 +439,24 @@ input.error, select.error { border-color: var(--danger); }
 .modal-body p, .modal-body li { font-size: 14px; color: var(--slate); line-height: 1.75; }
 .modal-body ul { padding-left: 18px; margin: 6px 0; }
 .modal-body li { margin-bottom: 5px; }
+
+html.tm-dark .plan-mini-label {
+  color: rgba(248,250,252,0.78) !important;
+}
+
+html.tm-dark .plan-mini.premium .plan-mini-label {
+  color: #F8C84E !important;
+}
+
+html.tm-dark .plan-mini-price {
+  color: #FFFFFF !important;
+  text-shadow: 0 1px 16px rgba(255,255,255,0.12);
+}
+
+html.tm-dark .plan-mini-price sub,
+html.tm-dark .plan-mini-desc {
+  color: rgba(226,232,240,0.86) !important;
+}
 
 /* ── RESPONSIVE ── */
 @media (max-width: 860px) {
