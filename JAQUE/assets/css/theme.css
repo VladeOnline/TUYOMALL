@@ -2,6 +2,30 @@ html.tm-dark {
   color-scheme: dark;
 }
 
+.logo-mark,
+.brand-mark,
+.nav-logo-mark {
+  background: #FFFFFF !important;
+  color: #FF6B47 !important;
+  overflow: hidden;
+}
+
+.logo-mark img,
+.brand-mark img,
+.nav-logo-mark img {
+  width: 86% !important;
+  height: 86% !important;
+  object-fit: contain !important;
+  display: block;
+}
+
+html.tm-dark .logo-mark,
+html.tm-dark .brand-mark,
+html.tm-dark .nav-logo-mark {
+  background: #FFFFFF !important;
+  border-color: rgba(255,255,255,0.16) !important;
+}
+
 html.tm-dark body,
 body.dark-mode {
   background: #0B1118 !important;
