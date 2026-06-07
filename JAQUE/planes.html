@@ -1,268 +1,884 @@
 <!DOCTYPE html>
 <html lang="es-CR">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Planes | TuyoMall</title>
-  <meta name="description" content="Compará el Plan Gratis y el Plan Premium de TuyoMall. Empezá gratis o suscribite al plan de $5 para vender y escalar." />
-  <meta name="theme-color" content="#C4D814" />
-
-  <!-- Tipografías -->
+  <meta name="description" content="Compara el Plan Gratis y el Plan Premium de TuyoMall. Empieza gratis o activa Premium por $5 al mes.">
+  <meta name="theme-color" content="#FF6B47">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;800&family=Sansita:wght@700;800&display=swap" rel="stylesheet">
-  <style>
-       /* Footer */
-    .tm-footer{
-      background: radial-gradient(1200px 300px at center top, #1f2937 0%, #0b1220 55%, #020617 100%);
-      padding: 56px 16px 26px;
-      margin-top: 42px;
-    }
- .tm-footer__inner{
-    max-width: 72rem; /* ~ max-w-6xl */
-    margin: 0 auto;
-    text-align:center;
-  }  
-  .tm-footer__social{
-      display:flex;
-      justify-content:center;
-      gap:18px;
-      margin-bottom:26px;
-      flex-wrap:wrap;
-    }
-   .tm-footer__icon{
-    width: 36px;
-    height: 36px;
-    border-radius: 999px;
-    display:grid;
-    place-items:center;
-    background: rgba(255,255,255,.10);
-    border: 1px solid rgba(255,255,255,.14);
-    transition: transform .15s ease, background .15s ease, border-color .15s ease;
-    }
-    .tm-footer__icon:hover{
-      transform: translateY(-3px);
-      background: rgba(255,255,255,.12);
-      box-shadow: inset 0 0 0 1px rgba(255,255,255,.08), 0 18px 38px rgba(0,0,0,.6);
-    }
-     .tm-footer__icon img{
-    width: 18px;
-    height: 18px;
-    object-fit: contain;
-    filter: brightness(0) invert(1); /* vuelve los iconos blancos */
-    opacity: .95;
-        
-    }
-    
-    
-    .tm-footer__line{
-      height:1px; max-width:860px; margin:0 auto 14px;
-      background: linear-gradient(to right, transparent, rgba(255,255,255,.25), transparent);
-    }
-    .tm-footer__copy{
-      margin:0;
-      font-size:13px;
-      color: rgba(226,232,240,.9);
-      font-family:var(--font-body);
-    }
-    .tm-footer__copy a{
-      color: rgba(64,224,208,.95);
-      text-decoration: underline;
-      text-underline-offset: 3px;
-      font-weight:800;
-    }
-    .summary-grid{
-      grid-template-columns:1fr 1fr;
-      gap:12px;
-    }
-    .nav a img {
-      transition: transform 0.2s;
-      transform-origin: center;
-    }
-    .nav a:hover img {
-      transform: rotate(-6deg) scale(1.05);
-    }
-    @media (max-width: 760px){
-      .summary-grid{ grid-template-columns:1fr; }
-    }
-
-  </style>
-
-  <!-- CSS global -->
-  <link rel="stylesheet" href="assets/css/base.css">
-  <link rel="stylesheet" href="assets/css/layout.css">
-  <link rel="stylesheet" href="assets/css/components.css">
-  <!-- CSS específico -->
-  <link rel="stylesheet" href="assets/css/pages/planes.css">
+  <link href="https://fonts.googleapis.com/css2?family=Clash+Display:wght@500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.14.0/dist/tabler-icons.min.css">
   <link rel="stylesheet" href="assets/css/theme.css">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --coral: #FF6B47;
+      --coral-2: #FF8A6A;
+      --navy: #14213D;
+      --ink: #07111C;
+      --white: #FFFFFF;
+      --paper: #F7F4EF;
+      --muted: #667085;
+      --line: rgba(20,33,61,0.12);
+      --shadow: 0 24px 80px rgba(7,17,28,0.14);
+      --r-lg: 28px;
+    }
+
+    html { min-height: 100%; scroll-behavior: smooth; }
+
+    body {
+      min-height: 100vh;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      color: var(--navy);
+      background:
+        radial-gradient(circle at 12% 20%, rgba(255,107,71,0.14), transparent 26%),
+        linear-gradient(135deg, #FFFFFF 0%, var(--paper) 48%, #101A27 48.1%, #07111C 100%);
+      overflow-x: hidden;
+    }
+
+    .ambient {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      overflow: hidden;
+      z-index: 1;
+    }
+
+    .spark {
+      position: absolute;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--coral);
+      box-shadow: 0 0 26px rgba(255,107,71,0.8);
+      opacity: 0;
+      animation: floatSpark 7s ease-in-out infinite;
+    }
+
+    .spark:nth-child(1) { left: 9%; top: 76%; animation-delay: 0s; }
+    .spark:nth-child(2) { left: 22%; top: 18%; width: 5px; height: 5px; animation-delay: 1.3s; }
+    .spark:nth-child(3) { left: 48%; top: 12%; width: 10px; height: 10px; animation-delay: 0.7s; }
+    .spark:nth-child(4) { left: 78%; top: 26%; animation-delay: 2.2s; }
+    .spark:nth-child(5) { left: 90%; top: 72%; width: 6px; height: 6px; animation-delay: 1.1s; }
+
+    .topbar {
+      position: relative;
+      z-index: 3;
+      height: 76px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 clamp(22px, 5vw, 72px);
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      color: var(--navy);
+      font-family: 'Clash Display', sans-serif;
+      font-size: 22px;
+      font-weight: 700;
+      line-height: 1;
+      animation: dropIn 0.65s cubic-bezier(.2,.8,.2,1) both;
+    }
+
+    .brand-mark {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      background: var(--coral);
+      display: grid;
+      place-items: center;
+      box-shadow: 0 12px 26px rgba(255,107,71,0.28);
+      transition: transform 0.2s;
+      overflow: hidden;
+    }
+
+    .brand:hover .brand-mark { transform: rotate(-6deg) scale(1.05); }
+
+    .brand-mark img {
+      width: 58px;
+      height: 58px;
+      object-fit: contain;
+    }
+
+    .brand-mall {
+      color: var(--coral);
+      position: relative;
+      display: inline-block;
+      margin-left: 1px;
+    }
+
+    .brand-underline {
+      position: absolute;
+      left: 3px;
+      right: 0;
+      bottom: -9px;
+      width: 100%;
+      height: 7px;
+    }
+
+    .top-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .ghost-link,
+    .theme-toggle {
+      height: 42px;
+      border-radius: 999px;
+      border: 1px solid rgba(20,33,61,0.14);
+      background: rgba(255,255,255,0.68);
+      color: var(--navy);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 0 16px;
+      font-size: 13px;
+      font-weight: 800;
+      text-decoration: none;
+      cursor: pointer;
+      backdrop-filter: blur(14px);
+    }
+
+    .theme-toggle { width: 42px; padding: 0; }
+
+    .page {
+      position: relative;
+      z-index: 2;
+      width: min(1160px, calc(100% - 40px));
+      margin: 0 auto;
+      padding: 46px 0 52px;
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 360px;
+      gap: 36px;
+      align-items: end;
+      margin: 22px 0 40px;
+    }
+
+    .hero-copy {
+      animation: riseIn 0.8s 0.08s cubic-bezier(.2,.8,.2,1) both;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--coral);
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 1.4px;
+      text-transform: uppercase;
+      margin-bottom: 18px;
+    }
+
+    h1 {
+      font-family: 'Clash Display', sans-serif;
+      font-size: clamp(44px, 7vw, 82px);
+      line-height: 0.95;
+      letter-spacing: -1px;
+      color: var(--navy);
+      margin-bottom: 22px;
+    }
+
+    h1 span { color: var(--coral); }
+
+    .lead {
+      max-width: 570px;
+      color: #475467;
+      font-size: 18px;
+      line-height: 1.7;
+    }
+
+    .mini-panel {
+      border-radius: 24px;
+      background: rgba(255,255,255,0.86);
+      border: 1px solid rgba(255,255,255,0.58);
+      box-shadow: var(--shadow);
+      padding: 22px;
+      animation: cardReveal 0.86s 0.16s cubic-bezier(.2,.8,.2,1) both;
+    }
+
+    .mini-panel strong {
+      display: block;
+      font-family: 'Clash Display', sans-serif;
+      font-size: 24px;
+      color: var(--navy);
+      margin-bottom: 8px;
+    }
+
+    .mini-panel p {
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.55;
+    }
+
+    .plans-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 28px;
+      perspective: 1200px;
+    }
+
+    .plan-card {
+      position: relative;
+      overflow: hidden;
+      border-radius: var(--r-lg);
+      padding: 34px;
+      min-height: 650px;
+      background: rgba(255,255,255,0.92);
+      border: 1px solid rgba(255,255,255,0.58);
+      box-shadow: var(--shadow);
+      animation: cardReveal 0.86s cubic-bezier(.2,.8,.2,1) both;
+      transition: transform 0.35s cubic-bezier(.2,.8,.2,1), box-shadow 0.3s, border-color 0.3s;
+    }
+
+    .plan-card:nth-child(2) { animation-delay: 0.14s; }
+
+    .plan-card::before {
+      content: '';
+      position: absolute;
+      inset: 0 0 auto;
+      height: 6px;
+      background: linear-gradient(90deg, rgba(20,33,61,0.16), rgba(20,33,61,0.04));
+    }
+
+    .plan-card::after {
+      content: '';
+      position: absolute;
+      width: 220px;
+      height: 220px;
+      right: -110px;
+      top: -110px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(255,107,71,0.14), transparent 68%);
+      pointer-events: none;
+      animation: premiumOrb 7s ease-in-out infinite alternate;
+    }
+
+    .plan-card:hover {
+      transform: translateY(-8px) rotateX(1.5deg);
+      border-color: rgba(255,107,71,0.34);
+      box-shadow: 0 30px 90px rgba(7,17,28,0.18);
+    }
+
+    .plan-card.premium {
+      background: rgba(17,24,39,0.94);
+      color: var(--white);
+      border-color: rgba(255,107,71,0.58);
+      animation: cardReveal 0.86s 0.14s cubic-bezier(.2,.8,.2,1) both, premiumBreath 4s 1s ease-in-out infinite;
+    }
+
+    .plan-card.premium::before {
+      background: linear-gradient(90deg, var(--coral), #FFB199);
+      animation: shineLine 2.8s ease-in-out infinite;
+    }
+
+    .recommended {
+      position: absolute;
+      top: 18px;
+      right: 24px;
+      border-radius: 999px;
+      padding: 8px 14px;
+      background: var(--coral);
+      color: var(--white);
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.9px;
+      text-transform: uppercase;
+      animation: recommendedFloat 2.8s ease-in-out infinite;
+    }
+
+    .plan-kicker {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--coral);
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+
+    .plan-name {
+      font-family: 'Clash Display', sans-serif;
+      font-size: 36px;
+      line-height: 1;
+      margin-bottom: 12px;
+      color: var(--navy);
+    }
+
+    .premium .plan-name { color: var(--white); }
+
+    .price {
+      display: flex;
+      align-items: flex-end;
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+
+    .price strong {
+      font-family: 'Clash Display', sans-serif;
+      font-size: 56px;
+      line-height: 0.95;
+      color: var(--coral);
+    }
+
+    .price span {
+      color: var(--muted);
+      font-size: 15px;
+      padding-bottom: 7px;
+    }
+
+    .plan-desc {
+      color: var(--muted);
+      line-height: 1.65;
+      font-size: 15px;
+      min-height: 52px;
+      margin-bottom: 24px;
+    }
+
+    .premium .plan-desc,
+    .premium .price span {
+      color: #CBD5E1;
+    }
+
+    .feature-list {
+      list-style: none;
+      display: grid;
+      gap: 14px;
+      padding: 24px 0;
+      margin: 0 0 24px;
+      border-top: 1px solid rgba(20,33,61,0.1);
+      border-bottom: 1px solid rgba(20,33,61,0.1);
+    }
+
+    .premium .feature-list {
+      border-color: rgba(255,255,255,0.12);
+    }
+
+    .feature-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      color: var(--navy);
+      line-height: 1.45;
+      font-size: 14px;
+      font-weight: 700;
+      animation: featurePop 0.48s cubic-bezier(.2,.8,.2,1) both;
+    }
+
+    .premium .feature-list li { color: #F8FAFC; }
+    .feature-list li:nth-child(1) { animation-delay: 0.16s; }
+    .feature-list li:nth-child(2) { animation-delay: 0.22s; }
+    .feature-list li:nth-child(3) { animation-delay: 0.28s; }
+    .feature-list li:nth-child(4) { animation-delay: 0.34s; }
+    .feature-list li:nth-child(5) { animation-delay: 0.40s; }
+    .feature-list li:nth-child(6) { animation-delay: 0.46s; }
+    .feature-list li:nth-child(7) { animation-delay: 0.52s; }
+
+    .check {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: rgba(255,107,71,0.12);
+      color: var(--coral);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 15px;
+      flex: 0 0 auto;
+      animation: checkPulse 0.58s cubic-bezier(.2,.8,.2,1) both;
+    }
+
+    .plan-actions {
+      display: grid;
+      gap: 10px;
+      margin-top: auto;
+    }
+
+    .btn {
+      min-height: 52px;
+      border-radius: 15px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      text-decoration: none;
+      border: 0;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 15px;
+      font-weight: 800;
+      cursor: pointer;
+      transition: transform 0.22s, box-shadow 0.22s, background 0.22s;
+    }
+
+    .btn-primary {
+      position: relative;
+      overflow: hidden;
+      color: var(--white);
+      background: var(--coral);
+      box-shadow: 0 16px 32px rgba(255,107,71,0.28);
+    }
+
+    .btn-primary::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(110deg, transparent 0%, rgba(255,255,255,0.32) 42%, transparent 68%);
+      transform: translateX(-120%);
+      animation: buttonSweep 3.4s ease-in-out infinite;
+    }
+
+    .btn-primary span,
+    .btn-primary .ti {
+      position: relative;
+      z-index: 1;
+    }
+
+    .btn-primary:hover {
+      background: #e55a38;
+      transform: translateY(-2px);
+      box-shadow: 0 18px 40px rgba(255,107,71,0.35);
+    }
+
+    .btn-secondary {
+      color: var(--navy);
+      background: transparent;
+      border: 1px solid rgba(20,33,61,0.18);
+    }
+
+    .premium .btn-secondary {
+      color: #F8FAFC;
+      border-color: rgba(255,255,255,0.18);
+    }
+
+    .btn-secondary:hover {
+      color: var(--coral);
+      border-color: rgba(255,107,71,0.4);
+      background: rgba(255,107,71,0.1);
+    }
+
+    .comparison {
+      margin-top: 32px;
+      border-radius: var(--r-lg);
+      background: rgba(255,255,255,0.88);
+      border: 1px solid rgba(255,255,255,0.58);
+      box-shadow: var(--shadow);
+      padding: 28px;
+      animation: riseIn 0.8s 0.24s cubic-bezier(.2,.8,.2,1) both;
+    }
+
+    .comparison h2,
+    .faq h2 {
+      font-family: 'Clash Display', sans-serif;
+      font-size: 30px;
+      color: var(--navy);
+      margin-bottom: 18px;
+    }
+
+    .compare-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 1fr 1fr;
+      overflow: hidden;
+      border-radius: 18px;
+      border: 1px solid var(--line);
+    }
+
+    .compare-grid > div {
+      padding: 14px 16px;
+      border-bottom: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .compare-grid > div:nth-last-child(-n + 3) { border-bottom: 0; }
+    .compare-grid .head {
+      background: rgba(20,33,61,0.05);
+      color: var(--navy);
+      font-weight: 800;
+    }
+    .compare-grid .premium-cell {
+      color: var(--coral);
+      font-weight: 800;
+    }
+
+    .faq {
+      margin-top: 32px;
+      display: grid;
+      gap: 12px;
+    }
+
+    .faq-item {
+      border-radius: 18px;
+      background: rgba(255,255,255,0.86);
+      border: 1px solid rgba(255,255,255,0.58);
+      overflow: hidden;
+    }
+
+    .faq-q {
+      width: 100%;
+      border: 0;
+      background: transparent;
+      color: var(--navy);
+      padding: 18px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 15px;
+      font-weight: 800;
+      cursor: pointer;
+      text-align: left;
+    }
+
+    .faq-a {
+      max-height: 0;
+      overflow: hidden;
+      padding: 0 20px;
+      color: var(--muted);
+      line-height: 1.65;
+      transition: max-height 0.28s ease, padding 0.28s ease;
+    }
+
+    .faq-item.open .faq-a {
+      max-height: 180px;
+      padding: 0 20px 18px;
+    }
+
+    .footer {
+      position: relative;
+      z-index: 2;
+      padding: 36px clamp(22px, 5vw, 72px) 26px;
+      color: rgba(255,255,255,0.66);
+      font-size: 13px;
+      text-align: center;
+    }
+
+    html.tm-dark body,
+    body.dark-mode {
+      background:
+        radial-gradient(circle at 18% 18%, rgba(255,107,71,0.18), transparent 28%),
+        linear-gradient(135deg, #070D14 0%, #0B1118 48%, #111827 48.1%, #0B1118 100%) !important;
+    }
+
+    html.tm-dark .brand,
+    html.tm-dark h1,
+    html.tm-dark .mini-panel strong,
+    html.tm-dark .plan-name,
+    html.tm-dark .comparison h2,
+    html.tm-dark .faq h2,
+    html.tm-dark .faq-q {
+      color: #F8FAFC !important;
+    }
+
+    html.tm-dark .lead,
+    html.tm-dark .mini-panel p,
+    html.tm-dark .plan-desc,
+    html.tm-dark .compare-grid > div,
+    html.tm-dark .faq-a {
+      color: #CBD5E1 !important;
+    }
+
+    html.tm-dark .ghost-link,
+    html.tm-dark .theme-toggle,
+    html.tm-dark .mini-panel,
+    html.tm-dark .plan-card,
+    html.tm-dark .comparison,
+    html.tm-dark .faq-item {
+      background: rgba(23,32,43,0.86) !important;
+      border-color: rgba(255,255,255,0.12) !important;
+      color: #F8FAFC !important;
+    }
+
+    html.tm-dark .compare-grid {
+      border-color: rgba(255,255,255,0.12) !important;
+    }
+
+    html.tm-dark .compare-grid > div {
+      border-color: rgba(255,255,255,0.1) !important;
+    }
+
+    html.tm-dark .compare-grid .head {
+      background: rgba(255,255,255,0.06) !important;
+      color: #F8FAFC !important;
+    }
+
+    @keyframes dropIn {
+      from { opacity: 0; transform: translateY(-12px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes riseIn {
+      from { opacity: 0; transform: translateY(24px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes cardReveal {
+      from { opacity: 0; transform: translateY(30px) scale(0.96); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    @keyframes premiumBreath {
+      0%, 100% { box-shadow: 0 24px 80px rgba(7,17,28,0.16); }
+      50% { box-shadow: 0 30px 90px rgba(255,107,71,0.24); }
+    }
+
+    @keyframes premiumOrb {
+      from { transform: translate3d(0,0,0) scale(0.92); opacity: 0.46; }
+      to { transform: translate3d(-34px,28px,0) scale(1.18); opacity: 0.78; }
+    }
+
+    @keyframes recommendedFloat {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-4px); }
+    }
+
+    @keyframes featurePop {
+      from { opacity: 0; transform: translateX(-10px); }
+      to { opacity: 1; transform: translateX(0); }
+    }
+
+    @keyframes checkPulse {
+      0% { transform: scale(0.72); }
+      70% { transform: scale(1.12); }
+      100% { transform: scale(1); }
+    }
+
+    @keyframes buttonSweep {
+      0%, 38% { transform: translateX(-120%); }
+      62%, 100% { transform: translateX(120%); }
+    }
+
+    @keyframes shineLine {
+      0%, 100% { filter: saturate(1); }
+      50% { filter: saturate(1.35) brightness(1.12); }
+    }
+
+    @keyframes floatSpark {
+      0% { opacity: 0; transform: translateY(24px) scale(0.7); }
+      18% { opacity: 0.9; }
+      50% { opacity: 0.62; transform: translateY(-34px) scale(1); }
+      100% { opacity: 0; transform: translateY(-86px) scale(0.72); }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        scroll-behavior: auto !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+
+    @media (max-width: 900px) {
+      body {
+        background: linear-gradient(180deg, #FFFFFF 0%, var(--paper) 58%, #07111C 58.1%, #07111C 100%);
+      }
+
+      .topbar {
+        height: auto;
+        padding-top: 18px;
+        gap: 16px;
+      }
+
+      .hero,
+      .plans-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .plan-card {
+        min-height: auto;
+      }
+    }
+
+    @media (max-width: 620px) {
+      .page { width: min(100% - 28px, 1160px); padding-top: 26px; }
+      .top-actions { gap: 8px; }
+      .ghost-link { width: 42px; padding: 0; }
+      .ghost-link span:not(.ti) { display: none; }
+      .plan-card,
+      .comparison { padding: 22px; border-radius: 22px; }
+      .compare-grid { grid-template-columns: 1fr; }
+      .compare-grid > div { border-bottom: 1px solid var(--line) !important; }
+    }
+  </style>
   <script src="assets/js/theme.js" defer></script>
 </head>
 <body>
-  <header class="site-header" role="navigation" aria-label="Barra superior">
-    <div class="container nav">
-       <a href="new-index.html" class="flex items-center">
-          <!-- Cambiá este SVG  logo real  -->
-          <img src="assets/img/TuyoMall-Logo.png" width="150" height="100">
-         
-          
-        </a>
-      <!-- Reconstruido por header-state.js -->
-      <nav class="main-menu" aria-label="Navegación principal">
-        <a href="acceso-cliente.html">Volver</a>
-        <a href="Principal.html#categorias">Inicio</a>
-      </nav>
+  <div class="ambient" aria-hidden="true">
+    <span class="spark"></span>
+    <span class="spark"></span>
+    <span class="spark"></span>
+    <span class="spark"></span>
+    <span class="spark"></span>
+  </div>
+
+  <header class="topbar">
+    <a class="brand" href="index.html">
+      <span class="brand-mark">
+        <img src="assets/img/Logo_TuyoMall.2.png" alt="Logo TuyoMall">
+      </span>
+      <span>Tuyo<span class="brand-mall">Mall
+        <svg class="brand-underline" viewBox="0 0 46 7" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+          <path d="M2 4.5 C8 1.5, 16 6.5, 23 3.5 C30 0.5, 38 6, 44 3" stroke="#FF6B47" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </span></span>
+    </a>
+
+    <div class="top-actions">
+      <a class="ghost-link" href="index.html">
+        <span class="ti ti-arrow-left"></span>
+        <span>Volver al inicio</span>
+      </a>
+      <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()" title="Cambiar modo">
+        <span class="ti ti-moon"></span>
+      </button>
     </div>
   </header>
 
-  <main id="top" class="container" tabindex="-1">
+  <main class="page" id="top" tabindex="-1">
     <section class="hero" aria-labelledby="planesTitle">
-      <span class="badge" aria-hidden="true">Planes</span>
-      <h1 id="planesTitle" class="hero-title">Elegí cómo empezar</h1>
-      <p class="hero-sub">Activá el ecosistema con el plan gratis o suscribite al Premium por <strong>$5</strong> para vender y escalar.</p>
+      <div class="hero-copy">
+        <p class="eyebrow"><span class="ti ti-crown"></span> Planes TuyoMall</p>
+        <h1 id="planesTitle">Elige como <span>crecer</span></h1>
+        <p class="lead">Empieza gratis y valida tu negocio. Cuando quieras vender con mas visibilidad, activa Premium por $5 al mes y destaca en el feed.</p>
+      </div>
+
+      <aside class="mini-panel" aria-label="Resumen rapido">
+        <strong>$5 / mes</strong>
+        <p>Premium desbloquea productos ilimitados, prioridad visual, estadisticas avanzadas y mas rutas de contacto para tus clientes.</p>
+      </aside>
     </section>
 
-    <section class="grid grid-2" aria-label="Comparación de planes">
-      <article class="card" aria-labelledby="planFreeTitle">
-        <header>
-          <h2 id="planFreeTitle">Plan Gratis <span class="hint">(Estándar)</span></h2>
-          <p class="hint">Para activar el ecosistema</p>
-        </header>
-        <ul>
-          <li>Perfil público con URL compartible (branding TuyoMall).</li>
-          <li>Hasta 10 productos/servicios activos.</li>
-          <li>1 galería por producto (máx. 3 imágenes).</li>
-          <li>1 botón de contacto (WhatsApp o formulario).</li>
-          <li>Catálogo “lite” sin carrito (CTA a WhatsApp/Hotmart/enlace externo).</li>
-          <li>5 categorías principales, 5 etiquetas.</li>
-          <li>Estadísticas básicas (visitas y clics a contacto últimos 7 días).</li>
-          <li>Plantillas de diseño básicas.</li>
-          <li>Límites anti-spam: revisión inicial, tope de ediciones diarias, peso máximo de imágenes.</li>
+    <section class="plans-grid" aria-label="Comparacion de planes">
+      <article class="plan-card" aria-labelledby="gratisTitle">
+        <p class="plan-kicker"><span class="ti ti-sparkles"></span> Estandar</p>
+        <h2 class="plan-name" id="gratisTitle">Plan Gratis</h2>
+        <div class="price"><strong>₡0</strong><span>para empezar</span></div>
+        <p class="plan-desc">Perfecto para publicar tus primeros productos, probar el ecosistema y empezar a recibir contactos.</p>
+
+        <ul class="feature-list">
+          <li><span class="check ti ti-check"></span> Perfil publico con URL compartible</li>
+          <li><span class="check ti ti-check"></span> Hasta 10 productos o servicios activos</li>
+          <li><span class="check ti ti-check"></span> Galeria basica por producto</li>
+          <li><span class="check ti ti-check"></span> Un boton de contacto directo</li>
+          <li><span class="check ti ti-check"></span> Categorias y etiquetas principales</li>
+          <li><span class="check ti ti-check"></span> Estadisticas basicas de 7 dias</li>
         </ul>
 
-        <div class="actions">
-          <a class="btn btn-primary" href="registro.html">Regístrate gratis</a>
+        <div class="plan-actions">
+          <a class="btn btn-secondary" href="acceso-emprendedor.html">
+            <span class="ti ti-user-plus"></span>
+            Registrarme gratis
+          </a>
         </div>
       </article>
 
-      <article class="card" aria-labelledby="planProTitle">
-        <header>
-          <h2 id="planProTitle">Plan Premium <span class="hint">(Pro)</span></h2>
-          <p class="hint">Para vender y escalar</p>
-        </header>
-        <ul>
-          <li>Productos ilimitados.</li>
-          <li>Carrito y checkout <strong>fase 1:</strong> enlaces externos; <strong>fase 2:</strong> pasarela nativa/integradora.</li>
-          <li>Múltiples botones de contacto (WhatsApp, formulario, link a tienda externa).</li>
-          <li>Cupones y descuentos, precio tachado, stock visible.</li>
-          <li>Reseñas con moderación, calificación por estrellas.</li>
-          <li>Destacados en el feed (x veces/mes) y prioridad en búsquedas.</li>
-          <li>Estadísticas avanzadas (CTR, origen del tráfico, productos top).</li>
-          <li>Integración con pixel/medición (cuando lo habiliten).</li>
-          <li>Soporte prioritario.</li>
+      <article class="plan-card premium" aria-labelledby="premiumTitle">
+        <span class="recommended"><span class="ti ti-star-filled"></span> Recomendado</span>
+        <p class="plan-kicker"><span class="ti ti-crown"></span> Pro</p>
+        <h2 class="plan-name" id="premiumTitle">Plan Premium</h2>
+        <div class="price"><strong>$5</strong><span>USD / mes</span></div>
+        <p class="plan-desc">Para negocios que quieren aparecer primero, vender mas y medir mejor que esta funcionando.</p>
+
+        <ul class="feature-list">
+          <li><span class="check ti ti-check"></span> Productos y servicios ilimitados</li>
+          <li><span class="check ti ti-check"></span> Prioridad en feed y busquedas</li>
+          <li><span class="check ti ti-check"></span> Cupones, descuentos y precio tachado</li>
+          <li><span class="check ti ti-check"></span> Reseñas con calificacion por estrellas</li>
+          <li><span class="check ti ti-check"></span> Multiples botones de contacto</li>
+          <li><span class="check ti ti-check"></span> Estadisticas avanzadas del negocio</li>
+          <li><span class="check ti ti-check"></span> Soporte prioritario</li>
         </ul>
 
-        <div class="card" style="background:#fff;border:1px dashed var(--border);">
-          <h3 style="margin-top:0">Suscripción Premium — <span aria-label="precio">$5</span> / mes</h3>
-          <div class="actions">
-            <a href="https://www.paypal.com/ncp/payment/WMVQM564842BJ" target="_blank" rel="noopener" class="btn btn-primary">
-              Suscribirme con PayPal
-            </a>
-          </div>
-          <p class="hint">El cobro se procesa vía PayPal. El precio es en USD.</p>
+        <div class="plan-actions">
+          <a class="btn btn-primary" href="https://buy.onvopay.com/live_A1sDEAmKtULXZclHzz3TjX_dpb4" target="_blank" rel="noopener">
+            <span class="ti ti-credit-card"></span>
+            <span>Suscribirme por $5 / mes</span>
+          </a>
+          <a class="btn btn-secondary" href="premium-checkout.html">
+            <span class="ti ti-info-circle"></span>
+            Ver detalle del pago
+          </a>
         </div>
       </article>
     </section>
 
-    <section class="card" aria-labelledby="cmpTitle">
-      <h2 id="cmpTitle">Resumen rápido</h2>
-      <div class="grid summary-grid">
-        <div>
-          <h3>Gratis</h3>
-          <ul>
-            <li>10 productos</li>
-            <li>1 botón de contacto</li>
-            <li>Catálogo sin carrito</li>
-            <li>Estadísticas básicas</li>
-          </ul>
-        </div>
-        <div>
-          <h3>Premium</h3>
-          <ul>
-            <li>Ilimitados</li>
-            <li>Carrito & checkout</li>
-            <li>Cupones, reseñas y destacados</li>
-            <li>Estadísticas avanzadas</li>
-          </ul>
-        </div>
+    <section class="comparison" aria-labelledby="cmpTitle">
+      <h2 id="cmpTitle">Resumen rapido</h2>
+      <div class="compare-grid">
+        <div class="head">Funcion</div>
+        <div class="head">Gratis</div>
+        <div class="head">Premium</div>
+        <div>Productos</div>
+        <div>Hasta 10</div>
+        <div class="premium-cell">Ilimitados</div>
+        <div>Visibilidad</div>
+        <div>Normal</div>
+        <div class="premium-cell">Prioridad</div>
+        <div>Estadisticas</div>
+        <div>Basicas</div>
+        <div class="premium-cell">Avanzadas</div>
+        <div>Contacto</div>
+        <div>1 boton</div>
+        <div class="premium-cell">Multiples botones</div>
       </div>
     </section>
 
-    <section class="card" aria-labelledby="termsTitle">
-      <h2 id="termsTitle">Condiciones</h2>
-      <div class="terms-content">
-        <!-- ESPACIO RESERVADO: pegá aquí tus condiciones de uso -->
-      </div>
+    <section class="faq" aria-labelledby="faqTitle">
+      <h2 id="faqTitle">Preguntas frecuentes</h2>
+      <article class="faq-item open">
+        <button class="faq-q" type="button" onclick="toggleFaq(this)">
+          &iquest;Puedo empezar gratis y activar Premium despues?
+          <span class="ti ti-chevron-down"></span>
+        </button>
+        <div class="faq-a">Si. Puedes empezar con el plan gratis y activar Premium desde el dashboard cuando tu negocio este listo para escalar.</div>
+      </article>
+      <article class="faq-item">
+        <button class="faq-q" type="button" onclick="toggleFaq(this)">
+          &iquest;El cobro es mensual?
+          <span class="ti ti-chevron-down"></span>
+        </button>
+        <div class="faq-a">Si. El precio es de $5 USD al mes y el pago se procesa por VopPay.</div>
+      </article>
+      <article class="faq-item">
+        <button class="faq-q" type="button" onclick="toggleFaq(this)">
+          &iquest;Puedo cancelar cuando quiera?
+          <span class="ti ti-chevron-down"></span>
+        </button>
+        <div class="faq-a">Si. Puedes cancelar tu suscripcion sin penalidad. El plan se mantiene activo hasta terminar el periodo pagado.</div>
+      </article>
     </section>
   </main>
 
-  <!-- FOOTER -->
-<footer class="tm-footer">
-  <div class="tm-footer__inner">
+  <footer class="footer">
+    <p>&copy; <span id="year"></span> TuyoMall - Costa Rica</p>
+  </footer>
 
-      <div class="tm-footer__social">
-      <!-- Facebook -->
-      <a class="tm-footer__icon" href="https://www.facebook.com/Tuyomall" target="_blank" aria-label="Facebook">
-          
-   
-        <svg viewBox="0 0 24 24">
-            
-          <path d="M22 12a10 10 0 1 0-11.5 9.9v-7h-2v-3h2v-2.3c0-2 1.2-3.1 3-3.1.9 0 1.8.1 1.8.1v2h-1c-1 0-1.3.6-1.3 1.2V12h2.6l-.4 3h-2.2v7A10 10 0 0 0 22 12z" fill="#1877F2"/>
-        </svg>
-      </a>
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
 
-      <!-- Instagram -->
-      <a class="tm-footer__icon" href="https://www.instagram.com/tuyomall/" target="_blank" aria-label="Instagram">
-        <svg viewBox="0 0 24 24">
-          <path d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5zm5 5a5 5 0 1 0 0 10 5 5 0 0 0 0-10zm6.5-.9a1.1 1.1 0 1 0 0 2.2 1.1 1.1 0 0 0 0-2.2z" fill="#E4405F"/>
-        </svg>
-      </a>
-
-      <!-- TikTok -->
-      <a class="tm-footer__icon" href="https://www.tiktok.com/@tuyomall" target="_blank" aria-label="TikTok">
-        <svg viewBox="0 0 24 24">
-          <path d="M16 2c.6 2.8 2.5 4.7 5 5v4c-2.2 0-4.1-.7-5.6-1.9v6.4a6.5 6.5 0 1 1-5.5-6.4v4a2.5 2.5 0 1 0 1.5 2.3V2H16z" fill="#855ef5"/>
-        </svg>
-      </a>
-
-      <!-- Pinterest -->
-      <a class="tm-footer__icon" href="https://pin.it/7bu34y2Cl" target="_blank" aria-label="Pinterest">
-        <svg viewBox="0 0 24 24">
-          <path d="M12 2a10 10 0 0 0-3.6 19.3c-.1-.8-.2-2 0-2.8.2-.8 1.4-5.8 1.4-5.8s-.3-.7-.3-1.7c0-1.6.9-2.8 2.1-2.8 1 0 1.5.7 1.5 1.6 0 1-.6 2.5-.9 3.9-.3 1.1.6 2 1.7 2 2.1 0 3.7-2.2 3.7-5.3 0-2.8-2-4.7-4.8-4.7-3.3 0-5.2 2.5-5.2 5 0 1 .4 2.1.9 2.7.1.1.1.2.1.3-.1.3-.3 1.1-.4 1.2-.1.2-.2.2-.4.1-1.4-.6-2.3-2.6-2.3-4.1 0-3.4 2.5-6.6 7.2-6.6 3.8 0 6.8 2.7 6.8 6.4 0 3.8-2.4 6.9-5.8 6.9-1.1 0-2.2-.6-2.6-1.3l-.7 2.6c-.2.9-.8 2-1.2 2.7A10 10 0 1 0 12 2z"fill="#E60023"/>
-        </svg>
-      </a>
-    </div>
-
-    <div class="tm-footer__line"></div>
-
-    <p class="tm-footer__copy">
-      © <span id="year"></span> TuyoMall Todos los derechos reservados. ·
-      <a href="mailto:tuyomall.info@gmail.com">tuyomall.info@gmail.com</a> ·
-      <a href="https://wa.me/message/6WYXKGUVOYLWO1" target="_blank" rel="noopener">WhatsApp +506 8802 7022</a>
-    </p>
-
-  </div>
-</footer>
-
-
-  <!-- JS global -->
-  <script src="assets/js/main.js" defer></script>
-  <!-- JS específico -->
-  <script src="assets/js/pages/planes.js" defer></script>
-  <!-- Auth (para header dinámico) -->
-  <script src="assets/js/auth/auth-utils.js" defer></script>
-  <script src="assets/js/auth/header-perfil.js" defer></script>
-  <script src="assets/js/auth/header-state.js" defer></script>
+    function toggleFaq(button) {
+      const item = button.closest('.faq-item');
+      const isOpen = item.classList.contains('open');
+      document.querySelectorAll('.faq-item').forEach((faq) => faq.classList.remove('open'));
+      if (!isOpen) item.classList.add('open');
+    }
+  </script>
 </body>
 </html>
-
-
