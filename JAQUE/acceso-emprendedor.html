@@ -311,6 +311,49 @@ input.error, select.error { border-color: var(--danger); }
 .plan-opt.selected .plan-opt-price { color: var(--coral); }
 .plan-opt.selected.gold-plan .plan-opt-price { color: #92400E; }
 
+html.tm-dark .plan-opt {
+  background: rgba(15,23,32,0.72);
+  border-color: rgba(255,255,255,0.16);
+}
+
+html.tm-dark .plan-opt-name {
+  color: #F8FAFC !important;
+}
+
+html.tm-dark .plan-opt-price {
+  color: #CBD5E1 !important;
+}
+
+html.tm-dark .plan-opt.selected {
+  background: rgba(255,107,71,0.14);
+  border-color: rgba(255,107,71,0.62);
+}
+
+html.tm-dark .plan-opt.selected .plan-opt-price {
+  color: #FF8A6A !important;
+}
+
+html.tm-dark .plan-opt.gold-plan,
+html.tm-dark .plan-opt.selected.gold-plan {
+  background: linear-gradient(135deg, #FFF7DE 0%, #FFFDF6 100%) !important;
+  border-color: #F0B429 !important;
+  box-shadow: 0 12px 28px rgba(240,180,41,0.12);
+}
+
+html.tm-dark .plan-opt.gold-plan .plan-opt-name,
+html.tm-dark .plan-opt.selected.gold-plan .plan-opt-name {
+  color: #14213D !important;
+}
+
+html.tm-dark .plan-opt.gold-plan .plan-opt-price,
+html.tm-dark .plan-opt.selected.gold-plan .plan-opt-price {
+  color: #92400E !important;
+}
+
+html.tm-dark .plan-opt-badge {
+  color: #14213D !important;
+}
+
 /* ── PASSWORD STRENGTH ── */
 .strength-bar {
   display: flex; gap: 4px; margin-top: 8px;
