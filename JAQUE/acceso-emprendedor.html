@@ -223,6 +223,7 @@ label {
 }
 
 .input-wrap { position: relative; }
+.input-wrap input { padding-right: 82px; }
 
 input[type=text], input[type=email],
 input[type=password], input[type=tel],
@@ -253,7 +254,22 @@ input.error, select.error { border-color: var(--danger); }
 .input-icon {
   position: absolute; right: 14px; top: 50%;
   transform: translateY(-50%);
-  font-size: 16px; cursor: pointer; color: var(--muted);
+  border: 1px solid rgba(20,33,61,0.1);
+  border-radius: 999px;
+  background: var(--gray-l);
+  padding: 5px 9px;
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 1;
+  cursor: pointer;
+  color: var(--slate);
+  user-select: none;
+  transition: all 0.18s;
+}
+.input-icon:hover {
+  border-color: rgba(255,107,71,0.32);
+  background: var(--coral-3);
+  color: var(--coral);
 }
 
 .field-error {
@@ -496,6 +512,8 @@ input.error, select.error { border-color: var(--danger); }
   .modal-body { padding: 16px; }
 }
 </style>
+  <link rel="stylesheet" href="assets/css/theme.css">
+  <script src="assets/js/theme.js" defer></script>
 </head>
 <body>
 
@@ -565,7 +583,7 @@ input.error, select.error { border-color: var(--danger); }
         <label>Contraseña</label>
         <div class="input-wrap">
           <input type="password" id="l-pass" placeholder="••••••••" oninput="clearErr(this)">
-          <span class="input-icon" onclick="togglePass('l-pass', this)">👁️</span>
+          <span class="input-icon" onclick="togglePass('l-pass', this)">Ver</span>
         </div>
         <div class="field-error" id="l-pass-err">Ingresa tu contraseña</div>
       </div>
@@ -642,7 +660,7 @@ input.error, select.error { border-color: var(--danger); }
         <label>Contraseña</label>
         <div class="input-wrap">
           <input type="password" id="r-pass" placeholder="Mínimo 8 caracteres" oninput="checkStrength(this.value)">
-          <span class="input-icon" onclick="togglePass('r-pass', this)">👁️</span>
+          <span class="input-icon" onclick="togglePass('r-pass', this)">Ver</span>
         </div>
         <div class="strength-bar">
           <div class="strength-seg" id="seg1"></div>
@@ -770,7 +788,7 @@ function switchView(view) {
 function togglePass(id, icon) {
   const input = document.getElementById(id);
   input.type = input.type === 'password' ? 'text' : 'password';
-  icon.textContent = input.type === 'password' ? '👁️' : '🙈';
+  icon.textContent = input.type === 'password' ? 'Ver' : 'Ocultar';
 }
 
 function clearErr(input) { input.classList.remove('error'); }
@@ -795,7 +813,20 @@ function checkStrength(val) {
 
 function isEmail(v) { return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v); }
 
-function doLogin() {
+async function postAuth(url, data) {
+  const response = await fetch(url, { method: 'POST', body: data });
+  const contentType = response.headers.get('content-type') || '';
+  if (!contentType.includes('application/json')) {
+    throw new Error('El servidor actual no ejecuta PHP. Para registrar o iniciar sesion debes probar desde cPanel/Namecheap o desde un servidor local con PHP, no desde localhost:3000.');
+  }
+  const payload = await response.json().catch(() => ({ ok: false, message: 'Respuesta invalida del servidor.' }));
+  if (!response.ok || !payload.ok) {
+    throw new Error(payload.message || 'No se pudo completar la solicitud.');
+  }
+  return payload;
+}
+
+async function doLogin() {
   let ok = true;
   const email = document.getElementById('l-email');
   const pass  = document.getElementById('l-pass');
@@ -804,19 +835,34 @@ function doLogin() {
   if (!pass.value) { pass.classList.add('error'); document.getElementById('l-pass-err').classList.add('show'); ok = false; }
   if (!ok) return;
   btn.classList.add('loading'); btn.disabled = true;
-  setTimeout(() => { window.location.href = 'dashboard-emprendedor.html'; }, 1200);
+  try {
+    const data = new FormData();
+    data.append('email', email.value.trim());
+    data.append('password', pass.value);
+    const result = await postAuth('auth/login-business.php', data);
+    window.location.href = result.redirect || 'dashboard-emprendedor.php';
+  } catch (error) {
+    alert(error.message);
+    btn.classList.remove('loading');
+    btn.disabled = false;
+  }
 }
 
-function doRegister() {
+async function doRegister() {
   let ok = true;
+  const nombre   = document.getElementById('r-nombre');
+  const apellido = document.getElementById('r-apellido');
   const negocio  = document.getElementById('r-negocio');
   const email    = document.getElementById('r-email');
   const wa       = document.getElementById('r-wa');
   const prov     = document.getElementById('r-provincia');
+  const canton   = document.getElementById('r-canton');
   const pass     = document.getElementById('r-pass');
   const terms    = document.getElementById('r-terms');
   const btn      = document.getElementById('btn-register');
 
+  if (!nombre.value.trim()) { nombre.classList.add('error'); ok = false; }
+  if (!apellido.value.trim()) { apellido.classList.add('error'); ok = false; }
   if (!negocio.value.trim()) { negocio.classList.add('error'); document.getElementById('r-negocio-err').classList.add('show'); ok = false; }
   if (!isEmail(email.value)) { email.classList.add('error'); document.getElementById('r-email-err').classList.add('show'); ok = false; }
   if (!wa.value.trim()) { wa.classList.add('error'); document.getElementById('r-wa-err').classList.add('show'); ok = false; }
@@ -826,10 +872,25 @@ function doRegister() {
   if (!ok) return;
 
   btn.classList.add('loading'); btn.disabled = true;
-  if (selectedPlan === 'premium') {
-    setTimeout(() => { window.location.href = 'premium-checkout.html'; }, 1200);
-  } else {
-    setTimeout(() => { window.location.href = 'dashboard-emprendedor.html'; }, 1200);
+  try {
+    const data = new FormData();
+    data.append('r-nombre', nombre.value.trim());
+    data.append('r-apellido', apellido.value.trim());
+    data.append('r-negocio', negocio.value.trim());
+    data.append('r-email', email.value.trim());
+    data.append('r-wa', wa.value.trim());
+    data.append('r-provincia', prov.value);
+    data.append('r-canton', canton.value.trim());
+    data.append('r-password', pass.value);
+    data.append('plan', selectedPlan);
+    if (terms.checked) data.append('r-terms', '1');
+
+    const result = await postAuth('auth/register-business.php', data);
+    window.location.href = result.redirect || 'dashboard-emprendedor.php';
+  } catch (error) {
+    alert(error.message);
+    btn.classList.remove('loading');
+    btn.disabled = false;
   }
 }
 
@@ -857,3 +918,4 @@ document.getElementById('r-terms').addEventListener('change', function() {
 
 </body>
 </html>
+

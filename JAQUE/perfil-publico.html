@@ -1,154 +1,684 @@
 <!DOCTYPE html>
-<html lang="es-CR">
+<html lang="es">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Perfil público | TuyoMall</title>
-  <meta name="description" content="Perfil público de un emprendimiento en TuyoMall.">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Artesanías La Ceiba | TuyoMall</title>
+<meta name="description" content="Perfil público de Artesanías La Ceiba en TuyoMall.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Clash+Display:wght@500;600;700&family=Syne:wght@500;600;700;800&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.14.0/dist/tabler-icons.min.css">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;800&family=Sansita:wght@700;800&display=swap" rel="stylesheet">
+:root {
+  --coral: #FF6B47;
+  --coral-2: #FFF0EC;
+  --coral-3: #FFD6C8;
+  --navy: #14213D;
+  --slate: #4A5568;
+  --muted: #8A98AA;
+  --line: #EDE4D5;
+  --sand: #FDFAF6;
+  --soft: #F5F7FA;
+  --white: #FFFFFF;
+  --green: #16A34A;
+  --gold: #F5A623;
+  --r: 8px;
+  --r-lg: 14px;
+}
 
-  <link rel="stylesheet" href="assets/css/base.css?v=20">
-  <link rel="stylesheet" href="assets/css/layout.css?v=20">
-  <link rel="stylesheet" href="assets/css/components.css?v=20">
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--sand);
+  color: var(--navy);
+  min-height: 100vh;
+}
 
-  <style>
-    .brand__logo {
-      transition: transform 0.2s;
-    }
-    .brand:hover .brand__logo {
-      transform: rotate(-6deg) scale(1.05);
-    }
+a { color: inherit; text-decoration: none; }
+button { font: inherit; cursor: pointer; }
 
-    /* Ajustes visuales rápidos para el perfil público */
-    .public-hero {
-      margin: 16px 0 12px;
-    }
-    .cover {
-      width: 100%;
-      height: 180px;
-      border-radius: 12px;
-      background-color: #eee;
-      background-size: cover;
-      background-position: center center;
-      margin-bottom: 16px;
-    }
-    .logo-wrap {
-      display: flex;
-      align-items: center;
-      gap: 16px;
-      margin-bottom: 12px;
-    }
-    .logo {
-      width: 96px;
-      height: 96px;
-      border-radius: 16px;
-      background-color: #ddd;
-      background-size: cover;
-      background-position: center center;
-      flex-shrink: 0;
-    }
-    .social-links {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      margin: 12px 0;
-    }
-    .social-links a {
-      padding: 6px 10px;
-      border-radius: 999px;
-      border: 1px solid #40E0D0;
-      font-size: 0.9rem;
-      text-decoration: none;
-    }
-    .products-section {
-      margin-top: 24px;
-    }
-    .product-list {
-      list-style: none;
-      padding: 0;
-      margin: 0;
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 12px;
-    }
-    .product-card {
-      border-radius: 12px;
-      border: 1px solid #eee;
-      padding: 10px 12px;
-      background: #fff;
-    }
-    .product-card h3 {
-      margin: 0 0 6px;
-    }
-    .product-card .price {
-      font-weight: 700;
-      margin-top: 4px;
-    }
-    #perfilError {
-      color: #c0392b;
-      margin-top: 10px;
-    }
-  </style>
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  height: 68px;
+  background: rgba(255,255,255,0.94);
+  backdrop-filter: blur(18px);
+  border-bottom: 1px solid rgba(20,33,61,0.08);
+}
+.topbar-inner {
+  max-width: 1440px;
+  height: 100%;
+  margin: 0 auto;
+  padding: 0 32px;
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-family: 'Clash Display', sans-serif;
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+}
+.brand-mark {
+  width: 60px;
+  height: 60px;
+  border-radius: 11px;
+  background: var(--coral);
+  display: grid;
+  place-items: center;
+  box-shadow: 0 4px 12px rgba(255,107,71,0.35);
+  overflow: hidden;
+  transition: transform 0.2s;
+}
+.brand:hover .brand-mark { transform: rotate(-6deg) scale(1.05); }
+.brand-mark img {
+  width: 70px;
+  height: 70px;
+  object-fit: contain;
+}
+.brand-mall {
+  position: relative;
+  display: inline-block;
+  color: var(--coral);
+  line-height: 1;
+}
+.brand-underline {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: calc(100% + 2px);
+  display: block;
+  width: 100%;
+  height: 7px;
+  pointer-events: none;
+}
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-left: 16px;
+}
+.nav-links a {
+  padding: 8px 14px;
+  border-radius: 999px;
+  color: var(--slate);
+  font-size: 14px;
+  font-weight: 700;
+}
+.nav-links a:hover { background: var(--soft); color: var(--navy); }
+.nav-actions {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.btn {
+  min-height: 42px;
+  padding: 0 17px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: var(--white);
+  color: var(--navy);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: 800;
+  transition: transform 0.18s, border-color 0.18s, background 0.18s, box-shadow 0.18s;
+}
+.btn:hover {
+  transform: translateY(-1px);
+  border-color: rgba(255,107,71,0.35);
+}
+.btn-coral {
+  background: var(--coral);
+  color: white;
+  border-color: var(--coral);
+  box-shadow: 0 8px 22px rgba(255,107,71,0.22);
+}
+.btn-coral:hover { background: #e85a35; }
+.btn-green {
+  background: #22C55E;
+  color: white;
+  border-color: #22C55E;
+}
+
+.page {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 22px 32px 56px;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 340px;
+  gap: 24px;
+}
+.panel {
+  background: var(--white);
+  border: 1px solid rgba(20,33,61,0.08);
+  border-radius: var(--r-lg);
+  box-shadow: 0 10px 34px rgba(20,33,61,0.05);
+}
+.profile-panel { overflow: hidden; }
+.cover {
+  height: 220px;
+  background:
+    linear-gradient(180deg, rgba(20,33,61,0.08), rgba(20,33,61,0.24)),
+    url('https://images.unsplash.com/photo-1602874801006-e26e88ed23e1?w=1400&h=500&fit=crop&q=80');
+  background-size: cover;
+  background-position: center;
+}
+.profile-body {
+  padding: 0 28px 22px;
+}
+.profile-main {
+  display: grid;
+  grid-template-columns: 176px minmax(0, 1fr);
+  gap: 28px;
+  margin-top: -86px;
+}
+.biz-avatar {
+  width: 176px;
+  height: 176px;
+  border-radius: 50%;
+  border: 5px solid white;
+  outline: 1px solid var(--line);
+  object-fit: cover;
+  background: var(--navy);
+  box-shadow: 0 10px 30px rgba(20,33,61,0.15);
+}
+.profile-info {
+  padding-top: 92px;
+}
+.title-row {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.title-row h1 {
+  font-family: 'Syne', sans-serif;
+  font-size: 34px;
+  line-height: 1.05;
+  font-weight: 800;
+}
+.badge {
+  height: 25px;
+  padding: 0 9px;
+  border-radius: 999px;
+  background: var(--coral);
+  color: white;
+  font-size: 11px;
+  font-weight: 800;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+.verified {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: #3B82F6;
+  color: white;
+  display: grid;
+  place-items: center;
+}
+.profile-meta {
+  margin-top: 10px;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  color: var(--slate);
+  font-size: 14px;
+}
+.meta-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  border: 1px solid var(--line);
+  background: var(--sand);
+  border-radius: 999px;
+  padding: 4px 9px;
+  color: var(--navy);
+  font-size: 12px;
+  font-weight: 800;
+}
+.stats-row {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(110px, 1fr));
+  margin: 22px 0 18px;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+.stat {
+  padding: 13px 12px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.stat + .stat { border-left: 1px solid var(--line); }
+.stat .ti { font-size: 23px; color: var(--coral); }
+.stat strong {
+  display: block;
+  font-size: 18px;
+  line-height: 1;
+}
+.stat span {
+  display: block;
+  margin-top: 3px;
+  color: var(--muted);
+  font-size: 12px;
+}
+.bio {
+  max-width: 760px;
+  color: var(--slate);
+  line-height: 1.55;
+  font-size: 14px;
+}
+.bio strong { color: var(--navy); }
+.info-strip {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin-top: 14px;
+  color: var(--slate);
+  font-size: 13px;
+}
+.info-strip span {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.info-strip .ti { color: var(--coral); font-size: 17px; }
+.profile-actions {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr 1fr;
+  gap: 10px;
+  margin-top: 22px;
+}
+.profile-actions .btn { border-radius: var(--r); width: 100%; }
+
+.highlights {
+  display: flex;
+  gap: 26px;
+  padding: 22px 38px 24px;
+  overflow-x: auto;
+  border-top: 1px solid var(--line);
+}
+.highlight {
+  width: 92px;
+  flex: 0 0 auto;
+  text-align: center;
+  color: var(--navy);
+  font-size: 12px;
+  font-weight: 800;
+}
+.highlight-img {
+  width: 76px;
+  height: 76px;
+  margin: 0 auto 9px;
+  border-radius: 50%;
+  padding: 3px;
+  background: linear-gradient(135deg, var(--coral), var(--gold));
+}
+.highlight-img img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  border: 3px solid white;
+  object-fit: cover;
+}
+.tabs {
+  margin-top: 18px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  border-radius: var(--r-lg) var(--r-lg) 0 0;
+  border: 1px solid rgba(20,33,61,0.08);
+  overflow: hidden;
+}
+.tab-btn {
+  height: 58px;
+  border: none;
+  background: white;
+  color: var(--slate);
+  font-size: 13px;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border-bottom: 2px solid transparent;
+}
+.tab-btn.active {
+  color: var(--coral);
+  border-bottom-color: var(--coral);
+}
+.post-shell {
+  border-top: none;
+  border-radius: 0 0 var(--r-lg) var(--r-lg);
+  padding: 16px;
+}
+.posts-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+}
+.post-card {
+  position: relative;
+  aspect-ratio: 1 / 1;
+  border-radius: var(--r);
+  overflow: hidden;
+  background: var(--soft);
+}
+.post-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.24s;
+}
+.post-card:hover img { transform: scale(1.04); }
+.post-menu {
+  position: absolute;
+  top: 9px;
+  right: 9px;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: rgba(10,16,28,0.46);
+  color: white;
+  display: grid;
+  place-items: center;
+}
+.post-overlay {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  min-height: 52px;
+  padding: 10px;
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  color: white;
+  background: linear-gradient(180deg, transparent, rgba(8,14,25,0.72));
+}
+.post-stats {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  font-weight: 800;
+}
+.price-chip {
+  background: rgba(8,14,25,0.68);
+  border: 1px solid rgba(255,255,255,0.2);
+  border-radius: 999px;
+  padding: 5px 8px;
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.side-panel {
+  padding: 18px;
+}
+.side-panel h2 {
+  font-family: 'Syne', sans-serif;
+  font-size: 20px;
+  margin-bottom: 14px;
+}
+.contact-card {
+  background: var(--navy);
+  color: white;
+  border-color: transparent;
+}
+.contact-card h2 { color: white; }
+.contact-card p {
+  color: rgba(255,255,255,0.72);
+  line-height: 1.5;
+  font-size: 13px;
+  margin-bottom: 14px;
+}
+.contact-card .btn {
+  width: 100%;
+  border-radius: var(--r);
+  margin-top: 8px;
+}
+.contact-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 0;
+  border-top: 1px solid var(--line);
+  font-size: 13px;
+}
+.contact-row:first-of-type { border-top: none; }
+.contact-row .ti {
+  width: 26px;
+  font-size: 19px;
+  color: var(--coral);
+}
+.contact-row strong {
+  display: block;
+  font-weight: 800;
+}
+.contact-row small {
+  color: var(--muted);
+  font-size: 12px;
+}
+.review {
+  padding: 14px 0;
+  border-top: 1px solid var(--line);
+}
+.review:first-of-type { border-top: none; }
+.stars {
+  color: var(--gold);
+  font-size: 15px;
+  margin-bottom: 6px;
+}
+.review p {
+  color: var(--slate);
+  line-height: 1.45;
+  font-size: 13px;
+}
+.review small {
+  display: block;
+  margin-top: 7px;
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 700;
+}
+
+@media (max-width: 1120px) {
+  .page { grid-template-columns: 1fr; }
+}
+@media (max-width: 760px) {
+  .topbar-inner { padding: 0 14px; gap: 10px; }
+  .nav-links { display: none; }
+  .nav-actions .btn:not(.btn-coral) { display: none; }
+  .page { padding: 14px 12px 36px; }
+  .cover { height: 160px; }
+  .profile-body { padding: 0 14px 18px; }
+  .profile-main { grid-template-columns: 1fr; gap: 10px; text-align: center; }
+  .profile-info { padding-top: 0; }
+  .biz-avatar { width: 136px; height: 136px; margin: 0 auto; }
+  .title-row,
+  .profile-meta,
+  .info-strip { justify-content: center; }
+  .stats-row { grid-template-columns: repeat(2, 1fr); }
+  .stat + .stat { border-left: none; }
+  .stat:nth-child(even) { border-left: 1px solid var(--line); }
+  .profile-actions { grid-template-columns: 1fr; }
+  .highlights { padding: 18px 14px; }
+  .posts-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+</style>
+  <link rel="stylesheet" href="assets/css/theme.css">
+  <script src="assets/js/theme.js" defer></script>
 </head>
 <body>
-  <header class="site-header">
-    <div class="container nav">
-      <a class="brand" href="index.html">
-        <span class="brand__logo"></span><span class="brand__name">TuyoMall</span>
-      </a>
-      <nav class="main-menu">
-        <a href="index.html#categorias">Categorías</a>
-        <a href="planes.html">Planes</a>
-        <a href="acceso-cliente.html" class="btn btn-outline">Entrar</a>
-      </nav>
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="principal.html">
+      <span class="brand-mark">
+        <img src="assets/img/Logo_TuyoMall.2.png" alt="Logo TuyoMall">
+      </span>
+      <span>Tuyo<span class="brand-mall">Mall
+        <svg class="brand-underline" viewBox="0 0 46 7" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+          <path d="M2 4.5 C8 1.5, 16 6.5, 23 3.5 C30 0.5, 38 6, 44 3" stroke="#FF6B47" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </span></span>
+    </a>
+    <nav class="nav-links">
+      <a href="principal.html">Feed</a>
+      <a href="planes.html">Planes</a>
+      <a href="faq-contacto.html">Ayuda</a>
+    </nav>
+    <div class="nav-actions">
+      <button class="btn" onclick="shareProfile()"><span class="ti ti-share-3"></span> Compartir</button>
+      <a class="btn btn-coral" href="acceso-cliente.html"><span class="ti ti-login"></span> Entrar</a>
     </div>
-  </header>
+  </div>
+</header>
 
-  <main class="container" id="top" tabindex="-1">
-    <section class="card">
-      <div id="bizCover" class="cover"></div>
-
-      <div class="logo-wrap">
-        <div id="bizLogo" class="logo"></div>
-        <div>
-          <h1 id="bizName" class="public-hero">Cargando emprendimiento…</h1>
-          <p id="bizLoc" class="hint"></p>
+<main class="page">
+  <section>
+    <article class="panel profile-panel">
+      <div class="cover"></div>
+      <div class="profile-body">
+        <div class="profile-main">
+          <img class="biz-avatar" src="https://images.unsplash.com/photo-1606722590583-6951b5ea92ad?w=400&h=400&fit=crop&q=80" alt="Artesanías La Ceiba">
+          <div class="profile-info">
+            <div class="title-row">
+              <h1>Artesanías La Ceiba</h1>
+              <span class="badge"><span class="ti ti-crown"></span> PRO</span>
+              <span class="verified"><span class="ti ti-check"></span></span>
+            </div>
+            <div class="profile-meta">
+              <span><span class="ti ti-map-pin"></span> Cartago, Costa Rica</span>
+              <span class="meta-pill"><span class="ti ti-palette"></span> Artesanías & Hogar</span>
+            </div>
+            <div class="stats-row">
+              <div class="stat"><span class="ti ti-layout-grid"></span><div><strong>12</strong><span>publicaciones</span></div></div>
+              <div class="stat"><span class="ti ti-eye"></span><div><strong>548</strong><span>vistas</span></div></div>
+              <div class="stat"><span class="ti ti-bookmark"></span><div><strong>86</strong><span>guardados</span></div></div>
+              <div class="stat"><span class="ti ti-star"></span><div><strong>4.9</strong><span>calificación</span></div></div>
+            </div>
+            <p class="bio">
+              <strong>Piezas artesanales únicas</strong> creadas con materiales naturales de nuestra tierra.
+              Trabajamos canastas, decoración y regalos personalizados hechos a mano en Costa Rica.
+            </p>
+            <div class="info-strip">
+              <span><span class="ti ti-clock"></span> Lun - Sáb 8:00 - 18:00</span>
+              <span><span class="ti ti-circle-filled" style="color:var(--green)"></span> Responde en minutos</span>
+              <span><span class="ti ti-truck"></span> Envíos a todo el país</span>
+            </div>
+            <div class="profile-actions">
+              <a class="btn btn-green" href="https://wa.me/50688881234" target="_blank"><span class="ti ti-brand-whatsapp"></span> Contactar por WhatsApp</a>
+              <button class="btn" onclick="saveProfile(this)"><span class="ti ti-bookmark"></span> Guardar negocio</button>
+              <button class="btn" onclick="shareProfile()"><span class="ti ti-share-3"></span> Compartir</button>
+            </div>
+          </div>
         </div>
       </div>
-
-      <p id="bizAbout"></p>
-
-      <div class="social-links">
-        <a id="waLink"  href="#" target="_blank" rel="noopener noreferrer">WhatsApp</a>
-        <a id="igLink"  href="#" target="_blank" rel="noopener noreferrer">Instagram</a>
-        <a id="fbLink"  href="#" target="_blank" rel="noopener noreferrer">Facebook</a>
-        <a id="ttLink"  href="#" target="_blank" rel="noopener noreferrer">TikTok</a>
+      <div class="highlights" aria-label="Destacados">
+        <div class="highlight"><div class="highlight-img"><img src="https://images.unsplash.com/photo-1606722590583-6951b5ea92ad?w=160&h=160&fit=crop&q=80" alt=""></div>Canastas</div>
+        <div class="highlight"><div class="highlight-img"><img src="https://images.unsplash.com/photo-1602874801006-e26e88ed23e1?w=160&h=160&fit=crop&q=80" alt=""></div>Talleres</div>
+        <div class="highlight"><div class="highlight-img"><img src="https://images.unsplash.com/photo-1607082348824-0a96f2a4b9da?w=160&h=160&fit=crop&q=80" alt=""></div>Envíos</div>
+        <div class="highlight"><div class="highlight-img"><img src="https://images.unsplash.com/photo-1598300042247-d088f8ab3a91?w=160&h=160&fit=crop&q=80" alt=""></div>Reseñas</div>
       </div>
+    </article>
 
-      <p id="perfilError" class="hint"></p>
-
-      <section class="products-section">
-        <h2>Productos y servicios</h2>
-        <ul id="productList" class="product-list">
-          <li class="hint">Cargando catálogo…</li>
-        </ul>
-      </section>
+    <nav class="tabs">
+      <button class="tab-btn active"><span class="ti ti-layout-grid"></span> Productos</button>
+      <button class="tab-btn"><span class="ti ti-message-star"></span> Reseñas</button>
+      <button class="tab-btn"><span class="ti ti-info-circle"></span> Información</button>
+    </nav>
+    <section class="panel post-shell">
+      <div class="posts-grid" id="postsGrid"></div>
     </section>
-  </main>
+  </section>
 
-  <footer class="site-footer">
-    <p>© <span id="year"></span> TuyoMall · Costa Rica</p>
-  </footer>
+  <aside class="sidebar">
+    <article class="panel side-panel contact-card">
+      <h2>¿Te interesa algo?</h2>
+      <p>Contactá directo con el negocio. TuyoMall no cobra comisión ni procesa pagos.</p>
+      <a class="btn btn-green" href="https://wa.me/50688881234" target="_blank"><span class="ti ti-brand-whatsapp"></span> Escribir por WhatsApp</a>
+      <button class="btn btn-coral" onclick="shareProfile()"><span class="ti ti-share-3"></span> Compartir perfil</button>
+    </article>
 
-  <script>
-    const yearEl = document.getElementById('year');
-    if (yearEl) yearEl.textContent = new Date().getFullYear();
-  </script>
+    <article class="panel side-panel">
+      <h2>Contacto y redes</h2>
+      <div class="contact-row"><span class="ti ti-brand-whatsapp"></span><div><strong>WhatsApp</strong><small>+506 8888-1234</small></div></div>
+      <div class="contact-row"><span class="ti ti-mail"></span><div><strong>Correo</strong><small>hola@artesaniaslaceiba.cr</small></div></div>
+      <div class="contact-row"><span class="ti ti-brand-instagram"></span><div><strong>Instagram</strong><small>@artesanias_laceiba</small></div></div>
+      <div class="contact-row"><span class="ti ti-map-pin"></span><div><strong>Ubicación</strong><small>Cartago, Costa Rica</small></div></div>
+    </article>
 
-  <!-- JS del perfil público -->
-  <script src="assets/js/pages/perfil-publico.js?v=1" defer></script>
+    <article class="panel side-panel">
+      <h2>Reseñas recientes</h2>
+      <div class="review"><div class="stars">★★★★★</div><p>Producto hermoso y muy buena atención por WhatsApp.</p><small>María C.</small></div>
+      <div class="review"><div class="stars">★★★★★</div><p>La canasta llegó rápido y se nota el trabajo artesanal.</p><small>José R.</small></div>
+      <div class="review"><div class="stars">★★★★☆</div><p>Muy recomendado para regalos personalizados.</p><small>Andrea M.</small></div>
+    </article>
+  </aside>
+</main>
+
+<script>
+const posts = [
+  { img:'https://images.unsplash.com/photo-1606722590583-6951b5ea92ad?w=600&h=600&fit=crop&q=80', price:'₡18.000', likes:42, saves:11 },
+  { img:'https://images.unsplash.com/photo-1513519245088-0e12902e5a38?w=600&h=600&fit=crop&q=80', price:'₡22.500', likes:35, saves:7 },
+  { img:'https://images.unsplash.com/photo-1514228742587-6b1558fcca3d?w=600&h=600&fit=crop&q=80', price:'₡9.000', likes:28, saves:5 },
+  { img:'https://images.unsplash.com/photo-1587132137056-bfbf0166836e?w=600&h=600&fit=crop&q=80', price:'₡15.000', likes:31, saves:8 },
+  { img:'https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?w=600&h=600&fit=crop&q=80', price:'₡12.000', likes:19, saves:3 },
+  { img:'https://images.unsplash.com/photo-1590736969955-71cc94901144?w=600&h=600&fit=crop&q=80', price:'₡28.000', likes:27, saves:6 }
+];
+
+document.getElementById('postsGrid').innerHTML = posts.map(p => `
+  <article class="post-card">
+    <img src="${p.img}" alt="Producto publicado">
+    <span class="post-menu"><span class="ti ti-dots"></span></span>
+    <div class="post-overlay">
+      <div class="post-stats">
+        <span><span class="ti ti-heart-filled"></span> ${p.likes}</span>
+        <span><span class="ti ti-bookmark"></span> ${p.saves}</span>
+      </div>
+      <span class="price-chip">${p.price}</span>
+    </div>
+  </article>
+`).join('');
+
+function saveProfile(btn) {
+  btn.classList.toggle('btn-coral');
+  btn.innerHTML = btn.classList.contains('btn-coral')
+    ? '<span class="ti ti-bookmark-filled"></span> Guardado'
+    : '<span class="ti ti-bookmark"></span> Guardar negocio';
+}
+
+async function shareProfile() {
+  const data = {
+    title: 'Artesanías La Ceiba en TuyoMall',
+    text: 'Mirá este negocio en TuyoMall',
+    url: window.location.href
+  };
+  if (navigator.share) {
+    await navigator.share(data);
+    return;
+  }
+  await navigator.clipboard.writeText(window.location.href);
+  alert('Enlace copiado.');
+}
+</script>
 </body>
 </html>

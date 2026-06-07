@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>TuyoMall — Explorar productos</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Clash+Display:wght@500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Syne:wght@400;500;600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.14.0/dist/tabler-icons.min.css">
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -82,7 +82,7 @@ body {
 }
 .nav-logo:hover .nav-logo-mark { transform: rotate(-6deg) scale(1.05); }
 .nav-logo-text {
-  font-family: 'Syne', sans-serif;
+  font-family: 'Clash Display', sans-serif;
   font-size: 20px; font-weight: 800;
   letter-spacing: -0.5px; line-height: 1.1;
   color: var(--navy);
@@ -274,10 +274,10 @@ body.dark-mode .sidebar-right {
   min-width: 180px;
 }
 .feed-title {
-  font-family: 'Syne', sans-serif;
+  font-family: 'Plus Jakarta Sans', sans-serif;
   font-size: 18px;
-  font-weight: 800;
-  letter-spacing: -0.25px;
+  font-weight: 700;
+  letter-spacing: 0;
   line-height: 1.15;
   color: var(--navy);
 }
@@ -630,9 +630,9 @@ body.dark-mode .sidebar-right {
   color: var(--coral); font-size: 18px;
 }
 .premium-banner h4 {
-  font-family: 'Syne', sans-serif;
-  font-size: 13px;
-  font-weight: 800;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
   line-height: 1.25;
   color: var(--navy);
   margin-bottom: 6px;
@@ -842,6 +842,8 @@ select {
   }
 }
 </style>
+  <link rel="stylesheet" href="assets/css/theme.css">
+  <script src="assets/js/theme.js" defer></script>
 </head>
 <body>
 
@@ -874,13 +876,13 @@ select {
     <a href="acceso-emprendedor.html" class="nav-btn btn-ghost">
       <span class="ti ti-rocket"></span> Emprendedor
     </a>
-    <a href="acceso-cliente.php" class="nav-btn btn-coral">
+    <a href="acceso-cliente.html" class="nav-btn btn-coral">
       <span class="ti ti-login"></span> Iniciar sesión
     </a>
     <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()" title="Cambiar modo">
       <span class="ti ti-moon"></span>
     </button>
-    <div class="nav-avatar" title="Mi cuenta">U</div>
+    <a href="dashboard-emprendedor.php" class="nav-avatar" title="Dashboard emprendedor">U</a>
   </div>
 </nav>
 
@@ -1213,18 +1215,6 @@ const allProducts = [
 let activeCat='', activeProvs=new Set(), activeType='', searchQ='';
 let currentView='grid', visibleCount=12;
 let likedIds=new Set(), savedIds=new Set();
-
-function applyTheme(theme) {
-  const isDark = theme === 'dark';
-  document.body.classList.toggle('dark-mode', isDark);
-  const icon = document.querySelector('#themeToggle .ti');
-  if (icon) icon.className = `ti ${isDark ? 'ti-sun' : 'ti-moon'}`;
-  localStorage.setItem('tuyomall_theme', isDark ? 'dark' : 'light');
-}
-
-function toggleTheme() {
-  applyTheme(document.body.classList.contains('dark-mode') ? 'light' : 'dark');
-}
 
 function getFiltered() {
   return allProducts.filter(p => {
@@ -1621,7 +1611,6 @@ document.addEventListener('keydown',e=>{
   }
 });
 
-applyTheme(localStorage.getItem('tuyomall_theme') || 'light');
 initDraggableFab();
 allProducts.sort((a,b)=>b.premium-a.premium);
 renderProducts();

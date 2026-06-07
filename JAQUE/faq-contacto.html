@@ -1,216 +1,626 @@
-<!doctype html>
-<html lang="es" class="h-full">
+<!DOCTYPE html>
+<html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Tuyomall - Tu espacio para emprender</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ayuda y Contacto | TuyoMall</title>
+<meta name="description" content="Centro de ayuda, preguntas frecuentes y contacto de TuyoMall.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Clash+Display:wght@500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.14.0/dist/tabler-icons.min.css">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-  <!-- Tailwind CDN (para pruebas rápidas; luego te digo cómo optimizarlo) -->
-  <script src="https://cdn.tailwindcss.com"></script>
+:root {
+  --coral: #FF6B47;
+  --coral-2: #FFF0EC;
+  --coral-3: #FFD6C8;
+  --navy: #14213D;
+  --slate: #4A5568;
+  --muted: #8A98AA;
+  --line: #EDE4D5;
+  --sand: #FDFAF6;
+  --soft: #F5F7FA;
+  --white: #FFFFFF;
+  --green: #16A34A;
+  --gold: #F5A623;
+  --r: 8px;
+  --r-lg: 14px;
+}
 
-  <style>
-    :root{
-      --bg-primary:#6366f1;
-      --bg-secondary:#8b5cf6;
-      --surface:#ffffff;
-      --text:#1f2937;
-      --primary-action:#4f46e5;
-      --secondary-action:#10b981;
-      --base-size:16px;
-      --font: system-ui, -apple-system, sans-serif;
-    }
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--sand);
+  color: var(--navy);
+  min-height: 100vh;
+}
 
-    .gradient-bg {
-      background: linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
-    }
-    .feature-card { transition: transform .3s ease, box-shadow .3s ease; }
-    .feature-card:hover { transform: translateY(-8px); box-shadow: 0 20px 40px rgba(0,0,0,.15); }
+a { color: inherit; text-decoration: none; }
+button, input, textarea, select { font: inherit; }
+button { cursor: pointer; }
 
-    .nav-button { transition: all .25s ease; }
-    .nav-button:hover { transform: translateY(-2px); }
-    .tm-logo-mark { transition: transform .2s ease; transform-origin: center; }
-    a:hover .tm-logo-mark { transform: rotate(-6deg) scale(1.05); }
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  height: 68px;
+  background: rgba(255,255,255,0.94);
+  backdrop-filter: blur(18px);
+  border-bottom: 1px solid rgba(20,33,61,0.08);
+}
+.topbar-inner {
+  max-width: 1440px;
+  height: 100%;
+  margin: 0 auto;
+  padding: 0 32px;
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-family: 'Clash Display', sans-serif;
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+}
+.brand-mark {
+  width: 60px;
+  height: 60px;
+  border-radius: 11px;
+  background: var(--coral);
+  display: grid;
+  place-items: center;
+  box-shadow: 0 4px 12px rgba(255,107,71,0.35);
+  overflow: hidden;
+  transition: transform 0.2s;
+}
+.brand:hover .brand-mark { transform: rotate(-6deg) scale(1.05); }
+.brand-mark img {
+  width: 70px;
+  height: 70px;
+  object-fit: contain;
+}
+.brand-mall {
+  position: relative;
+  display: inline-block;
+  color: var(--coral);
+  line-height: 1;
+}
+.brand-underline {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: calc(100% + 2px);
+  display: block;
+  width: 100%;
+  height: 7px;
+  pointer-events: none;
+}
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-left: 16px;
+}
+.nav-links a {
+  padding: 8px 14px;
+  border-radius: 999px;
+  color: var(--slate);
+  font-size: 14px;
+  font-weight: 700;
+}
+.nav-links a:hover,
+.nav-links a.active { background: var(--soft); color: var(--navy); }
+.nav-actions {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.btn {
+  min-height: 42px;
+  padding: 0 17px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: var(--white);
+  color: var(--navy);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: 800;
+  transition: transform 0.18s, border-color 0.18s, background 0.18s, box-shadow 0.18s;
+}
+.btn:hover { transform: translateY(-1px); border-color: rgba(255,107,71,0.35); }
+.btn-coral {
+  background: var(--coral);
+  color: white;
+  border-color: var(--coral);
+  box-shadow: 0 8px 22px rgba(255,107,71,0.22);
+}
+.btn-coral:hover { background: #e85a35; }
+.btn-green {
+  background: #22C55E;
+  color: white;
+  border-color: #22C55E;
+}
 
-    .category-pill { transition: transform .2s ease; }
-    .category-pill:hover { transform: scale(1.05); }
-    @media (max-width: 420px){
-      #categoriesMenu{
-        min-width: calc(100vw - 32px) !important;
-        left: 50%;
-        transform: translateX(-50%);
-      }
-    }
-  </style>
+.page {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 28px 32px 56px;
+}
+.hero {
+  background:
+    radial-gradient(circle at 18% 18%, rgba(255,107,71,0.12), transparent 34%),
+    linear-gradient(135deg, var(--white), #fff7f4);
+  border: 1px solid rgba(20,33,61,0.08);
+  border-radius: var(--r-lg);
+  padding: 42px;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 360px;
+  gap: 28px;
+  box-shadow: 0 10px 34px rgba(20,33,61,0.05);
+}
+.hero h1 {
+  font-family: 'Clash Display', sans-serif;
+  font-size: clamp(34px, 5vw, 64px);
+  line-height: 0.98;
+  letter-spacing: -1px;
+  margin-bottom: 16px;
+}
+.hero h1 span { color: var(--coral); }
+.hero p {
+  color: var(--slate);
+  max-width: 640px;
+  font-size: 17px;
+  line-height: 1.6;
+}
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 24px;
+}
+.support-card {
+  background: var(--navy);
+  color: white;
+  border-radius: var(--r-lg);
+  padding: 24px;
+}
+.support-card h2 {
+  font-family: 'Clash Display', sans-serif;
+  font-size: 26px;
+  margin-bottom: 8px;
+}
+.support-card p {
+  color: rgba(255,255,255,0.74);
+  font-size: 14px;
+  margin-bottom: 16px;
+}
+.support-list {
+  display: grid;
+  gap: 10px;
+}
+.support-list a {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px;
+  border-radius: var(--r);
+  background: rgba(255,255,255,0.08);
+  color: white;
+  font-weight: 800;
+  font-size: 13px;
+}
+.support-list .ti { color: var(--coral); font-size: 20px; }
+
+.content-grid {
+  margin-top: 24px;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 360px;
+  gap: 24px;
+  align-items: start;
+}
+.panel {
+  background: var(--white);
+  border: 1px solid rgba(20,33,61,0.08);
+  border-radius: var(--r-lg);
+  box-shadow: 0 10px 34px rgba(20,33,61,0.05);
+}
+.section-panel {
+  padding: 24px;
+}
+.section-head {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 18px;
+  margin-bottom: 18px;
+}
+.section-head h2 {
+  font-family: 'Clash Display', sans-serif;
+  font-size: 30px;
+}
+.section-head p {
+  color: var(--muted);
+  font-size: 14px;
+}
+.help-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 18px;
+}
+.help-tabs button {
+  border: 1px solid var(--line);
+  background: var(--white);
+  color: var(--slate);
+  border-radius: 999px;
+  padding: 9px 13px;
+  font-size: 13px;
+  font-weight: 800;
+}
+.help-tabs button.active {
+  background: var(--coral);
+  border-color: var(--coral);
+  color: white;
+}
+.faq-list {
+  display: grid;
+  gap: 10px;
+}
+.faq-item {
+  border: 1px solid var(--line);
+  border-radius: var(--r);
+  background: var(--sand);
+  overflow: hidden;
+}
+.faq-q {
+  width: 100%;
+  min-height: 58px;
+  border: none;
+  background: transparent;
+  padding: 0 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  color: var(--navy);
+  font-weight: 800;
+  text-align: left;
+}
+.faq-q .ti { color: var(--coral); font-size: 20px; transition: transform 0.18s; }
+.faq-item.open .faq-q .ti { transform: rotate(180deg); }
+.faq-a {
+  display: none;
+  padding: 0 16px 16px;
+  color: var(--slate);
+  line-height: 1.6;
+  font-size: 14px;
+}
+.faq-item.open .faq-a { display: block; }
+
+.contact-form {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.field.full { grid-column: 1 / -1; }
+.field label {
+  font-size: 12px;
+  font-weight: 800;
+  color: var(--navy);
+}
+.field input,
+.field select,
+.field textarea {
+  width: 100%;
+  border: 1px solid var(--line);
+  border-radius: var(--r);
+  background: var(--sand);
+  min-height: 44px;
+  padding: 11px 12px;
+  color: var(--navy);
+  outline: none;
+}
+.field textarea {
+  min-height: 120px;
+  resize: vertical;
+}
+.field input:focus,
+.field select:focus,
+.field textarea:focus {
+  border-color: var(--coral);
+  box-shadow: 0 0 0 3px rgba(255,107,71,0.1);
+}
+
+.side-stack {
+  display: grid;
+  gap: 16px;
+}
+.side-panel {
+  padding: 18px;
+}
+.side-panel h3 {
+  font-family: 'Clash Display', sans-serif;
+  font-size: 22px;
+  margin-bottom: 12px;
+}
+.quick-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 0;
+  border-top: 1px solid var(--line);
+}
+.quick-row:first-of-type { border-top: none; }
+.quick-row .ti {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: var(--coral-2);
+  color: var(--coral);
+  display: grid;
+  place-items: center;
+  font-size: 18px;
+  flex-shrink: 0;
+}
+.quick-row strong {
+  display: block;
+  font-size: 13px;
+}
+.quick-row small {
+  color: var(--muted);
+  font-size: 12px;
+}
+.steps {
+  counter-reset: step;
+  display: grid;
+  gap: 10px;
+}
+.step {
+  display: grid;
+  grid-template-columns: 34px 1fr;
+  gap: 10px;
+  align-items: start;
+}
+.step::before {
+  counter-increment: step;
+  content: counter(step);
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--coral);
+  color: white;
+  display: grid;
+  place-items: center;
+  font-size: 12px;
+  font-weight: 800;
+}
+.step strong {
+  display: block;
+  font-size: 13px;
+}
+.step span {
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.footer {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 24px 32px 42px;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+@media (max-width: 1000px) {
+  .hero,
+  .content-grid { grid-template-columns: 1fr; }
+}
+@media (max-width: 720px) {
+  .topbar-inner { padding: 0 14px; gap: 10px; }
+  .nav-links { display: none; }
+  .nav-actions .btn:not(.btn-coral) { display: none; }
+  .page { padding: 14px 12px 36px; }
+  .hero { padding: 26px 18px; }
+  .contact-form { grid-template-columns: 1fr; }
+  .section-head { align-items: start; flex-direction: column; }
+}
+</style>
+  <link rel="stylesheet" href="assets/css/theme.css">
+  <script src="assets/js/theme.js" defer></script>
 </head>
-
-<body class="h-full overflow-auto" style="background:var(--surface); color:var(--text); font-family: var(--font);">
-  <!-- Header -->
-  <header class="w-full" style="background:var(--surface); box-shadow:0 2px 8px rgba(0,0,0,.1);">
-    <nav class="max-w-7xl mx-auto px-4 py-4">
-      <div class="flex items-center justify-between flex-wrap gap-4">
-        <!-- Logo -->
-        <a href="index.html" class="flex items-center">
-          <!-- Cambiá este SVG por tu logo real si querés -->
-          <div class="tm-logo-mark w-10 h-10 rounded-lg flex items-center justify-center mr-3" style="background:var(--primary-action);">
-            <span class="text-white font-bold">TM</span>
-          </div>
-          <h1 class="font-bold" style="font-size: calc(var(--base-size) * 1.5);">Tuyomall</h1>
-        </a>
-
-        <!-- Nav -->
-        <div class="flex items-center gap-3 flex-wrap">
-          <a class="nav-button px-4 py-2 rounded-lg font-medium" href="index.html">Inicio</a>
-
-          <div class="relative">
-            <button id="categoriesBtn" class="nav-button px-4 py-2 rounded-lg flex items-center gap-2 font-medium">
-              Categorías
-              <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-                <path d="M4 6L8 10L12 6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-              </svg>
-            </button>
-
-            <div id="categoriesMenu" class="hidden absolute top-full mt-2 rounded-lg shadow-xl p-4 z-10"
-                 style="background:var(--surface); min-width:200px;">
-              <div class="flex flex-col gap-2">
-                <a href="#"
-                   class="category-pill px-4 py-2 rounded-lg text-center"
-                   style="background: color-mix(in srgb, var(--bg-primary) 12%, transparent);">
-                  Moda
-                </a>
-                <a href="#" class="category-pill px-4 py-2 rounded-lg text-center"
-                   style="background: color-mix(in srgb, var(--bg-primary) 12%, transparent);">
-                  Tecnología
-                </a>
-                <a href="#" class="category-pill px-4 py-2 rounded-lg text-center"
-                   style="background: color-mix(in srgb, var(--bg-primary) 12%, transparent);">
-                  Alimentos
-                </a>
-                <a href="#" class="category-pill px-4 py-2 rounded-lg text-center"
-                   style="background: color-mix(in srgb, var(--bg-primary) 12%, transparent);">
-                  Arte
-                </a>
-                <a href="#" class="category-pill px-4 py-2 rounded-lg text-center"
-                   style="background: color-mix(in srgb, var(--bg-primary) 12%, transparent);">
-                  Servicios
-                </a>
-              </div>
-            </div>
-          </div>
-
-          <a class="nav-button px-4 py-2 rounded-lg font-semibold"
-             style="background:var(--secondary-action); color:var(--surface);"
-             href="login.html">
-            Iniciar sesión
-          </a>
-
-          <a class="nav-button px-5 py-2 rounded-lg font-semibold"
-             style="background:var(--primary-action); color:var(--surface);"
-             href="registro.html">
-            Registrarse
-          </a>
-        </div>
-      </div>
+<body>
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="index.html">
+      <span class="brand-mark">
+        <img src="assets/img/Logo_TuyoMall.2.png" alt="Logo TuyoMall">
+      </span>
+      <span>Tuyo<span class="brand-mall">Mall
+        <svg class="brand-underline" viewBox="0 0 46 7" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+          <path d="M2 4.5 C8 1.5, 16 6.5, 23 3.5 C30 0.5, 38 6, 44 3" stroke="#FF6B47" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </span></span>
+    </a>
+    <nav class="nav-links">
+      <a href="index.html">Inicio</a>
+      <a href="principal.html">Explorar</a>
+      <a href="planes.html">Planes</a>
+      <a class="active" href="faq-contacto.html">Ayuda</a>
     </nav>
-  </header>
+    <div class="nav-actions">
+      <a class="btn" href="acceso-cliente.html"><span class="ti ti-login"></span> Cliente</a>
+      <a class="btn btn-coral" href="acceso-emprendedor.html"><span class="ti ti-rocket"></span> Emprendedor</a>
+    </div>
+  </div>
+</header>
 
-  <!-- Hero -->
-  <section class="w-full gradient-bg py-20 px-4">
-    <div class="max-w-5xl mx-auto text-center">
-      <h2 class="font-extrabold text-white mb-6" style="font-size: calc(var(--base-size) * 3);">
-        Tu espacio para emprender
-      </h2>
-      <p class="text-white/95 mb-10 max-w-xl mx-auto" style="font-size: calc(var(--base-size) * 1.25);">
-        Conecta emprendedores con clientes en un solo lugar
+<main class="page">
+  <section class="hero">
+    <div>
+      <h1>Centro de <span>ayuda</span> y contacto</h1>
+      <p>
+        Encontrá respuestas rápidas sobre cuentas, publicaciones, perfiles de negocio, planes Premium
+        y el proceso para subir TuyoMall a cPanel.
       </p>
-
-      <div class="flex gap-4 justify-center flex-wrap">
-        <a class="px-8 py-4 rounded-lg font-semibold"
-           style="background:var(--surface); color:var(--primary-action); box-shadow: 0 4px 12px rgba(0,0,0,.15);"
-           href="soy-emprendedor.html">
-          Soy Emprendedor
-        </a>
-        <a class="px-8 py-4 rounded-lg font-semibold text-white"
-           style="background:transparent; border:3px solid var(--surface);"
-           href="soy-cliente.html">
-          Soy Cliente
-        </a>
+      <div class="hero-actions">
+        <a class="btn btn-green" href="https://wa.me/50688027022" target="_blank"><span class="ti ti-brand-whatsapp"></span> WhatsApp soporte</a>
+        <a class="btn" href="#contacto"><span class="ti ti-mail"></span> Enviar consulta</a>
       </div>
     </div>
+    <aside class="support-card">
+      <h2>Respuesta rápida</h2>
+      <p>Si estás preparando el lanzamiento, revisá primero estas rutas principales.</p>
+      <div class="support-list">
+        <a href="acceso-emprendedor.html"><span class="ti ti-user-plus"></span> Crear cuenta emprendedor</a>
+        <a href="acceso-cliente.html"><span class="ti ti-users"></span> Crear cuenta cliente</a>
+        <a href="database/README.md"><span class="ti ti-database"></span> Guía base de datos</a>
+      </div>
+    </aside>
   </section>
 
-  <!-- Features -->
-  <section class="w-full py-20 px-4">
-    <div class="max-w-6xl mx-auto">
-      <h3 class="font-bold text-center mb-12" style="font-size: calc(var(--base-size) * 2);">
-        ¿Por qué elegir Tuyomall?
-      </h3>
-
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-        <div class="feature-card p-8 rounded-2xl" style="background:var(--surface); box-shadow:0 4px 12px rgba(0,0,0,.08);">
-          <div class="w-16 h-16 rounded-full flex items-center justify-center mb-6"
-               style="background: color-mix(in srgb, var(--primary-action) 14%, transparent);">
-            ✅
-          </div>
-          <h4 class="font-semibold mb-3" style="font-size: calc(var(--base-size) * 1.25);">Fácil de usar</h4>
-          <p class="opacity-75 leading-relaxed" style="font-size: calc(var(--base-size) * .9);">
-            Crea tu tienda en minutos sin conocimientos técnicos
-          </p>
-        </div>
-
-        <div class="feature-card p-8 rounded-2xl" style="background:var(--surface); box-shadow:0 4px 12px rgba(0,0,0,.08);">
-          <div class="w-16 h-16 rounded-full flex items-center justify-center mb-6"
-               style="background: color-mix(in srgb, var(--secondary-action) 14%, transparent);">
-            💰
-          </div>
-          <h4 class="font-semibold mb-3" style="font-size: calc(var(--base-size) * 1.25);">Sin comisiones ocultas</h4>
-          <p class="opacity-75 leading-relaxed" style="font-size: calc(var(--base-size) * .9);">
-            Mantén el 100% de tus ganancias
-          </p>
-        </div>
-
-        <div class="feature-card p-8 rounded-2xl" style="background:var(--surface); box-shadow:0 4px 12px rgba(0,0,0,.08);">
-          <div class="w-16 h-16 rounded-full flex items-center justify-center mb-6"
-               style="background: color-mix(in srgb, var(--primary-action) 14%, transparent);">
-            👥
-          </div>
-          <h4 class="font-semibold mb-3" style="font-size: calc(var(--base-size) * 1.25);">Comunidad activa</h4>
-          <p class="opacity-75 leading-relaxed" style="font-size: calc(var(--base-size) * .9);">
-            Miles de clientes esperándote
-          </p>
+  <section class="content-grid">
+    <div class="panel section-panel">
+      <div class="section-head">
+        <div>
+          <h2>Preguntas frecuentes</h2>
+          <p>Seleccioná una categoría para encontrar respuestas más rápido.</p>
         </div>
       </div>
+
+      <div class="help-tabs">
+        <button class="active" onclick="filterFaq('all', this)">Todo</button>
+        <button onclick="filterFaq('cliente', this)">Clientes</button>
+        <button onclick="filterFaq('emprendedor', this)">Emprendedores</button>
+        <button onclick="filterFaq('pagos', this)">Pagos</button>
+        <button onclick="filterFaq('tecnico', this)">Técnico</button>
+      </div>
+
+      <div class="faq-list" id="faqList">
+        <article class="faq-item open" data-cat="cliente">
+          <button class="faq-q" onclick="toggleFaq(this)">¿Necesito cuenta para explorar productos?<span class="ti ti-chevron-down"></span></button>
+          <div class="faq-a">No. Podés explorar publicaciones sin cuenta. La cuenta de cliente sirve para guardar negocios, dar me gusta y tener una experiencia más personalizada.</div>
+        </article>
+        <article class="faq-item" data-cat="cliente">
+          <button class="faq-q" onclick="toggleFaq(this)">¿TuyoMall procesa pagos o entregas?<span class="ti ti-chevron-down"></span></button>
+          <div class="faq-a">No. TuyoMall conecta clientes con emprendedores. El pago, entrega, garantía y coordinación se hacen directamente con cada negocio.</div>
+        </article>
+        <article class="faq-item" data-cat="emprendedor">
+          <button class="faq-q" onclick="toggleFaq(this)">¿Cómo publico mi negocio?<span class="ti ti-chevron-down"></span></button>
+          <div class="faq-a">Entrás como emprendedor, completás el perfil del negocio y desde el dashboard creás publicaciones con fotos, descripción, precio y botón de WhatsApp.</div>
+        </article>
+        <article class="faq-item" data-cat="emprendedor">
+          <button class="faq-q" onclick="toggleFaq(this)">¿Cuál es la diferencia entre dashboard y perfil público?<span class="ti ti-chevron-down"></span></button>
+          <div class="faq-a">El dashboard es privado para administrar el negocio. El perfil público es la vitrina que ven los clientes cuando quieren conocer tus productos y contactarte.</div>
+        </article>
+        <article class="faq-item" data-cat="pagos">
+          <button class="faq-q" onclick="toggleFaq(this)">¿Qué incluye el plan Premium?<span class="ti ti-chevron-down"></span></button>
+          <div class="faq-a">Premium mejora la visibilidad del negocio, permite más publicaciones y destaca el perfil dentro del feed. El precio base definido es $5 al mes.</div>
+        </article>
+        <article class="faq-item" data-cat="tecnico">
+          <button class="faq-q" onclick="toggleFaq(this)">¿Por qué un PHP se descarga en localhost?<span class="ti ti-chevron-down"></span></button>
+          <div class="faq-a">Porque servidores como localhost:3000 no ejecutan PHP. Para probar registro/login necesitás cPanel, XAMPP, Laragon o un servidor PHP local.</div>
+        </article>
+        <article class="faq-item" data-cat="tecnico">
+          <button class="faq-q" onclick="toggleFaq(this)">¿Qué debo configurar en Namecheap?<span class="ti ti-chevron-down"></span></button>
+          <div class="faq-a">Debés subir los archivos a public_html, crear una base MySQL, importar database/schema.sql y editar config/database.php con los datos reales de cPanel.</div>
+        </article>
+      </div>
     </div>
+
+    <aside class="side-stack">
+      <article class="panel side-panel">
+        <h3>Canales de soporte</h3>
+        <div class="quick-row"><span class="ti ti-brand-whatsapp"></span><div><strong>WhatsApp</strong><small>Respuesta para soporte rápido</small></div></div>
+        <div class="quick-row"><span class="ti ti-mail"></span><div><strong>Correo</strong><small>soporte@tuyomall.com</small></div></div>
+        <div class="quick-row"><span class="ti ti-clock"></span><div><strong>Horario</strong><small>Lunes a sábado, 8:00 - 18:00</small></div></div>
+      </article>
+      <article class="panel side-panel">
+        <h3>Para publicar</h3>
+        <div class="steps">
+          <div class="step"><div><strong>Creá tu cuenta</strong><span>Registrate como emprendedor.</span></div></div>
+          <div class="step"><div><strong>Completá tu perfil</strong><span>Agregá descripción, WhatsApp y ubicación.</span></div></div>
+          <div class="step"><div><strong>Subí productos</strong><span>Fotos, precio y descripción clara.</span></div></div>
+        </div>
+      </article>
+    </aside>
   </section>
 
-  <!-- Footer -->
-  <footer class="w-full py-8 px-4 mt-20" style="background:var(--text);">
-    <div class="max-w-6xl mx-auto text-center">
-      <p class="text-white/80" style="font-size: calc(var(--base-size) * .9);">
-        © <span id="year"></span> Tuyomall. Todos los derechos reservados.
-      </p>
+  <section class="panel section-panel" id="contacto" style="margin-top:24px">
+    <div class="section-head">
+      <div>
+        <h2>Enviar consulta</h2>
+        <p>Este formulario queda listo para conectar luego con PHP o correo del hosting.</p>
+      </div>
     </div>
-  </footer>
+    <form class="contact-form" onsubmit="sendContact(event)">
+      <div class="field">
+        <label>Nombre</label>
+        <input type="text" placeholder="Tu nombre" required>
+      </div>
+      <div class="field">
+        <label>Correo</label>
+        <input type="email" placeholder="tucorreo@gmail.com" required>
+      </div>
+      <div class="field">
+        <label>Tipo de consulta</label>
+        <select>
+          <option>Cuenta cliente</option>
+          <option>Cuenta emprendedor</option>
+          <option>Plan Premium</option>
+          <option>Problema técnico</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>WhatsApp</label>
+        <input type="tel" placeholder="+506 8888 8888">
+      </div>
+      <div class="field full">
+        <label>Mensaje</label>
+        <textarea placeholder="Contanos qué necesitás..." required></textarea>
+      </div>
+      <div class="field full">
+        <button class="btn btn-coral" type="submit"><span class="ti ti-send"></span> Enviar mensaje</button>
+      </div>
+    </form>
+  </section>
+</main>
 
-  <script>
-    // Año
-    document.getElementById('year').textContent = new Date().getFullYear();
+<footer class="footer">
+  © <span id="year"></span> TuyoMall. Ayuda para clientes, emprendedores y configuración de lanzamiento.
+</footer>
 
-    // Dropdown categorías
-    const categoriesBtn = document.getElementById('categoriesBtn');
-    const categoriesMenu = document.getElementById('categoriesMenu');
+<script>
+document.getElementById('year').textContent = new Date().getFullYear();
 
-    if (categoriesBtn && categoriesMenu) {
-      categoriesBtn.addEventListener('click', (e) => {
-        e.preventDefault();
-        categoriesMenu.classList.toggle('hidden');
-      });
+function toggleFaq(btn) {
+  btn.closest('.faq-item').classList.toggle('open');
+}
 
-      document.addEventListener('click', (e) => {
-        if (!categoriesBtn.contains(e.target) && !categoriesMenu.contains(e.target)) {
-          categoriesMenu.classList.add('hidden');
-        }
-      });
-    }
-  </script>
+function filterFaq(cat, btn) {
+  document.querySelectorAll('.help-tabs button').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.faq-item').forEach(item => {
+    item.style.display = cat === 'all' || item.dataset.cat === cat ? '' : 'none';
+  });
+}
+
+function sendContact(event) {
+  event.preventDefault();
+  alert('Consulta preparada. Luego conectamos este formulario con PHP/correo en cPanel.');
+}
+</script>
 </body>
 </html>

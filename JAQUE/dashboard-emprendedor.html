@@ -1,258 +1,1007 @@
 <!DOCTYPE html>
-<html lang="es-CR">
+<html lang="es">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Mi Negocio | TuyoMall</title>
-  <meta name="description" content="Administrá tu negocio: datos, productos/servicios, contacto, redes y plan." />
-  <meta name="theme-color" content="#C4D814" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dashboard Emprendedor | TuyoMall</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Clash+Display:wght@500;600;700&family=Syne:wght@500;600;700;800&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.14.0/dist/tabler-icons.min.css">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;800&family=Sansita:wght@700;800&display=swap" rel="stylesheet">
+:root {
+  --coral: #FF6B47;
+  --coral-2: #FFF0EC;
+  --coral-3: #FFD6C8;
+  --navy: #14213D;
+  --navy-2: #1E2F50;
+  --slate: #4A5568;
+  --muted: #8A98AA;
+  --line: #EDE4D5;
+  --sand: #FDFAF6;
+  --soft: #F5F7FA;
+  --white: #FFFFFF;
+  --green: #16A34A;
+  --gold: #F5A623;
+  --r: 8px;
+  --r-lg: 14px;
+  --nav-h: 68px;
+}
 
-  <link rel="stylesheet" href="assets/css/base.css?v=18">
-  <link rel="stylesheet" href="assets/css/layout.css?v=18">
-  <link rel="stylesheet" href="assets/css/components.css?v=18">
-  <link rel="stylesheet" href="assets/css/pages/emprendedor.css?v=18">
-  <style>
-    .brand__logo { transition: transform 0.2s; }
-    .brand:hover .brand__logo { transform: rotate(-6deg) scale(1.05); }
-  </style>
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--sand);
+  color: var(--navy);
+  min-height: 100vh;
+}
+
+button, input, select, textarea { font: inherit; }
+button { cursor: pointer; }
+a { color: inherit; text-decoration: none; }
+
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  height: var(--nav-h);
+  background: rgba(255,255,255,0.92);
+  backdrop-filter: blur(18px);
+  border-bottom: 1px solid rgba(20,33,61,0.08);
+}
+.topbar-inner {
+  max-width: 1440px;
+  height: 100%;
+  margin: 0 auto;
+  padding: 0 32px;
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-family: 'Clash Display', sans-serif;
+  font-weight: 700;
+  font-size: 22px;
+  letter-spacing: -0.5px;
+}
+.brand-mark {
+  width: 60px;
+  height: 60px;
+  border-radius: 11px;
+  background: var(--coral);
+  display: grid;
+  place-items: center;
+  color: #fff;
+  box-shadow: 0 4px 12px rgba(255,107,71,0.35);
+  transition: transform 0.2s;
+  overflow: hidden;
+}
+.brand:hover .brand-mark { transform: rotate(-6deg) scale(1.05); }
+.brand-mark img {
+  width: 70px;
+  height: 70px;
+  object-fit: contain;
+}
+.brand-mall {
+  position: relative;
+  color: var(--coral);
+  display: inline-block;
+  line-height: 1;
+}
+.brand-underline {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: calc(100% + 2px);
+  display: block;
+  width: 100%;
+  height: 7px;
+  pointer-events: none;
+}
+.topnav {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-left: 18px;
+}
+.topnav a {
+  padding: 8px 14px;
+  border-radius: 999px;
+  color: var(--slate);
+  font-size: 14px;
+  font-weight: 600;
+}
+.topnav a:hover { background: var(--soft); color: var(--navy); }
+.top-actions {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.icon-btn,
+.profile-chip,
+.btn {
+  border: 1px solid var(--line);
+  background: var(--white);
+  color: var(--navy);
+  border-radius: 999px;
+  min-height: 40px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-weight: 700;
+  font-size: 13px;
+  transition: transform 0.18s, border-color 0.18s, background 0.18s, box-shadow 0.18s;
+}
+.icon-btn {
+  width: 40px;
+  padding: 0;
+  position: relative;
+}
+.icon-btn .ti { font-size: 20px; }
+.notif-dot {
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--coral);
+  color: white;
+  font-size: 10px;
+  display: grid;
+  place-items: center;
+  border: 2px solid white;
+}
+.profile-chip {
+  padding: 5px 12px 5px 5px;
+}
+.profile-chip img {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+.btn {
+  padding: 0 18px;
+  height: 42px;
+}
+.btn:hover,
+.icon-btn:hover,
+.profile-chip:hover {
+  transform: translateY(-1px);
+  border-color: rgba(255,107,71,0.35);
+}
+.btn-coral {
+  background: var(--coral);
+  color: white;
+  border-color: var(--coral);
+  box-shadow: 0 8px 22px rgba(255,107,71,0.22);
+}
+.btn-coral:hover { background: #e85a35; }
+.btn-soft { background: var(--coral-2); color: var(--coral); border-color: var(--coral-3); }
+
+.page {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 22px 32px 56px;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 360px;
+  gap: 24px;
+}
+.profile-panel,
+.side-panel,
+.post-shell {
+  background: var(--white);
+  border: 1px solid rgba(20,33,61,0.08);
+  border-radius: var(--r-lg);
+  box-shadow: 0 10px 34px rgba(20,33,61,0.05);
+}
+.profile-panel { padding: 26px 28px 18px; }
+.profile-head {
+  display: grid;
+  grid-template-columns: 196px minmax(0, 1fr);
+  gap: 28px;
+  align-items: start;
+}
+.avatar-block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.biz-avatar {
+  width: 178px;
+  height: 178px;
+  border-radius: 50%;
+  border: 4px solid white;
+  outline: 1px solid var(--line);
+  object-fit: cover;
+  background: var(--navy);
+}
+.change-photo {
+  margin-top: -36px;
+  margin-left: 122px;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  border: 2px solid white;
+  background: var(--soft);
+  color: var(--navy);
+  display: grid;
+  place-items: center;
+}
+.profile-title-row {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 4px;
+}
+.profile-title {
+  font-family: 'Syne', sans-serif;
+  font-size: 34px;
+  line-height: 1.05;
+  font-weight: 800;
+  color: var(--navy);
+}
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  height: 25px;
+  padding: 0 9px;
+  border-radius: 999px;
+  background: var(--coral);
+  color: white;
+  font-size: 11px;
+  font-weight: 800;
+}
+.verified {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: #3B82F6;
+  color: white;
+  display: grid;
+  place-items: center;
+}
+.profile-meta {
+  margin-top: 10px;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  color: var(--slate);
+  font-size: 14px;
+}
+.meta-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  border: 1px solid var(--line);
+  background: var(--sand);
+  border-radius: 999px;
+  padding: 4px 9px;
+  color: var(--navy);
+  font-size: 12px;
+  font-weight: 700;
+}
+.stats-row {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(110px, 1fr));
+  margin: 22px 0 18px;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+.stat {
+  padding: 13px 12px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.stat + .stat { border-left: 1px solid var(--line); }
+.stat .ti { font-size: 23px; color: var(--coral); }
+.stat strong {
+  display: block;
+  font-size: 18px;
+  line-height: 1;
+}
+.stat span {
+  display: block;
+  margin-top: 3px;
+  color: var(--muted);
+  font-size: 12px;
+}
+.bio {
+  max-width: 720px;
+  color: var(--slate);
+  line-height: 1.55;
+  font-size: 14px;
+}
+.bio strong { color: var(--navy); }
+.info-strip {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin-top: 14px;
+  color: var(--slate);
+  font-size: 13px;
+}
+.info-strip span {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.info-strip .ti { color: var(--coral); font-size: 17px; }
+.profile-actions {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 10px;
+  margin-top: 22px;
+}
+.profile-actions .btn { border-radius: var(--r); width: 100%; }
+
+.highlights {
+  display: flex;
+  gap: 26px;
+  padding: 22px 10px 4px;
+  overflow-x: auto;
+}
+.highlight {
+  width: 92px;
+  flex: 0 0 auto;
+  text-align: center;
+  color: var(--navy);
+  font-size: 12px;
+  font-weight: 800;
+}
+.highlight-img,
+.highlight-add {
+  width: 76px;
+  height: 76px;
+  margin: 0 auto 9px;
+  border-radius: 50%;
+  padding: 3px;
+  background: linear-gradient(135deg, var(--coral), var(--gold));
+}
+.highlight-img img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  border: 3px solid white;
+  object-fit: cover;
+}
+.highlight-add {
+  border: 2px dashed var(--line);
+  background: var(--sand);
+  display: grid;
+  place-items: center;
+  color: var(--slate);
+}
+.highlight-add .ti { font-size: 32px; }
+
+.content-tabs {
+  margin-top: 18px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  background: var(--white);
+  border: 1px solid rgba(20,33,61,0.08);
+  border-radius: var(--r-lg) var(--r-lg) 0 0;
+  overflow: hidden;
+}
+.tab-btn {
+  height: 58px;
+  border: none;
+  background: white;
+  color: var(--slate);
+  font-size: 13px;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border-bottom: 2px solid transparent;
+}
+.tab-btn .ti { font-size: 20px; }
+.tab-btn.active {
+  color: var(--coral);
+  border-bottom-color: var(--coral);
+}
+.post-shell {
+  border-top: none;
+  border-radius: 0 0 var(--r-lg) var(--r-lg);
+  padding: 16px;
+}
+.posts-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+}
+.post-card {
+  position: relative;
+  aspect-ratio: 1 / 1;
+  border-radius: var(--r);
+  overflow: hidden;
+  background: var(--soft);
+  cursor: pointer;
+}
+.post-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.24s;
+}
+.post-card:hover img { transform: scale(1.04); }
+.post-menu {
+  position: absolute;
+  top: 9px;
+  right: 9px;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: rgba(10,16,28,0.44);
+  color: white;
+  display: grid;
+  place-items: center;
+}
+.post-overlay {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  min-height: 52px;
+  padding: 10px;
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 8px;
+  color: white;
+  background: linear-gradient(180deg, transparent, rgba(8,14,25,0.72));
+}
+.post-stats {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  font-weight: 800;
+}
+.post-stats span {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+}
+.price-chip {
+  background: rgba(8,14,25,0.68);
+  border: 1px solid rgba(255,255,255,0.2);
+  border-radius: 999px;
+  padding: 5px 8px;
+  font-size: 12px;
+  font-weight: 800;
+}
+.tab-panel { display: none; }
+.tab-panel.active { display: block; }
+.empty-panel {
+  padding: 56px 20px;
+  text-align: center;
+  color: var(--slate);
+}
+.empty-panel .ti {
+  color: var(--coral);
+  font-size: 42px;
+  margin-bottom: 10px;
+}
+.empty-panel h3 {
+  font-family: 'Syne', sans-serif;
+  color: var(--navy);
+  font-size: 22px;
+  margin-bottom: 6px;
+}
+
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.side-panel {
+  padding: 18px;
+}
+.premium-panel {
+  background: var(--navy);
+  color: white;
+  border-color: transparent;
+}
+.panel-title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+.panel-title h2 {
+  font-family: 'Syne', sans-serif;
+  font-size: 18px;
+  line-height: 1.1;
+}
+.premium-icon {
+  width: 54px;
+  height: 54px;
+  border-radius: 12px;
+  background: rgba(255,255,255,0.12);
+  color: var(--gold);
+  display: grid;
+  place-items: center;
+}
+.premium-icon .ti { font-size: 28px; }
+.status-pill {
+  padding: 5px 10px;
+  border-radius: 999px;
+  background: rgba(22,163,74,0.18);
+  color: #86EFAC;
+  font-size: 11px;
+  font-weight: 800;
+}
+.premium-panel p {
+  color: rgba(255,255,255,0.72);
+  font-size: 13px;
+  line-height: 1.5;
+}
+.premium-panel .btn {
+  margin-top: 16px;
+  width: 100%;
+  border-radius: var(--r);
+  border-color: var(--coral);
+}
+.progress-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+.progress-top strong {
+  font-family: 'Syne', sans-serif;
+  font-size: 17px;
+}
+.progress-num {
+  background: var(--coral);
+  color: white;
+  border-radius: 999px;
+  padding: 5px 9px;
+  font-size: 12px;
+  font-weight: 800;
+}
+.progress-bar {
+  height: 7px;
+  border-radius: 999px;
+  background: var(--soft);
+  overflow: hidden;
+  margin-bottom: 12px;
+}
+.progress-bar span {
+  display: block;
+  width: 86%;
+  height: 100%;
+  background: var(--coral);
+}
+.check-row,
+.contact-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 0;
+  border-top: 1px solid var(--line);
+  font-size: 13px;
+}
+.check-row:first-of-type,
+.contact-row:first-of-type { border-top: none; }
+.check-row .ti-circle-check { color: var(--green); }
+.check-row .ti-circle { color: var(--coral); }
+.check-row span:last-child {
+  margin-left: auto;
+  color: var(--muted);
+  font-size: 12px;
+}
+.contact-row .ti {
+  width: 26px;
+  font-size: 19px;
+  color: var(--coral);
+}
+.contact-row strong {
+  display: block;
+  font-weight: 700;
+}
+.contact-row small {
+  color: var(--muted);
+  font-size: 12px;
+}
+.contact-row button {
+  margin-left: auto;
+  border: none;
+  background: transparent;
+  color: var(--slate);
+}
+
+.drawer {
+  position: fixed;
+  inset: 0;
+  background: rgba(20,33,61,0.34);
+  z-index: 100;
+  display: none;
+  justify-content: flex-end;
+}
+.drawer.open { display: flex; }
+.drawer-panel {
+  width: min(520px, 100%);
+  height: 100%;
+  overflow-y: auto;
+  background: white;
+  padding: 24px;
+  box-shadow: -20px 0 50px rgba(20,33,61,0.18);
+}
+.drawer-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+.drawer-head h2 {
+  font-family: 'Syne', sans-serif;
+  font-size: 24px;
+}
+.close-drawer {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  border: 1px solid var(--line);
+  background: white;
+}
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+.field { display: flex; flex-direction: column; gap: 6px; margin-bottom: 14px; }
+.field.full { grid-column: 1 / -1; }
+.field label {
+  color: var(--navy);
+  font-size: 12px;
+  font-weight: 800;
+}
+.field input,
+.field select,
+.field textarea {
+  width: 100%;
+  border: 1px solid var(--line);
+  border-radius: var(--r);
+  background: var(--sand);
+  min-height: 42px;
+  padding: 10px 12px;
+  color: var(--navy);
+  outline: none;
+}
+.field textarea { min-height: 96px; resize: vertical; }
+.field input:focus,
+.field select:focus,
+.field textarea:focus {
+  border-color: var(--coral);
+  box-shadow: 0 0 0 3px rgba(255,107,71,0.1);
+}
+
+@media (max-width: 1120px) {
+  .page { grid-template-columns: 1fr; }
+  .sidebar { grid-row: auto; }
+}
+@media (max-width: 760px) {
+  .topbar-inner { padding: 0 14px; gap: 10px; }
+  .topnav { display: none; }
+  .btn-public { display: none; }
+  .profile-chip span { display: none; }
+  .page { padding: 14px 12px 36px; }
+  .profile-panel { padding: 18px 14px; }
+  .profile-head { grid-template-columns: 1fr; text-align: center; gap: 14px; }
+  .profile-title-row,
+  .profile-meta,
+  .info-strip { justify-content: center; }
+  .biz-avatar { width: 136px; height: 136px; }
+  .avatar-block { align-items: center; }
+  .stats-row { grid-template-columns: repeat(2, 1fr); }
+  .stat + .stat { border-left: none; }
+  .stat:nth-child(even) { border-left: 1px solid var(--line); }
+  .profile-actions { grid-template-columns: 1fr 1fr; }
+  .content-tabs { grid-template-columns: repeat(4, minmax(54px, 1fr)); }
+  .tab-btn span { display: none; }
+  .posts-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .form-grid { grid-template-columns: 1fr; }
+}
+</style>
+  <link rel="stylesheet" href="assets/css/theme.css">
+  <script src="assets/js/theme.js" defer></script>
 </head>
-
-<body data-role="emprendedor">
-  <header class="site-header" role="navigation">
-    <div class="container nav">
-      <a class="brand" href="index.html"><span class="brand__logo"></span><span class="brand__name">TuyoMall</span></a>
-      <nav class="main-menu">
-        <a href="planes.html">Planes</a>
-        <a href="faq-contacto.html" class="btn btn-outline">Ayuda</a>
-        <button class="btn btn-outline" onclick="TMLogout()">Cerrar sesión</button>
-      </nav>
+<body>
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="principal.html">
+      <span class="brand-mark">
+        <img src="assets/img/Logo_TuyoMall.2.png" alt="Logo TuyoMall">
+      </span>
+      <span>Tuyo<span class="brand-mall">Mall
+        <svg class="brand-underline" viewBox="0 0 46 7" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+          <path d="M2 4.5 C8 1.5, 16 6.5, 23 3.5 C30 0.5, 38 6, 44 3" stroke="#FF6B47" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </span></span>
+    </a>
+    <nav class="topnav">
+      <a href="principal.html">Feed</a>
+      <a href="planes.html">Planes</a>
+      <a href="faq-contacto.html">Ayuda</a>
+    </nav>
+    <div class="top-actions">
+      <button class="icon-btn" title="Notificaciones">
+        <span class="ti ti-bell"></span>
+        <span class="notif-dot">3</span>
+      </button>
+      <a class="btn btn-public" href="perfil-publico.html" target="_blank">
+        <span class="ti ti-external-link"></span> Ver perfil público
+      </a>
+      <a class="profile-chip" href="dashboard-emprendedor.php">
+        <img src="https://images.unsplash.com/photo-1606722590583-6951b5ea92ad?w=120&h=120&fit=crop&q=80" alt="Logo negocio">
+        <span>Artesanías La Ceiba</span>
+        <span class="ti ti-chevron-down"></span>
+      </a>
     </div>
-  </header>
+  </div>
+</header>
 
-  <main class="container" id="top" tabindex="-1">
-    <!-- Portada + Logo + Tarjeta -->
-    <section class="biz-hero card">
-      <div class="cover" id="bizCoverPreview" aria-label="Portada"></div>
-      <div class="hero-row">
-        <div class="logo-wrap">
-          <div class="logo" id="bizLogoPreview" aria-label="Logo"></div>
-          <div class="logo-actions">
-            <label class="btn btn-outline">
-              Cambiar logo
-              <!-- ID ACTUALIZADO -->
-              <input id="bizLogoInput" type="file" accept="image/*" hidden>
-            </label>
-            <label class="btn btn-outline">
-              Cambiar portada
-              <!-- ID ACTUALIZADO -->
-              <input id="bizCoverInput" type="file" accept="image/*" hidden>
-            </label>
-          </div>
+<main class="page">
+  <section>
+    <article class="profile-panel">
+      <div class="profile-head">
+        <div class="avatar-block">
+          <img class="biz-avatar" src="https://images.unsplash.com/photo-1606722590583-6951b5ea92ad?w=400&h=400&fit=crop&q=80" alt="Artesanías La Ceiba">
+          <button class="change-photo" title="Cambiar foto"><span class="ti ti-camera"></span></button>
         </div>
-
-        <div class="biz-card">
-          <h1 id="bizNameText">Mi Emprendimiento</h1>
-          <p class="meta" id="bizLoc">—</p>
-          <p class="meta">Plan: <strong id="planName">Gratis</strong> · <span id="planLimits">10 ítems máx · 3 imágenes/ítem</span></p>
-
-          <div class="inline-actions">
-            <a id="linkPerfilPublico" class="btn btn-outline" href="#" target="_blank" rel="noopener">Ver perfil público</a>
-            <button id="btnPublish" class="btn btn-primary" type="button">Publicar JSON</button>
-            <a id="btnUpgrade" class="btn btn-primary" href="https://www.paypal.com/ncp/payment/WMVQM564842BJ" target="_blank" rel="noopener">Pasar a Premium ($5)</a>
-            <button id="btnDowngrade" class="btn btn-outline" type="button" hidden>Volver a Gratis</button>
+        <div>
+          <div class="profile-title-row">
+            <h1 class="profile-title">Artesanías La Ceiba</h1>
+            <span class="badge"><span class="ti ti-crown"></span> PRO</span>
+            <span class="verified"><span class="ti ti-check"></span></span>
           </div>
-          <p id="publishHint" class="hint" role="status"></p>
+          <div class="profile-meta">
+            <span><span class="ti ti-map-pin"></span> Cartago, Costa Rica</span>
+            <span class="meta-pill"><span class="ti ti-palette"></span> Artesanías & Hogar</span>
+          </div>
+          <div class="stats-row">
+            <div class="stat"><span class="ti ti-layout-grid"></span><div><strong>12</strong><span>publicaciones</span></div></div>
+            <div class="stat"><span class="ti ti-eye"></span><div><strong>548</strong><span>vistas</span></div></div>
+            <div class="stat"><span class="ti ti-bookmark"></span><div><strong>86</strong><span>guardados</span></div></div>
+            <div class="stat"><span class="ti ti-brand-whatsapp"></span><div><strong>34</strong><span>WhatsApp</span></div></div>
+          </div>
+          <p class="bio">
+            <strong>Creamos piezas artesanales únicas</strong> con materiales naturales de nuestra tierra.
+            Cada producto cuenta una historia de tradición, dedicación y amor por lo hecho a mano.
+          </p>
+          <div class="info-strip">
+            <span><span class="ti ti-clock"></span> Lun - Sáb 8:00 - 18:00</span>
+            <span><span class="ti ti-circle-filled" style="color:var(--green)"></span> Responde en minutos</span>
+            <span><span class="ti ti-link"></span> tuyomall.com/negocio/artesanias-la-ceiba</span>
+          </div>
+          <div class="profile-actions">
+            <button class="btn" onclick="openDrawer('profile')"><span class="ti ti-pencil"></span> Editar perfil</button>
+            <button class="btn btn-coral" onclick="openDrawer('post')"><span class="ti ti-square-plus"></span> Nueva publicación</button>
+            <a class="btn" href="perfil-publico.html"><span class="ti ti-external-link"></span> Ver perfil público</a>
+            <a class="btn btn-soft" href="premium-checkout.html"><span class="ti ti-crown"></span> Mejorar a Premium</a>
+          </div>
         </div>
       </div>
+
+      <div class="highlights" aria-label="Destacados">
+        <div class="highlight">
+          <div class="highlight-img"><img src="https://images.unsplash.com/photo-1606722590583-6951b5ea92ad?w=160&h=160&fit=crop&q=80" alt=""></div>
+          Canastas
+        </div>
+        <div class="highlight">
+          <div class="highlight-img"><img src="https://images.unsplash.com/photo-1602874801006-e26e88ed23e1?w=160&h=160&fit=crop&q=80" alt=""></div>
+          Talleres
+        </div>
+        <div class="highlight">
+          <div class="highlight-img"><img src="https://images.unsplash.com/photo-1607082348824-0a96f2a4b9da?w=160&h=160&fit=crop&q=80" alt=""></div>
+          Envíos
+        </div>
+        <div class="highlight">
+          <div class="highlight-img"><img src="https://images.unsplash.com/photo-1598300042247-d088f8ab3a91?w=160&h=160&fit=crop&q=80" alt=""></div>
+          Reseñas
+        </div>
+        <button class="highlight" style="border:none;background:transparent" onclick="openDrawer('highlight')">
+          <div class="highlight-add"><span class="ti ti-plus"></span></div>
+          Nueva
+        </button>
+      </div>
+    </article>
+
+    <nav class="content-tabs" aria-label="Contenido del negocio">
+      <button class="tab-btn active" onclick="setTab('posts', this)"><span class="ti ti-layout-grid"></span><span>Publicaciones</span></button>
+      <button class="tab-btn" onclick="setTab('saved', this)"><span class="ti ti-bookmark"></span><span>Guardados</span></button>
+      <button class="tab-btn" onclick="setTab('stats', this)"><span class="ti ti-chart-bar"></span><span>Estadísticas</span></button>
+      <button class="tab-btn" onclick="setTab('info', this)"><span class="ti ti-info-circle"></span><span>Información</span></button>
+    </nav>
+
+    <section class="post-shell">
+      <div class="tab-panel active" id="panel-posts">
+        <div class="posts-grid" id="postsGrid"></div>
+      </div>
+      <div class="tab-panel empty-panel" id="panel-saved">
+        <span class="ti ti-bookmark"></span>
+        <h3>Publicaciones guardadas</h3>
+        <p>Aquí verás productos o referencias que quieras revisar después.</p>
+      </div>
+      <div class="tab-panel empty-panel" id="panel-stats">
+        <span class="ti ti-chart-dots"></span>
+        <h3>Estadísticas del negocio</h3>
+        <p>Vistas, clics de WhatsApp y guardados aparecerán aquí cuando conectemos datos reales.</p>
+      </div>
+      <div class="tab-panel empty-panel" id="panel-info">
+        <span class="ti ti-building-store"></span>
+        <h3>Información pública</h3>
+        <p>Nombre, descripción, ubicación, redes, horario y medios de pago del negocio.</p>
+      </div>
     </section>
+  </section>
 
-    <section class="grid-main">
-      <!-- Columna A: Ítems -->
-      <section class="col-a">
-        <article class="card">
-          <div class="row-head">
-            <h2>Productos / Servicios</h2>
-            <button id="btnToggleNewItem" class="btn btn-primary" type="button">+ Agregar producto/servicio</button>
-          </div>
+  <aside class="sidebar">
+    <article class="side-panel premium-panel">
+      <div class="panel-title">
+        <div class="premium-icon"><span class="ti ti-crown"></span></div>
+        <span class="status-pill">Activo</span>
+      </div>
+      <h2 style="font-family:'Syne',sans-serif;font-size:22px;margin-bottom:6px">Plan Premium</h2>
+      <p>Renovación: 15 jun 2026. Disfrutá prioridad en el feed, más publicaciones y mejor visibilidad.</p>
+      <a class="btn btn-coral" href="premium-checkout.html">Administrar plan</a>
+    </article>
 
-          <!-- Formulario colapsable -->
-          <div id="itemFormWrap" class="collapse" hidden>
-            <form id="itemForm" class="emp-form" novalidate>
-              <div class="row row-3">
-                <div>
-                  <label for="itemType">Tipo</label>
-                  <select id="itemType" required>
-                    <option>Producto</option><option>Servicio</option>
-                  </select>
-                </div>
-                <div>
-                  <label for="itemName">Nombre</label>
-                  <input id="itemName" type="text" placeholder="Ej. Taza / Consultoría" required />
-                </div>
-                <div>
-                  <label for="itemPrice">Precio</label>
-                  <input id="itemPrice" type="number" inputmode="decimal" min="0" step="0.01" placeholder="Ej. 9.99" />
-                </div>
-              </div>
+    <article class="side-panel">
+      <div class="progress-top">
+        <strong>Completa tu perfil</strong>
+        <span class="progress-num">86%</span>
+      </div>
+      <div class="progress-bar"><span></span></div>
+      <div class="check-row"><span class="ti ti-circle-check"></span> Información básica <span>Completo</span></div>
+      <div class="check-row"><span class="ti ti-circle-check"></span> Descripción del negocio <span>Completo</span></div>
+      <div class="check-row"><span class="ti ti-circle-check"></span> Horario de atención <span>Completo</span></div>
+      <div class="check-row"><span class="ti ti-circle-check"></span> Redes sociales <span>Completo</span></div>
+      <div class="check-row"><span class="ti ti-circle"></span> Publicá tu primer producto <span>Pendiente</span></div>
+    </article>
 
-              <div class="row row-3">
-                <div>
-                  <label for="itemCurrency">Moneda</label>
-                  <select id="itemCurrency">
-                    <!-- Se completa desde JS según país del negocio -->
-                  </select>
-                  <small class="hint" id="curHint">Se sugiere según el país del negocio</small>
-                </div>
-                <div><label for="itemCat">Categoría</label><input id="itemCat" type="text" placeholder="Ej. Hogar / Marketing" /></div>
-                <div><label for="itemTags">Etiquetas</label><input id="itemTags" type="text" placeholder="artesanal, regalo" /></div>
-              </div>
+    <article class="side-panel">
+      <div class="panel-title"><h2>Contacto rápido</h2></div>
+      <div class="contact-row">
+        <span class="ti ti-brand-whatsapp"></span>
+        <div><strong>WhatsApp</strong><small>+506 8888-1234</small></div>
+        <button title="Editar"><span class="ti ti-pencil"></span></button>
+      </div>
+      <div class="contact-row">
+        <span class="ti ti-mail"></span>
+        <div><strong>Correo</strong><small>hola@artesaniaslaceiba.cr</small></div>
+        <button title="Editar"><span class="ti ti-pencil"></span></button>
+      </div>
+      <div class="contact-row">
+        <span class="ti ti-brand-instagram"></span>
+        <div><strong>Instagram</strong><small>@artesanias_laceiba</small></div>
+        <button title="Editar"><span class="ti ti-pencil"></span></button>
+      </div>
+      <button class="btn" style="width:100%;border-radius:var(--r);margin-top:10px" onclick="openDrawer('profile')">Ver todas las redes</button>
+    </article>
+  </aside>
+</main>
 
-              <div class="row row-2">
-                <div><label for="itemLink">Enlace externo</label><input id="itemLink" type="url" placeholder="https://..." /></div>
-                <div>
-                  <label for="itemDesc">Descripción</label>
-                  <textarea id="itemDesc" placeholder="Breve descripción del ítem"></textarea>
-                </div>
-              </div>
+<div class="drawer" id="drawer">
+  <div class="drawer-panel">
+    <div class="drawer-head">
+      <h2 id="drawerTitle">Editar perfil</h2>
+      <button class="close-drawer" onclick="closeDrawer()"><span class="ti ti-x"></span></button>
+    </div>
+    <form id="profileForm">
+      <div class="form-grid" id="drawerContent"></div>
+      <button class="btn btn-coral" type="submit" style="width:100%;border-radius:var(--r);margin-top:8px">Guardar cambios</button>
+    </form>
+  </div>
+</div>
 
-              <div>
-                <label for="itemGallery">Galería (máx según plan)</label>
-                <input id="itemGallery" type="file" accept="image/*" multiple />
-                <p class="hint" id="galleryHint">Gratis: máx 3 imágenes por ítem. Premium: sin límite razonable.</p>
-                <div id="itemGalleryPreview" class="gallery-preview"></div>
-              </div>
+<script>
+const posts = [
+  { img:'https://images.unsplash.com/photo-1606722590583-6951b5ea92ad?w=600&h=600&fit=crop&q=80', price:'₡18.000', likes:42, saves:11 },
+  { img:'https://images.unsplash.com/photo-1513519245088-0e12902e5a38?w=600&h=600&fit=crop&q=80', price:'₡22.500', likes:35, saves:7 },
+  { img:'https://images.unsplash.com/photo-1514228742587-6b1558fcca3d?w=600&h=600&fit=crop&q=80', price:'₡9.000', likes:28, saves:5 },
+  { img:'https://images.unsplash.com/photo-1587132137056-bfbf0166836e?w=600&h=600&fit=crop&q=80', price:'₡15.000', likes:31, saves:8 },
+  { img:'https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?w=600&h=600&fit=crop&q=80', price:'₡12.000', likes:19, saves:3 },
+  { img:'https://images.unsplash.com/photo-1590736969955-71cc94901144?w=600&h=600&fit=crop&q=80', price:'₡28.000', likes:27, saves:6 },
+  { img:'https://images.unsplash.com/photo-1602874801006-e26e88ed23e1?w=600&h=600&fit=crop&q=80', price:'₡6.500', likes:22, saves:4 },
+  { img:'https://images.unsplash.com/photo-1610701596007-11502861dcfa?w=600&h=600&fit=crop&q=80', price:'₡24.000', likes:16, saves:2 },
+  { img:'https://images.unsplash.com/photo-1511988617509-a57c8a288659?w=600&h=600&fit=crop&q=80', price:'₡11.000', likes:44, saves:12 }
+];
 
-              <div class="actions">
-                <button class="btn btn-outline" type="submit">Guardar ítem</button>
-                <button class="btn btn-ghost" type="button" id="btnCancelItem">Cancelar</button>
-                <span id="itemAlert" class="hint" role="status"></span>
-              </div>
-            </form>
-          </div>
+function renderPosts() {
+  document.getElementById('postsGrid').innerHTML = posts.map(p => `
+    <article class="post-card">
+      <img src="${p.img}" alt="Publicación de producto">
+      <span class="post-menu"><span class="ti ti-dots"></span></span>
+      <div class="post-overlay">
+        <div class="post-stats">
+          <span><span class="ti ti-heart-filled"></span>${p.likes}</span>
+          <span><span class="ti ti-bookmark"></span>${p.saves}</span>
+        </div>
+        <span class="price-chip">${p.price}</span>
+      </div>
+    </article>
+  `).join('');
+}
 
-          <ul id="itemList" class="item-list" aria-live="polite"></ul>
-          <p class="hint" id="limitHint"></p>
-        </article>
-      </section>
+function setTab(name, btn) {
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.tab-panel').forEach(panel => panel.classList.remove('active'));
+  document.getElementById(`panel-${name}`).classList.add('active');
+}
 
-      <!-- Columna B: Resumen + Formularios existentes -->
-      <aside class="col-b">
-        <!-- NUEVO: Resumen compacto con botón Editar -->
-        <article class="card" id="bizSummary">
-          <h2>Mi información</h2>
-          <ul class="list-plain">
-            <li><strong>Negocio:</strong> <span id="s_name">—</span></li>
-            <li><strong>Tipo:</strong> <span id="s_type">—</span></li>
-            <li><strong>Ubicación:</strong> <span id="s_loc">—</span></li>
-            <li><strong>Correo:</strong> <span id="s_email">—</span></li>
-          </ul>
-          <div class="actions">
-            <button id="btnEditBiz" class="btn btn-outline" type="button">Editar información</button>
-          </div>
-        </article>
+const drawerTemplates = {
+  profile: {
+    title: 'Editar perfil del negocio',
+    fields: `
+      <div class="field full"><label>Nombre del negocio</label><input value="Artesanías La Ceiba"></div>
+      <div class="field"><label>Categoría</label><select><option>Artesanías & Hogar</option><option>Alimentos</option><option>Servicios</option></select></div>
+      <div class="field"><label>Provincia</label><input value="Cartago"></div>
+      <div class="field full"><label>Descripción</label><textarea>Creamos piezas artesanales únicas con materiales naturales de nuestra tierra.</textarea></div>
+      <div class="field"><label>WhatsApp</label><input value="+506 8888-1234"></div>
+      <div class="field"><label>Instagram</label><input value="@artesanias_laceiba"></div>
+    `
+  },
+  post: {
+    title: 'Nueva publicación',
+    fields: `
+      <div class="field full"><label>Nombre del producto o servicio</label><input placeholder="Ej: Canasta tejida a mano"></div>
+      <div class="field"><label>Precio</label><input placeholder="₡18.000"></div>
+      <div class="field"><label>Tipo</label><select><option>Producto</option><option>Servicio</option></select></div>
+      <div class="field full"><label>Descripción</label><textarea placeholder="Contá qué hace especial esta publicación"></textarea></div>
+      <div class="field full"><label>Fotos</label><input type="file" accept="image/*" multiple></div>
+    `
+  },
+  highlight: {
+    title: 'Nuevo destacado',
+    fields: `
+      <div class="field full"><label>Nombre del destacado</label><input placeholder="Ej: Envíos"></div>
+      <div class="field full"><label>Imagen</label><input type="file" accept="image/*"></div>
+    `
+  }
+};
 
-        <!-- Form datos del negocio (sin cambios de campos) -->
-        <article class="card">
-          <h2>Datos del negocio</h2>
-          <form id="bizForm" class="emp-form" novalidate>
-            <div class="row row-2">
-              <div><label for="bizName">Nombre</label><input id="bizName" type="text" required /></div>
-              <div><label for="bizType">Tipo</label>
-                <select id="bizType" required>
-                  <option>Productos</option><option>Servicios</option><option>Productos y Servicios</option>
-                </select>
-              </div>
-            </div>
-            <div class="row row-2">
-              <div><label for="bizEmail">Correo</label><input id="bizEmail" type="email" required /></div>
-              <div><label for="bizPhone">Teléfono</label><input id="bizPhone" type="tel" /></div>
-            </div>
-            <div class="row row-3">
-              <div><label for="country">País</label>
-                <select id="country" required>
-                  <option>Argentina</option><option>Bolivia</option><option>Chile</option><option>Colombia</option>
-                  <option>Costa Rica</option><option>Ecuador</option><option>El Salvador</option><option>Guatemala</option>
-                  <option>Haití</option><option>Honduras</option><option>México</option><option>Nicaragua</option>
-                  <option>Panamá</option><option>Paraguay</option><option>Perú</option>
-                  <option>República Dominicana</option><option>Uruguay</option>
-                </select>
-              </div>
-              <div><label for="province">Provincia</label><input id="province" type="text" /></div>
-              <div><label for="city">Ciudad</label><input id="city" type="text" /></div>
-            </div>
-            <div class="row row-2">
-              <div><label for="postal">Código postal</label><input id="postal" type="text" /></div>
-              <div><label for="address">Dirección</label><input id="address" type="text" /></div>
-            </div>
-            <div>
-              <label for="about">Descripción / Historia</label>
-              <textarea id="about" placeholder="Contá tu historia y propuesta de valor"></textarea>
-            </div>
-            <div class="row row-2">
-              <div><label for="hours">Horario</label><input id="hours" type="text" placeholder="Lun-Sáb 9:00-18:00" /></div>
-              <div><label for="startDate">Inicio</label><input id="startDate" type="date" /></div>
-            </div>
-            <div class="actions">
-              <button class="btn btn-primary" type="submit">Guardar datos</button>
-              <span id="bizAlert" class="hint" role="status"></span>
-            </div>
-          </form>
-        </article>
+function openDrawer(type) {
+  const data = drawerTemplates[type] || drawerTemplates.profile;
+  document.getElementById('drawerTitle').textContent = data.title;
+  document.getElementById('drawerContent').innerHTML = data.fields;
+  document.getElementById('drawer').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
 
-        <!-- Contacto y Redes (igual) -->
-        <article class="card">
-          <h2>Contacto y Redes</h2>
-          <form id="socialForm" class="emp-form" novalidate>
-            <div class="row row-2">
-              <div><label for="contactWa">WhatsApp</label><input id="contactWa" type="url" placeholder="https://wa.me/XXXXXXXXXXX" /></div>
-              <div><label for="contactForm">Formulario</label><input id="contactForm" type="url" placeholder="https://..." /></div>
-            </div>
-            <div class="row row-2">
-              <div><label for="ig">Instagram</label><input id="ig" type="url" placeholder="https://instagram.com/..." /></div>
-              <div><label for="fb">Facebook</label><input id="fb" type="url" placeholder="https://facebook.com/..." /></div>
-            </div>
-            <div class="row row-2">
-              <div><label for="tt">TikTok</label><input id="tt" type="url" placeholder="https://tiktok.com/@..." /></div>
-              <div><label for="pin">Pinterest</label><input id="pin" type="url" placeholder="https://pinterest.com/..." /></div>
-            </div>
-            <div class="row row-2">
-              <div><label for="x">X (Twitter)</label><input id="x" type="url" placeholder="https://twitter.com/..." /></div>
-              <div><label for="tg">Telegram</label><input id="tg" type="url" placeholder="https://t.me/..." /></div>
-            </div>
-            <div class="actions">
-              <button class="btn btn-primary" type="submit">Guardar contacto y redes</button>
-              <span id="socialAlert" class="hint" role="status"></span>
-            </div>
-          </form>
-        </article>
+function closeDrawer() {
+  document.getElementById('drawer').classList.remove('open');
+  document.body.style.overflow = '';
+}
 
-        <!-- Pagos (igual) -->
-        <article class="card">
-          <h2>Formas de pago</h2>
-          <form id="paymentsForm" class="emp-form">
-            <div class="row row-2">
-              <div><label for="paypalLink">PayPal (link)</label><input id="paypalLink" type="url" placeholder="https://www.paypal.com/..." /></div>
-              <div><label for="bankInfo">Transferencia/Depósito</label><input id="bankInfo" type="text" placeholder="Banco, cuenta, IBAN, etc." /></div>
-            </div>
-            <div class="actions">
-              <button class="btn btn-primary" type="submit">Guardar formas de pago</button>
-              <span id="payAlert" class="hint" role="status"></span>
-            </div>
-          </form>
-        </article>
-      </aside>
-    </section>
-  </main>
+document.getElementById('drawer').addEventListener('click', e => {
+  if (e.target.id === 'drawer') closeDrawer();
+});
+document.getElementById('profileForm').addEventListener('submit', e => {
+  e.preventDefault();
+  closeDrawer();
+});
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') closeDrawer();
+});
 
-  <footer class="site-footer"><p>© <span id="year"></span> TuyoMall · Costa Rica</p></footer>
-
-  <script src="assets/js/auth/auth-utils.js?v=26" defer></script>
-  <script src="assets/js/auth/guard-emprendedor.js?v=26" defer></script>
-  <script src="assets/js/auth/header-state.js?v=26" defer></script>
-  <script src="assets/js/pages/dashboard-emprendedor.js?v=26" defer></script>
+renderPosts();
+</script>
 </body>
 </html>

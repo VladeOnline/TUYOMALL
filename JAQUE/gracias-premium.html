@@ -15,12 +15,14 @@
     .brand__logo { transition: transform 0.2s; }
     .brand:hover .brand__logo { transform: rotate(-6deg) scale(1.05); }
   </style>
+  <link rel="stylesheet" href="assets/css/theme.css">
+  <script src="assets/js/theme.js" defer></script>
 </head>
 <body>
 <header class="site-header">
   <div class="container nav">
     <a class="brand" href="index.html"><span class="brand__logo"></span><span class="brand__name">TuyoMall</span></a>
-    <nav class="main-menu"><a href="dashboard-emprendedor.html">Volver al panel</a></nav>
+    <nav class="main-menu"><a href="dashboard-emprendedor.php">Volver al panel</a></nav>
   </div>
 </header>
 
@@ -34,7 +36,7 @@
   <section class="card">
     <p>En unos segundos te redirigiremos a tu panel. Si no ocurre, podés continuar manualmente.</p>
     <div class="actions">
-      <a class="btn btn-primary" href="dashboard-emprendedor.html">Ir a mi panel</a>
+      <a class="btn btn-primary" href="dashboard-emprendedor.php">Ir a mi panel</a>
     </div>
     <p id="gAlert" class="hint" role="status" aria-live="polite"></p>
   </section>

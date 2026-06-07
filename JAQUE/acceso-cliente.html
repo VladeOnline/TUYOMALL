@@ -1,0 +1,861 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TuyoMall — Acceso Cliente</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Clash+Display:wght@400;500;600;700&family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --coral:   #FF6B47;
+  --coral-2: #FF8A6A;
+  --coral-3: #FFF0EC;
+  --coral-4: #FFE4DC;
+  --sand:    #F5EFE6;
+  --sand-2:  #EDE4D8;
+  --navy:    #14213D;
+  --navy-2:  #1E2F50;
+  --slate:   #4A5568;
+  --muted:   #8899AA;
+  --gray-l:  #F0F2F5;
+  --white:   #FFFFFF;
+  --surface: #FDFBF8;
+  --success: #10B981;
+  --danger:  #EF4444;
+  --r:       14px;
+  --r-lg:    20px;
+}
+
+html, body { height: 100%; }
+
+body {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  background: var(--surface);
+  color: var(--navy);
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+/* ── LEFT PANEL ────────────────────────────── */
+.left {
+  background: var(--navy);
+  min-height: 100vh;
+  display: flex; flex-direction: column;
+  justify-content: space-between;
+  padding: 40px 52px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Decorative circles */
+.left::before {
+  content: '';
+  position: absolute; top: -140px; right: -100px;
+  width: 420px; height: 420px;
+  background: radial-gradient(circle, rgba(255,107,71,0.18) 0%, transparent 70%);
+  border-radius: 50%; pointer-events: none;
+}
+.left::after {
+  content: '';
+  position: absolute; bottom: -100px; left: -80px;
+  width: 340px; height: 340px;
+  background: radial-gradient(circle, rgba(255,255,255,0.04) 0%, transparent 70%);
+  border-radius: 50%; pointer-events: none;
+}
+
+.left-logo {
+  display: flex; align-items: center; gap: 10px;
+  text-decoration: none; position: relative; z-index: 1;
+}
+.logo-mark {
+  width: 60px; height: 60px;
+  background: var(--coral);
+  border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px;
+  box-shadow: 0 4px 12px rgba(255,107,71,0.4);
+  transition: transform 0.2s;
+}
+.left-logo:hover .logo-mark { transform: rotate(-6deg) scale(1.05); }
+.logo-text {
+  font-family: 'Clash Display', sans-serif;
+  font-size: 22px; font-weight: 700;
+  color: var(--white); letter-spacing: -0.5px;
+}
+.logo-text span { color: var(--coral); }
+
+.left-body {
+  position: relative; z-index: 1;
+  flex: 1; display: flex; flex-direction: column;
+  justify-content: center; padding: 40px 0;
+}
+
+.left-badge {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: rgba(255,107,71,0.15);
+  border: 1px solid rgba(255,107,71,0.25);
+  border-radius: 100px;
+  padding: 6px 14px;
+  margin-bottom: 28px; width: fit-content;
+}
+.left-badge span { font-size: 12px; font-weight: 600; letter-spacing: 0.8px; text-transform: uppercase; color: var(--coral-2); }
+
+.left h2 {
+  font-family: 'Clash Display', sans-serif;
+  font-size: clamp(32px, 3.5vw, 46px);
+  font-weight: 700; line-height: 1.1;
+  letter-spacing: -1px; color: var(--white);
+  margin-bottom: 18px;
+}
+.left h2 em { font-style: normal; color: var(--coral); }
+
+.left-desc {
+  font-size: 16px; color: rgba(255,255,255,0.5);
+  line-height: 1.7; max-width: 380px;
+  margin-bottom: 40px;
+}
+
+.left-perks { list-style: none; display: flex; flex-direction: column; gap: 14px; }
+.perk {
+  display: flex; align-items: center; gap: 12px;
+  font-size: 14px; color: rgba(255,255,255,0.7);
+}
+.perk-icon {
+  width: 32px; height: 32px; flex-shrink: 0;
+  background: rgba(255,107,71,0.15);
+  border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 15px;
+}
+
+/* Preview mockup strip */
+.left-preview {
+  position: relative; z-index: 1;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: var(--r-lg);
+  padding: 16px 20px;
+  margin-top: 40px;
+  display: flex; align-items: center; gap: 14px;
+}
+.preview-avatars { display: flex; }
+.preview-avatar {
+  width: 32px; height: 32px;
+  border-radius: 50%; border: 2px solid var(--navy);
+  background: var(--coral);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 12px; font-weight: 700; color: white;
+  margin-left: -8px;
+}
+.preview-avatar:first-child { margin-left: 0; }
+.preview-avatar:nth-child(2) { background: #10B981; }
+.preview-avatar:nth-child(3) { background: #6366F1; }
+.preview-text { font-size: 13px; color: rgba(255,255,255,0.6); line-height: 1.45; }
+.preview-text strong { color: white; font-weight: 600; }
+
+.left-footer {
+  position: relative; z-index: 1;
+  font-size: 12px; color: rgba(255,255,255,0.2);
+}
+
+/* ── RIGHT PANEL ────────────────────────────── */
+.right {
+  display: flex; align-items: center; justify-content: center;
+  padding: 40px 52px; min-height: 100vh; overflow-y: auto;
+  background: var(--surface);
+}
+
+.form-box {
+  width: 100%; max-width: 400px;
+}
+
+/* ── TABS ────────────────────────────── */
+.tabs {
+  display: flex;
+  background: var(--gray-l);
+  border-radius: 12px; padding: 4px; gap: 4px;
+  margin-bottom: 36px;
+}
+.tab {
+  flex: 1; padding: 10px 8px;
+  border: none; background: transparent;
+  border-radius: 9px;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 14px; font-weight: 500;
+  color: var(--muted); cursor: pointer;
+  transition: all 0.2s;
+}
+.tab.active {
+  background: var(--white);
+  color: var(--navy); font-weight: 600;
+  box-shadow: 0 2px 8px rgba(20,33,61,0.1);
+}
+
+/* ── FORM VIEWS ────────────────────────────── */
+.view { display: none; }
+.view.active { display: block; }
+
+.form-title {
+  font-family: 'Clash Display', sans-serif;
+  font-size: 26px; font-weight: 700;
+  letter-spacing: -0.5px; margin-bottom: 6px;
+}
+.form-sub {
+  font-size: 14px; color: var(--muted);
+  margin-bottom: 28px; line-height: 1.5;
+}
+
+/* ── FIELDS ────────────────────────────── */
+.field { margin-bottom: 16px; }
+.field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 0; }
+.field-row .field { margin-bottom: 0; }
+
+label {
+  display: block; font-size: 13px; font-weight: 600;
+  color: var(--navy); margin-bottom: 7px;
+}
+
+.input-wrap { position: relative; }
+.input-wrap input { padding-right: 82px; }
+
+input[type=text], input[type=email],
+input[type=password], input[type=tel] {
+  width: 100%; padding: 12px 16px;
+  border: 1.5px solid var(--sand-2);
+  border-radius: var(--r);
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 15px; color: var(--navy);
+  background: var(--white);
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+input:focus {
+  border-color: var(--coral);
+  box-shadow: 0 0 0 3px rgba(255,107,71,0.1);
+}
+input.error { border-color: var(--danger); }
+input.success { border-color: var(--success); }
+
+.input-icon {
+  position: absolute; right: 14px; top: 50%;
+  transform: translateY(-50%);
+  border: 1px solid rgba(20,33,61,0.1);
+  border-radius: 999px;
+  background: var(--gray-l);
+  padding: 5px 9px;
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 1;
+  cursor: pointer;
+  color: var(--slate);
+  user-select: none;
+  transition: all 0.18s;
+}
+.input-icon:hover {
+  border-color: rgba(255,107,71,0.32);
+  background: var(--coral-3);
+  color: var(--coral);
+}
+
+.field-error {
+  font-size: 12px; color: var(--danger);
+  margin-top: 5px; display: none;
+}
+.field-error.show { display: block; }
+
+/* ── PASSWORD STRENGTH ────────────────────────────── */
+.strength-bar {
+  display: flex; gap: 4px; margin-top: 8px;
+}
+.strength-seg {
+  flex: 1; height: 3px; border-radius: 100px;
+  background: var(--sand-2);
+  transition: background 0.3s;
+}
+.strength-seg.weak   { background: var(--danger); }
+.strength-seg.medium { background: #F59E0B; }
+.strength-seg.strong { background: var(--success); }
+.strength-label {
+  font-size: 11px; color: var(--muted);
+  margin-top: 4px; text-align: right;
+}
+
+/* ── CHECKBOX ────────────────────────────── */
+.check-wrap {
+  display: flex; align-items: flex-start; gap: 10px;
+  margin-bottom: 20px;
+}
+.check-wrap input[type=checkbox] {
+  width: 18px; height: 18px; flex-shrink: 0;
+  accent-color: var(--coral); cursor: pointer;
+  margin-top: 2px;
+}
+.check-label {
+  font-size: 13px; color: var(--slate); line-height: 1.5;
+}
+.check-label a { color: var(--coral); text-decoration: none; font-weight: 600; }
+.check-label a:hover { text-decoration: underline; }
+.check-error {
+  font-size: 12px; color: var(--danger);
+  margin-top: -12px; margin-bottom: 12px;
+  display: none;
+}
+.check-error.show { display: block; }
+
+/* ── FORGOT ────────────────────────────── */
+.forgot {
+  display: block; text-align: right;
+  font-size: 13px; color: var(--coral);
+  text-decoration: none; margin-top: -8px; margin-bottom: 20px;
+  cursor: pointer; font-weight: 500;
+  background: none; border: none;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  width: 100%;
+}
+.forgot:hover { text-decoration: underline; }
+
+/* ── SUBMIT BTN ────────────────────────────── */
+.btn-submit {
+  width: 100%; padding: 14px;
+  background: var(--coral); color: var(--white);
+  border: none; border-radius: var(--r);
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 16px; font-weight: 700;
+  cursor: pointer;
+  transition: all 0.22s cubic-bezier(.34,1.56,.64,1);
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+  position: relative; overflow: hidden;
+}
+.btn-submit:hover { background: #e55a38; transform: translateY(-2px); box-shadow: 0 8px 24px rgba(255,107,71,0.35); }
+.btn-submit:active { transform: scale(0.99); }
+.btn-submit:disabled { background: var(--sand-2); color: var(--muted); cursor: not-allowed; transform: none; box-shadow: none; }
+
+/* Loading spinner */
+.btn-submit .spinner {
+  width: 18px; height: 18px;
+  border: 2px solid rgba(255,255,255,0.3);
+  border-top-color: white;
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+  display: none;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+.btn-submit.loading .spinner { display: block; }
+.btn-submit.loading .btn-text { display: none; }
+
+/* ── DIVIDER ────────────────────────────── */
+.divider {
+  display: flex; align-items: center; gap: 12px;
+  margin: 20px 0; color: var(--muted); font-size: 12px;
+}
+.divider::before, .divider::after {
+  content: ''; flex: 1; height: 1px; background: var(--sand-2);
+}
+
+/* ── SWITCH LINK ────────────────────────────── */
+.switch-link {
+  text-align: center; font-size: 13px;
+  color: var(--muted); margin-top: 20px;
+}
+.switch-link a {
+  color: var(--coral); font-weight: 600;
+  text-decoration: none; cursor: pointer;
+}
+.switch-link a:hover { text-decoration: underline; }
+
+/* ── BACK LINK ────────────────────────────── */
+.back-btn {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: none; border: none;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 14px; color: var(--coral);
+  cursor: pointer; margin-bottom: 28px; padding: 0;
+}
+.back-btn:hover { text-decoration: underline; }
+
+/* ── SUCCESS BOX ────────────────────────────── */
+.success-box {
+  display: none;
+  background: #ECFDF5; border: 1px solid rgba(16,185,129,0.25);
+  border-radius: var(--r); padding: 18px 20px;
+  font-size: 14px; color: #065F46; line-height: 1.6;
+  margin-top: 16px; text-align: center;
+}
+.success-box.show { display: block; }
+.success-box .s-icon { font-size: 28px; margin-bottom: 8px; display: block; }
+
+/* ── MODAL ────────────────────────────── */
+.modal-overlay {
+  position: fixed; inset: 0; z-index: 9999;
+  background: rgba(14,20,35,0.65);
+  backdrop-filter: blur(8px);
+  display: flex; align-items: center; justify-content: center;
+  padding: 20px; opacity: 0; pointer-events: none;
+  transition: opacity 0.3s;
+}
+.modal-overlay.open { opacity: 1; pointer-events: all; }
+.modal {
+  background: var(--white); border-radius: 24px;
+  width: 100%; max-width: 640px; max-height: 82vh;
+  overflow: hidden; display: flex; flex-direction: column;
+  transform: translateY(20px); transition: transform 0.3s;
+  box-shadow: 0 32px 80px rgba(0,0,0,0.2);
+}
+.modal-overlay.open .modal { transform: translateY(0); }
+.modal-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 22px 28px; border-bottom: 1px solid var(--sand-2);
+}
+.modal-title {
+  font-family: 'Clash Display', sans-serif;
+  font-size: 18px; font-weight: 700; color: var(--navy);
+}
+.modal-close {
+  width: 34px; height: 34px; border-radius: 50%;
+  background: var(--gray-l); border: none; cursor: pointer;
+  font-size: 16px; color: var(--slate);
+  display: flex; align-items: center; justify-content: center;
+  transition: all 0.2s;
+}
+.modal-close:hover { background: var(--coral-3); color: var(--coral); }
+.modal-body { padding: 28px; overflow-y: auto; flex: 1; }
+.modal-body h3 { font-family: 'Clash Display', sans-serif; font-size: 16px; font-weight: 600; color: var(--navy); margin: 20px 0 8px; }
+.modal-body h3:first-child { margin-top: 0; }
+.modal-body p, .modal-body li { font-size: 14px; color: var(--slate); line-height: 1.75; }
+.modal-body ul { padding-left: 18px; margin: 6px 0; }
+.modal-body li { margin-bottom: 5px; }
+
+/* ── RESPONSIVE ────────────────────────────── */
+@media (max-width: 860px) {
+  body { grid-template-columns: 1fr; }
+  .left { display: none; }
+  .right { padding: 32px 24px; align-items: flex-start; padding-top: 48px; }
+}
+@media (max-width: 560px) {
+  .right { padding: 22px 14px; padding-top: 26px; }
+  .form-box { max-width: 100%; }
+  .tabs { margin-bottom: 24px; }
+  .tab { font-size: 13px; padding: 10px 6px; }
+  .form-title { font-size: 22px; }
+  .field-row { grid-template-columns: 1fr; gap: 10px; }
+  input[type=text], input[type=email],
+  input[type=password], input[type=tel] {
+    font-size: 16px;
+  }
+  .modal-header,
+  .modal-body { padding: 16px; }
+}
+</style>
+  <link rel="stylesheet" href="assets/css/theme.css">
+  <script src="assets/js/theme.js" defer></script>
+</head>
+<body>
+
+<!-- ══ LEFT PANEL ══ -->
+<div class="left">
+  <a href="index.html" class="left-logo">
+     <div class="logo-mark">
+        <img src="assets/img/Logo_TuyoMall.2.png" alt="Logo TuyoMall" width="70" height="70">
+    </div>
+    <span class="logo-text">Tuyo<span>Mall</span></span>
+  </a>
+
+  <div class="left-body">
+    <div class="left-badge"><span>🛍️ Para Clientes</span></div>
+
+    <h2>Descubre lo mejor del<br><em>emprendimiento</em> local</h2>
+
+    <p class="left-desc">
+      Encuentra productos y servicios únicos de emprendedores de toda Latinoamérica. Todo a un clic de distancia.
+    </p>
+
+    <ul class="left-perks">
+      <li class="perk">
+        <div class="perk-icon">🔍</div>
+        Busca por categoría y provincia
+      </li>
+      <li class="perk">
+        <div class="perk-icon">💬</div>
+        Contacta directo por WhatsApp
+      </li>
+      <li class="perk">
+        <div class="perk-icon">⭐</div>
+        Guarda tus negocios favoritos
+      </li>
+      <li class="perk">
+        <div class="perk-icon">🎁</div>
+        Acceso completamente gratis
+      </li>
+    </ul>
+
+    <div class="left-preview">
+      <div class="preview-avatars">
+        <div class="preview-avatar">M</div>
+        <div class="preview-avatar">C</div>
+        <div class="preview-avatar">A</div>
+      </div>
+      <p class="preview-text"><strong>+500 emprendedores</strong> ya publican<br>sus productos en TuyoMall</p>
+    </div>
+  </div>
+
+  <div class="left-footer">© 2026 TuyoMall · Todos los derechos reservados</div>
+</div>
+
+<!-- ══ RIGHT PANEL ══ -->
+<div class="right">
+  <div class="form-box">
+
+    <!-- TABS -->
+    <div class="tabs" id="tabs">
+      <button class="tab active" onclick="switchTab('login', this)">Iniciar sesión</button>
+      <button class="tab" onclick="switchTab('register', this)">Crear cuenta</button>
+    </div>
+
+    <!-- ── VIEW: LOGIN ── -->
+    <div class="view active" id="view-login">
+      <h1 class="form-title">Bienvenido de vuelta 👋</h1>
+      <p class="form-sub">Ingresa a tu cuenta para explorar</p>
+
+      <div class="field">
+        <label>Correo electrónico</label>
+        <input type="email" id="l-email" placeholder="tucorreo@gmail.com" oninput="clearErr(this)">
+        <div class="field-error" id="l-email-err">Ingresa un correo válido</div>
+      </div>
+
+      <div class="field">
+        <label>Contraseña</label>
+        <div class="input-wrap">
+          <input type="password" id="l-pass" placeholder="••••••••" oninput="clearErr(this)">
+          <span class="input-icon" onclick="togglePass('l-pass', this)">Ver</span>
+        </div>
+        <div class="field-error" id="l-pass-err">Ingresa tu contraseña</div>
+      </div>
+
+      <button class="forgot" onclick="switchView('recover')">¿Olvidaste tu contraseña?</button>
+
+      <button class="btn-submit" onclick="doLogin()" id="btn-login">
+        <span class="btn-text">Iniciar sesión</span>
+        <div class="spinner"></div>
+      </button>
+
+      <div class="switch-link">
+        ¿No tienes cuenta? <a onclick="switchTab('register', document.querySelectorAll('.tab')[1])">Regístrate gratis</a>
+      </div>
+    </div>
+
+    <!-- ── VIEW: REGISTER ── -->
+   <div class="view" id="view-register">
+  <h1 class="form-title">Crea tu cuenta gratis ✨</h1>
+  <p class="form-sub">Solo toma un momento</p>
+
+  <!-- El form envuelve todos los campos -->
+  <form id="clientRegisterForm" onsubmit="doRegister(event)">
+    <div class="field-row">
+      <div class="field">
+        <label>Nombre</label>
+        <input type="text" id="r-nombre" name="r-nombre" placeholder="María">
+      </div>
+      <div class="field">
+        <label>Apellido</label>
+        <input type="text" id="r-apellido" name="r-apellido" placeholder="González">
+      </div>
+    </div>
+
+    <div class="field" style="margin-top:16px;">
+      <label>Correo electrónico</label>
+      <input type="email" id="r-email" name="r-email" placeholder="tucorreo@gmail.com" oninput="clearErr(this)">
+      <div class="field-error" id="r-email-err">Ingresa un correo válido</div>
+    </div>
+
+    <div class="field">
+      <label>Contraseña</label>
+      <div class="input-wrap">
+        <input type="password" id="r-pass" name="r-password" placeholder="Mínimo 8 caracteres" oninput="checkStrength(this.value)">
+        <span class="input-icon" onclick="togglePass('r-pass', this)">Ver</span>
+      </div>
+      <div class="strength-bar">
+        <div class="strength-seg" id="seg1"></div>
+        <div class="strength-seg" id="seg2"></div>
+        <div class="strength-seg" id="seg3"></div>
+        <div class="strength-seg" id="seg4"></div>
+      </div>
+      <div class="strength-label" id="strength-lbl"></div>
+      <div class="field-error" id="r-pass-err">La contraseña debe tener mínimo 8 caracteres</div>
+    </div>
+
+    <div class="field">
+      <label>Confirmar contraseña</label>
+      <div class="input-wrap">
+        <input type="password" id="r-pass2" name="r-pass2" placeholder="Repite tu contraseña" oninput="clearErr(this)">
+        <span class="input-icon" onclick="togglePass('r-pass2', this)">Ver</span>
+      </div>
+      <div class="field-error" id="r-pass2-err">Las contraseñas no coinciden</div>
+    </div>
+
+    <div class="check-wrap">
+      <input type="checkbox" id="r-terms" name="r-terms">
+      <label class="check-label" for="r-terms">
+        Acepto los <a href="#" onclick="openModal('compradores')">Términos y Condiciones</a> y la <a href="#" onclick="openModal('compradores')">Política de Privacidad</a> de TuyoMall
+      </label>
+    </div>
+    <div class="check-error" id="r-terms-err">Debes aceptar los términos para continuar</div>
+
+    <!-- Botón de envío -->
+    <button type="submit" class="btn-submit" id="btn-register">
+      <span class="btn-text">Crear mi cuenta gratis</span>
+      <div class="spinner"></div>
+    </button>
+  </form>
+
+  <div class="switch-link">
+    ¿Ya tienes cuenta? <a onclick="switchTab('login', document.querySelectorAll('.tab')[0])">Inicia sesión</a>
+  </div>
+</div>
+    <!-- ── VIEW: RECOVER ── -->
+    <div class="view" id="view-recover">
+      <button class="back-btn" onclick="switchView('login')">← Volver al inicio de sesión</button>
+      <h1 class="form-title">Recuperar contraseña 🔑</h1>
+      <p class="form-sub">Te enviamos un enlace a tu correo para restablecer tu contraseña</p>
+
+      <div class="field">
+        <label>Correo electrónico</label>
+        <input type="email" id="rec-email" placeholder="tucorreo@gmail.com">
+        <div class="field-error" id="rec-email-err">Ingresa un correo válido</div>
+      </div>
+
+      <button class="btn-submit" onclick="doRecover()" id="btn-recover">
+        <span class="btn-text">Enviar enlace de recuperación</span>
+        <div class="spinner"></div>
+      </button>
+
+      <div class="success-box" id="rec-success">
+        <span class="s-icon">📬</span>
+        <strong>¡Listo!</strong> Revisa tu correo.<br>
+        Te enviamos el enlace para recuperar tu contraseña. Puede tardar unos minutos.
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ══ MODAL TÉRMINOS COMPRADORES ══ -->
+<div class="modal-overlay" id="modal-compradores">
+  <div class="modal">
+    <div class="modal-header">
+      <span class="modal-title">📄 Términos y Condiciones — Compradores</span>
+      <button class="modal-close" onclick="closeModal('compradores')">✕</button>
+    </div>
+    <div class="modal-body">
+      <h3>1. Aceptación de los términos</h3>
+      <p>El Comprador acepta los términos y condiciones al visitar el sitio web https://tuyomall.com/ y al interactuar con los productos o servicios anunciados en la plataforma.</p>
+      <h3>2. Políticas de Privacidad</h3>
+      <p>Tuyomall recopila información personal (nombre, correo, teléfono) e información de uso (IP, navegador, páginas visitadas) para facilitar la interacción con el sitio y mejorar la experiencia del Comprador.</p>
+      <p>Tuyomall no vende ni alquila la información personal del Comprador a terceros.</p>
+      <h3>3. Responsabilidad de Tuyomall</h3>
+      <p>Tuyomall actúa únicamente como medio de publicidad. No se hace responsable por la calidad, entrega, devolución o garantías de los productos o servicios ofrecidos por los emprendedores.</p>
+      <h3>4. Conflictos con emprendedores</h3>
+      <p>En caso de problemas con un pedido, el Comprador debe notificarlo a Tuyomall. Si se verifica el incumplimiento, Tuyomall puede desactivar la página del emprendedor infractor.</p>
+      <h3>5. Pagos</h3>
+      <p>Todas las transacciones son gestionadas directamente por los emprendedores. Tuyomall no procesa pagos ni gestiona devoluciones.</p>
+      <h3>6. Ley aplicable</h3>
+      <p>Este contrato se rige por las leyes de la República de Costa Rica.</p>
+    </div>
+  </div>
+</div>
+
+<script>
+// ── Tab switch ──────────────────────────────────────
+function switchTab(tab, btn) {
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  btn.classList.add('active');
+  switchView(tab);
+}
+
+// ── View switch ──────────────────────────────────────
+function switchView(view) {
+  document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+  document.getElementById('view-' + view).classList.add('active');
+  const tabs = document.getElementById('tabs');
+  tabs.style.display = view === 'recover' ? 'none' : 'flex';
+}
+
+// ── Toggle password visibility ──────────────────────
+function togglePass(id, icon) {
+  const input = document.getElementById(id);
+  if (input.type === 'password') { input.type = 'text'; icon.textContent = 'Ocultar'; }
+  else { input.type = 'password'; icon.textContent = 'Ver'; }
+}
+
+// ── Clear error ──────────────────────────────────────
+function clearErr(input) {
+  input.classList.remove('error');
+}
+
+// ── Password strength ──────────────────────────────────────
+function checkStrength(val) {
+  const segs = [document.getElementById('seg1'), document.getElementById('seg2'),
+                document.getElementById('seg3'), document.getElementById('seg4')];
+  const lbl  = document.getElementById('strength-lbl');
+  segs.forEach(s => { s.className = 'strength-seg'; });
+
+  if (!val) { lbl.textContent = ''; return; }
+
+  let score = 0;
+  if (val.length >= 8)  score++;
+  if (val.length >= 12) score++;
+  if (/[A-Z]/.test(val) && /[0-9]/.test(val)) score++;
+  if (/[^A-Za-z0-9]/.test(val)) score++;
+
+  const cls  = score <= 1 ? 'weak' : score <= 2 ? 'medium' : 'strong';
+  const lbls = ['', 'Débil', 'Débil', 'Regular', 'Fuerte'];
+  const clrs = ['', '#EF4444', '#EF4444', '#F59E0B', '#10B981'];
+
+  for (let i = 0; i < score; i++) segs[i].classList.add(cls);
+  lbl.textContent = lbls[score];
+  lbl.style.color = clrs[score];
+}
+
+// ── Validate email ──────────────────────────────────────
+function isEmail(v) { return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v); }
+
+async function postAuth(url, data) {
+  const response = await fetch(url, { method: 'POST', body: data });
+  const contentType = response.headers.get('content-type') || '';
+  if (!contentType.includes('application/json')) {
+    throw new Error('El servidor actual no ejecuta PHP. Para registrar o iniciar sesion debes probar desde cPanel/Namecheap o desde un servidor local con PHP, no desde localhost:3000.');
+  }
+  const payload = await response.json().catch(() => ({ ok: false, message: 'Respuesta invalida del servidor.' }));
+  if (!response.ok || !payload.ok) {
+    throw new Error(payload.message || 'No se pudo completar la solicitud.');
+  }
+  return payload;
+}
+
+// ── Login ──────────────────────────────────────
+async function doLogin() {
+  let ok = true;
+  const email = document.getElementById('l-email');
+  const pass  = document.getElementById('l-pass');
+  const btn   = document.getElementById('btn-login');
+
+  if (!isEmail(email.value)) {
+    email.classList.add('error');
+    document.getElementById('l-email-err').classList.add('show');
+    ok = false;
+  }
+  if (!pass.value) {
+    pass.classList.add('error');
+    document.getElementById('l-pass-err').classList.add('show');
+    ok = false;
+  }
+  if (!ok) return;
+
+  btn.classList.add('loading'); btn.disabled = true;
+  try {
+    const data = new FormData();
+    data.append('email', email.value.trim());
+    data.append('password', pass.value);
+    const result = await postAuth('auth/login-client.php', data);
+    window.location.href = result.redirect || 'principal.html';
+  } catch (error) {
+    alert(error.message);
+    btn.classList.remove('loading');
+    btn.disabled = false;
+  }
+}
+
+// ── Register ──────────────────────────────────────
+async function doRegister(event) {
+  if (event) event.preventDefault();
+  let ok = true;
+  const email  = document.getElementById('r-email');
+  const pass   = document.getElementById('r-pass');
+  const pass2  = document.getElementById('r-pass2');
+  const terms  = document.getElementById('r-terms');
+  const btn    = document.getElementById('btn-register');
+
+  if (!isEmail(email.value)) {
+    email.classList.add('error');
+    document.getElementById('r-email-err').classList.add('show');
+    ok = false;
+  }
+  if (pass.value.length < 8) {
+    pass.classList.add('error');
+    document.getElementById('r-pass-err').classList.add('show');
+    ok = false;
+  }
+  if (pass.value !== pass2.value) {
+    pass2.classList.add('error');
+    document.getElementById('r-pass2-err').classList.add('show');
+    ok = false;
+  }
+  if (!terms.checked) {
+    document.getElementById('r-terms-err').classList.add('show');
+    ok = false;
+  }
+  if (!ok) return;
+
+  btn.classList.add('loading'); btn.disabled = true;
+  try {
+    const result = await postAuth('auth/register-client.php', new FormData(document.getElementById('clientRegisterForm')));
+    window.location.href = result.redirect || 'principal.html';
+  } catch (error) {
+    alert(error.message);
+    btn.classList.remove('loading');
+    btn.disabled = false;
+  }
+}
+
+// ── Recover ──────────────────────────────────────
+function doRecover() {
+  const email = document.getElementById('rec-email');
+  const btn   = document.getElementById('btn-recover');
+
+  if (!isEmail(email.value)) {
+    email.classList.add('error');
+    document.getElementById('rec-email-err').classList.add('show');
+    return;
+  }
+  btn.classList.add('loading'); btn.disabled = true;
+  setTimeout(() => {
+    btn.style.display = 'none';
+    document.getElementById('rec-success').classList.add('show');
+  }, 1000);
+}
+
+// ── Modal ──────────────────────────────────────
+function openModal(type) {
+  document.getElementById('modal-' + type).classList.add('open');
+  document.body.style.overflow = 'hidden';
+  return false;
+}
+function closeModal(type) {
+  document.getElementById('modal-' + type).classList.remove('open');
+  document.body.style.overflow = '';
+}
+document.querySelectorAll('.modal-overlay').forEach(o => {
+  o.addEventListener('click', function(e) {
+    if (e.target === this) { this.classList.remove('open'); document.body.style.overflow = ''; }
+  });
+});
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') {
+    document.querySelectorAll('.modal-overlay.open').forEach(m => m.classList.remove('open'));
+    document.body.style.overflow = '';
+  }
+});
+
+// ── Clear errors on checkbox change ──────────────────
+document.getElementById('r-terms').addEventListener('change', function() {
+  if (this.checked) document.getElementById('r-terms-err').classList.remove('show');
+});
+</script>
+
+</body>
+</html>
+
