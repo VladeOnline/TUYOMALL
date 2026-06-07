@@ -1,193 +1,621 @@
 <!DOCTYPE html>
 <html lang="es-CR">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Sobre Nosotros | TuyoMall</title>
-  <meta name="description" content="Conocé la historia, misión, visión y objetivos de TuyoMall. Emprendimiento familiar desde Pérez Zeledón, Costa Rica, apoyando a otros soñadores." />
-  <meta name="theme-color" content="#C4D814" />
-
+  <meta name="description" content="Conoce la historia, vision y mision de TuyoMall, un emprendimiento familiar creado en Costa Rica para impulsar negocios locales.">
+  <meta name="theme-color" content="#FF6B47">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;800&family=Sansita:wght@700;800&display=swap" rel="stylesheet">
-
-  <link rel="stylesheet" href="assets/css/base.css">
-  <link rel="stylesheet" href="assets/css/layout.css">
-  <link rel="stylesheet" href="assets/css/components.css">
-  <link rel="stylesheet" href="assets/css/pages/sobre-nosotros.css">
-  <style>
-    .brand__logo { transition: transform 0.2s; }
-    .brand:hover .brand__logo { transform: rotate(-6deg) scale(1.05); }
-  </style>
+  <link href="https://fonts.googleapis.com/css2?family=Clash+Display:wght@500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.14.0/dist/tabler-icons.min.css">
   <link rel="stylesheet" href="assets/css/theme.css">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --coral: #FF6B47;
+      --coral-soft: #FFF0EC;
+      --navy: #14213D;
+      --ink: #07111C;
+      --paper: #F8F4EE;
+      --white: #FFFFFF;
+      --muted: #64748B;
+      --line: rgba(20,33,61,0.12);
+      --shadow: 0 24px 70px rgba(15,23,42,0.12);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      min-height: 100vh;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      color: var(--navy);
+      background: var(--paper);
+      overflow-x: hidden;
+    }
+
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      min-height: 72px;
+      padding: 14px clamp(18px, 4vw, 70px);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      background: rgba(248,244,238,0.86);
+      border-bottom: 1px solid rgba(20,33,61,0.08);
+      backdrop-filter: blur(18px);
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      color: var(--navy);
+      font-family: 'Clash Display', sans-serif;
+      font-size: 24px;
+      font-weight: 700;
+      line-height: 1;
+    }
+
+    .brand-mark {
+      width: 46px;
+      height: 46px;
+      border-radius: 12px;
+      background: var(--coral);
+      color: #fff;
+      display: grid;
+      place-items: center;
+      font-size: 23px;
+      box-shadow: 0 14px 30px rgba(255,107,71,0.28);
+      transition: transform 0.2s ease;
+    }
+
+    .brand:hover .brand-mark { transform: rotate(-6deg) scale(1.05); }
+    .brand-mall { color: var(--coral); position: relative; display: inline-block; }
+    .brand-mall::after {
+      content: '';
+      position: absolute;
+      left: 2px;
+      right: 0;
+      bottom: -8px;
+      height: 6px;
+      background: url("data:image/svg+xml,%3Csvg viewBox='0 0 46 7' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M2 4.5 C8 1.5 16 6.5 23 3.5 C30 .5 38 6 44 3' stroke='%23FF6B47' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E") center/100% 100% no-repeat;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    .nav-links a,
+    .theme-toggle {
+      min-height: 40px;
+      border-radius: 999px;
+      border: 1px solid rgba(20,33,61,0.14);
+      background: rgba(255,255,255,0.72);
+      color: var(--navy);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 7px;
+      padding: 0 15px;
+      font-size: 13px;
+      font-weight: 800;
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    .theme-toggle { width: 40px; padding: 0; }
+    .nav-links a:hover,
+    .theme-toggle:hover {
+      border-color: rgba(255,107,71,0.38);
+      color: var(--coral);
+      background: var(--coral-soft);
+    }
+
+    .hero {
+      position: relative;
+      min-height: calc(100vh - 72px);
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(300px, 470px);
+      align-items: center;
+      gap: clamp(34px, 6vw, 80px);
+      padding: clamp(54px, 8vw, 96px) clamp(20px, 5vw, 88px);
+      background:
+        linear-gradient(112deg, rgba(255,255,255,0.96) 0%, rgba(255,255,255,0.78) 48%, rgba(20,33,61,0.08) 48.1%, rgba(255,107,71,0.1) 100%),
+        var(--paper);
+    }
+
+    .hero-copy {
+      max-width: 720px;
+      animation: riseIn 0.72s cubic-bezier(.2,.8,.2,1) both;
+    }
+
+    h1 {
+      font-family: 'Clash Display', sans-serif;
+      font-size: clamp(48px, 8vw, 104px);
+      line-height: 0.92;
+      letter-spacing: -1px;
+      color: var(--navy);
+      margin-bottom: 26px;
+    }
+
+    h1 span { color: var(--coral); }
+
+    .hero-lead {
+      max-width: 610px;
+      color: #475569;
+      font-size: clamp(18px, 2vw, 23px);
+      line-height: 1.65;
+      margin-bottom: 30px;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .btn {
+      min-height: 48px;
+      border-radius: 999px;
+      padding: 0 20px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      text-decoration: none;
+      font-weight: 800;
+      font-size: 14px;
+      border: 1px solid transparent;
+      transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+    }
+
+    .btn-primary {
+      background: var(--coral);
+      color: #fff;
+      box-shadow: 0 18px 34px rgba(255,107,71,0.25);
+    }
+
+    .btn-outline {
+      background: rgba(255,255,255,0.74);
+      color: var(--navy);
+      border-color: rgba(20,33,61,0.14);
+    }
+
+    .btn:hover { transform: translateY(-2px); }
+
+    .story-card {
+      position: relative;
+      min-height: 520px;
+      border-radius: 28px;
+      background: #111827;
+      color: #fff;
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      animation: cardIn 0.82s 0.12s cubic-bezier(.2,.8,.2,1) both;
+    }
+
+    .story-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(180deg, rgba(7,17,28,0) 0%, rgba(7,17,28,0.88) 78%),
+        url("https://images.unsplash.com/photo-1556761175-b413da4baf72?w=900&h=1100&fit=crop&q=80") center/cover;
+    }
+
+    .story-card::after {
+      content: '';
+      position: absolute;
+      top: -74px;
+      right: -58px;
+      width: 190px;
+      height: 190px;
+      border-radius: 50%;
+      background: rgba(255,107,71,0.48);
+    }
+
+    .story-content {
+      position: absolute;
+      inset: auto 24px 24px;
+      z-index: 1;
+    }
+
+    .story-icon {
+      width: 52px;
+      height: 52px;
+      border-radius: 16px;
+      background: rgba(255,107,71,0.92);
+      display: grid;
+      place-items: center;
+      font-size: 26px;
+      margin-bottom: 16px;
+    }
+
+    .story-content h2 {
+      font-family: 'Clash Display', sans-serif;
+      font-size: 30px;
+      line-height: 1.05;
+      margin-bottom: 10px;
+    }
+
+    .story-content p {
+      color: rgba(255,255,255,0.78);
+      line-height: 1.7;
+      font-size: 15px;
+    }
+
+    .section {
+      padding: clamp(54px, 7vw, 92px) clamp(20px, 5vw, 88px);
+      background: var(--white);
+    }
+
+    .section.alt { background: var(--paper); }
+    .section-inner { max-width: 1180px; margin: 0 auto; }
+
+    .section-title {
+      font-family: 'Clash Display', sans-serif;
+      font-size: clamp(34px, 5vw, 58px);
+      line-height: 1;
+      margin-bottom: 18px;
+      color: var(--navy);
+    }
+
+    .section-text {
+      max-width: 760px;
+      color: #475569;
+      font-size: 17px;
+      line-height: 1.8;
+    }
+
+    .values-grid,
+    .goals-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+      margin-top: 34px;
+    }
+
+    .value-card,
+    .goal-card,
+    .contact-panel {
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      background: rgba(255,255,255,0.86);
+      padding: 24px;
+      box-shadow: 0 12px 34px rgba(15,23,42,0.06);
+    }
+
+    .value-card .ti,
+    .goal-card .ti {
+      width: 42px;
+      height: 42px;
+      border-radius: 13px;
+      display: grid;
+      place-items: center;
+      background: var(--coral-soft);
+      color: var(--coral);
+      font-size: 22px;
+      margin-bottom: 18px;
+    }
+
+    .value-card h3,
+    .goal-card h3 {
+      font-family: 'Clash Display', sans-serif;
+      font-size: 22px;
+      margin-bottom: 10px;
+      color: var(--navy);
+    }
+
+    .value-card p,
+    .goal-card p {
+      color: #64748B;
+      line-height: 1.65;
+      font-size: 14px;
+    }
+
+    .mission-band {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0;
+      overflow: hidden;
+      border-radius: 26px;
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
+      margin-top: 34px;
+    }
+
+    .mission-box {
+      padding: clamp(28px, 4vw, 46px);
+      background: var(--navy);
+      color: #fff;
+    }
+
+    .mission-box:nth-child(2) {
+      background: var(--coral);
+    }
+
+    .mission-box h3 {
+      font-family: 'Clash Display', sans-serif;
+      font-size: 32px;
+      margin-bottom: 12px;
+    }
+
+    .mission-box p {
+      color: rgba(255,255,255,0.82);
+      line-height: 1.75;
+    }
+
+    .goals-grid {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+
+    .goal-card {
+      counter-increment: goal;
+      position: relative;
+      min-height: 176px;
+    }
+
+    .goal-card::before {
+      content: counter(goal, decimal-leading-zero);
+      position: absolute;
+      top: 18px;
+      right: 20px;
+      font-family: 'Clash Display', sans-serif;
+      font-size: 24px;
+      color: rgba(255,107,71,0.28);
+    }
+
+    .contact-wrap {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 380px;
+      gap: 22px;
+      align-items: stretch;
+    }
+
+    .contact-panel {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .contact-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: #475569;
+      text-decoration: none;
+      font-weight: 700;
+    }
+
+    .contact-row .ti {
+      width: 42px;
+      height: 42px;
+      border-radius: 13px;
+      background: var(--coral-soft);
+      color: var(--coral);
+      display: grid;
+      place-items: center;
+      font-size: 21px;
+    }
+
+    .footer {
+      padding: 28px clamp(20px, 5vw, 88px);
+      background: var(--ink);
+      color: rgba(255,255,255,0.72);
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+      font-size: 13px;
+    }
+
+    .footer a { color: #fff; text-decoration: none; font-weight: 800; }
+
+    html.tm-dark body {
+      background: #0B1118 !important;
+      color: #F8FAFC !important;
+    }
+
+    html.tm-dark .nav {
+      background: rgba(11,17,24,0.88) !important;
+      border-color: rgba(255,255,255,0.1) !important;
+    }
+
+    html.tm-dark .hero {
+      background:
+        linear-gradient(112deg, rgba(11,17,24,0.96) 0%, rgba(17,32,43,0.94) 52%, rgba(255,107,71,0.12) 100%),
+        #0B1118 !important;
+    }
+
+    html.tm-dark .section,
+    html.tm-dark .section.alt {
+      background: #0B1118 !important;
+    }
+
+    html.tm-dark .brand,
+    html.tm-dark h1,
+    html.tm-dark .section-title,
+    html.tm-dark .value-card h3,
+    html.tm-dark .goal-card h3 {
+      color: #F8FAFC !important;
+    }
+
+    html.tm-dark .hero-lead,
+    html.tm-dark .section-text,
+    html.tm-dark .value-card p,
+    html.tm-dark .goal-card p,
+    html.tm-dark .contact-row {
+      color: #CBD5E1 !important;
+    }
+
+    html.tm-dark .value-card,
+    html.tm-dark .goal-card,
+    html.tm-dark .contact-panel,
+    html.tm-dark .nav-links a,
+    html.tm-dark .theme-toggle {
+      background: #17202B !important;
+      border-color: rgba(255,255,255,0.12) !important;
+    }
+
+    @keyframes riseIn {
+      from { opacity: 0; transform: translateY(24px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes cardIn {
+      from { opacity: 0; transform: translateY(28px) scale(0.97); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    @media (max-width: 900px) {
+      .hero,
+      .mission-band,
+      .contact-wrap {
+        grid-template-columns: 1fr;
+      }
+
+      .story-card { min-height: 430px; }
+      .values-grid,
+      .goals-grid { grid-template-columns: 1fr 1fr; }
+    }
+
+    @media (max-width: 620px) {
+      .nav { align-items: flex-start; }
+      .nav-links a span:not(.ti) { display: none; }
+      .nav-links a { width: 40px; padding: 0; }
+      .hero { padding-top: 44px; }
+      .values-grid,
+      .goals-grid { grid-template-columns: 1fr; }
+      .footer { flex-direction: column; }
+    }
+  </style>
   <script src="assets/js/theme.js" defer></script>
 </head>
 <body>
-  <header class="site-header" role="navigation" aria-label="Barra superior">
-    <div class="container nav">
-      <a class="brand" href="index.html" aria-label="Inicio TuyoMall">
-        <span class="brand__logo" aria-hidden="true"></span>
-        <span class="brand__name">TuyoMall</span>
-      </a>
-      <!-- Reconstruido por header-state.js -->
-      <nav class="main-menu" aria-label="Navegación principal">
-        <a href="index.html">Inicio</a>
-        <a href="index.html#categorias">Categorías</a>
-      </nav>
-    </div>
+  <header class="nav">
+    <a class="brand" href="index.html" aria-label="Inicio TuyoMall">
+      <span class="brand-mark"><span class="ti ti-shopping-bag"></span></span>
+      <span>Tuyo<span class="brand-mall">Mall</span></span>
+    </a>
+    <nav class="nav-links" aria-label="Navegacion principal">
+      <a href="index.html"><span class="ti ti-home"></span><span>Inicio</span></a>
+      <a href="principal.html"><span class="ti ti-layout-grid"></span><span>Explorar</span></a>
+      <a href="planes.html"><span class="ti ti-crown"></span><span>Planes</span></a>
+      <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()" title="Cambiar modo"><span class="ti ti-moon"></span></button>
+    </nav>
   </header>
 
-  <main id="top" class="container" tabindex="-1">
-    <section class="hero" aria-labelledby="aboutTitle">
-      <span class="badge" aria-hidden="true">Sobre Nosotros</span>
-      <h1 id="aboutTitle" class="hero-title">Lo tuyo también es lo nuestro</h1>
-      <p class="hero-sub">Emprendimiento familiar desde Pérez Zeledón, Costa Rica. Apoyamos a soñadores como vos.</p>
-    </section>
+  <main>
+    <section class="hero">
+      <div class="hero-copy">
+        <h1>Lo tuyo también es <span>lo nuestro</span></h1>
+        <p class="hero-lead">TuyoMall nace como un emprendimiento familiar desde Pérez Zeledón, Costa Rica, con una idea sencilla: ayudar a otros soñadores a mostrar su negocio con orgullo, claridad y alcance.</p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="acceso-emprendedor.html"><span class="ti ti-rocket"></span> Registrar mi negocio</a>
+          <a class="btn btn-outline" href="principal.html"><span class="ti ti-search"></span> Explorar productos</a>
+        </div>
+      </div>
 
-    <section class="grid grid-2 about-intro">
-      <article class="card">
-        <h2>Quiénes somos</h2>
-        <p>TuyoMall es un emprendimiento familiar que nació con un propósito muy claro: apoyar a otros soñadores como nosotros...</p>
-        <p>Sabemos lo que es empezar desde cero, enfrentar barreras, y tener más ganas que recursos...</p>
-        <p>TuyoMall es tu vitrina online personalizada...</p>
-        <p><strong>Lo tuyo también es lo nuestro.</strong></p>
-      </article>
-      <aside class="card about-illustration" aria-label="Imagen de equipo (espacio reservado)">
-        <!-- <img src="assets/img/ui/sobre-nosotros-hero.webp" alt="Equipo TuyoMall trabajando" /> -->
+      <aside class="story-card" aria-label="Historia visual de TuyoMall">
+        <div class="story-content">
+          <div class="story-icon"><span class="ti ti-heart-handshake"></span></div>
+          <h2>Una vitrina para empezar con más fuerza.</h2>
+          <p>Sabemos lo que es comenzar desde cero, enfrentar barreras y tener más ganas que recursos. Por eso TuyoMall existe para hacer más visible el trabajo local.</p>
+        </div>
       </aside>
     </section>
 
-    <section class="grid grid-2 about-mv">
-      <article class="card">
-        <h2>Visión</h2>
-        <p>Ser la plataforma líder en innovación y crecimiento...</p>
-      </article>
-      <article class="card">
-        <h2>Misión</h2>
-        <p>Facilitar el camino hacia el éxito de emprendedores y empresas...</p>
-      </article>
-    </section>
+    <section class="section">
+      <div class="section-inner">
+        <h2 class="section-title">Quiénes Somos</h2>
+        <p class="section-text">Somos una plataforma pensada para emprendedores, pequeños negocios y clientes que quieren descubrir productos reales cerca de ellos. TuyoMall funciona como una vitrina online personalizada: cada negocio puede presentarse, publicar lo que ofrece y recibir contacto directo de clientes interesados.</p>
 
-    <section class="card about-goals">
-      <h2>Objetivos</h2>
-      <ol class="goals">
-        <li>Brindar una plataforma accesible y fácil de usar...</li>
-        <li>Maximizar la visibilidad y el alcance...</li>
-        <li>Fomentar el crecimiento de negocios emergentes...</li>
-        <li>Establecer alianzas estratégicas...</li>
-        <li>Mejorar constantemente la experiencia del usuario...</li>
-        <li>Impulsar el emprendimiento y la economía local...</li>
-        <li>Garantizar la seguridad y confianza en la plataforma...</li>
-        <li>Establecer un ecosistema de innovación...</li>
-      </ol>
-    </section>
-
-    <section class="card about-what">
-      <h2>¿Qué hace TuyoMall por vos?</h2>
-      <p>TuyoMall está diseñada para ayudar a emprendedores y pequeñas empresas...</p>
-    </section>
-
-    <section class="cta-duo">
-      <a class="btn btn-primary cta" href="planes.html">Crear mi página</a>
-      <a class="btn btn-outline cta" href="planes.html#perfil">Crear mi perfil</a>
-    </section>
-
-    <section class="card socials-block">
-      <h2>Siguenos</h2>
-      <nav class="socials" aria-label="Redes sociales de TuyoMall">
-       <div class="tm-social">
-        <a class="tm-icon" href="https://www.instagram.com/tuyomall/" target="_blank" rel="noopener" aria-label="Instagram">
-          <img src="assets/img/Instagram.png" alt="Instagram" width="40px">
-        </a>
-        <a class="tm-icon" href="https://www.facebook.com/Tuyomall" target="_blank" rel="noopener" aria-label="Facebook">
-          <img src="assets/img/Facebook.png" alt="Facebook" width="40px">
-        </a>
-        <a class="tm-icon" href="https://www.tiktok.com/@tuyomall" target="_blank" rel="noopener" aria-label="TikTok">
-          <img src="assets/img/TikTok.png" alt="TikTok" width="40px">
-        </a>
-        <a class="tm-icon" href="https://pin.it/7bu34y2Cl" target="_blank" rel="noopener" aria-label="Pinterest">
-          <img src="assets/img/Pinterest.png" alt="Pinterest" width="40px">
-        </a>
-      </div>
-      </nav>
-    </section>
-
-    <section class="card contact" id="contacto">
-      <h2>Contacto</h2>
-      <div class="contact-list">
-        <div class="contact-item"><span class="ico ico-wa"></span><span><strong>WhatsApp:</strong> <a href="https://wa.me/message/6WYXKGUVOYLWO1" target="_blank" rel="noopener">+506 8802 7022</a></span></div>
-        <div class="contact-item"><span class="ico ico-mail"></span><span><strong>Email:</strong> <a href="mailto:tuyomall.info@gmail.com">tuyomall.info@gmail.com</a></span></div>
-      </div>
-
-      <form id="aboutForm" class="about-form" novalidate>
-        <div class="row row-2">
-          <div>
-            <label for="name">Nombre y apellido</label>
-            <input id="name" name="name" type="text" placeholder="Tu nombre completo" required />
-          </div>
-          <div>
-            <label for="email">Correo electrónico</label>
-            <input id="email" name="email" type="email" placeholder="tunombre@correo.com" required />
-          </div>
+        <div class="values-grid">
+          <article class="value-card">
+            <span class="ti ti-users"></span>
+            <h3>Familia</h3>
+            <p>Nacimos con una mirada humana: acompañar a quienes están construyendo algo propio.</p>
+          </article>
+          <article class="value-card">
+            <span class="ti ti-building-store"></span>
+            <h3>Emprendimiento</h3>
+            <p>Queremos que cada producto, servicio e historia tenga un lugar visible y fácil de compartir.</p>
+          </article>
+          <article class="value-card">
+            <span class="ti ti-map-pin"></span>
+            <h3>Raíz Local</h3>
+            <p>Empezamos en Costa Rica con la intención de crecer junto a emprendedores de toda Latinoamérica.</p>
+          </article>
         </div>
+      </div>
+    </section>
 
-        <div class="row row-2">
-          <div>
-            <label for="country">País</label>
-            <select id="country" name="country" required>
-              <option value="" disabled selected>Seleccioná tu país</option>
-              <option>Todos</option><option>Argentina</option><option>Bolivia</option><option>Chile</option>
-              <option>Colombia</option><option>Costa Rica</option><option>Ecuador</option><option>El Salvador</option>
-              <option>Guatemala</option><option>Haití</option><option>Honduras</option><option>México</option>
-              <option>Nicaragua</option><option>Panamá</option><option>Paraguay</option><option>Perú</option>
-              <option>República Dominicana</option><option>Uruguay</option>
-            </select>
-          </div>
-          <div>
-            <label for="topic">Interés</label>
-            <select id="topic" name="topic" required>
-              <option value="" disabled selected>¿Qué querés crear?</option>
-              <option>Página</option><option>Perfil</option><option>Consulta general</option>
-            </select>
-          </div>
+    <section class="section alt">
+      <div class="section-inner">
+        <h2 class="section-title">Misión y Visión</h2>
+        <p class="section-text">TuyoMall quiere facilitar el camino hacia el crecimiento de negocios emergentes, combinando presencia digital, contacto directo y herramientas simples.</p>
+
+        <div class="mission-band">
+          <article class="mission-box">
+            <h3>Misión</h3>
+            <p>Facilitar que emprendedores y pequeñas empresas tengan una presencia digital clara, accesible y lista para conectar con clientes.</p>
+          </article>
+          <article class="mission-box">
+            <h3>Visión</h3>
+            <p>Ser una plataforma latinoamericana reconocida por impulsar innovación, confianza y crecimiento para negocios locales.</p>
+          </article>
         </div>
+      </div>
+    </section>
 
+    <section class="section">
+      <div class="section-inner">
+        <h2 class="section-title">Objetivos</h2>
+        <p class="section-text">Cada decisión de TuyoMall busca que vender, descubrir y contactar sea más simple para todos.</p>
+
+        <div class="goals-grid">
+          <article class="goal-card"><span class="ti ti-device-desktop"></span><h3>Accesible</h3><p>Crear una plataforma fácil de usar para negocios que están empezando.</p></article>
+          <article class="goal-card"><span class="ti ti-eye"></span><h3>Visible</h3><p>Maximizar el alcance de productos y servicios locales.</p></article>
+          <article class="goal-card"><span class="ti ti-chart-line"></span><h3>Crecimiento</h3><p>Fomentar el desarrollo de negocios emergentes con herramientas prácticas.</p></article>
+          <article class="goal-card"><span class="ti ti-shield-check"></span><h3>Confianza</h3><p>Promover seguridad, transparencia y comunicación directa.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section alt">
+      <div class="section-inner contact-wrap">
         <div>
-          <label for="message">Mensaje</label>
-          <textarea id="message" name="message" placeholder="Contanos brevemente tu idea o negocio…" required></textarea>
+          <h2 class="section-title">Hablemos</h2>
+          <p class="section-text">Si tenés una idea, un negocio o una pregunta sobre TuyoMall, escribinos. Queremos que este proyecto se sienta cercano, útil y posible.</p>
         </div>
-
-        <div class="sr-only" aria-hidden="true">
-          <label for="company">Empresa</label>
-          <input id="company" name="company" type="text" tabindex="-1" autocomplete="off" />
-        </div>
-
-        <label class="consent">
-          <input type="checkbox" id="consent" required />
-          <span>Acepto que TuyoMall use estos datos para responder mi consulta. <a href="legales/privacidad.html">Leer política</a>.</span>
-        </label>
-
-        <div class="actions">
-          <button class="btn btn-primary" type="submit">Enviar</button>
-          <a class="btn btn-outline" href="planes.html">Crear mi página</a>
-          <a class="btn btn-outline" href="planes.html#perfil">Crear mi perfil</a>
-        </div>
-        <p id="aboutFormAlert" class="hint" role="status" aria-live="polite"></p>
-      </form>
+        <aside class="contact-panel">
+          <a class="contact-row" href="https://wa.me/message/6WYXKGUVOYLWO1" target="_blank" rel="noopener"><span class="ti ti-brand-whatsapp"></span> +506 8802 7022</a>
+          <a class="contact-row" href="mailto:tuyomall.info@gmail.com"><span class="ti ti-mail"></span> tuyomall.info@gmail.com</a>
+          <a class="btn btn-primary" href="acceso-emprendedor.html"><span class="ti ti-rocket"></span> Empezar ahora</a>
+        </aside>
+      </div>
     </section>
   </main>
 
-  <footer class="site-footer">
-    <p>© <span id="year"></span> TuyoMall · Costa Rica</p>
+  <footer class="footer">
+    <p>© <span id="year">2026</span> TuyoMall · Costa Rica</p>
+    <a href="index.html">Volver al inicio</a>
   </footer>
 
-  <!-- JS global -->
-  <script src="assets/js/main.js" defer></script>
-  <script src="assets/js/ui.js" defer></script>
-  <script src="assets/js/pages/sobre-nosotros.js" defer></script>
-  <!-- Auth (para header dinámico) -->
-  <script src="assets/js/auth/auth-utils.js" defer></script>
-  <script src="assets/js/auth/header-state.js" defer></script>
+  <script>
+    const year = document.getElementById('year');
+    if (year) year.textContent = new Date().getFullYear();
+  </script>
 </body>
 </html>
-
