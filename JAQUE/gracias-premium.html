@@ -1,52 +1,474 @@
 <!DOCTYPE html>
 <html lang="es-CR">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Gracias — Premium activado | TuyoMall</title>
-  <meta name="theme-color" content="#C4D814" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gracias - Premium activado | TuyoMall</title>
+  <meta name="theme-color" content="#FF6B47">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;800&family=Sansita:wght@700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="assets/css/base.css">
-  <link rel="stylesheet" href="assets/css/layout.css">
-  <link rel="stylesheet" href="assets/css/components.css">
+  <link href="https://fonts.googleapis.com/css2?family=Clash+Display:wght@500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.14.0/dist/tabler-icons.min.css">
   <style>
-    .brand__logo { transition: transform 0.2s; }
-    .brand:hover .brand__logo { transform: rotate(-6deg) scale(1.05); }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --coral: #FF6B47;
+      --coral-2: #FF8A6A;
+      --navy: #14213D;
+      --ink: #07111C;
+      --white: #FFFFFF;
+      --soft: #F6F4F1;
+      --line: rgba(20,33,61,0.12);
+      --muted: #667085;
+      --shadow: 0 24px 80px rgba(7,17,28,0.14);
+    }
+
+    html { min-height: 100%; }
+
+    body {
+      min-height: 100vh;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background:
+        radial-gradient(circle at 20% 20%, rgba(255,107,71,0.14), transparent 28%),
+        linear-gradient(135deg, #FFFFFF 0%, #F7F4EF 46%, #101A27 46.1%, #07111C 100%);
+      color: var(--navy);
+      display: flex;
+      flex-direction: column;
+      overflow-x: hidden;
+    }
+
+    .topbar {
+      position: relative;
+      z-index: 2;
+      height: 76px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 clamp(22px, 5vw, 72px);
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      color: var(--navy);
+      font-family: 'Clash Display', sans-serif;
+      font-size: 22px;
+      font-weight: 700;
+      line-height: 1;
+    }
+
+    .brand-mark {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      background: var(--coral);
+      display: grid;
+      place-items: center;
+      box-shadow: 0 12px 26px rgba(255,107,71,0.28);
+      transition: transform 0.2s;
+      overflow: hidden;
+    }
+
+    .brand:hover .brand-mark { transform: rotate(-6deg) scale(1.05); }
+
+    .brand-mark img {
+      width: 58px;
+      height: 58px;
+      object-fit: contain;
+    }
+
+    .brand-mall {
+      color: var(--coral);
+      position: relative;
+      display: inline-block;
+      margin-left: 1px;
+    }
+
+    .brand-underline {
+      position: absolute;
+      left: 3px;
+      right: 0;
+      bottom: -9px;
+      width: 100%;
+      height: 7px;
+    }
+
+    .top-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .ghost-link,
+    .theme-toggle {
+      height: 42px;
+      border-radius: 999px;
+      border: 1px solid rgba(20,33,61,0.14);
+      background: rgba(255,255,255,0.68);
+      color: var(--navy);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 0 16px;
+      font-size: 13px;
+      font-weight: 700;
+      text-decoration: none;
+      cursor: pointer;
+      backdrop-filter: blur(14px);
+    }
+
+    .theme-toggle {
+      width: 42px;
+      padding: 0;
+    }
+
+    .wrap {
+      width: min(1120px, calc(100% - 40px));
+      margin: auto;
+      padding: 42px 0 64px;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 420px;
+      gap: 36px;
+      align-items: center;
+    }
+
+    .hero-copy {
+      max-width: 620px;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--coral);
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 1.4px;
+      text-transform: uppercase;
+      margin-bottom: 18px;
+    }
+
+    h1 {
+      font-family: 'Clash Display', sans-serif;
+      font-size: clamp(44px, 7vw, 82px);
+      line-height: 0.95;
+      letter-spacing: -1px;
+      color: var(--navy);
+      margin-bottom: 22px;
+    }
+
+    h1 span { color: var(--coral); }
+
+    .lead {
+      max-width: 520px;
+      color: #475467;
+      font-size: 18px;
+      line-height: 1.7;
+      margin-bottom: 28px;
+    }
+
+    .status-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .status-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.7);
+      border: 1px solid var(--line);
+      color: var(--navy);
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .confirm-card {
+      position: relative;
+      border-radius: 28px;
+      background: rgba(255,255,255,0.92);
+      border: 1px solid rgba(255,255,255,0.58);
+      box-shadow: var(--shadow);
+      padding: 28px;
+      overflow: hidden;
+    }
+
+    .confirm-card::before {
+      content: '';
+      position: absolute;
+      inset: 0 0 auto;
+      height: 6px;
+      background: linear-gradient(90deg, var(--coral), #FFB199);
+    }
+
+    .success-icon {
+      width: 68px;
+      height: 68px;
+      border-radius: 20px;
+      background: #111827;
+      color: var(--coral);
+      display: grid;
+      place-items: center;
+      font-size: 34px;
+      margin-bottom: 22px;
+      box-shadow: 0 18px 34px rgba(17,24,39,0.18);
+    }
+
+    .confirm-card h2 {
+      font-family: 'Clash Display', sans-serif;
+      font-size: 30px;
+      line-height: 1.1;
+      color: var(--navy);
+      margin-bottom: 10px;
+    }
+
+    .confirm-card p {
+      color: var(--muted);
+      line-height: 1.65;
+      font-size: 15px;
+    }
+
+    .premium-list {
+      list-style: none;
+      display: grid;
+      gap: 12px;
+      margin: 24px 0;
+      padding: 20px 0;
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .premium-list li {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--navy);
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .premium-list .ti {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: rgba(255,107,71,0.12);
+      color: var(--coral);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 15px;
+      flex: 0 0 auto;
+    }
+
+    .actions {
+      display: grid;
+      gap: 10px;
+    }
+
+    .btn {
+      height: 50px;
+      border-radius: 14px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      text-decoration: none;
+      border: 0;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-weight: 800;
+      cursor: pointer;
+    }
+
+    .btn-primary {
+      background: var(--coral);
+      color: var(--white);
+      box-shadow: 0 16px 32px rgba(255,107,71,0.28);
+    }
+
+    .btn-secondary {
+      background: #111827;
+      color: var(--white);
+    }
+
+    .note {
+      margin-top: 14px;
+      font-size: 12px;
+      color: var(--muted);
+      text-align: center;
+    }
+
+    .site-footer {
+      position: relative;
+      z-index: 2;
+      padding: 0 clamp(22px, 5vw, 72px) 24px;
+      color: rgba(255,255,255,0.64);
+      font-size: 13px;
+      text-align: right;
+    }
+
+    html.tm-dark body,
+    body.dark-mode {
+      background:
+        radial-gradient(circle at 18% 18%, rgba(255,107,71,0.18), transparent 28%),
+        linear-gradient(135deg, #070D14 0%, #0B1118 48%, #111827 48.1%, #0B1118 100%) !important;
+    }
+
+    html.tm-dark .brand,
+    html.tm-dark h1 {
+      color: #FFFFFF !important;
+    }
+
+    html.tm-dark .lead,
+    html.tm-dark .confirm-card p,
+    html.tm-dark .note {
+      color: #CBD5E1 !important;
+    }
+
+    html.tm-dark .ghost-link,
+    html.tm-dark .theme-toggle,
+    html.tm-dark .status-pill,
+    html.tm-dark .confirm-card {
+      background: rgba(23,32,43,0.86) !important;
+      border-color: rgba(255,255,255,0.12) !important;
+      color: #F8FAFC !important;
+    }
+
+    html.tm-dark .confirm-card h2,
+    html.tm-dark .premium-list li {
+      color: #F8FAFC !important;
+    }
+
+    html.tm-dark .btn-secondary {
+      background: #FFFFFF !important;
+      color: #111827 !important;
+    }
+
+    @media (max-width: 860px) {
+      body {
+        background: linear-gradient(180deg, #FFFFFF 0%, #F7F4EF 58%, #07111C 58.1%, #07111C 100%);
+      }
+
+      .topbar {
+        height: auto;
+        padding-top: 18px;
+        gap: 16px;
+      }
+
+      .ghost-link span:not(.ti) { display: none; }
+
+      .wrap {
+        grid-template-columns: 1fr;
+        padding-top: 36px;
+      }
+
+      .confirm-card { border-radius: 22px; }
+
+      .site-footer {
+        text-align: left;
+      }
+    }
+
+    @media (max-width: 560px) {
+      .top-actions { gap: 8px; }
+      .ghost-link { width: 42px; padding: 0; }
+      .wrap { width: min(100% - 28px, 1120px); }
+      .status-pill { width: 100%; }
+      .confirm-card { padding: 22px; }
+      .actions { grid-template-columns: 1fr; }
+    }
   </style>
   <link rel="stylesheet" href="assets/css/theme.css">
   <script src="assets/js/theme.js" defer></script>
 </head>
 <body>
-<header class="site-header">
-  <div class="container nav">
-    <a class="brand" href="index.html"><span class="brand__logo"></span><span class="brand__name">TuyoMall</span></a>
-    <nav class="main-menu"><a href="dashboard-emprendedor.php">Volver al panel</a></nav>
-  </div>
-</header>
+  <header class="topbar">
+    <a class="brand" href="index.html">
+      <span class="brand-mark">
+        <img src="assets/img/Logo_TuyoMall.2.png" alt="Logo TuyoMall">
+      </span>
+      <span>Tuyo<span class="brand-mall">Mall
+        <svg class="brand-underline" viewBox="0 0 46 7" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+          <path d="M2 4.5 C8 1.5, 16 6.5, 23 3.5 C30 0.5, 38 6, 44 3" stroke="#FF6B47" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </span></span>
+    </a>
 
-<main class="container" tabindex="-1">
-  <section class="hero">
-    <span class="badge">Premium</span>
-    <h1 class="hero-title">¡Gracias por suscribirte!</h1>
-    <p class="hero-sub">Estamos activando tu plan Premium…</p>
-  </section>
-
-  <section class="card">
-    <p>En unos segundos te redirigiremos a tu panel. Si no ocurre, podés continuar manualmente.</p>
-    <div class="actions">
-      <a class="btn btn-primary" href="dashboard-emprendedor.php">Ir a mi panel</a>
+    <div class="top-actions">
+      <a class="ghost-link" href="dashboard-emprendedor.php">
+        <span class="ti ti-layout-dashboard"></span>
+        <span>Volver al panel</span>
+      </a>
+      <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()" title="Cambiar modo">
+        <span class="ti ti-moon"></span>
+      </button>
     </div>
-    <p id="gAlert" class="hint" role="status" aria-live="polite"></p>
-  </section>
-</main>
+  </header>
 
-<footer class="site-footer"><p>© <span id="year"></span> TuyoMall · Costa Rica</p></footer>
+  <main class="wrap" tabindex="-1">
+    <section class="hero-copy" aria-labelledby="page-title">
+      <p class="eyebrow"><span class="ti ti-crown"></span> Premium activado</p>
+      <h1 id="page-title">Gracias por confiar en <span>TuyoMall</span></h1>
+      <p class="lead">Estamos activando tu plan Premium. Tu negocio tendrá prioridad visual, más herramientas de contacto y mejores señales para destacar en el feed.</p>
+      <div class="status-row" aria-label="Estado de activacion">
+        <span class="status-pill"><span class="ti ti-shield-check"></span> Pago recibido</span>
+        <span class="status-pill"><span class="ti ti-bolt"></span> Activacion en proceso</span>
+        <span class="status-pill"><span class="ti ti-clock"></span> Redireccion automatica</span>
+      </div>
+    </section>
 
-<script src="assets/js/main.js" defer></script>
-<script src="assets/js/pages/gracias-premium.js" defer></script>
-<script src="assets/js/auth/auth-utils.js" defer></script>
-<script src="assets/js/auth/header-state.js" defer></script>
+    <section class="confirm-card" aria-label="Resumen del plan Premium">
+      <div class="success-icon" aria-hidden="true">
+        <span class="ti ti-crown"></span>
+      </div>
+      <h2>Tu plan Premium esta casi listo</h2>
+      <p>En unos segundos te llevaremos a tu panel. Si el navegador no redirige automaticamente, puedes entrar manualmente.</p>
+
+      <ul class="premium-list">
+        <li><span class="ti ti-check"></span> Prioridad en el feed publico</li>
+        <li><span class="ti ti-check"></span> Publicaciones y productos ilimitados</li>
+        <li><span class="ti ti-check"></span> Estadisticas avanzadas para tu negocio</li>
+        <li><span class="ti ti-check"></span> Mas visibilidad para nuevos clientes</li>
+      </ul>
+
+      <div class="actions">
+        <a class="btn btn-primary" href="dashboard-emprendedor.php">
+          <span class="ti ti-arrow-right"></span>
+          Ir a mi panel
+        </a>
+        <a class="btn btn-secondary" href="principal.html">
+          <span class="ti ti-home"></span>
+          Ver feed publico
+        </a>
+      </div>
+      <p class="note" id="gAlert" role="status" aria-live="polite">Te redirigiremos automaticamente en 6 segundos.</p>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>&copy; <span id="year"></span> TuyoMall - Costa Rica</p>
+  </footer>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    let remaining = 6;
+    const statusText = document.getElementById('gAlert');
+    const countdown = setInterval(() => {
+      remaining -= 1;
+      if (remaining <= 0) {
+        clearInterval(countdown);
+        window.location.href = 'dashboard-emprendedor.php';
+        return;
+      }
+      statusText.textContent = `Te redirigiremos automaticamente en ${remaining} segundos.`;
+    }, 1000);
+  </script>
 </body>
 </html>
