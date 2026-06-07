@@ -629,6 +629,7 @@ body {
   gap: 28px;
   max-width: 860px;
   margin: 0 auto;
+  perspective: 1200px;
 }
 
 .plan-card {
@@ -637,15 +638,53 @@ body {
   border: 2px solid rgba(20,33,61,0.1);
   background: var(--white);
   position: relative;
-  transition: all 0.3s;
+  overflow: hidden;
+  transition: transform 0.35s cubic-bezier(.2,.8,.2,1), border-color 0.3s, box-shadow 0.3s;
 }
 
-.plan-card:hover { border-color: var(--coral); box-shadow: var(--shadow-glow); }
+.plan-card::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  background: radial-gradient(circle at 18% 10%, rgba(255,107,71,0.18), transparent 32%);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.35s;
+}
+
+.plan-card > * {
+  position: relative;
+  z-index: 1;
+}
+
+.plan-card:hover {
+  border-color: var(--coral);
+  box-shadow: var(--shadow-glow);
+  transform: translateY(-8px) rotateX(1.5deg);
+}
+
+.plan-card:hover::before { opacity: 1; }
 
 .plan-card.featured {
   border-color: var(--coral);
   background: var(--navy);
   color: var(--white);
+  animation: premiumBreath 4s ease-in-out infinite;
+}
+
+.plan-card.featured::after {
+  content: '';
+  position: absolute;
+  width: 220px;
+  height: 220px;
+  right: -110px;
+  top: -110px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255,107,71,0.28), transparent 68%);
+  opacity: 0.72;
+  pointer-events: none;
+  animation: premiumOrb 7s ease-in-out infinite alternate;
+  z-index: 0;
 }
 
 .plan-recommended {
@@ -656,6 +695,8 @@ body {
   text-transform: uppercase;
   padding: 4px 18px; border-radius: 100px;
   white-space: nowrap;
+  z-index: 3;
+  animation: recommendedFloat 2.8s ease-in-out infinite;
 }
 
 .plan-type {
@@ -699,6 +740,23 @@ body {
   line-height: 1.5;
 }
 
+.plan-card.reveal .plan-features li {
+  opacity: 0;
+  transform: translateX(-10px);
+}
+
+.plan-card.reveal.visible .plan-features li {
+  animation: featurePop 0.48s cubic-bezier(.2,.8,.2,1) forwards;
+}
+
+.plan-card.reveal.visible .plan-features li:nth-child(1) { animation-delay: 0.12s; }
+.plan-card.reveal.visible .plan-features li:nth-child(2) { animation-delay: 0.18s; }
+.plan-card.reveal.visible .plan-features li:nth-child(3) { animation-delay: 0.24s; }
+.plan-card.reveal.visible .plan-features li:nth-child(4) { animation-delay: 0.30s; }
+.plan-card.reveal.visible .plan-features li:nth-child(5) { animation-delay: 0.36s; }
+.plan-card.reveal.visible .plan-features li:nth-child(6) { animation-delay: 0.42s; }
+.plan-card.reveal.visible .plan-features li:nth-child(7) { animation-delay: 0.48s; }
+
 .plan-card.featured .plan-features li { color: rgba(255,255,255,0.75); }
 
 .plan-check {
@@ -712,6 +770,10 @@ body {
 }
 
 .plan-card.featured .plan-check { background: rgba(255,107,71,0.25); }
+
+.plan-card.reveal.visible .plan-check {
+  animation: checkPulse 0.58s cubic-bezier(.2,.8,.2,1) both;
+}
 
 .plan-cta {
   display: block;
@@ -736,6 +798,17 @@ body {
   background: var(--coral);
   color: var(--white);
   box-shadow: 0 4px 16px rgba(255,107,71,0.4);
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+}
+.cta-solid::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(110deg, transparent 0%, rgba(255,255,255,0.32) 42%, transparent 68%);
+  transform: translateX(-120%);
+  animation: buttonSweep 3.4s ease-in-out infinite;
 }
 .cta-solid:hover { background: #e55a38; transform: translateY(-2px); }
 
@@ -945,11 +1018,57 @@ footer {
   opacity: 1;
   transform: translateY(0);
 }
+.plan-card.reveal.visible:hover {
+  transform: translateY(-8px) rotateX(1.5deg);
+}
 .reveal-delay-1 { transition-delay: 0.1s; }
 .reveal-delay-2 { transition-delay: 0.2s; }
 .reveal-delay-3 { transition-delay: 0.3s; }
 .reveal-delay-4 { transition-delay: 0.4s; }
 .reveal-delay-5 { transition-delay: 0.5s; }
+
+@keyframes premiumBreath {
+  0%, 100% { box-shadow: 0 0 0 rgba(255,107,71,0); }
+  50% { box-shadow: 0 24px 70px rgba(255,107,71,0.18); }
+}
+
+@keyframes premiumOrb {
+  from { transform: translate3d(0,0,0) scale(0.92); opacity: 0.46; }
+  to { transform: translate3d(-34px,28px,0) scale(1.18); opacity: 0.78; }
+}
+
+@keyframes recommendedFloat {
+  0%, 100% { transform: translateX(-50%) translateY(0); }
+  50% { transform: translateX(-50%) translateY(-4px); }
+}
+
+@keyframes featurePop {
+  from { opacity: 0; transform: translateX(-10px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes checkPulse {
+  0% { transform: scale(0.72); }
+  70% { transform: scale(1.12); }
+  100% { transform: scale(1); }
+}
+
+@keyframes buttonSweep {
+  0%, 38% { transform: translateX(-120%); }
+  62%, 100% { transform: translateX(120%); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .plan-card,
+  .plan-card.featured,
+  .plan-recommended,
+  .plan-card.reveal.visible .plan-features li,
+  .plan-card.reveal.visible .plan-check,
+  .cta-solid::before {
+    animation: none !important;
+    transition-duration: 0.01ms !important;
+  }
+}
 
 /* ─── NAV SCROLLED STATE ─────────────────────────────── */
 .nav.scrolled {
@@ -1536,7 +1655,7 @@ footer {
 
     <div class="plans-grid">
       <!-- Gratis -->
-      <div class="plan-card">
+      <div class="plan-card reveal reveal-delay-1">
         <p class="plan-type">Estándar</p>
         <h3 class="plan-name">Plan Gratis</h3>
         <div class="plan-price"><span class="free">₡0</span></div>
@@ -1554,7 +1673,7 @@ footer {
       </div>
 
       <!-- Premium -->
-      <div class="plan-card featured">
+      <div class="plan-card featured reveal reveal-delay-2">
         <div class="plan-recommended">⭐ Recomendado</div>
         <p class="plan-type">Pro</p>
         <h3 class="plan-name">Plan Premium</h3>
