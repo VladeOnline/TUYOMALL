@@ -49,6 +49,37 @@ html.tm-dark .nav.scrolled {
   background: rgba(23,32,43,0.92) !important;
 }
 
+html.tm-dark .nav .logo-text,
+html.tm-dark .nav.scrolled .logo-text {
+  color: #F8FAFC !important;
+}
+
+html.tm-dark .nav .logo-text span,
+html.tm-dark .nav.scrolled .logo-text span,
+html.tm-dark .nav .logo-mall-wrap span,
+html.tm-dark .nav.scrolled .logo-mall-wrap span {
+  color: #FF6B47 !important;
+}
+
+html.tm-dark .nav .nav-link,
+html.tm-dark .nav.scrolled .nav-link {
+  color: #CBD5E1 !important;
+}
+
+html.tm-dark .nav .btn-ghost,
+html.tm-dark .nav.scrolled .btn-ghost {
+  color: #F8FAFC !important;
+  border-color: rgba(248,250,252,0.28) !important;
+  background: rgba(15,23,32,0.72) !important;
+}
+
+html.tm-dark .nav .btn-ghost:hover,
+html.tm-dark .nav.scrolled .btn-ghost:hover {
+  color: #FF8A6A !important;
+  border-color: rgba(255,107,71,0.5) !important;
+  background: rgba(255,107,71,0.14) !important;
+}
+
 html.tm-dark input,
 html.tm-dark textarea,
 html.tm-dark select,
