@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Dashboard Emprendedor | TuyoMall</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Clash+Display:wght@500;600;700&family=Syne:wght@500;600;700;800&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Clash+Display:wght@500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.14.0/dist/tabler-icons.min.css">
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -717,6 +717,46 @@ a { color: inherit; text-decoration: none; }
   .posts-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .form-grid { grid-template-columns: 1fr; }
 }
+
+.profile-title,
+.panel-title h2,
+.empty-panel h3,
+.drawer-head h2,
+.progress-top strong,
+.premium-panel h2,
+.premium-heading,
+.side-panel h2 {
+  font-family: 'Plus Jakarta Sans', 'DM Sans', system-ui, sans-serif !important;
+  font-weight: 800 !important;
+  letter-spacing: -0.02em;
+}
+
+.profile-title {
+  font-size: clamp(28px, 3.2vw, 42px);
+  line-height: 1.08;
+}
+
+.panel-title h2,
+.premium-panel h2,
+.premium-heading,
+.side-panel h2 {
+  font-size: 19px !important;
+  line-height: 1.18;
+}
+
+.premium-heading {
+  margin-bottom: 6px;
+}
+
+.profile-copy,
+.bio,
+.business-desc,
+.premium-panel p,
+.completion-row,
+.contact-info small {
+  font-family: 'DM Sans', system-ui, sans-serif;
+  letter-spacing: 0;
+}
 </style>
   <link rel="stylesheet" href="assets/css/theme.css">
   <script src="assets/js/theme.js" defer></script>
@@ -857,7 +897,7 @@ a { color: inherit; text-decoration: none; }
         <div class="premium-icon"><span class="ti ti-crown"></span></div>
         <span class="status-pill">Activo</span>
       </div>
-      <h2 style="font-family:'Syne',sans-serif;font-size:22px;margin-bottom:6px">Plan Premium</h2>
+      <h2 class="premium-heading">Plan Premium</h2>
       <p>Renovación: 15 jun 2026. Disfrutá prioridad en el feed, más publicaciones y mejor visibilidad.</p>
       <a class="btn btn-coral" href="premium-checkout.html">Administrar plan</a>
     </article>

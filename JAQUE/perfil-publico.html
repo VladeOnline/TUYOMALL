@@ -6,7 +6,7 @@
 <title>Artesanías La Ceiba | TuyoMall</title>
 <meta name="description" content="Perfil público de Artesanías La Ceiba en TuyoMall.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Clash+Display:wght@500;600;700&family=Syne:wght@500;600;700;800&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Clash+Display:wght@500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.14.0/dist/tabler-icons.min.css">
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -522,6 +522,34 @@ button { font: inherit; cursor: pointer; }
   .profile-actions { grid-template-columns: 1fr; }
   .highlights { padding: 18px 14px; }
   .posts-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+.title-row h1,
+.side-panel h2,
+.contact-card h2 {
+  font-family: 'Plus Jakarta Sans', 'DM Sans', system-ui, sans-serif !important;
+  font-weight: 800 !important;
+  letter-spacing: -0.02em;
+}
+
+.title-row h1 {
+  font-size: clamp(28px, 3.2vw, 42px);
+  line-height: 1.08;
+}
+
+.side-panel h2,
+.contact-card h2 {
+  font-size: 20px;
+  line-height: 1.18;
+}
+
+.bio,
+.public-desc,
+.contact-card p,
+.review p,
+.contact-row small {
+  font-family: 'DM Sans', system-ui, sans-serif;
+  letter-spacing: 0;
 }
 </style>
   <link rel="stylesheet" href="assets/css/theme.css">
