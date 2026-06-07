@@ -21,12 +21,72 @@ html.tm-dark {
   display: block;
 }
 
+.logo-text,
+.nav-logo-text,
+.footer-logo-text,
+.brand > span:not(.brand-mark) {
+  font-family: "Clash Display", "Plus Jakarta Sans", system-ui, sans-serif !important;
+  font-weight: 800 !important;
+  letter-spacing: -0.6px;
+  color: #14213D !important;
+}
+
+.logo-text > span,
+.footer-logo-text > span,
+.logo-mall,
+.logo-mall-wrap span,
+.brand-mall {
+  color: #FF6B47 !important;
+}
+
+.left-logo .logo-text > span,
+.footer-logo-text > span {
+  position: relative;
+  display: inline-block;
+}
+
+.left-logo .logo-text > span::after,
+.footer-logo-text > span::after {
+  content: "";
+  position: absolute;
+  left: 2px;
+  right: 0;
+  bottom: -8px;
+  height: 6px;
+  background: url("data:image/svg+xml,%3Csvg viewBox='0 0 46 7' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M2 4.5 C8 1.5 16 6.5 23 3.5 C30 .5 38 6 44 3' stroke='%23FF6B47' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E") center/100% 100% no-repeat;
+  pointer-events: none;
+}
+
 html.tm-dark .logo-mark,
 html.tm-dark .brand-mark,
 html.tm-dark .nav-logo-mark {
   background: transparent !important;
   border-color: transparent !important;
   box-shadow: none !important;
+}
+
+html.tm-dark .logo-text,
+html.tm-dark .nav-logo-text,
+html.tm-dark .footer-logo-text,
+html.tm-dark .brand > span:not(.brand-mark),
+body.dark-mode .logo-text,
+body.dark-mode .nav-logo-text,
+body.dark-mode .footer-logo-text,
+body.dark-mode .brand > span:not(.brand-mark) {
+  color: #F8FAFC !important;
+}
+
+html.tm-dark .logo-text > span,
+html.tm-dark .footer-logo-text > span,
+html.tm-dark .logo-mall,
+html.tm-dark .logo-mall-wrap span,
+html.tm-dark .brand-mall,
+body.dark-mode .logo-text > span,
+body.dark-mode .footer-logo-text > span,
+body.dark-mode .logo-mall,
+body.dark-mode .logo-mall-wrap span,
+body.dark-mode .brand-mall {
+  color: #FF6B47 !important;
 }
 
 html.tm-dark body,
