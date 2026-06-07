@@ -340,6 +340,8 @@ body.dark-mode .sidebar-right {
   display: flex;
   flex-direction: column;
   position: relative;
+  animation: postCardIn 0.52s cubic-bezier(.2,.8,.2,1) both;
+  animation-delay: var(--post-delay, 0ms);
 }
 .prod-card.menu-open {
   overflow: visible;
@@ -348,6 +350,7 @@ body.dark-mode .sidebar-right {
 .prod-card:hover {
   border-color: rgba(255,107,71,0.2);
   box-shadow: 0 8px 28px rgba(20,33,61,0.08);
+  transform: translateY(-3px);
 }
 
 /* Cabecera: avatar + vendedor + fecha */
@@ -367,7 +370,9 @@ body.dark-mode .sidebar-right {
   font-size: 13px; font-weight: 700; color: white; flex-shrink: 0;
   border: 2px solid rgba(255,255,255,0.72);
   box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+  transition: transform 0.22s ease, box-shadow 0.22s ease;
 }
+.prod-card:hover .prod-avatar { transform: scale(1.06); box-shadow: 0 8px 22px rgba(0,0,0,0.24); }
 .prod-header-info { flex: 1; min-width: 0; }
 .prod-seller-name {
   font-size: 12px; font-weight: 800; color: white;
@@ -537,6 +542,10 @@ body.dark-mode .sidebar-right {
 .action-btn:hover { background: var(--gray-l); }
 .action-btn.liked { color: #e55a35; }
 .action-btn.saved { color: #3B82F6; }
+.action-btn.liked .ti,
+.action-btn.saved .ti {
+  animation: iconPop 0.34s cubic-bezier(.2,.8,.2,1) both;
+}
 .action-like-count { font-size: 12px; color: var(--muted); }
 .action-contact {
   background: #22c55e; color: white;
@@ -552,7 +561,11 @@ body.dark-mode .sidebar-right {
   overflow: hidden;
 }
 .action-contact .ti { font-size: 16px; line-height: 1; }
-.action-contact:hover { background: #16a34a; }
+.action-contact:hover {
+  background: #16a34a;
+  transform: translateY(-1px);
+  box-shadow: 0 10px 22px rgba(34,197,94,0.22);
+}
 
 /* List view */
 .products-grid.list-view .prod-card { display: grid; grid-template-columns: 180px 1fr; }
@@ -608,6 +621,7 @@ body.dark-mode .sidebar-right {
   margin-bottom: 18px;
   position: relative;
   overflow: hidden;
+  animation: softFloat 5.6s ease-in-out infinite;
 }
 .premium-banner::before {
   content: '';
@@ -620,7 +634,13 @@ body.dark-mode .sidebar-right {
   border-radius: 50%;
 }
 .premium-banner::after {
-  content: none;
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(105deg, transparent 0%, rgba(255,255,255,0.16) 42%, transparent 58%);
+  transform: translateX(-120%);
+  animation: bannerSheen 4.8s ease-in-out infinite;
+  pointer-events: none;
 }
 .premium-banner-icon {
   width: 34px; height: 34px; border-radius: 10px;
@@ -628,6 +648,7 @@ body.dark-mode .sidebar-right {
   display: flex; align-items: center; justify-content: center;
   margin-bottom: 10px; position: relative; z-index: 1;
   color: var(--coral); font-size: 18px;
+  animation: iconLift 2.8s ease-in-out infinite;
 }
 .premium-banner h4 {
   font-family: 'Plus Jakarta Sans', sans-serif;
@@ -660,12 +681,17 @@ body.dark-mode .sidebar-right {
   display: flex; align-items: center; gap: 10px;
   margin-bottom: 8px; cursor: pointer; transition: all 0.2s;
   position: relative; overflow: hidden;
+  animation: sideItemIn 0.46s cubic-bezier(.2,.8,.2,1) both;
+  animation-delay: var(--hl-delay, 0ms);
 }
 .highlight-card::before {
   content: ''; position: absolute; left: 0; top: 0; bottom: 0;
   width: 3px; background: transparent; border-radius: 3px 0 0 3px; transition: background 0.2s;
 }
-.highlight-card:hover { border-color: rgba(255,107,71,0.25); }
+.highlight-card:hover {
+  border-color: rgba(255,107,71,0.25);
+  transform: translateX(3px);
+}
 .highlight-card:hover::before { background: var(--coral); }
 .hl-img {
   width: 42px; height: 42px; border-radius: 10px;
@@ -819,6 +845,60 @@ select {
 }
 .btn-publish .ti { font-size: 18px; }
 .btn-publish:hover { background: #e85a35; transform: translateY(-2px); box-shadow: 0 8px 24px rgba(255,107,71,0.35); }
+
+@keyframes postCardIn {
+  from {
+    opacity: 0;
+    transform: translateY(18px) scale(0.985);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes sideItemIn {
+  from {
+    opacity: 0;
+    transform: translateX(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes iconPop {
+  0% { transform: scale(0.72); }
+  58% { transform: scale(1.22); }
+  100% { transform: scale(1); }
+}
+
+@keyframes softFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-4px); }
+}
+
+@keyframes iconLift {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-2px) rotate(-4deg); }
+}
+
+@keyframes bannerSheen {
+  0%, 46% { transform: translateX(-120%); }
+  76%, 100% { transform: translateX(120%); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0.001ms !important;
+  }
+}
 
 /* ══ RESPONSIVE ══ */
 @media (max-width: 1120px) {
@@ -1246,13 +1326,13 @@ function renderProducts() {
   empty.classList.remove('show');
   loadBtn.style.display = filtered.length > visibleCount ? 'flex' : 'none';
 
-  grid.innerHTML = visible.map(p => {
+  grid.innerHTML = visible.map((p, index) => {
     const liked   = likedIds.has(p.id);
     const saved   = savedIds.has(p.id);
     const total   = p.likes + (liked ? 1 : 0);
     const timeAgo = timeLabels[(p.id-1) % timeLabels.length];
     return `
-    <div class="prod-card">
+    <div class="prod-card" style="--post-delay:${Math.min(index * 42, 360)}ms">
       <div class="prod-header">
         <div class="prod-avatar" style="background:${p.sellerColor}">${p.sellerInit}</div>
         <div class="prod-header-info">
@@ -1309,8 +1389,8 @@ function renderSidebar() {
   const premium = allProducts.filter(p=>p.premium).slice(0,4);
   const cats    = [...new Set(allProducts.map(p=>p.cat))];
 
-  premDiv.innerHTML = premium.map(p=>`
-    <div class="highlight-card">
+  premDiv.innerHTML = premium.map((p,index)=>`
+    <div class="highlight-card" style="--hl-delay:${index * 70}ms">
       <div class="hl-img">${catIcon(p.cat)}</div>
       <div class="hl-info">
         <div class="hl-name">${p.name}</div>
