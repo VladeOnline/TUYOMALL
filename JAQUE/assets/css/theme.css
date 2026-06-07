@@ -254,6 +254,12 @@ html.tm-dark .right {
   background: #0B1118 !important;
 }
 
+html.tm-dark .right .form-box {
+  background: transparent !important;
+  border-color: transparent !important;
+  box-shadow: none !important;
+}
+
 html.tm-dark .left .logo-text,
 html.tm-dark .left h2,
 html.tm-dark .left .preview-text strong {
