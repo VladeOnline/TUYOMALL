@@ -5,21 +5,20 @@ html.tm-dark {
 .logo-mark,
 .brand-mark,
 .nav-logo-mark {
-  background: rgba(255,255,255,0.96) !important;
+  background: transparent !important;
   color: #FF6B47 !important;
-  border: 1px solid rgba(20,33,61,0.1) !important;
-  box-shadow: 0 10px 24px rgba(20,33,61,0.14) !important;
-  overflow: hidden;
+  border-color: transparent !important;
+  box-shadow: none !important;
+  overflow: visible;
 }
 
 .logo-mark img,
 .brand-mark img,
 .nav-logo-mark img {
-  width: 82% !important;
-  height: 82% !important;
+  width: 86% !important;
+  height: 86% !important;
   object-fit: contain !important;
   display: block;
-  filter: drop-shadow(0 1px 1px rgba(255,255,255,0.55));
 }
 
 .logo-text,
@@ -58,12 +57,24 @@ html.tm-dark {
   pointer-events: none;
 }
 
+.left .logo-text,
+.hero-dark .logo-text,
+.auth-hero .logo-text {
+  color: #F8FAFC !important;
+}
+
+.left .logo-text > span,
+.hero-dark .logo-text > span,
+.auth-hero .logo-text > span {
+  color: #FF6B47 !important;
+}
+
 html.tm-dark .logo-mark,
 html.tm-dark .brand-mark,
 html.tm-dark .nav-logo-mark {
-  background: rgba(248,250,252,0.96) !important;
-  border-color: rgba(255,255,255,0.2) !important;
-  box-shadow: 0 12px 28px rgba(0,0,0,0.28) !important;
+  background: transparent !important;
+  border-color: transparent !important;
+  box-shadow: none !important;
 }
 
 html.tm-dark .logo-text,
