@@ -473,7 +473,7 @@ button { cursor: pointer; }
       <h1>Centro de <span>ayuda</span> y contacto</h1>
       <p>
         Encontrá respuestas rápidas sobre cuentas, publicaciones, perfiles de negocio, planes Premium
-        y el proceso para subir TuyoMall a cPanel.
+        y formas de contacto con nuestro equipo.
       </p>
       <div class="hero-actions">
         <a class="btn btn-green" href="https://wa.me/50688027022" target="_blank"><span class="ti ti-brand-whatsapp"></span> WhatsApp soporte</a>
@@ -486,7 +486,6 @@ button { cursor: pointer; }
       <div class="support-list">
         <a href="acceso-emprendedor.html"><span class="ti ti-user-plus"></span> Crear cuenta emprendedor</a>
         <a href="acceso-cliente.html"><span class="ti ti-users"></span> Crear cuenta cliente</a>
-        <a href="database/README.md"><span class="ti ti-database"></span> Guía base de datos</a>
       </div>
     </aside>
   </section>
@@ -505,7 +504,6 @@ button { cursor: pointer; }
         <button onclick="filterFaq('cliente', this)">Clientes</button>
         <button onclick="filterFaq('emprendedor', this)">Emprendedores</button>
         <button onclick="filterFaq('pagos', this)">Pagos</button>
-        <button onclick="filterFaq('tecnico', this)">Técnico</button>
       </div>
 
       <div class="faq-list" id="faqList">
@@ -528,14 +526,6 @@ button { cursor: pointer; }
         <article class="faq-item" data-cat="pagos">
           <button class="faq-q" onclick="toggleFaq(this)">¿Qué incluye el plan Premium?<span class="ti ti-chevron-down"></span></button>
           <div class="faq-a">Premium mejora la visibilidad del negocio, permite más publicaciones y destaca el perfil dentro del feed. El precio base definido es $5 al mes.</div>
-        </article>
-        <article class="faq-item" data-cat="tecnico">
-          <button class="faq-q" onclick="toggleFaq(this)">¿Por qué un PHP se descarga en localhost?<span class="ti ti-chevron-down"></span></button>
-          <div class="faq-a">Porque servidores como localhost:3000 no ejecutan PHP. Para probar registro/login necesitás cPanel, XAMPP, Laragon o un servidor PHP local.</div>
-        </article>
-        <article class="faq-item" data-cat="tecnico">
-          <button class="faq-q" onclick="toggleFaq(this)">¿Qué debo configurar en Namecheap?<span class="ti ti-chevron-down"></span></button>
-          <div class="faq-a">Debés subir los archivos a public_html, crear una base MySQL, importar database/schema.sql y editar config/database.php con los datos reales de cPanel.</div>
         </article>
       </div>
     </div>
@@ -562,21 +552,21 @@ button { cursor: pointer; }
     <div class="section-head">
       <div>
         <h2>Enviar consulta</h2>
-        <p>Este formulario queda listo para conectar luego con PHP o correo del hosting.</p>
+        <p>Contanos qué necesitás y nuestro equipo te responderá lo antes posible.</p>
       </div>
     </div>
-    <form class="contact-form" onsubmit="sendContact(event)">
+    <form class="contact-form" id="supportForm" onsubmit="sendContact(event)">
       <div class="field">
         <label>Nombre</label>
-        <input type="text" placeholder="Tu nombre" required>
+        <input type="text" name="nombre" placeholder="Tu nombre" required>
       </div>
       <div class="field">
         <label>Correo</label>
-        <input type="email" placeholder="tucorreo@gmail.com" required>
+        <input type="email" name="correo" placeholder="tucorreo@gmail.com" required>
       </div>
       <div class="field">
         <label>Tipo de consulta</label>
-        <select>
+        <select name="tipo">
           <option>Cuenta cliente</option>
           <option>Cuenta emprendedor</option>
           <option>Plan Premium</option>
@@ -585,14 +575,14 @@ button { cursor: pointer; }
       </div>
       <div class="field">
         <label>WhatsApp</label>
-        <input type="tel" placeholder="+506 8888 8888">
+        <input type="tel" name="whatsapp" placeholder="+506 8888 8888">
       </div>
       <div class="field full">
         <label>Mensaje</label>
-        <textarea placeholder="Contanos qué necesitás..." required></textarea>
+        <textarea name="mensaje" placeholder="Contanos qué necesitás..." required></textarea>
       </div>
       <div class="field full">
-        <button class="btn btn-coral" type="submit"><span class="ti ti-send"></span> Enviar mensaje</button>
+        <button class="btn btn-coral" id="supportSubmit" type="submit"><span class="ti ti-send"></span> Enviar mensaje</button>
       </div>
     </form>
   </section>
@@ -617,9 +607,31 @@ function filterFaq(cat, btn) {
   });
 }
 
-function sendContact(event) {
+async function sendContact(event) {
   event.preventDefault();
-  alert('Consulta preparada. Luego conectamos este formulario con PHP/correo en cPanel.');
+  const form = document.getElementById('supportForm');
+  const button = document.getElementById('supportSubmit');
+  const original = button.innerHTML;
+  button.disabled = true;
+  button.innerHTML = '<span class="ti ti-loader-2"></span> Enviando...';
+
+  try {
+    const response = await fetch('contacto-soporte.php', {
+      method: 'POST',
+      body: new FormData(form)
+    });
+    const result = await response.json();
+    if (!response.ok || !result.ok) throw new Error(result.message || 'No se pudo enviar la consulta.');
+
+    form.reset();
+    button.innerHTML = '<span class="ti ti-circle-check"></span> Mensaje enviado';
+    alert(result.message);
+  } catch (error) {
+    alert(error.message || 'No pudimos enviar la consulta. Escribinos a soporte@tuyomall.com.');
+    button.innerHTML = original;
+  } finally {
+    button.disabled = false;
+  }
 }
 </script>
 </body>

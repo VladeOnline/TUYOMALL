@@ -229,7 +229,7 @@ label {
 .input-wrap input { padding-right: 82px; }
 
 input[type=text], input[type=email],
-input[type=password], input[type=tel] {
+input[type=password], input[type=tel], select {
   width: 100%; padding: 12px 16px;
   border: 1.5px solid var(--sand-2);
   border-radius: var(--r);
@@ -243,7 +243,18 @@ input:focus {
   border-color: var(--coral);
   box-shadow: 0 0 0 3px rgba(255,107,71,0.1);
 }
-input.error { border-color: var(--danger); }
+select {
+  appearance: none;
+  background-image: linear-gradient(45deg, transparent 50%, var(--muted) 50%), linear-gradient(135deg, var(--muted) 50%, transparent 50%);
+  background-position: calc(100% - 18px) 50%, calc(100% - 12px) 50%;
+  background-size: 6px 6px, 6px 6px;
+  background-repeat: no-repeat;
+}
+select:focus {
+  border-color: var(--coral);
+  box-shadow: 0 0 0 3px rgba(255,107,71,0.1);
+}
+input.error, select.error { border-color: var(--danger); }
 input.success { border-color: var(--success); }
 
 .input-icon {
@@ -462,7 +473,7 @@ html.tm-dark .preview-avatar {
   .form-title { font-size: 22px; }
   .field-row { grid-template-columns: 1fr; gap: 10px; }
   input[type=text], input[type=email],
-  input[type=password], input[type=tel] {
+  input[type=password], input[type=tel], select {
     font-size: 16px;
   }
   .modal-header,
@@ -590,6 +601,23 @@ html.tm-dark .preview-avatar {
       <div class="field-error" id="r-email-err">Ingresa un correo válido</div>
     </div>
 
+    <div class="field-row" data-location-group>
+      <div class="field">
+        <label>País</label>
+        <select id="r-pais" name="r-pais" data-country-select onchange="clearErr(this)">
+          <option value="">Seleccioná país</option>
+        </select>
+        <div class="field-error" id="r-pais-err">Seleccioná tu país</div>
+      </div>
+      <div class="field">
+        <label>Provincia / Estado</label>
+        <select id="r-provincia" name="r-provincia" data-province-select onchange="clearErr(this)" disabled>
+          <option value="">Primero elegí país</option>
+        </select>
+        <div class="field-error" id="r-prov-err">Seleccioná tu provincia</div>
+      </div>
+    </div>
+
     <div class="field">
       <label>Contraseña</label>
       <div class="input-wrap">
@@ -618,7 +646,7 @@ html.tm-dark .preview-avatar {
     <div class="check-wrap">
       <input type="checkbox" id="r-terms" name="r-terms">
       <label class="check-label" for="r-terms">
-        Acepto los <a href="#" onclick="openModal('compradores')">Términos y Condiciones</a> y la <a href="#" onclick="openModal('compradores')">Política de Privacidad</a> de TuyoMall
+        Acepto los <a href="#terminos-compradores" onclick="return openModal('compradores')">Términos y Condiciones</a> y la <a href="#privacidad-compradores" onclick="return openModal('compradores')">Política de Privacidad</a> de TuyoMall
       </label>
     </div>
     <div class="check-error" id="r-terms-err">Debes aceptar los términos para continuar</div>
@@ -669,9 +697,9 @@ html.tm-dark .preview-avatar {
       <button class="modal-close" onclick="closeModal('compradores')">✕</button>
     </div>
     <div class="modal-body">
-      <h3>1. Aceptación de los términos</h3>
+      <h3 id="terminos-compradores">1. Aceptación de los términos</h3>
       <p>El Comprador acepta los términos y condiciones al visitar el sitio web https://tuyomall.com/ y al interactuar con los productos o servicios anunciados en la plataforma.</p>
-      <h3>2. Políticas de Privacidad</h3>
+      <h3 id="privacidad-compradores">2. Políticas de Privacidad</h3>
       <p>Tuyomall recopila información personal (nombre, correo, teléfono) e información de uso (IP, navegador, páginas visitadas) para facilitar la interacción con el sitio y mejorar la experiencia del Comprador.</p>
       <p>Tuyomall no vende ni alquila la información personal del Comprador a terceros.</p>
       <h3>3. Responsabilidad de Tuyomall</h3>
@@ -686,6 +714,7 @@ html.tm-dark .preview-avatar {
   </div>
 </div>
 
+<script src="assets/js/latam-locations.js"></script>
 <script>
 // ── Tab switch ──────────────────────────────────────
 function switchTab(tab, btn) {
@@ -712,6 +741,8 @@ function togglePass(id, icon) {
 // ── Clear error ──────────────────────────────────────
 function clearErr(input) {
   input.classList.remove('error');
+  const error = input.closest('.field')?.querySelector('.field-error');
+  if (error) error.classList.remove('show');
 }
 
 // ── Password strength ──────────────────────────────────────
@@ -792,6 +823,8 @@ async function doRegister(event) {
   if (event) event.preventDefault();
   let ok = true;
   const email  = document.getElementById('r-email');
+  const pais   = document.getElementById('r-pais');
+  const prov   = document.getElementById('r-provincia');
   const pass   = document.getElementById('r-pass');
   const pass2  = document.getElementById('r-pass2');
   const terms  = document.getElementById('r-terms');
@@ -800,6 +833,16 @@ async function doRegister(event) {
   if (!isEmail(email.value)) {
     email.classList.add('error');
     document.getElementById('r-email-err').classList.add('show');
+    ok = false;
+  }
+  if (!pais.value) {
+    pais.classList.add('error');
+    document.getElementById('r-pais-err').classList.add('show');
+    ok = false;
+  }
+  if (!prov.value) {
+    prov.classList.add('error');
+    document.getElementById('r-prov-err').classList.add('show');
     ok = false;
   }
   if (pass.value.length < 8) {

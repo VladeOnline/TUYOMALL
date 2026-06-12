@@ -157,6 +157,105 @@ a { color: inherit; text-decoration: none; }
   place-items: center;
   border: 2px solid white;
 }
+.notif-wrap {
+  position: relative;
+}
+.notif-panel {
+  position: absolute;
+  top: calc(100% + 12px);
+  right: 0;
+  width: min(360px, calc(100vw - 28px));
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  box-shadow: 0 24px 60px rgba(20,33,61,0.16);
+  padding: 14px;
+  display: none;
+  z-index: 70;
+}
+.notif-panel.open { display: block; }
+.notif-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 4px 4px 10px;
+  border-bottom: 1px solid var(--line);
+}
+.notif-head strong {
+  color: var(--navy);
+  font-size: 15px;
+}
+.notif-head button {
+  border: none;
+  background: transparent;
+  color: var(--coral);
+  font-size: 12px;
+  font-weight: 800;
+  cursor: pointer;
+}
+.notif-list {
+  display: grid;
+  gap: 8px;
+  padding-top: 10px;
+}
+.notif-item {
+  display: grid;
+  grid-template-columns: 34px minmax(0, 1fr);
+  gap: 10px;
+  padding: 10px;
+  border-radius: 14px;
+  color: var(--slate);
+  background: var(--soft);
+  border: 1px solid transparent;
+}
+.notif-item.unread {
+  background: rgba(255,107,71,0.08);
+  border-color: rgba(255,107,71,0.18);
+}
+.notif-icon {
+  width: 34px;
+  height: 34px;
+  border-radius: 12px;
+  display: grid;
+  place-items: center;
+  color: var(--coral);
+  background: rgba(255,107,71,0.12);
+}
+.notif-text strong {
+  display: block;
+  color: var(--navy);
+  font-size: 13px;
+  margin-bottom: 2px;
+}
+.notif-text p {
+  font-size: 12px;
+  line-height: 1.35;
+}
+.notif-time {
+  display: block;
+  color: var(--muted);
+  font-size: 11px;
+  margin-top: 5px;
+}
+html.tm-dark .notif-panel {
+  background: #111B29;
+  border-color: rgba(255,255,255,0.12);
+  box-shadow: 0 24px 60px rgba(0,0,0,0.34);
+}
+html.tm-dark .notif-head,
+html.tm-dark .notif-head strong,
+html.tm-dark .notif-text strong {
+  color: #F8FAFC;
+}
+html.tm-dark .notif-item {
+  background: rgba(255,255,255,0.04);
+  color: #CBD5E1;
+}
+html.tm-dark .notif-item.unread {
+  background: rgba(255,107,71,0.14);
+  border-color: rgba(255,107,71,0.26);
+}
 .profile-chip {
   padding: 5px 12px 5px 5px;
 }
@@ -437,6 +536,10 @@ a { color: inherit; text-decoration: none; }
   transition: transform 0.24s;
 }
 .post-card:hover img { transform: scale(1.04); }
+.post-card.menu-open {
+  overflow: visible;
+  z-index: 8;
+}
 .post-menu {
   position: absolute;
   top: 9px;
@@ -448,6 +551,70 @@ a { color: inherit; text-decoration: none; }
   color: white;
   display: grid;
   place-items: center;
+  border: none;
+  cursor: pointer;
+  z-index: 3;
+  transition: transform 0.18s, background 0.18s;
+}
+.post-menu:hover { transform: scale(1.06); background: rgba(10,16,28,0.66); }
+.post-options {
+  position: absolute;
+  top: 43px;
+  right: 9px;
+  width: 210px;
+  padding: 8px;
+  border-radius: 14px;
+  background: white;
+  border: 1px solid var(--line);
+  box-shadow: 0 18px 44px rgba(20,33,61,0.18);
+  display: none;
+  z-index: 10;
+}
+.post-card.menu-open .post-options { display: grid; }
+.post-options button {
+  width: 100%;
+  border: none;
+  background: transparent;
+  color: var(--navy);
+  border-radius: 10px;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  font-size: 13px;
+  font-weight: 750;
+  text-align: left;
+  cursor: pointer;
+}
+.post-options button:hover {
+  background: var(--coral-3);
+  color: var(--coral);
+}
+.post-options .report-action {
+  color: #EF4444;
+}
+.post-options .report-action:hover {
+  background: rgba(239,68,68,0.1);
+  color: #DC2626;
+}
+html.tm-dark .post-options {
+  background: #111B29;
+  border-color: rgba(255,255,255,0.12);
+  box-shadow: 0 18px 44px rgba(0,0,0,0.34);
+}
+html.tm-dark .post-options button {
+  color: #F8FAFC;
+}
+html.tm-dark .post-options button:hover {
+  background: rgba(255,107,71,0.14);
+  color: #FF8A6A;
+}
+html.tm-dark .post-options .report-action {
+  color: #FCA5A5;
+}
+html.tm-dark .post-options .report-action:hover {
+  background: rgba(239,68,68,0.16);
+  color: #F87171;
 }
 .post-overlay {
   position: absolute;
@@ -583,23 +750,35 @@ a { color: inherit; text-decoration: none; }
 }
 .progress-bar span {
   display: block;
-  width: 86%;
+  width: var(--profile-progress, 0%);
   height: 100%;
   background: var(--coral);
+  transition: width 0.28s ease;
 }
 .check-row,
 .contact-row {
   display: flex;
   align-items: center;
   gap: 10px;
+  width: 100%;
   padding: 12px 0;
   border-top: 1px solid var(--line);
+  border-right: none;
+  border-bottom: none;
+  border-left: none;
+  background: transparent;
+  color: inherit;
   font-size: 13px;
+  text-align: left;
 }
 .check-row:first-of-type,
 .contact-row:first-of-type { border-top: none; }
 .check-row .ti-circle-check { color: var(--green); }
 .check-row .ti-circle { color: var(--coral); }
+.check-row.pending { cursor: pointer; }
+.check-row.pending:hover {
+  color: var(--coral);
+}
 .check-row span:last-child {
   margin-left: auto;
   color: var(--muted);
@@ -653,11 +832,28 @@ a { color: inherit; text-decoration: none; }
   font-size: 24px;
 }
 .close-drawer {
-  width: 38px;
-  height: 38px;
+  width: 42px;
+  height: 42px;
   border-radius: 50%;
-  border: 1px solid var(--line);
-  background: white;
+  border: 1px solid rgba(255,107,71,0.45);
+  background: rgba(255,107,71,0.12);
+  color: var(--coral);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 10px 24px rgba(255,107,71,0.16);
+  transition: transform 0.18s ease, background 0.18s ease, box-shadow 0.18s ease;
+}
+.close-drawer:hover {
+  transform: translateY(-1px) scale(1.04);
+  background: var(--coral);
+  color: white;
+  box-shadow: 0 14px 30px rgba(255,107,71,0.28);
+}
+.close-drawer .ti {
+  font-size: 22px;
+  stroke-width: 2.5;
 }
 .form-grid {
   display: grid;
@@ -780,15 +976,24 @@ a { color: inherit; text-decoration: none; }
       <a href="faq-contacto.html">Ayuda</a>
     </nav>
     <div class="top-actions">
-      <button class="icon-btn" title="Notificaciones">
-        <span class="ti ti-bell"></span>
-        <span class="notif-dot">3</span>
-      </button>
+      <div class="notif-wrap">
+        <button class="icon-btn" id="notifButton" type="button" title="Notificaciones" aria-haspopup="true" aria-expanded="false">
+          <span class="ti ti-bell"></span>
+          <span class="notif-dot" id="notifCount">3</span>
+        </button>
+        <div class="notif-panel" id="notifPanel" role="dialog" aria-label="Notificaciones">
+          <div class="notif-head">
+            <strong>Notificaciones</strong>
+            <button type="button" onclick="markNotificationsRead()">Marcar leídas</button>
+          </div>
+          <div class="notif-list" id="notifList"></div>
+        </div>
+      </div>
       <a class="btn btn-public" href="perfil-publico.html" target="_blank">
         <span class="ti ti-external-link"></span> Ver perfil público
       </a>
       <a class="profile-chip" href="dashboard-emprendedor.php">
-        <img src="https://images.unsplash.com/photo-1606722590583-6951b5ea92ad?w=120&h=120&fit=crop&q=80" alt="Logo negocio">
+        <img data-business-avatar src="https://images.unsplash.com/photo-1606722590583-6951b5ea92ad?w=120&h=120&fit=crop&q=80" alt="Logo negocio">
         <span>Artesanías La Ceiba</span>
         <span class="ti ti-chevron-down"></span>
       </a>
@@ -801,8 +1006,9 @@ a { color: inherit; text-decoration: none; }
     <article class="profile-panel">
       <div class="profile-head">
         <div class="avatar-block">
-          <img class="biz-avatar" src="https://images.unsplash.com/photo-1606722590583-6951b5ea92ad?w=400&h=400&fit=crop&q=80" alt="Artesanías La Ceiba">
-          <button class="change-photo" title="Cambiar foto"><span class="ti ti-camera"></span></button>
+          <img class="biz-avatar" data-business-avatar src="https://images.unsplash.com/photo-1606722590583-6951b5ea92ad?w=400&h=400&fit=crop&q=80" alt="Artesanías La Ceiba">
+          <input data-business-avatar-input type="file" accept="image/*" hidden>
+          <button class="change-photo" type="button" data-business-avatar-button title="Cambiar foto"><span class="ti ti-camera"></span></button>
         </div>
         <div>
           <div class="profile-title-row">
@@ -905,14 +1111,10 @@ a { color: inherit; text-decoration: none; }
     <article class="side-panel">
       <div class="progress-top">
         <strong>Completa tu perfil</strong>
-        <span class="progress-num">86%</span>
+        <span class="progress-num" id="profileProgressNum">0%</span>
       </div>
-      <div class="progress-bar"><span></span></div>
-      <div class="check-row"><span class="ti ti-circle-check"></span> Información básica <span>Completo</span></div>
-      <div class="check-row"><span class="ti ti-circle-check"></span> Descripción del negocio <span>Completo</span></div>
-      <div class="check-row"><span class="ti ti-circle-check"></span> Horario de atención <span>Completo</span></div>
-      <div class="check-row"><span class="ti ti-circle-check"></span> Redes sociales <span>Completo</span></div>
-      <div class="check-row"><span class="ti ti-circle"></span> Publicá tu primer producto <span>Pendiente</span></div>
+      <div class="progress-bar" id="profileProgressBar"><span></span></div>
+      <div id="profileChecklist"></div>
     </article>
 
     <article class="side-panel">
@@ -920,19 +1122,19 @@ a { color: inherit; text-decoration: none; }
       <div class="contact-row">
         <span class="ti ti-brand-whatsapp"></span>
         <div><strong>WhatsApp</strong><small>+506 8888-1234</small></div>
-        <button title="Editar"><span class="ti ti-pencil"></span></button>
+        <button title="Editar WhatsApp" onclick="openDrawer('contact')"><span class="ti ti-pencil"></span></button>
       </div>
       <div class="contact-row">
         <span class="ti ti-mail"></span>
         <div><strong>Correo</strong><small>hola@artesaniaslaceiba.cr</small></div>
-        <button title="Editar"><span class="ti ti-pencil"></span></button>
+        <button title="Editar correo" onclick="openDrawer('contact')"><span class="ti ti-pencil"></span></button>
       </div>
       <div class="contact-row">
         <span class="ti ti-brand-instagram"></span>
         <div><strong>Instagram</strong><small>@artesanias_laceiba</small></div>
-        <button title="Editar"><span class="ti ti-pencil"></span></button>
+        <button title="Editar Instagram" onclick="openDrawer('contact')"><span class="ti ti-pencil"></span></button>
       </div>
-      <button class="btn" style="width:100%;border-radius:var(--r);margin-top:10px" onclick="openDrawer('profile')">Ver todas las redes</button>
+      <button class="btn" style="width:100%;border-radius:var(--r);margin-top:10px" onclick="openDrawer('contact')">Ver todas las redes</button>
     </article>
   </aside>
 </main>
@@ -952,22 +1154,155 @@ a { color: inherit; text-decoration: none; }
 
 <script>
 const posts = [
-  { img:'https://images.unsplash.com/photo-1606722590583-6951b5ea92ad?w=600&h=600&fit=crop&q=80', price:'₡18.000', likes:42, saves:11 },
-  { img:'https://images.unsplash.com/photo-1513519245088-0e12902e5a38?w=600&h=600&fit=crop&q=80', price:'₡22.500', likes:35, saves:7 },
-  { img:'https://images.unsplash.com/photo-1514228742587-6b1558fcca3d?w=600&h=600&fit=crop&q=80', price:'₡9.000', likes:28, saves:5 },
-  { img:'https://images.unsplash.com/photo-1587132137056-bfbf0166836e?w=600&h=600&fit=crop&q=80', price:'₡15.000', likes:31, saves:8 },
-  { img:'https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?w=600&h=600&fit=crop&q=80', price:'₡12.000', likes:19, saves:3 },
-  { img:'https://images.unsplash.com/photo-1590736969955-71cc94901144?w=600&h=600&fit=crop&q=80', price:'₡28.000', likes:27, saves:6 },
-  { img:'https://images.unsplash.com/photo-1602874801006-e26e88ed23e1?w=600&h=600&fit=crop&q=80', price:'₡6.500', likes:22, saves:4 },
-  { img:'https://images.unsplash.com/photo-1610701596007-11502861dcfa?w=600&h=600&fit=crop&q=80', price:'₡24.000', likes:16, saves:2 },
-  { img:'https://images.unsplash.com/photo-1511988617509-a57c8a288659?w=600&h=600&fit=crop&q=80', price:'₡11.000', likes:44, saves:12 }
+  { id:3, name:'Canasta tejida a mano en fibra', img:'https://images.unsplash.com/photo-1606722590583-6951b5ea92ad?w=600&h=600&fit=crop&q=80', price:'₡18.000', likes:42, saves:11 },
+  { id:101, name:'Cuadros decorativos artesanales', img:'https://images.unsplash.com/photo-1513519245088-0e12902e5a38?w=600&h=600&fit=crop&q=80', price:'₡22.500', likes:35, saves:7 },
+  { id:102, name:'Taza personalizada minimalista', img:'https://images.unsplash.com/photo-1514228742587-6b1558fcca3d?w=600&h=600&fit=crop&q=80', price:'₡9.000', likes:28, saves:5 },
+  { id:103, name:'Velas artesanales aromáticas', img:'https://images.unsplash.com/photo-1587132137056-bfbf0166836e?w=600&h=600&fit=crop&q=80', price:'₡15.000', likes:31, saves:8 },
+  { id:5, name:'Collar artesanal de plata 925', img:'https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?w=600&h=600&fit=crop&q=80', price:'₡12.000', likes:19, saves:3 },
+  { id:104, name:'Set de decoración natural', img:'https://images.unsplash.com/photo-1590736969955-71cc94901144?w=600&h=600&fit=crop&q=80', price:'₡28.000', likes:27, saves:6 },
+  { id:105, name:'Taller creativo para principiantes', img:'https://images.unsplash.com/photo-1602874801006-e26e88ed23e1?w=600&h=600&fit=crop&q=80', price:'₡6.500', likes:22, saves:4 },
+  { id:106, name:'Jarrón hecho a mano', img:'https://images.unsplash.com/photo-1610701596007-11502861dcfa?w=600&h=600&fit=crop&q=80', price:'₡24.000', likes:16, saves:2 },
+  { id:107, name:'Regalo artesanal personalizado', img:'https://images.unsplash.com/photo-1511988617509-a57c8a288659?w=600&h=600&fit=crop&q=80', price:'₡11.000', likes:44, saves:12 }
 ];
+
+const NOTIF_READ_KEY = 'tuyomall_dashboard_notifications_read_v1';
+const notifications = [
+  {
+    id: 'profile-views',
+    icon: 'ti-eye',
+    title: 'Tu perfil tuvo 18 vistas nuevas',
+    text: 'Artesanías La Ceiba está recibiendo más visitas esta semana.',
+    time: 'Hace 12 min'
+  },
+  {
+    id: 'whatsapp-clicks',
+    icon: 'ti-brand-whatsapp',
+    title: '3 clientes tocaron WhatsApp',
+    text: 'Revisá tus mensajes para responder rápido y cerrar ventas.',
+    time: 'Hace 1 h'
+  },
+  {
+    id: 'profile-progress',
+    icon: 'ti-crown',
+    title: 'Completá tu primera publicación',
+    text: 'Publicar el primer producto activa mejor visibilidad en el feed.',
+    time: 'Hoy'
+  }
+];
+
+// Cuando conectemos la BD, este objeto puede venir de PHP/API:
+// negocio + conteos + redes + horario.
+const businessProfileStatus = {
+  basicInfo: true,
+  description: true,
+  schedule: true,
+  socialLinks: true,
+  firstProduct: false
+};
+
+const profileChecklistItems = [
+  {
+    key: 'basicInfo',
+    label: 'Información básica',
+    action: 'profile'
+  },
+  {
+    key: 'description',
+    label: 'Descripción del negocio',
+    action: 'profile'
+  },
+  {
+    key: 'schedule',
+    label: 'Horario de atención',
+    action: 'profile'
+  },
+  {
+    key: 'socialLinks',
+    label: 'Redes sociales',
+    action: 'contact'
+  },
+  {
+    key: 'firstProduct',
+    label: 'Publicá tu primer producto',
+    action: 'post'
+  }
+];
+
+function renderProfileCompletion() {
+  const total = profileChecklistItems.length;
+  const completed = profileChecklistItems.filter(item => businessProfileStatus[item.key]).length;
+  const percent = Math.round((completed / total) * 100);
+
+  document.getElementById('profileProgressNum').textContent = `${percent}%`;
+  document.getElementById('profileProgressBar').style.setProperty('--profile-progress', `${percent}%`);
+  document.getElementById('profileChecklist').innerHTML = profileChecklistItems.map(item => {
+    const done = businessProfileStatus[item.key];
+    return `
+      <button class="check-row ${done ? '' : 'pending'}" type="button" onclick="openDrawer('${item.action}')">
+        <span class="ti ${done ? 'ti-circle-check' : 'ti-circle'}"></span>
+        ${item.label}
+        <span>${done ? 'Completo' : 'Pendiente'}</span>
+      </button>
+    `;
+  }).join('');
+}
+
+function readNotifications() {
+  return new Set(JSON.parse(localStorage.getItem(NOTIF_READ_KEY) || '[]'));
+}
+
+function renderNotifications() {
+  const read = readNotifications();
+  const unreadCount = notifications.filter(item => !read.has(item.id)).length;
+  const count = document.getElementById('notifCount');
+  count.textContent = unreadCount;
+  count.style.display = unreadCount ? 'grid' : 'none';
+
+  document.getElementById('notifList').innerHTML = notifications.map(item => `
+    <article class="notif-item ${read.has(item.id) ? '' : 'unread'}">
+      <span class="notif-icon"><span class="ti ${item.icon}"></span></span>
+      <div class="notif-text">
+        <strong>${item.title}</strong>
+        <p>${item.text}</p>
+        <span class="notif-time">${item.time}</span>
+      </div>
+    </article>
+  `).join('');
+}
+
+function toggleNotifications(event) {
+  event.stopPropagation();
+  const panel = document.getElementById('notifPanel');
+  const button = document.getElementById('notifButton');
+  const open = !panel.classList.contains('open');
+  panel.classList.toggle('open', open);
+  button.setAttribute('aria-expanded', String(open));
+}
+
+function closeNotifications() {
+  document.getElementById('notifPanel')?.classList.remove('open');
+  document.getElementById('notifButton')?.setAttribute('aria-expanded', 'false');
+}
+
+function markNotificationsRead() {
+  localStorage.setItem(NOTIF_READ_KEY, JSON.stringify(notifications.map(item => item.id)));
+  renderNotifications();
+}
 
 function renderPosts() {
   document.getElementById('postsGrid').innerHTML = posts.map(p => `
     <article class="post-card">
       <img src="${p.img}" alt="Publicación de producto">
-      <span class="post-menu"><span class="ti ti-dots"></span></span>
+      <button class="post-menu" type="button" onclick="togglePostMenu(event, ${p.id}, this)" title="Más opciones">
+        <span class="ti ti-dots"></span>
+      </button>
+      <div class="post-options">
+        <button type="button" onclick="viewPostDetails(${p.id})"><span class="ti ti-eye"></span> Ver detalles</button>
+        <button type="button" onclick="viewBusinessProfile(${p.id})"><span class="ti ti-building-store"></span> Ver perfil del negocio</button>
+        <button type="button" onclick="sharePost(${p.id})"><span class="ti ti-share-3"></span> Compartir</button>
+        <button type="button" onclick="copyPostLink(${p.id})"><span class="ti ti-link"></span> Copiar enlace</button>
+        <button type="button" class="report-action" onclick="reportPost(${p.id})"><span class="ti ti-flag"></span> Reportar</button>
+      </div>
       <div class="post-overlay">
         <div class="post-stats">
           <span><span class="ti ti-heart-filled"></span>${p.likes}</span>
@@ -977,6 +1312,68 @@ function renderPosts() {
       </div>
     </article>
   `).join('');
+}
+
+function closePostMenus() {
+  document.querySelectorAll('.post-card.menu-open').forEach(card => card.classList.remove('menu-open'));
+}
+
+function togglePostMenu(event, id, btn) {
+  event.stopPropagation();
+  const card = btn.closest('.post-card');
+  const wasOpen = card.classList.contains('menu-open');
+  closePostMenus();
+  if (!wasOpen) card.classList.add('menu-open');
+}
+
+function getPost(id) {
+  return posts.find(post => post.id === id);
+}
+
+function postUrl(id) {
+  return `${window.location.origin}${window.location.pathname.replace(/dashboard-emprendedor(?:\\.html|\\.php)?$/, 'perfil-publico.html')}?producto=${id}`;
+}
+
+function viewPostDetails(id) {
+  closePostMenus();
+  const post = getPost(id);
+  if (!post) return;
+  alert(`${post.name}\n${post.price}\nArtesanías La Ceiba`);
+}
+
+function viewBusinessProfile(id) {
+  closePostMenus();
+  window.location.href = `perfil-publico.html?producto=${id}`;
+}
+
+async function sharePost(id) {
+  closePostMenus();
+  const post = getPost(id);
+  if (!post) return;
+  const data = {
+    title: post.name,
+    text: `${post.name} de Artesanías La Ceiba en TuyoMall`,
+    url: postUrl(id)
+  };
+  if (navigator.share) {
+    await navigator.share(data);
+    return;
+  }
+  await navigator.clipboard.writeText(data.url);
+  alert('Enlace copiado para compartir.');
+}
+
+async function copyPostLink(id) {
+  closePostMenus();
+  await navigator.clipboard.writeText(postUrl(id));
+  alert('Enlace copiado.');
+}
+
+function reportPost(id) {
+  closePostMenus();
+  const post = getPost(id);
+  if (!post) return;
+  alert(`Gracias. Revisaremos la publicación "${post.name}".`);
 }
 
 function setTab(name, btn) {
@@ -996,6 +1393,18 @@ const drawerTemplates = {
       <div class="field full"><label>Descripción</label><textarea>Creamos piezas artesanales únicas con materiales naturales de nuestra tierra.</textarea></div>
       <div class="field"><label>WhatsApp</label><input value="+506 8888-1234"></div>
       <div class="field"><label>Instagram</label><input value="@artesanias_laceiba"></div>
+    `
+  },
+  contact: {
+    title: 'Editar contacto y redes',
+    fields: `
+      <div class="field"><label>WhatsApp</label><input value="+506 8888-1234"></div>
+      <div class="field"><label>Correo</label><input type="email" value="hola@artesaniaslaceiba.cr"></div>
+      <div class="field"><label>Instagram</label><input value="@artesanias_laceiba"></div>
+      <div class="field"><label>Facebook</label><input placeholder="https://facebook.com/..."></div>
+      <div class="field"><label>TikTok</label><input placeholder="https://tiktok.com/@..."></div>
+      <div class="field"><label>Pinterest</label><input placeholder="https://pinterest.com/..."></div>
+      <div class="field full"><label>Formulario o sitio web</label><input placeholder="https://..."></div>
     `
   },
   post: {
@@ -1033,15 +1442,28 @@ function closeDrawer() {
 document.getElementById('drawer').addEventListener('click', e => {
   if (e.target.id === 'drawer') closeDrawer();
 });
+document.getElementById('notifButton').addEventListener('click', toggleNotifications);
+document.getElementById('notifPanel').addEventListener('click', e => e.stopPropagation());
+document.addEventListener('click', () => {
+  closePostMenus();
+  closeNotifications();
+});
 document.getElementById('profileForm').addEventListener('submit', e => {
   e.preventDefault();
   closeDrawer();
 });
 document.addEventListener('keydown', e => {
-  if (e.key === 'Escape') closeDrawer();
+  if (e.key === 'Escape') {
+    closeDrawer();
+    closePostMenus();
+    closeNotifications();
+  }
 });
 
+renderNotifications();
+renderProfileCompletion();
 renderPosts();
 </script>
+<script src="assets/js/business-profile.js"></script>
 </body>
 </html>

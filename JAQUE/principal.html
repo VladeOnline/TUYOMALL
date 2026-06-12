@@ -147,7 +147,9 @@ body {
   background: var(--coral-3); border: 2px solid rgba(255,107,71,0.2);
   display: flex; align-items: center; justify-content: center;
   font-size: 13px; font-weight: 700; color: var(--coral); cursor: pointer; flex-shrink: 0;
+  overflow: hidden;
 }
+.nav-avatar img { width: 100%; height: 100%; object-fit: cover; display: block; }
 .theme-toggle {
   width: 36px; height: 36px; border-radius: 50%;
   border: 1.5px solid var(--sand-2);
@@ -371,6 +373,13 @@ body.dark-mode .sidebar-right {
   border: 2px solid rgba(255,255,255,0.72);
   box-shadow: 0 4px 16px rgba(0,0,0,0.2);
   transition: transform 0.22s ease, box-shadow 0.22s ease;
+  overflow: hidden;
+}
+.prod-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
 }
 .prod-card:hover .prod-avatar { transform: scale(1.06); box-shadow: 0 8px 22px rgba(0,0,0,0.24); }
 .prod-header-info { flex: 1; min-width: 0; }
@@ -962,7 +971,9 @@ select {
     <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()" title="Cambiar modo">
       <span class="ti ti-moon"></span>
     </button>
-    <a href="dashboard-emprendedor.php" class="nav-avatar" title="Dashboard emprendedor">U</a>
+    <a href="dashboard-emprendedor.php" class="nav-avatar" title="Dashboard emprendedor">
+      <img data-business-avatar src="https://images.unsplash.com/photo-1606722590583-6951b5ea92ad?w=120&h=120&fit=crop&q=80" alt="Artesanías La Ceiba">
+    </a>
   </div>
 </nav>
 
@@ -1294,7 +1305,12 @@ const allProducts = [
 
 let activeCat='', activeProvs=new Set(), activeType='', searchQ='';
 let currentView='grid', visibleCount=12;
-let likedIds=new Set(), savedIds=new Set();
+const LIKED_POSTS_KEY = 'tuyomall_liked_posts_v1';
+let likedIds=new Set(JSON.parse(localStorage.getItem(LIKED_POSTS_KEY) || '[]')), savedIds=new Set();
+
+function persistLikedPosts() {
+  localStorage.setItem(LIKED_POSTS_KEY, JSON.stringify([...likedIds]));
+}
 
 function getFiltered() {
   return allProducts.filter(p => {
@@ -1309,6 +1325,22 @@ function getFiltered() {
 }
 
 const timeLabels = ['hace 2 min','hace 15 min','hace 1 h','hace 3 h','hace 5 h','hace 8 h','hace 1 d','hace 2 d','hace 3 d','hace 4 d','hace 5 d','hace 1 sem'];
+
+function storedBusinessAvatar() {
+  try {
+    return localStorage.getItem('tuyomall_business_avatar_v1');
+  } catch (_) {
+    return null;
+  }
+}
+
+function sellerAvatarMarkup(p) {
+  const avatar = p.seller === 'Artesanías La Ceiba' ? storedBusinessAvatar() : null;
+  if (avatar) {
+    return `<div class="prod-avatar" style="background:${p.sellerColor}"><img src="${avatar}" alt="${p.seller}"></div>`;
+  }
+  return `<div class="prod-avatar" style="background:${p.sellerColor}">${p.sellerInit}</div>`;
+}
 
 function renderProducts() {
   const grid    = document.getElementById('productsGrid');
@@ -1334,7 +1366,7 @@ function renderProducts() {
     return `
     <div class="prod-card" style="--post-delay:${Math.min(index * 42, 360)}ms">
       <div class="prod-header">
-        <div class="prod-avatar" style="background:${p.sellerColor}">${p.sellerInit}</div>
+        ${sellerAvatarMarkup(p)}
         <div class="prod-header-info">
           <div class="prod-seller-name">${p.seller}</div>
           <div class="prod-seller-meta">${p.prov} · ${timeAgo}</div>
@@ -1581,6 +1613,7 @@ function toggleLike(id,btn) {
     btn.querySelector('.ti').className='ti ti-heart-filled';
     btn.querySelector('.action-like-count').textContent=p.likes+1;
   }
+  persistLikedPosts();
 }
 function toggleSave(id,btn) {
   if(savedIds.has(id)) {
@@ -1694,6 +1727,10 @@ document.addEventListener('keydown',e=>{
 initDraggableFab();
 allProducts.sort((a,b)=>b.premium-a.premium);
 renderProducts();
+window.addEventListener('storage', (event) => {
+  if (event.key === 'tuyomall_business_avatar_v1') renderProducts();
+});
 </script>
+<script src="assets/js/business-profile.js"></script>
 </body>
 </html>

@@ -221,6 +221,19 @@ html.tm-dark .action-contact {
   color: #FFFFFF !important;
 }
 
+html.tm-dark .close-drawer,
+body.dark-mode .close-drawer {
+  background: rgba(255,107,71,0.14) !important;
+  border-color: rgba(255,107,71,0.5) !important;
+  color: #FF8A6A !important;
+}
+
+html.tm-dark .close-drawer:hover,
+body.dark-mode .close-drawer:hover {
+  background: #FF6B47 !important;
+  color: #FFFFFF !important;
+}
+
 html.tm-dark .hero,
 html.tm-dark .premium-banner {
   background: #17202B !important;

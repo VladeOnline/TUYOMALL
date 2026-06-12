@@ -379,7 +379,7 @@
     <section class="copy">
       <p class="eyebrow"><span class="ti ti-shield-lock"></span> <span id="flowLabel">Seguridad cliente</span></p>
       <h1>Recupera tu <span>contrasena</span></h1>
-      <p class="lead" id="flowLead">Escribe el correo de tu cuenta de cliente y te mostraremos un mensaje de recuperacion. Cuando conectemos el envio real por correo, este flujo ya queda listo visualmente.</p>
+      <p class="lead" id="flowLead">Escribe el correo de tu cuenta de cliente y te enviaremos un enlace seguro para crear una nueva contrasena.</p>
     </section>
 
     <section class="card" aria-label="Formulario para recuperar contrasena">
@@ -413,14 +413,14 @@
       ? {
           label: 'Seguridad emprendedor',
           back: 'acceso-emprendedor.html',
-          lead: 'Escribe el correo de tu cuenta de emprendedor y te mostraremos un mensaje de recuperacion. Cuando conectemos el envio real por correo, este flujo ya queda listo visualmente.',
+          lead: 'Escribe el correo de tu cuenta de emprendedor y te enviaremos un enlace seguro para crear una nueva contrasena.',
           help: 'Usa el correo con el que creaste tu cuenta de emprendedor.',
           account: 'cuenta de emprendedor'
         }
       : {
           label: 'Seguridad cliente',
           back: 'acceso-cliente.html',
-          lead: 'Escribe el correo de tu cuenta de cliente y te mostraremos un mensaje de recuperacion. Cuando conectemos el envio real por correo, este flujo ya queda listo visualmente.',
+          lead: 'Escribe el correo de tu cuenta de cliente y te enviaremos un enlace seguro para crear una nueva contrasena.',
           help: 'Usa el correo con el que creaste tu cuenta de cliente.',
           account: 'cuenta de cliente'
         };
@@ -431,9 +431,11 @@
     flowLead.textContent = flow.lead;
     cardHelp.textContent = flow.help;
 
-    form.addEventListener('submit', (event) => {
+    form.addEventListener('submit', async (event) => {
       event.preventDefault();
       const value = email.value.trim();
+      const submitButton = form.querySelector('button[type="submit"]');
+      const originalButton = submitButton.innerHTML;
       alertBox.classList.add('show');
 
       if (!value || !email.checkValidity()) {
@@ -441,7 +443,28 @@
         return;
       }
 
-      alertBox.textContent = `Listo. Si ${value} existe como ${flow.account} en TuyoMall, recibira instrucciones para recuperar la contrasena.`;
+      submitButton.disabled = true;
+      submitButton.innerHTML = '<span class="ti ti-loader-2"></span> Enviando...';
+
+      try {
+        const data = new FormData();
+        data.append('email', value);
+        data.append('role', isBusiness ? 'emprendedor' : 'cliente');
+
+        const response = await fetch('auth/request-password-reset.php', {
+          method: 'POST',
+          body: data
+        });
+        const result = await response.json();
+        if (!response.ok || !result.ok) throw new Error(result.message || 'No pudimos enviar el enlace.');
+
+        alertBox.textContent = result.message;
+      } catch (error) {
+        alertBox.textContent = error.message || 'No pudimos enviar el enlace. Intentá de nuevo.';
+      } finally {
+        submitButton.disabled = false;
+        submitButton.innerHTML = originalButton;
+      }
     });
 
     cancelBtn.addEventListener('click', () => {

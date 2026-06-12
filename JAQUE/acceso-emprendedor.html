@@ -700,26 +700,26 @@ html.tm-dark .plan-mini-desc {
         <div class="field-error" id="r-wa-err">Ingresa tu número de WhatsApp</div>
       </div>
 
-      <div class="field-row">
+      <div class="field-row" data-location-group>
         <div class="field">
-          <label>Provincia</label>
-          <select id="r-provincia" onchange="clearErr(this)">
-            <option value="">Seleccioná</option>
-            <option>San José</option>
-            <option>Alajuela</option>
-            <option>Cartago</option>
-            <option>Heredia</option>
-            <option>Guanacaste</option>
-            <option>Puntarenas</option>
-            <option>Limón</option>
-            <option>Otro país LATAM</option>
+          <label>País</label>
+          <select id="r-pais" data-country-select onchange="clearErr(this)">
+            <option value="">Seleccioná país</option>
+          </select>
+          <div class="field-error" id="r-pais-err">Seleccioná tu país</div>
+        </div>
+        <div class="field">
+          <label>Provincia / Estado</label>
+          <select id="r-provincia" data-province-select onchange="clearErr(this)" disabled>
+            <option value="">Primero elegí país</option>
           </select>
           <div class="field-error" id="r-prov-err">Seleccioná tu provincia</div>
         </div>
-        <div class="field">
-          <label>Cantón</label>
-          <input type="text" id="r-canton" placeholder="Ej: Desamparados">
-        </div>
+      </div>
+
+      <div class="field">
+        <label>Dirección o referencia</label>
+        <input type="text" id="r-direccion" placeholder="Ej: Centro, 200 m norte del parque">
       </div>
 
       <div class="field">
@@ -756,7 +756,7 @@ html.tm-dark .plan-mini-desc {
       <div class="check-wrap">
         <input type="checkbox" id="r-terms">
         <label class="check-label" for="r-terms">
-          Acepto los <a href="#" onclick="openModal('emprendedores')">Términos y Condiciones para Emprendedores</a> y la <a href="#" onclick="openModal('emprendedores')">Política de Privacidad</a> de TuyoMall
+          Acepto los <a href="#terminos-emprendedores" onclick="return openModal('emprendedores')">Términos y Condiciones para Emprendedores</a> y la <a href="#privacidad-emprendedores" onclick="return openModal('emprendedores')">Política de Privacidad</a> de TuyoMall
         </label>
       </div>
       <div class="check-error" id="r-terms-err">Debes aceptar los términos para continuar</div>
@@ -806,7 +806,7 @@ html.tm-dark .plan-mini-desc {
       <button class="modal-close" onclick="closeModal('emprendedores')">✕</button>
     </div>
     <div class="modal-body">
-      <h3>1. Naturaleza de la plataforma</h3>
+      <h3 id="terminos-emprendedores">1. Naturaleza de la plataforma</h3>
       <p>Tuyomall es una plataforma tecnológica digital de tipo marketplace. Actúa únicamente como proveedor de infraestructura tecnológica y no participa como parte en las transacciones comerciales.</p>
       <h3>2. Alcance internacional</h3>
       <p>La plataforma puede ser utilizada por personas en cualquier país de América Latina. La relación contractual se rige por las leyes de la República de Costa Rica.</p>
@@ -824,12 +824,15 @@ html.tm-dark .plan-mini-desc {
       <p>Las disputas entre comprador y vendedor son responsabilidad exclusiva del Usuario. En caso de controversia con Tuyomall, se intentará solución amistosa durante 30 días antes de acudir a tribunales costarricenses.</p>
       <h3>6. Propiedad intelectual</h3>
       <p>La marca Tuyomall y su código son propiedad exclusiva de Tuyomall. El Usuario conserva la propiedad sobre su contenido, pero otorga licencia no exclusiva para su publicación en la plataforma.</p>
-      <h3>7. Ley aplicable</h3>
+      <h3 id="privacidad-emprendedores">7. Política de privacidad</h3>
+      <p>Tuyomall puede recopilar datos como nombre, correo, teléfono, ubicación del negocio, información publicada y métricas de uso para operar la cuenta, mostrar el perfil público, mejorar la plataforma y brindar soporte.</p>
+      <h3>8. Ley aplicable</h3>
       <p>Este contrato se rige por la legislación de Costa Rica: Constitución Política, Código Civil, Ley 8968 (Datos), Ley 7472 (Consumidor), Ley 8454 (Firma Digital).</p>
     </div>
   </div>
 </div>
 
+<script src="assets/js/latam-locations.js"></script>
 <script>
 let selectedPlan = 'free';
 
@@ -857,7 +860,11 @@ function togglePass(id, icon) {
   icon.textContent = input.type === 'password' ? 'Ver' : 'Ocultar';
 }
 
-function clearErr(input) { input.classList.remove('error'); }
+function clearErr(input) {
+  input.classList.remove('error');
+  const error = input.closest('.field')?.querySelector('.field-error');
+  if (error) error.classList.remove('show');
+}
 
 function checkStrength(val) {
   const segs = ['seg1','seg2','seg3','seg4'].map(id => document.getElementById(id));
@@ -921,8 +928,9 @@ async function doRegister() {
   const negocio  = document.getElementById('r-negocio');
   const email    = document.getElementById('r-email');
   const wa       = document.getElementById('r-wa');
+  const pais     = document.getElementById('r-pais');
   const prov     = document.getElementById('r-provincia');
-  const canton   = document.getElementById('r-canton');
+  const direccion = document.getElementById('r-direccion');
   const pass     = document.getElementById('r-pass');
   const terms    = document.getElementById('r-terms');
   const btn      = document.getElementById('btn-register');
@@ -932,6 +940,7 @@ async function doRegister() {
   if (!negocio.value.trim()) { negocio.classList.add('error'); document.getElementById('r-negocio-err').classList.add('show'); ok = false; }
   if (!isEmail(email.value)) { email.classList.add('error'); document.getElementById('r-email-err').classList.add('show'); ok = false; }
   if (!wa.value.trim()) { wa.classList.add('error'); document.getElementById('r-wa-err').classList.add('show'); ok = false; }
+  if (!pais.value) { pais.classList.add('error'); document.getElementById('r-pais-err').classList.add('show'); ok = false; }
   if (!prov.value) { prov.classList.add('error'); document.getElementById('r-prov-err').classList.add('show'); ok = false; }
   if (pass.value.length < 8) { pass.classList.add('error'); document.getElementById('r-pass-err').classList.add('show'); ok = false; }
   if (!terms.checked) { document.getElementById('r-terms-err').classList.add('show'); ok = false; }
@@ -945,8 +954,9 @@ async function doRegister() {
     data.append('r-negocio', negocio.value.trim());
     data.append('r-email', email.value.trim());
     data.append('r-wa', wa.value.trim());
+    data.append('r-pais', pais.value);
     data.append('r-provincia', prov.value);
-    data.append('r-canton', canton.value.trim());
+    data.append('r-direccion', direccion.value.trim());
     data.append('r-password', pass.value);
     data.append('plan', selectedPlan);
     if (terms.checked) data.append('r-terms', '1');

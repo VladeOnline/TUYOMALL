@@ -166,7 +166,7 @@ button { font: inherit; cursor: pointer; }
 }
 .profile-panel { overflow: hidden; }
 .cover {
-  height: 220px;
+  height: 92px;
   background:
     linear-gradient(180deg, rgba(20,33,61,0.08), rgba(20,33,61,0.24)),
     url('https://images.unsplash.com/photo-1602874801006-e26e88ed23e1?w=1400&h=500&fit=crop&q=80');
@@ -178,13 +178,13 @@ button { font: inherit; cursor: pointer; }
 }
 .profile-main {
   display: grid;
-  grid-template-columns: 176px minmax(0, 1fr);
-  gap: 28px;
-  margin-top: -86px;
+  grid-template-columns: 148px minmax(0, 1fr);
+  gap: 24px;
+  margin-top: -34px;
 }
 .biz-avatar {
-  width: 176px;
-  height: 176px;
+  width: 148px;
+  height: 148px;
   border-radius: 50%;
   border: 5px solid white;
   outline: 1px solid var(--line);
@@ -193,7 +193,7 @@ button { font: inherit; cursor: pointer; }
   box-shadow: 0 10px 30px rgba(20,33,61,0.15);
 }
 .profile-info {
-  padding-top: 92px;
+  padding-top: 38px;
 }
 .title-row {
   display: flex;
@@ -364,6 +364,8 @@ button { font: inherit; cursor: pointer; }
   border-radius: 0 0 var(--r-lg) var(--r-lg);
   padding: 16px;
 }
+.tab-panel { display: none; }
+.tab-panel.active { display: block; }
 .posts-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -375,6 +377,10 @@ button { font: inherit; cursor: pointer; }
   border-radius: var(--r);
   overflow: hidden;
   background: var(--soft);
+}
+.post-card.menu-open {
+  overflow: visible;
+  z-index: 8;
 }
 .post-card img {
   width: 100%;
@@ -395,6 +401,71 @@ button { font: inherit; cursor: pointer; }
   color: white;
   display: grid;
   place-items: center;
+  border: none;
+  cursor: pointer;
+  z-index: 3;
+  transition: transform 0.18s, background 0.18s;
+}
+.post-menu:hover {
+  transform: scale(1.06);
+  background: rgba(10,16,28,0.66);
+}
+.post-options {
+  position: absolute;
+  top: 43px;
+  right: 9px;
+  width: 210px;
+  padding: 8px;
+  border-radius: 14px;
+  background: var(--white);
+  border: 1px solid var(--line);
+  box-shadow: 0 18px 44px rgba(20,33,61,0.18);
+  display: none;
+  z-index: 10;
+}
+.post-card.menu-open .post-options { display: grid; }
+.post-options button {
+  width: 100%;
+  border: none;
+  background: transparent;
+  color: var(--navy);
+  border-radius: 10px;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  font-size: 13px;
+  font-weight: 750;
+  text-align: left;
+  cursor: pointer;
+}
+.post-options button:hover {
+  background: var(--coral-3);
+  color: var(--coral);
+}
+.post-options .report-action { color: #EF4444; }
+.post-options .report-action:hover {
+  background: rgba(239,68,68,0.1);
+  color: #DC2626;
+}
+html.tm-dark .post-options {
+  background: #111B29;
+  border-color: rgba(255,255,255,0.12);
+  box-shadow: 0 18px 44px rgba(0,0,0,0.34);
+}
+html.tm-dark .post-options button {
+  color: #F8FAFC;
+}
+html.tm-dark .post-options button:hover {
+  background: rgba(255,107,71,0.14);
+  color: #FF8A6A;
+}
+html.tm-dark .post-options .report-action {
+  color: #FCA5A5;
+}
+html.tm-dark .post-options .report-action:hover {
+  background: rgba(239,68,68,0.16);
+  color: #F87171;
 }
 .post-overlay {
   position: absolute;
@@ -416,6 +487,18 @@ button { font: inherit; cursor: pointer; }
   font-size: 12px;
   font-weight: 800;
 }
+.post-action {
+  border: none;
+  background: transparent;
+  color: white;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font: inherit;
+  font-weight: 800;
+  cursor: pointer;
+}
+.post-action.liked { color: #FF8A6A; }
 .price-chip {
   background: rgba(8,14,25,0.68);
   border: 1px solid rgba(255,255,255,0.2);
@@ -423,6 +506,61 @@ button { font: inherit; cursor: pointer; }
   padding: 5px 8px;
   font-size: 12px;
   font-weight: 800;
+}
+.reviews-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 320px;
+  gap: 18px;
+}
+.review-form {
+  padding: 18px;
+  border: 1px solid var(--line);
+  border-radius: var(--r);
+}
+.review-form h3,
+.info-panel h3 {
+  font-family: 'Syne', sans-serif;
+  font-size: 20px;
+  margin-bottom: 8px;
+}
+.review-form p {
+  color: var(--muted);
+  font-size: 13px;
+  margin-bottom: 14px;
+}
+.review-form label {
+  display: block;
+  color: var(--navy);
+  font-size: 12px;
+  font-weight: 800;
+  margin: 12px 0 6px;
+}
+.review-form input,
+.review-form textarea,
+.review-form select {
+  width: 100%;
+  border: 1px solid var(--line);
+  border-radius: var(--r-sm);
+  background: var(--white);
+  color: var(--navy);
+  padding: 11px 12px;
+  font: inherit;
+}
+.review-form textarea { min-height: 104px; resize: vertical; }
+.info-panel {
+  padding: 18px;
+  color: var(--slate);
+  line-height: 1.65;
+}
+.info-list {
+  display: grid;
+  gap: 12px;
+  margin-top: 14px;
+}
+.info-list div {
+  padding: 12px;
+  border: 1px solid var(--line);
+  border-radius: var(--r-sm);
 }
 
 .sidebar {
@@ -508,11 +646,11 @@ button { font: inherit; cursor: pointer; }
   .nav-links { display: none; }
   .nav-actions .btn:not(.btn-coral) { display: none; }
   .page { padding: 14px 12px 36px; }
-  .cover { height: 160px; }
+  .cover { height: 88px; }
   .profile-body { padding: 0 14px 18px; }
-  .profile-main { grid-template-columns: 1fr; gap: 10px; text-align: center; }
+  .profile-main { grid-template-columns: 1fr; gap: 10px; text-align: center; margin-top: -42px; }
   .profile-info { padding-top: 0; }
-  .biz-avatar { width: 136px; height: 136px; margin: 0 auto; }
+  .biz-avatar { width: 124px; height: 124px; margin: 0 auto; }
   .title-row,
   .profile-meta,
   .info-strip { justify-content: center; }
@@ -522,6 +660,7 @@ button { font: inherit; cursor: pointer; }
   .profile-actions { grid-template-columns: 1fr; }
   .highlights { padding: 18px 14px; }
   .posts-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .reviews-layout { grid-template-columns: 1fr; }
 }
 
 .title-row h1,
@@ -586,7 +725,7 @@ button { font: inherit; cursor: pointer; }
       <div class="cover"></div>
       <div class="profile-body">
         <div class="profile-main">
-          <img class="biz-avatar" src="https://images.unsplash.com/photo-1606722590583-6951b5ea92ad?w=400&h=400&fit=crop&q=80" alt="Artesanías La Ceiba">
+          <img class="biz-avatar" data-business-avatar src="https://images.unsplash.com/photo-1606722590583-6951b5ea92ad?w=400&h=400&fit=crop&q=80" alt="Artesanías La Ceiba">
           <div class="profile-info">
             <div class="title-row">
               <h1>Artesanías La Ceiba</h1>
@@ -629,12 +768,50 @@ button { font: inherit; cursor: pointer; }
     </article>
 
     <nav class="tabs">
-      <button class="tab-btn active"><span class="ti ti-layout-grid"></span> Productos</button>
-      <button class="tab-btn"><span class="ti ti-message-star"></span> Reseñas</button>
-      <button class="tab-btn"><span class="ti ti-info-circle"></span> Información</button>
+      <button class="tab-btn active" data-tab-target="products" onclick="setPublicTab('products', this)"><span class="ti ti-layout-grid"></span> Productos</button>
+      <button class="tab-btn" data-tab-target="reviews" onclick="setPublicTab('reviews', this)"><span class="ti ti-message-star"></span> Reseñas</button>
+      <button class="tab-btn" data-tab-target="info" onclick="setPublicTab('info', this)"><span class="ti ti-info-circle"></span> Información</button>
     </nav>
     <section class="panel post-shell">
-      <div class="posts-grid" id="postsGrid"></div>
+      <div class="tab-panel active" id="tab-products">
+        <div class="posts-grid" id="postsGrid"></div>
+      </div>
+      <div class="tab-panel" id="tab-reviews">
+        <div class="reviews-layout">
+          <div>
+            <h2>Reseñas del negocio</h2>
+            <div class="review-list" id="reviewsList"></div>
+          </div>
+          <form class="review-form" id="reviewForm">
+            <h3>Dejá tu reseña</h3>
+            <p>Tu opinión ayuda a otros clientes a confiar en este negocio.</p>
+            <label for="reviewName">Nombre</label>
+            <input id="reviewName" placeholder="Tu nombre" required>
+            <label for="reviewRating">Calificación</label>
+            <select id="reviewRating">
+              <option value="5">5 estrellas</option>
+              <option value="4">4 estrellas</option>
+              <option value="3">3 estrellas</option>
+              <option value="2">2 estrellas</option>
+              <option value="1">1 estrella</option>
+            </select>
+            <label for="reviewText">Reseña</label>
+            <textarea id="reviewText" placeholder="Contá cómo fue tu experiencia" required></textarea>
+            <button class="btn btn-coral" type="submit">Publicar reseña</button>
+          </form>
+        </div>
+      </div>
+      <div class="tab-panel" id="tab-info">
+        <div class="info-panel">
+          <h3>Información del negocio</h3>
+          <p>Piezas artesanales únicas creadas con materiales naturales de nuestra tierra. Trabajamos canastas, decoración y regalos personalizados hechos a mano en Costa Rica.</p>
+          <div class="info-list">
+            <div><strong>Horario:</strong> Lun - Sáb 8:00 - 18:00</div>
+            <div><strong>Ubicación:</strong> Cartago, Costa Rica</div>
+            <div><strong>Categoría:</strong> Artesanías & Hogar</div>
+          </div>
+        </div>
+      </div>
     </section>
   </section>
 
@@ -656,36 +833,178 @@ button { font: inherit; cursor: pointer; }
 
     <article class="panel side-panel">
       <h2>Reseñas recientes</h2>
-      <div class="review"><div class="stars">★★★★★</div><p>Producto hermoso y muy buena atención por WhatsApp.</p><small>María C.</small></div>
-      <div class="review"><div class="stars">★★★★★</div><p>La canasta llegó rápido y se nota el trabajo artesanal.</p><small>José R.</small></div>
-      <div class="review"><div class="stars">★★★★☆</div><p>Muy recomendado para regalos personalizados.</p><small>Andrea M.</small></div>
+      <div id="sidebarReviews"></div>
+      <button class="btn btn-coral" type="button" onclick="openReviewForm()"><span class="ti ti-message-star"></span> Escribir reseña</button>
     </article>
   </aside>
 </main>
 
 <script>
+const LIKED_POSTS_KEY = 'tuyomall_liked_posts_v1';
+const REVIEWS_KEY = 'tuyomall_public_reviews_artesanias_v1';
+
 const posts = [
-  { img:'https://images.unsplash.com/photo-1606722590583-6951b5ea92ad?w=600&h=600&fit=crop&q=80', price:'₡18.000', likes:42, saves:11 },
-  { img:'https://images.unsplash.com/photo-1513519245088-0e12902e5a38?w=600&h=600&fit=crop&q=80', price:'₡22.500', likes:35, saves:7 },
-  { img:'https://images.unsplash.com/photo-1514228742587-6b1558fcca3d?w=600&h=600&fit=crop&q=80', price:'₡9.000', likes:28, saves:5 },
-  { img:'https://images.unsplash.com/photo-1587132137056-bfbf0166836e?w=600&h=600&fit=crop&q=80', price:'₡15.000', likes:31, saves:8 },
-  { img:'https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?w=600&h=600&fit=crop&q=80', price:'₡12.000', likes:19, saves:3 },
-  { img:'https://images.unsplash.com/photo-1590736969955-71cc94901144?w=600&h=600&fit=crop&q=80', price:'₡28.000', likes:27, saves:6 }
+  { id:3, img:'https://images.unsplash.com/photo-1606722590583-6951b5ea92ad?w=600&h=600&fit=crop&q=80', price:'₡18.000', likes:42, saves:11 },
+  { id:101, img:'https://images.unsplash.com/photo-1513519245088-0e12902e5a38?w=600&h=600&fit=crop&q=80', price:'₡22.500', likes:35, saves:7 },
+  { id:102, img:'https://images.unsplash.com/photo-1514228742587-6b1558fcca3d?w=600&h=600&fit=crop&q=80', price:'₡9.000', likes:28, saves:5 },
+  { id:103, img:'https://images.unsplash.com/photo-1587132137056-bfbf0166836e?w=600&h=600&fit=crop&q=80', price:'₡15.000', likes:31, saves:8 },
+  { id:5, img:'https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?w=600&h=600&fit=crop&q=80', price:'₡12.000', likes:19, saves:3 },
+  { id:104, img:'https://images.unsplash.com/photo-1590736969955-71cc94901144?w=600&h=600&fit=crop&q=80', price:'₡28.000', likes:27, saves:6 }
 ];
 
-document.getElementById('postsGrid').innerHTML = posts.map(p => `
-  <article class="post-card">
-    <img src="${p.img}" alt="Producto publicado">
-    <span class="post-menu"><span class="ti ti-dots"></span></span>
-    <div class="post-overlay">
-      <div class="post-stats">
-        <span><span class="ti ti-heart-filled"></span> ${p.likes}</span>
-        <span><span class="ti ti-bookmark"></span> ${p.saves}</span>
-      </div>
-      <span class="price-chip">${p.price}</span>
-    </div>
-  </article>
-`).join('');
+const defaultReviews = [
+  { name:'María C.', rating:5, text:'Producto hermoso y muy buena atención por WhatsApp.' },
+  { name:'José R.', rating:5, text:'La canasta llegó rápido y se nota el trabajo artesanal.' },
+  { name:'Andrea M.', rating:4, text:'Muy recomendado para regalos personalizados.' }
+];
+
+function likedSet() {
+  return new Set(JSON.parse(localStorage.getItem(LIKED_POSTS_KEY) || '[]'));
+}
+
+function saveLiked(set) {
+  localStorage.setItem(LIKED_POSTS_KEY, JSON.stringify([...set]));
+}
+
+function renderPosts() {
+  const liked = likedSet();
+  document.getElementById('postsGrid').innerHTML = posts.map(p => {
+    const isLiked = liked.has(p.id);
+    return `
+      <article class="post-card">
+        <img src="${p.img}" alt="Producto publicado">
+        <button class="post-menu" type="button" onclick="togglePostMenu(event, ${p.id}, this)" title="Más opciones">
+          <span class="ti ti-dots"></span>
+        </button>
+        <div class="post-options">
+          <button type="button" onclick="viewPostDetails(${p.id})"><span class="ti ti-eye"></span> Ver detalles</button>
+          <button type="button" onclick="viewBusinessProfile(${p.id})"><span class="ti ti-building-store"></span> Ver perfil del negocio</button>
+          <button type="button" onclick="sharePost(${p.id})"><span class="ti ti-share-3"></span> Compartir</button>
+          <button type="button" onclick="copyPostLink(${p.id})"><span class="ti ti-link"></span> Copiar enlace</button>
+          <button type="button" class="report-action" onclick="reportPost(${p.id})"><span class="ti ti-flag"></span> Reportar</button>
+        </div>
+        <div class="post-overlay">
+          <div class="post-stats">
+            <button class="post-action ${isLiked ? 'liked' : ''}" onclick="togglePublicLike(${p.id})" title="Me gusta">
+              <span class="ti ${isLiked ? 'ti-heart-filled' : 'ti-heart'}"></span>
+              <span>${p.likes + (isLiked ? 1 : 0)}</span>
+            </button>
+            <span><span class="ti ti-bookmark"></span> ${p.saves}</span>
+          </div>
+          <span class="price-chip">${p.price}</span>
+        </div>
+      </article>
+    `;
+  }).join('');
+}
+
+function togglePublicLike(id) {
+  const liked = likedSet();
+  if (liked.has(id)) {
+    liked.delete(id);
+  } else {
+    liked.add(id);
+  }
+  saveLiked(liked);
+  renderPosts();
+}
+
+function closePostMenus() {
+  document.querySelectorAll('.post-card.menu-open').forEach(card => card.classList.remove('menu-open'));
+}
+
+function togglePostMenu(event, id, btn) {
+  event.stopPropagation();
+  const card = btn.closest('.post-card');
+  const wasOpen = card.classList.contains('menu-open');
+  closePostMenus();
+  if (!wasOpen) card.classList.add('menu-open');
+}
+
+function getPost(id) {
+  return posts.find(post => post.id === id);
+}
+
+function postUrl(id) {
+  return `${window.location.origin}${window.location.pathname}?producto=${id}`;
+}
+
+function viewPostDetails(id) {
+  closePostMenus();
+  const post = getPost(id);
+  if (!post) return;
+  alert(`Producto publicado\n${post.price}\nArtesanías La Ceiba`);
+}
+
+function viewBusinessProfile(id) {
+  closePostMenus();
+  window.location.href = `perfil-publico.html?producto=${id}`;
+}
+
+async function sharePost(id) {
+  closePostMenus();
+  const post = getPost(id);
+  if (!post) return;
+  const data = {
+    title: 'Producto de Artesanías La Ceiba',
+    text: `Mirá este producto en TuyoMall: ${post.price}`,
+    url: postUrl(id)
+  };
+  if (navigator.share) {
+    await navigator.share(data);
+    return;
+  }
+  await navigator.clipboard.writeText(data.url);
+  alert('Enlace copiado para compartir.');
+}
+
+async function copyPostLink(id) {
+  closePostMenus();
+  await navigator.clipboard.writeText(postUrl(id));
+  alert('Enlace copiado.');
+}
+
+function reportPost(id) {
+  closePostMenus();
+  alert('Gracias. Revisaremos esta publicación.');
+}
+
+function savedReviews() {
+  return JSON.parse(localStorage.getItem(REVIEWS_KEY) || '[]');
+}
+
+function allReviews() {
+  return [...savedReviews(), ...defaultReviews];
+}
+
+function stars(rating) {
+  const value = Number(rating);
+  return '★'.repeat(value) + '☆'.repeat(5 - value);
+}
+
+function reviewMarkup(review) {
+  return `<div class="review"><div class="stars">${stars(review.rating)}</div><p>${review.text}</p><small>${review.name}</small></div>`;
+}
+
+function renderReviews() {
+  const reviews = allReviews();
+  document.getElementById('reviewsList').innerHTML = reviews.map(reviewMarkup).join('');
+  document.getElementById('sidebarReviews').innerHTML = reviews.slice(0, 3).map(reviewMarkup).join('');
+}
+
+function setPublicTab(name, btn) {
+  document.querySelectorAll('.tab-btn').forEach(item => item.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.tab-panel').forEach(panel => panel.classList.remove('active'));
+  document.getElementById(`tab-${name}`).classList.add('active');
+}
+
+function openReviewForm() {
+  const reviewsTab = document.querySelector('[data-tab-target="reviews"]');
+  setPublicTab('reviews', reviewsTab);
+  document.getElementById('reviewForm').scrollIntoView({ behavior: 'smooth', block: 'center' });
+  window.setTimeout(() => document.getElementById('reviewName').focus(), 420);
+}
 
 function saveProfile(btn) {
   btn.classList.toggle('btn-coral');
@@ -707,6 +1026,35 @@ async function shareProfile() {
   await navigator.clipboard.writeText(window.location.href);
   alert('Enlace copiado.');
 }
+
+document.getElementById('reviewForm').addEventListener('submit', (event) => {
+  event.preventDefault();
+  const name = document.getElementById('reviewName').value.trim();
+  const rating = Number(document.getElementById('reviewRating').value);
+  const text = document.getElementById('reviewText').value.trim();
+  if (!name || !text) return;
+
+  const reviews = savedReviews();
+  reviews.unshift({ name, rating, text });
+  localStorage.setItem(REVIEWS_KEY, JSON.stringify(reviews));
+  event.target.reset();
+  renderReviews();
+  alert('Gracias por dejar tu reseña.');
+});
+
+document.addEventListener('click', closePostMenus);
+document.addEventListener('keydown', (event) => {
+  if (event.key === 'Escape') closePostMenus();
+});
+
+window.addEventListener('storage', (event) => {
+  if (event.key === LIKED_POSTS_KEY) renderPosts();
+  if (event.key === REVIEWS_KEY) renderReviews();
+});
+
+renderPosts();
+renderReviews();
 </script>
+<script src="assets/js/business-profile.js"></script>
 </body>
 </html>

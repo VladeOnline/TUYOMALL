@@ -136,6 +136,58 @@ body {
 }
 .btn-ghost:hover { border-color: var(--coral); color: var(--coral); background: var(--coral-3); }
 
+.btn-nav-explore {
+  background: linear-gradient(135deg, #FF6B47, #FF8A6A);
+  color: var(--white);
+  border: 1.5px solid rgba(255,180,120,0.95);
+  box-shadow: 0 0 0 1px rgba(255,107,71,0.22), 0 12px 30px rgba(255,107,71,0.32);
+  position: relative;
+  overflow: visible;
+  isolation: isolate;
+}
+.btn-nav-explore::before {
+  content: '';
+  position: absolute;
+  inset: -4px;
+  z-index: -1;
+  border-radius: inherit;
+  background: linear-gradient(135deg, rgba(255,107,71,0.65), rgba(255,210,120,0.28), rgba(255,107,71,0.65));
+  filter: blur(9px);
+  opacity: 0.72;
+  animation: navExploreGlow 2.8s ease-in-out infinite;
+}
+.btn-nav-explore::after {
+  content: '✦';
+  position: absolute;
+  top: -11px;
+  right: 16px;
+  color: #FFD166;
+  font-size: 13px;
+  line-height: 1;
+  text-shadow: 0 0 10px rgba(255,209,102,0.9);
+  animation: navExploreStar 1.9s ease-in-out infinite;
+}
+.btn-nav-explore .nav-star {
+  color: #FFE8A3;
+  font-size: 14px;
+  line-height: 1;
+  text-shadow: 0 0 12px rgba(255,232,163,0.85);
+  animation: navExploreStar 2.2s 0.4s ease-in-out infinite;
+}
+.btn-nav-explore:hover {
+  background: linear-gradient(135deg, #FF5A36, #FF9A78);
+  transform: translateY(-2px);
+  box-shadow: 0 0 0 1px rgba(255,209,102,0.4), 0 16px 40px rgba(255,107,71,0.42);
+}
+@keyframes navExploreGlow {
+  0%, 100% { opacity: 0.58; transform: scale(0.98); }
+  50% { opacity: 0.95; transform: scale(1.03); }
+}
+@keyframes navExploreStar {
+  0%, 100% { opacity: 0.55; transform: translateY(0) rotate(0deg) scale(0.9); }
+  50% { opacity: 1; transform: translateY(-2px) rotate(18deg) scale(1.18); }
+}
+
 .btn-primary {
   background: var(--coral);
   color: var(--white);
@@ -250,14 +302,54 @@ body {
   animation: fadeSlideUp 0.6s 0.3s ease both;
 }
 
-.hero-ctas .btn { padding: 15px 32px; font-size: 16px; }
+.hero-ctas .btn {
+  padding: 15px 32px;
+  font-size: 16px;
+  min-height: 56px;
+}
+
+.hero-ctas .btn-explore {
+  min-width: 250px;
+  background: linear-gradient(135deg, var(--coral), var(--coral-2));
+  color: var(--white);
+  border: 1px solid rgba(255,255,255,0.18);
+  box-shadow: 0 16px 38px rgba(255,107,71,0.34);
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.hero-ctas .btn-explore::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(110deg, transparent 0%, rgba(255,255,255,0.34) 44%, transparent 70%);
+  transform: translateX(-120%);
+  animation: exploreSweep 3.2s ease-in-out infinite;
+  z-index: -1;
+}
+
+.hero-ctas .btn-explore:hover {
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: 0 20px 48px rgba(255,107,71,0.44);
+}
+
+.hero-ctas .btn-publish {
+  background: var(--navy);
+  color: var(--white);
+  box-shadow: 0 10px 26px rgba(20,33,61,0.18);
+}
+
+@keyframes exploreSweep {
+  0%, 45% { transform: translateX(-120%); }
+  70%, 100% { transform: translateX(120%); }
+}
 
 .hero-stats {
   display: flex; gap: 40px;
   animation: fadeSlideUp 0.6s 0.4s ease both;
 }
 
-.stat { }
 .stat-num {
   font-family: 'Clash Display', sans-serif;
   font-size: 28px; font-weight: 700;
@@ -962,6 +1054,8 @@ footer {
 
 .modal-overlay.open .modal { transform: translateY(0); }
 
+.modal-wide { max-width: 900px; }
+
 .modal-header {
   display: flex; align-items: center; justify-content: space-between;
   padding: 24px 32px;
@@ -1008,6 +1102,20 @@ footer {
 
 .modal-body ul { padding-left: 20px; margin: 8px 0; }
 .modal-body li { margin-bottom: 6px; }
+
+.terms-doc + .terms-doc {
+  border-top: 1px solid rgba(20,33,61,0.1);
+  margin-top: 32px;
+  padding-top: 28px;
+}
+
+.terms-doc-title {
+  color: var(--coral);
+  font-family: 'Clash Display', sans-serif;
+  font-size: 18px;
+  font-weight: 700;
+  margin: 0 0 18px;
+}
 
 /* ─── SCROLL REVEAL ─────────────────────────────────── */
 .reveal {
@@ -1199,6 +1307,51 @@ footer {
 }
 
 /* ─── WHATSAPP FLOAT ─────────────────────────────────── */
+.explore-float {
+  position: fixed;
+  left: 28px;
+  bottom: 28px;
+  z-index: 998;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 52px;
+  padding: 14px 22px;
+  border-radius: 999px;
+  background: linear-gradient(135deg, var(--coral), var(--coral-2));
+  color: var(--white);
+  font-size: 14px;
+  font-weight: 800;
+  text-decoration: none;
+  touch-action: none;
+  user-select: none;
+  box-shadow: 0 18px 42px rgba(255,107,71,0.36);
+  border: 1px solid rgba(255,255,255,0.18);
+  transition: transform 0.22s cubic-bezier(.34,1.56,.64,1), box-shadow 0.22s;
+  animation: exploreFloatIn 0.65s 1.1s ease both, explorePulse 4.5s 2s ease-in-out infinite;
+}
+.explore-float:hover {
+  transform: translateY(-3px) scale(1.03);
+  box-shadow: 0 24px 52px rgba(255,107,71,0.46);
+}
+.explore-float.dragging {
+  transition: none;
+  transform: none;
+  cursor: grabbing;
+}
+.explore-float span:first-child {
+  font-size: 18px;
+  line-height: 1;
+}
+@keyframes exploreFloatIn {
+  from { opacity: 0; transform: translateY(18px) scale(0.92); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+@keyframes explorePulse {
+  0%, 100% { box-shadow: 0 18px 42px rgba(255,107,71,0.34); }
+  50% { box-shadow: 0 18px 50px rgba(255,107,71,0.52); }
+}
+
 .wa-float {
   position: fixed;
   bottom: 28px; right: 28px;
@@ -1231,6 +1384,15 @@ footer {
 @media (max-width: 600px) {
   .wa-float span { display: none; }
   .wa-float { padding: 14px; border-radius: 50%; }
+  .explore-float {
+    left: 16px;
+    right: auto;
+    bottom: 16px;
+    justify-content: center;
+    width: min(230px, calc(100vw - 96px));
+    min-height: 50px;
+    padding: 13px 18px;
+  }
   .cta-final { padding: 64px 24px; }
 }
 @media (max-width: 1000px) {
@@ -1372,7 +1534,7 @@ footer {
     <div class="logo-mark">
         <img src="assets/img/Logo_TuyoMall.2.png" alt="Logo TuyoMall" width="70" height="70">
     </div>
-    
+
     <span class="logo-text">Tuyo<span class="logo-mall-wrap"><span>Mall</span>
         <svg class="logo-underline" viewBox="0 0 46 7" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
           <path d="M2 4.5 C8 1.5, 16 6.5, 23 3.5 C30 0.5, 38 6, 44 3" stroke="#FF6B47" stroke-width="2" stroke-linecap="round"/>
@@ -1384,10 +1546,11 @@ footer {
     <a href="#como-funciona" class="nav-link">¿Cómo funciona?</a>
     <a href="planes.html" class="nav-link">Planes</a>
     <a href="faq-contacto.html" class="nav-link">Ayuda</a>
-    <a href="#" onclick="openModal('compradores')" class="nav-link">Términos</a>
+    <a href="#terminos-tuyomall" onclick="return openModal('todos')" class="nav-link">Términos</a>
   </div>
 
   <div class="nav-actions">
+    <a href="principal.html" class="btn btn-nav-explore"><span class="nav-star">✦</span> Explorar productos</a>
     <a href="acceso-cliente.html" class="btn btn-ghost">Soy Cliente</a>
     <a href="acceso-emprendedor.html" class="btn btn-primary">Soy Emprendedor</a>
   </div>
@@ -1412,10 +1575,10 @@ footer {
     </p>
 
     <div class="hero-ctas">
-      <a href="acceso-emprendedor.html" class="btn btn-primary">
+      <a href="acceso-emprendedor.html" class="btn btn-publish">
         🚀 Publicar mi negocio
       </a>
-      <a href="principal.html" class="btn btn-navy">
+      <a href="principal.html" class="btn btn-explore">
         🛍️ Explorar productos
       </a>
     </div>
@@ -1448,7 +1611,7 @@ footer {
     <!-- Floating chips -->
     <div class="float-chip chip-1">✨ 500+ emprendedores</div>
     <div class="float-chip chip-2">💬 Contacto directo</div>
-    <div class="float-chip chip-3">📍 Toda Costa Rica</div>
+    <div class="float-chip chip-3">📍 Toda LATAM</div>
 
     <!-- Browser / Marketplace mockup -->
     <div class="browser-mockup">
@@ -1705,7 +1868,7 @@ footer {
           <li><div class="plan-check">✓</div>Estadísticas avanzadas (CTR, tráfico, top productos)</li>
           <li><div class="plan-check">✓</div>Soporte prioritario</li>
         </ul>
-        <a href="https://www.paypal.com" target="_blank" class="plan-cta cta-solid">Suscribirme con PayPal</a>
+        <a href="https://www.paypal.com/ncp/payment/BYX2Z63J5ZALY" target="_blank" rel="noopener" class="plan-cta cta-solid">Suscribirme con PayPal</a>
         <p class="paypal-note">El cobro se procesa vía PayPal. El precio es en USD.</p>
       </div>
     </div>
@@ -1730,6 +1893,10 @@ footer {
 </section>
 
 <!-- ═══════ WHATSAPP FLOTANTE ═══════ -->
+<a href="principal.html" class="explore-float" aria-label="Explorar productos en TuyoMall">
+  <span>🛍️</span>
+  <span>Ver productos</span>
+</a>
 <a href="https://wa.me/50688027022" target="_blank" class="wa-float" title="Contáctanos por WhatsApp">
   <svg viewBox="0 0 24 24" fill="currentColor">
     <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
@@ -1741,8 +1908,8 @@ footer {
 <div class="terms-strip">
   <p>Al registrarte en TuyoMall aceptás nuestras Políticas de Privacidad y Términos de Uso. Contamos con documentos separados para <strong>Compradores</strong> y <strong>Emprendedores</strong>.</p>
   <div class="terms-links">
-    <a href="#" onclick="openModal('compradores')" class="terms-btn">📄 Términos Compradores</a>
-    <a href="#" onclick="openModal('emprendedores')" class="terms-btn">📄 Términos Emprendedores</a>
+    <a href="#terminos-compradores" onclick="return openModal('compradores')" class="terms-btn">📄 Términos Compradores</a>
+    <a href="#terminos-emprendedores" onclick="return openModal('emprendedores')" class="terms-btn">📄 Términos Emprendedores</a>
   </div>
 </div>
 
@@ -1784,14 +1951,14 @@ footer {
 
     <div class="footer-col">
       <h4>Legal</h4>
-      <a href="#" onclick="openModal('compradores')">Términos para Compradores</a>
-      <a href="#" onclick="openModal('emprendedores')">Términos para Emprendedores</a>
-      <a href="#" onclick="openModal('compradores')">Política de privacidad</a>
+      <a href="#terminos-compradores" onclick="return openModal('compradores')">Términos para Compradores</a>
+      <a href="#terminos-emprendedores" onclick="return openModal('emprendedores')">Términos para Emprendedores</a>
+      <a href="#privacidad-compradores" onclick="return openModal('compradores')">Política de privacidad</a>
     </div>
 
     <div class="footer-col">
       <h4>Contacto</h4>
-      <a href="mailto:tuyomall.info@gmail.com">tuyomall.info@gmail.com</a>
+      <a href="mailto:info@tuyomall.com">info@tuyomall.com</a>
       <a href="https://wa.me/50688027022" target="_blank">WhatsApp +506 8802 7022</a>
     </div>
   </div>
@@ -1815,10 +1982,10 @@ footer {
       <h3>Entre las partes</h3>
       <p>Tuyomall, empresa registrada en Costa Rica, con domicilio en San José, Pérez Zeledón, debidamente representada por Jacqueline Quesada Castro, y la persona que visite el sitio web <strong>https://tuyomall.com/</strong> con el fin de consultar o realizar compras de productos y servicios ofrecidos por los emprendedores anunciados en la plataforma.</p>
 
-      <h3>1. Aceptación de los términos</h3>
+      <h3 id="terminos-compradores">1. Aceptación de los términos</h3>
       <p>El Comprador acepta los términos y condiciones establecidos en este contrato al visitar el sitio web y al interactuar con los productos o servicios anunciados en la plataforma. Si no está de acuerdo, deberá abstenerse de utilizar el sitio web.</p>
 
-      <h3>2. Políticas de Privacidad</h3>
+      <h3 id="privacidad-compradores">2. Políticas de Privacidad</h3>
       <p><strong>Información recopilada:</strong> Tuyomall recopila información personal (nombre, correo, dirección, teléfono) e información de uso (IP, navegador, páginas visitadas).</p>
       <p><strong>Uso de la información:</strong> Para facilitar la interacción con el sitio, mejorar la experiencia y enviar notificaciones sobre productos y actualizaciones.</p>
       <p><strong>Cookies:</strong> El sitio utiliza cookies para mejorar la experiencia. Al utilizar nuestros servicios, el Comprador acepta su uso.</p>
@@ -1847,7 +2014,7 @@ footer {
       <button class="modal-close" onclick="closeModal('emprendedores')">✕</button>
     </div>
     <div class="modal-body">
-      <h3>1. Naturaleza de la plataforma</h3>
+      <h3 id="terminos-emprendedores">1. Naturaleza de la plataforma</h3>
       <p>Tuyomall es una plataforma tecnológica digital de tipo marketplace que permite a emprendedores y empresas registrarse, crear perfiles comerciales y publicar productos o servicios bajo su exclusiva responsabilidad. Tuyomall actúa únicamente como proveedor de infraestructura tecnológica.</p>
 
       <h3>2. Alcance internacional y jurisdicción</h3>
@@ -1874,7 +2041,7 @@ footer {
       <h3>7. Limitación de responsabilidad</h3>
       <p>Tuyomall no será responsable por pérdidas económicas indirectas, lucro cesante, fallas técnicas de terceros ni incumplimientos entre Usuarios y clientes. La responsabilidad total de Tuyomall no excederá el monto pagado por el Usuario en los últimos tres meses de servicio.</p>
 
-      <h3>8. Protección de datos (Ley 8968)</h3>
+      <h3 id="privacidad-emprendedores">8. Protección de datos (Ley 8968)</h3>
       <p>El tratamiento de datos se rige por la legislación costarricense y principios internacionales: consentimiento informado, minimización de datos, seguridad razonable y derecho de acceso y rectificación.</p>
 
       <h3>9. Propiedad intelectual</h3>
@@ -1882,6 +2049,26 @@ footer {
 
       <h3>10. Ley aplicable</h3>
       <p>Este contrato se rige por la legislación de la República de Costa Rica, incluyendo: Constitución Política, Código Civil, Código de Comercio, Ley 8968 (Protección de Datos), Ley 7472 (Protección al Consumidor), Ley 7786 (Legitimación de Capitales), Ley 6683 (Derechos de Autor) y Ley 8454 (Firma Digital).</p>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════ MODAL — TODOS LOS TÉRMINOS ═══════ -->
+<div class="modal-overlay" id="modal-todos">
+  <div class="modal modal-wide">
+    <div class="modal-header">
+      <span class="modal-title" id="terminos-tuyomall">📄 Términos y Condiciones de TuyoMall</span>
+      <button class="modal-close" onclick="closeModal('todos')">✕</button>
+    </div>
+    <div class="modal-body">
+      <section class="terms-doc">
+        <h2 class="terms-doc-title">Términos para Compradores</h2>
+        <div id="terms-all-compradores"></div>
+      </section>
+      <section class="terms-doc">
+        <h2 class="terms-doc-title">Términos para Emprendedores</h2>
+        <div id="terms-all-emprendedores"></div>
+      </section>
     </div>
   </div>
 </div>
@@ -1948,12 +2135,11 @@ footer {
 
   setInterval(rotateCurrency, 2800);
 
-  // WhatsApp draggable button (mouse + touch)
-  (function initWhatsAppDrag() {
-    const wa = document.querySelector('.wa-float');
-    if (!wa) return;
+  function initDraggableFloat(selector, storageKey) {
+    const floatBtn = document.querySelector(selector);
+    if (!floatBtn) return;
 
-    const POS_KEY = 'tuyomall_wa_float_pos_v1';
+    const POS_KEY = storageKey;
     const MARGIN = 12;
 
     let pointerId = null;
@@ -1964,11 +2150,11 @@ footer {
     let moved = false;
 
     function maxLeft() {
-      return Math.max(MARGIN, window.innerWidth - wa.offsetWidth - MARGIN);
+      return Math.max(MARGIN, window.innerWidth - floatBtn.offsetWidth - MARGIN);
     }
 
     function maxTop() {
-      return Math.max(MARGIN, window.innerHeight - wa.offsetHeight - MARGIN);
+      return Math.max(MARGIN, window.innerHeight - floatBtn.offsetHeight - MARGIN);
     }
 
     function clampPosition(left, top) {
@@ -1979,10 +2165,10 @@ footer {
     }
 
     function applyPosition(left, top) {
-      wa.style.left = left + 'px';
-      wa.style.top = top + 'px';
-      wa.style.right = 'auto';
-      wa.style.bottom = 'auto';
+      floatBtn.style.left = left + 'px';
+      floatBtn.style.top = top + 'px';
+      floatBtn.style.right = 'auto';
+      floatBtn.style.bottom = 'auto';
     }
 
     function persistPosition(left, top) {
@@ -2000,23 +2186,23 @@ footer {
       } catch (_) {}
     }
 
-    wa.addEventListener('pointerdown', (e) => {
+    floatBtn.addEventListener('pointerdown', (e) => {
       if (e.button !== 0) return;
       pointerId = e.pointerId;
       moved = false;
       startX = e.clientX;
       startY = e.clientY;
 
-      const rect = wa.getBoundingClientRect();
+      const rect = floatBtn.getBoundingClientRect();
       startLeft = rect.left;
       startTop = rect.top;
 
-      wa.classList.add('dragging');
-      wa.setPointerCapture(pointerId);
+      floatBtn.classList.add('dragging');
+      floatBtn.setPointerCapture(pointerId);
       e.preventDefault();
     });
 
-    wa.addEventListener('pointermove', (e) => {
+    floatBtn.addEventListener('pointermove', (e) => {
       if (pointerId !== e.pointerId) return;
       const dx = e.clientX - startX;
       const dy = e.clientY - startY;
@@ -2027,21 +2213,20 @@ footer {
 
     function finishDrag(e) {
       if (pointerId !== e.pointerId) return;
-      wa.classList.remove('dragging');
-      wa.releasePointerCapture(pointerId);
+      floatBtn.classList.remove('dragging');
+      floatBtn.releasePointerCapture(pointerId);
       pointerId = null;
 
-      const rect = wa.getBoundingClientRect();
+      const rect = floatBtn.getBoundingClientRect();
       const pos = clampPosition(rect.left, rect.top);
       applyPosition(pos.left, pos.top);
       persistPosition(pos.left, pos.top);
     }
 
-    wa.addEventListener('pointerup', finishDrag);
-    wa.addEventListener('pointercancel', finishDrag);
+    floatBtn.addEventListener('pointerup', finishDrag);
+    floatBtn.addEventListener('pointercancel', finishDrag);
 
-    // Avoid opening WhatsApp when the user was dragging.
-    wa.addEventListener('click', (e) => {
+    floatBtn.addEventListener('click', (e) => {
       if (moved) {
         e.preventDefault();
         moved = false;
@@ -2049,18 +2234,39 @@ footer {
     });
 
     window.addEventListener('resize', () => {
-      const rect = wa.getBoundingClientRect();
+      const rect = floatBtn.getBoundingClientRect();
       const pos = clampPosition(rect.left, rect.top);
       applyPosition(pos.left, pos.top);
       persistPosition(pos.left, pos.top);
     });
 
     restorePosition();
-  })();
+  }
+
+  initDraggableFloat('.wa-float', 'tuyomall_wa_float_pos_v1');
+  initDraggableFloat('.explore-float', 'tuyomall_explore_float_pos_v1');
 
 
+
+  function syncAllTermsModal() {
+    const sources = {
+      compradores: document.querySelector('#modal-compradores .modal-body'),
+      emprendedores: document.querySelector('#modal-emprendedores .modal-body')
+    };
+    const targets = {
+      compradores: document.getElementById('terms-all-compradores'),
+      emprendedores: document.getElementById('terms-all-emprendedores')
+    };
+
+    Object.keys(sources).forEach(key => {
+      if (sources[key] && targets[key]) {
+        targets[key].innerHTML = sources[key].innerHTML;
+      }
+    });
+  }
 
   function openModal(type) {
+    if (type === 'todos') syncAllTermsModal();
     document.getElementById('modal-' + type).classList.add('open');
     document.body.style.overflow = 'hidden';
     return false;
