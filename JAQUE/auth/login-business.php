@@ -2,6 +2,7 @@
 declare(strict_types=1);
 
 require_once __DIR__ . '/helpers.php';
+require_once __DIR__ . '/../includes/plan-rules.php';
 
 require_post();
 
@@ -26,6 +27,15 @@ try {
         json_response(['ok' => false, 'message' => 'Esta cuenta no está activa.'], 403);
     }
 
+    $business = get_business_for_user($pdo, (int) $user['id']);
+
+    if (!$business) {
+        json_response(['ok' => false, 'message' => 'No encontramos el negocio asociado a esta cuenta.'], 404);
+    }
+
+    sync_business_plan($pdo, (int) $business['id']);
+
+    $user['business_id'] = (int) $business['id'];
     login_user($user);
     json_response(['ok' => true, 'redirect' => 'dashboard-emprendedor.php']);
 } catch (Throwable $e) {

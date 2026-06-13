@@ -699,7 +699,7 @@ html.tm-dark .post-options .report-action:hover {
   <div class="topbar-inner">
     <a class="brand" href="principal.html">
       <span class="brand-mark">
-        <img src="assets/img/Logo_TuyoMall.2.png" alt="Logo TuyoMall">
+        <img src="assets/img/logo-tuyomall-nav.png" alt="Logo TuyoMall">
       </span>
       <span>Tuyo<span class="brand-mall">Mall
         <svg class="brand-underline" viewBox="0 0 46 7" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
@@ -760,10 +760,10 @@ html.tm-dark .post-options .report-action:hover {
         </div>
       </div>
       <div class="highlights" aria-label="Destacados">
-        <div class="highlight"><div class="highlight-img"><img src="https://images.unsplash.com/photo-1606722590583-6951b5ea92ad?w=160&h=160&fit=crop&q=80" alt=""></div>Canastas</div>
-        <div class="highlight"><div class="highlight-img"><img src="https://images.unsplash.com/photo-1602874801006-e26e88ed23e1?w=160&h=160&fit=crop&q=80" alt=""></div>Talleres</div>
-        <div class="highlight"><div class="highlight-img"><img src="https://images.unsplash.com/photo-1607082348824-0a96f2a4b9da?w=160&h=160&fit=crop&q=80" alt=""></div>Envíos</div>
-        <div class="highlight"><div class="highlight-img"><img src="https://images.unsplash.com/photo-1598300042247-d088f8ab3a91?w=160&h=160&fit=crop&q=80" alt=""></div>Reseñas</div>
+        <div class="highlight"><div class="highlight-img"><img src="https://images.unsplash.com/photo-1606722590583-6951b5ea92ad?w=160&h=160&fit=crop&q=80" alt="" loading="lazy"></div>Canastas</div>
+        <div class="highlight"><div class="highlight-img"><img src="https://images.unsplash.com/photo-1602874801006-e26e88ed23e1?w=160&h=160&fit=crop&q=80" alt="" loading="lazy"></div>Talleres</div>
+        <div class="highlight"><div class="highlight-img"><img src="https://images.unsplash.com/photo-1607082348824-0a96f2a4b9da?w=160&h=160&fit=crop&q=80" alt="" loading="lazy"></div>Envíos</div>
+        <div class="highlight"><div class="highlight-img"><img src="https://images.unsplash.com/photo-1598300042247-d088f8ab3a91?w=160&h=160&fit=crop&q=80" alt="" loading="lazy"></div>Reseñas</div>
       </div>
     </article>
 
@@ -842,8 +842,10 @@ html.tm-dark .post-options .report-action:hover {
 <script>
 const LIKED_POSTS_KEY = 'tuyomall_liked_posts_v1';
 const REVIEWS_KEY = 'tuyomall_public_reviews_artesanias_v1';
+let currentBusiness = null;
+let publicReviews = [];
 
-const posts = [
+let posts = [
   { id:3, img:'https://images.unsplash.com/photo-1606722590583-6951b5ea92ad?w=600&h=600&fit=crop&q=80', price:'₡18.000', likes:42, saves:11 },
   { id:101, img:'https://images.unsplash.com/photo-1513519245088-0e12902e5a38?w=600&h=600&fit=crop&q=80', price:'₡22.500', likes:35, saves:7 },
   { id:102, img:'https://images.unsplash.com/photo-1514228742587-6b1558fcca3d?w=600&h=600&fit=crop&q=80', price:'₡9.000', likes:28, saves:5 },
@@ -857,6 +859,100 @@ const defaultReviews = [
   { name:'José R.', rating:5, text:'La canasta llegó rápido y se nota el trabajo artesanal.' },
   { name:'Andrea M.', rating:4, text:'Muy recomendado para regalos personalizados.' }
 ];
+
+function esc(value) {
+  return String(value ?? '')
+    .replaceAll('&', '&amp;')
+    .replaceAll('<', '&lt;')
+    .replaceAll('>', '&gt;');
+}
+
+function queryValue(...keys) {
+  const params = new URLSearchParams(window.location.search);
+  for (const key of keys) {
+    const value = params.get(key);
+    if (value) return value;
+  }
+  return '';
+}
+
+function applyPublicBusiness(business) {
+  if (!business) return;
+  currentBusiness = business;
+  document.title = `${business.name} | TuyoMall`;
+  document.querySelector('.title-row h1').textContent = business.name || 'Negocio TuyoMall';
+  document.querySelector('.profile-meta').innerHTML = `
+    <span><span class="ti ti-map-pin"></span> ${esc(business.province || '')}, ${esc(business.country || '')}</span>
+    <span class="meta-pill"><span class="ti ti-building-store"></span> ${esc(business.type || 'Negocio local')}</span>
+  `;
+  document.querySelector('.bio').innerHTML = `<strong>${esc(business.name || 'Este negocio')}</strong> ${esc(business.description || 'Aun no ha agregado una descripcion publica.')}`;
+  const avatar = document.querySelector('.biz-avatar');
+  if (avatar && business.avatar) avatar.src = business.avatar;
+  const cover = document.querySelector('.cover');
+  if (cover && business.cover) cover.style.backgroundImage = `linear-gradient(180deg, rgba(20,33,61,0.08), rgba(20,33,61,0.24)), url('${business.cover}')`;
+  const stats = business.stats || {};
+  const statEls = document.querySelectorAll('.stats-row .stat strong');
+  if (statEls[0]) statEls[0].textContent = stats.posts ?? 0;
+  if (statEls[1]) statEls[1].textContent = stats.views ?? 0;
+  if (statEls[2]) statEls[2].textContent = stats.saves ?? 0;
+  if (statEls[3]) statEls[3].textContent = stats.rating || '0.0';
+  const whatsapp = business.whatsapp ? business.whatsapp.replace(/[^0-9]/g, '') : '';
+  document.querySelector('.contact-card .btn-green')?.setAttribute('href', whatsapp ? `https://wa.me/${whatsapp}` : '#');
+}
+
+async function loadPublicBusiness() {
+  const slug = queryValue('slug');
+  const businessId = queryValue('business_id');
+  const productId = queryValue('producto', 'id');
+  const params = new URLSearchParams();
+  if (slug) params.set('slug', slug);
+  else if (businessId) params.set('id', businessId);
+  else if (productId) params.set('producto_id', productId);
+
+  if (!params.toString()) return;
+
+  try {
+    const response = await fetch(`api/business.php?${params.toString()}`, { headers: { 'Accept': 'application/json' } });
+    const result = await response.json();
+    if (!result.ok) return;
+    applyPublicBusiness(result.business);
+    await loadPublicProducts();
+    await loadPublicReviews();
+  } catch (_) {}
+}
+
+async function loadPublicProducts() {
+  if (!currentBusiness?.id) return;
+  try {
+    const response = await fetch(`api/products.php?business_id=${currentBusiness.id}`, { headers: { 'Accept': 'application/json' } });
+    const result = await response.json();
+    if (!result.ok) return;
+    posts = (result.products || []).map(product => ({
+      id: product.id,
+      name: product.name,
+      img: product.img,
+      price: product.price,
+      likes: Number(product.likes || 0),
+      saves: Number(product.saves || 0)
+    }));
+    renderPosts();
+  } catch (_) {}
+}
+
+async function loadPublicReviews() {
+  if (!currentBusiness?.id) return;
+  try {
+    const response = await fetch(`api/reviews.php?negocio_id=${currentBusiness.id}`, { headers: { 'Accept': 'application/json' } });
+    const result = await response.json();
+    if (!result.ok) return;
+    publicReviews = (result.reviews || []).map(review => ({
+      name: review.nombre_publico,
+      rating: Number(review.calificacion || 5),
+      text: review.comentario
+    }));
+    renderReviews();
+  } catch (_) {}
+}
 
 function likedSet() {
   return new Set(JSON.parse(localStorage.getItem(LIKED_POSTS_KEY) || '[]'));
@@ -872,7 +968,7 @@ function renderPosts() {
     const isLiked = liked.has(p.id);
     return `
       <article class="post-card">
-        <img src="${p.img}" alt="Producto publicado">
+        <img src="${p.img}" alt="Producto publicado" loading="lazy">
         <button class="post-menu" type="button" onclick="togglePostMenu(event, ${p.id}, this)" title="Más opciones">
           <span class="ti ti-dots"></span>
         </button>
@@ -898,12 +994,25 @@ function renderPosts() {
   }).join('');
 }
 
-function togglePublicLike(id) {
+async function togglePublicLike(id) {
   const liked = likedSet();
-  if (liked.has(id)) {
-    liked.delete(id);
-  } else {
-    liked.add(id);
+  try {
+    const data = new FormData();
+    data.append('producto_id', id);
+    data.append('accion', 'like');
+    const response = await fetch('api/interactions.php', {
+      method: 'POST',
+      body: data,
+      headers: { 'Accept': 'application/json' }
+    });
+    const result = await response.json();
+    if (!result.ok) throw new Error(result.message || 'No se pudo guardar el like.');
+    const post = getPost(id);
+    if (post) post.likes = Number(result.count || post.likes);
+    if (result.active) liked.add(id);
+    else liked.delete(id);
+  } catch (error) {
+    alert(error.message || 'Inicia sesión como cliente para dar like.');
   }
   saveLiked(liked);
   renderPosts();
@@ -974,7 +1083,7 @@ function savedReviews() {
 }
 
 function allReviews() {
-  return [...savedReviews(), ...defaultReviews];
+  return [...publicReviews, ...savedReviews(), ...defaultReviews];
 }
 
 function stars(rating) {
@@ -1027,19 +1136,34 @@ async function shareProfile() {
   alert('Enlace copiado.');
 }
 
-document.getElementById('reviewForm').addEventListener('submit', (event) => {
+document.getElementById('reviewForm').addEventListener('submit', async (event) => {
   event.preventDefault();
   const name = document.getElementById('reviewName').value.trim();
   const rating = Number(document.getElementById('reviewRating').value);
   const text = document.getElementById('reviewText').value.trim();
   if (!name || !text) return;
 
-  const reviews = savedReviews();
-  reviews.unshift({ name, rating, text });
-  localStorage.setItem(REVIEWS_KEY, JSON.stringify(reviews));
+  if (currentBusiness?.id) {
+    const data = new FormData();
+    data.append('negocio_id', currentBusiness.id);
+    data.append('nombre', name);
+    data.append('calificacion', rating);
+    data.append('comentario', text);
+    const response = await fetch('api/reviews.php', { method: 'POST', body: data, headers: { 'Accept': 'application/json' } });
+    const result = await response.json();
+    if (!result.ok) {
+      alert(result.message || 'No pudimos guardar la reseña.');
+      return;
+    }
+    alert(result.message || 'Gracias. Tu reseña quedó pendiente de revisión.');
+  } else {
+    const reviews = savedReviews();
+    reviews.unshift({ name, rating, text });
+    localStorage.setItem(REVIEWS_KEY, JSON.stringify(reviews));
+    alert('Gracias por dejar tu reseña.');
+  }
   event.target.reset();
   renderReviews();
-  alert('Gracias por dejar tu reseña.');
 });
 
 document.addEventListener('click', closePostMenus);
@@ -1054,6 +1178,7 @@ window.addEventListener('storage', (event) => {
 
 renderPosts();
 renderReviews();
+loadPublicBusiness();
 </script>
 <script src="assets/js/business-profile.js"></script>
 </body>

@@ -45,6 +45,36 @@ function email_exists(PDO $pdo, string $email): bool
     return (bool) $stmt->fetch();
 }
 
+function slugify(string $value): string
+{
+    $value = strtolower(trim($value));
+    $value = iconv('UTF-8', 'ASCII//TRANSLIT//IGNORE', $value) ?: $value;
+    $value = preg_replace('/[^a-z0-9]+/', '-', $value) ?? '';
+    $value = trim($value, '-');
+
+    return $value !== '' ? $value : 'negocio';
+}
+
+function unique_business_slug(PDO $pdo, string $businessName): string
+{
+    $baseSlug = slugify($businessName);
+    $slug = $baseSlug;
+    $suffix = 2;
+
+    $stmt = $pdo->prepare('SELECT id FROM negocios WHERE slug = :slug LIMIT 1');
+
+    while (true) {
+        $stmt->execute(['slug' => $slug]);
+
+        if (!$stmt->fetch()) {
+            return $slug;
+        }
+
+        $slug = $baseSlug . '-' . $suffix;
+        $suffix++;
+    }
+}
+
 function find_user_by_email_and_role(PDO $pdo, string $email, string $role): ?array
 {
     $stmt = $pdo->prepare(

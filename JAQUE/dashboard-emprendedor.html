@@ -536,6 +536,10 @@ html.tm-dark .notif-item.unread {
   transition: transform 0.24s;
 }
 .post-card:hover img { transform: scale(1.04); }
+.post-card.is-paused img {
+  filter: grayscale(0.7);
+  opacity: 0.62;
+}
 .post-card.menu-open {
   overflow: visible;
   z-index: 8;
@@ -596,6 +600,20 @@ html.tm-dark .notif-item.unread {
 .post-options .report-action:hover {
   background: rgba(239,68,68,0.1);
   color: #DC2626;
+}
+.status-chip {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  z-index: 3;
+  border-radius: 999px;
+  padding: 6px 9px;
+  background: rgba(8,14,25,0.76);
+  color: white;
+  border: 1px solid rgba(255,255,255,0.18);
+  font-size: 11px;
+  font-weight: 850;
+  box-shadow: 0 10px 24px rgba(0,0,0,0.18);
 }
 html.tm-dark .post-options {
   background: #111B29;
@@ -722,6 +740,23 @@ html.tm-dark .post-options .report-action:hover {
   width: 100%;
   border-radius: var(--r);
   border-color: var(--coral);
+}
+.plan-premium .upgrade-only { display: none !important; }
+.plan-free .premium-only { display: none !important; }
+.plan-cancel-note {
+  margin-top: 10px;
+  color: rgba(255,255,255,0.58);
+  font-size: 12px;
+  line-height: 1.45;
+}
+.btn-ghost-premium {
+  background: transparent;
+  color: rgba(255,255,255,0.88);
+  border-color: rgba(255,255,255,0.18);
+}
+.btn-ghost-premium:hover {
+  background: rgba(255,255,255,0.08);
+  border-color: rgba(255,255,255,0.32);
 }
 .progress-top {
   display: flex;
@@ -962,7 +997,7 @@ html.tm-dark .post-options .report-action:hover {
   <div class="topbar-inner">
     <a class="brand" href="principal.html">
       <span class="brand-mark">
-        <img src="assets/img/Logo_TuyoMall.2.png" alt="Logo TuyoMall">
+        <img src="assets/img/logo-tuyomall-nav.png" alt="Logo TuyoMall">
       </span>
       <span>Tuyo<span class="brand-mall">Mall
         <svg class="brand-underline" viewBox="0 0 46 7" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
@@ -1037,28 +1072,28 @@ html.tm-dark .post-options .report-action:hover {
           </div>
           <div class="profile-actions">
             <button class="btn" onclick="openDrawer('profile')"><span class="ti ti-pencil"></span> Editar perfil</button>
-            <button class="btn btn-coral" onclick="openDrawer('post')"><span class="ti ti-square-plus"></span> Nueva publicación</button>
+            <button class="btn btn-coral" onclick="openNewPostDrawer()"><span class="ti ti-square-plus"></span> Nueva publicación</button>
             <a class="btn" href="perfil-publico.html"><span class="ti ti-external-link"></span> Ver perfil público</a>
-            <a class="btn btn-soft" href="premium-checkout.html"><span class="ti ti-crown"></span> Mejorar a Premium</a>
+            <a class="btn btn-soft upgrade-only" href="premium-checkout.html"><span class="ti ti-crown"></span> Mejorar a Premium</a>
           </div>
         </div>
       </div>
 
       <div class="highlights" aria-label="Destacados">
         <div class="highlight">
-          <div class="highlight-img"><img src="https://images.unsplash.com/photo-1606722590583-6951b5ea92ad?w=160&h=160&fit=crop&q=80" alt=""></div>
+          <div class="highlight-img"><img src="https://images.unsplash.com/photo-1606722590583-6951b5ea92ad?w=160&h=160&fit=crop&q=80" alt="" loading="lazy"></div>
           Canastas
         </div>
         <div class="highlight">
-          <div class="highlight-img"><img src="https://images.unsplash.com/photo-1602874801006-e26e88ed23e1?w=160&h=160&fit=crop&q=80" alt=""></div>
+          <div class="highlight-img"><img src="https://images.unsplash.com/photo-1602874801006-e26e88ed23e1?w=160&h=160&fit=crop&q=80" alt="" loading="lazy"></div>
           Talleres
         </div>
         <div class="highlight">
-          <div class="highlight-img"><img src="https://images.unsplash.com/photo-1607082348824-0a96f2a4b9da?w=160&h=160&fit=crop&q=80" alt=""></div>
+          <div class="highlight-img"><img src="https://images.unsplash.com/photo-1607082348824-0a96f2a4b9da?w=160&h=160&fit=crop&q=80" alt="" loading="lazy"></div>
           Envíos
         </div>
         <div class="highlight">
-          <div class="highlight-img"><img src="https://images.unsplash.com/photo-1598300042247-d088f8ab3a91?w=160&h=160&fit=crop&q=80" alt=""></div>
+          <div class="highlight-img"><img src="https://images.unsplash.com/photo-1598300042247-d088f8ab3a91?w=160&h=160&fit=crop&q=80" alt="" loading="lazy"></div>
           Reseñas
         </div>
         <button class="highlight" style="border:none;background:transparent" onclick="openDrawer('highlight')">
@@ -1098,14 +1133,16 @@ html.tm-dark .post-options .report-action:hover {
   </section>
 
   <aside class="sidebar">
-    <article class="side-panel premium-panel">
+    <article class="side-panel premium-panel" id="planPanel">
       <div class="panel-title">
         <div class="premium-icon"><span class="ti ti-crown"></span></div>
-        <span class="status-pill">Activo</span>
+        <span class="status-pill" id="planStatusPill">Activo</span>
       </div>
-      <h2 class="premium-heading">Plan Premium</h2>
-      <p>Renovación: 15 jun 2026. Disfrutá prioridad en el feed, más publicaciones y mejor visibilidad.</p>
-      <a class="btn btn-coral" href="premium-checkout.html">Administrar plan</a>
+      <h2 class="premium-heading" id="planPanelTitle">Plan Premium</h2>
+      <p id="planPanelText">Renovación: 15 jun 2026. Disfrutá prioridad en el feed, más publicaciones y mejor visibilidad.</p>
+      <a class="btn btn-coral upgrade-only" href="premium-checkout.html">Mejorar plan</a>
+      <button class="btn btn-ghost-premium premium-only" type="button" id="cancelRenewalBtn" onclick="cancelPremiumRenewal()">Cancelar renovación mensual</button>
+      <p class="plan-cancel-note premium-only" id="planCancelNote">Si cancelás, Premium seguirá activo hasta terminar el mes pagado.</p>
     </article>
 
     <article class="side-panel">
@@ -1153,7 +1190,7 @@ html.tm-dark .post-options .report-action:hover {
 </div>
 
 <script>
-const posts = [
+let posts = [
   { id:3, name:'Canasta tejida a mano en fibra', img:'https://images.unsplash.com/photo-1606722590583-6951b5ea92ad?w=600&h=600&fit=crop&q=80', price:'₡18.000', likes:42, saves:11 },
   { id:101, name:'Cuadros decorativos artesanales', img:'https://images.unsplash.com/photo-1513519245088-0e12902e5a38?w=600&h=600&fit=crop&q=80', price:'₡22.500', likes:35, saves:7 },
   { id:102, name:'Taza personalizada minimalista', img:'https://images.unsplash.com/photo-1514228742587-6b1558fcca3d?w=600&h=600&fit=crop&q=80', price:'₡9.000', likes:28, saves:5 },
@@ -1164,6 +1201,9 @@ const posts = [
   { id:106, name:'Jarrón hecho a mano', img:'https://images.unsplash.com/photo-1610701596007-11502861dcfa?w=600&h=600&fit=crop&q=80', price:'₡24.000', likes:16, saves:2 },
   { id:107, name:'Regalo artesanal personalizado', img:'https://images.unsplash.com/photo-1511988617509-a57c8a288659?w=600&h=600&fit=crop&q=80', price:'₡11.000', likes:44, saves:12 }
 ];
+let activeDrawerType = 'profile';
+let currentBusiness = null;
+let editingPostId = null;
 
 const NOTIF_READ_KEY = 'tuyomall_dashboard_notifications_read_v1';
 const notifications = [
@@ -1199,6 +1239,67 @@ const businessProfileStatus = {
   socialLinks: true,
   firstProduct: false
 };
+
+const currentPlan = window.TUYOMALL_PLAN || {
+  codigo: 'gratis',
+  nombre: 'Plan Gratis',
+  isPremium: false,
+  renovacionCancelada: false,
+  expiraEn: null,
+  renovacionTexto: 'Activa Premium para destacar en el feed'
+};
+
+function applyBusinessProfile(business) {
+  if (!business) return;
+  currentBusiness = business;
+  const title = document.querySelector('.profile-title');
+  const meta = document.querySelector('.profile-meta');
+  const bio = document.querySelector('.bio');
+  const avatar = document.querySelector('.biz-avatar');
+  const chip = document.querySelector('.profile-chip span');
+  const chipImg = document.querySelector('.profile-chip img');
+
+  if (title) title.textContent = business.name || 'Mi negocio';
+  if (chip) chip.textContent = business.name || 'Mi negocio';
+  if (avatar && business.avatar) avatar.src = business.avatar;
+  if (chipImg && business.avatar) chipImg.src = business.avatar;
+  if (meta) {
+    meta.innerHTML = `
+      <span><span class="ti ti-map-pin"></span> ${business.province || ''}, ${business.country || ''}</span>
+      <span class="meta-pill"><span class="ti ti-building-store"></span> ${business.type || 'Negocio local'}</span>
+    `;
+  }
+  if (bio) {
+    bio.innerHTML = `<strong>${business.name || 'Este negocio'}</strong> ${business.description || 'Aun no ha agregado una descripcion publica.'}`;
+  }
+}
+
+function esc(value) {
+  return String(value ?? '')
+    .replaceAll('&', '&amp;')
+    .replaceAll('"', '&quot;')
+    .replaceAll('<', '&lt;')
+    .replaceAll('>', '&gt;');
+}
+
+function categorySlug(value) {
+  return String(value || '')
+    .toLowerCase()
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-|-$/g, '');
+}
+
+async function loadBusinessProfile() {
+  try {
+    const response = await fetch('api/business.php', { headers: { 'Accept': 'application/json' } });
+    const result = await response.json();
+    if (result.ok) applyBusinessProfile(result.business);
+  } catch (_) {
+    // Si la BD no esta configurada localmente, se mantiene el demo visual.
+  }
+}
 
 const profileChecklistItems = [
   {
@@ -1247,6 +1348,70 @@ function renderProfileCompletion() {
   }).join('');
 }
 
+function applyPlanState() {
+  const isPremium = Boolean(currentPlan.isPremium);
+  document.body.classList.toggle('plan-premium', isPremium);
+  document.body.classList.toggle('plan-free', !isPremium);
+
+  const status = document.getElementById('planStatusPill');
+  const title = document.getElementById('planPanelTitle');
+  const text = document.getElementById('planPanelText');
+  const cancelBtn = document.getElementById('cancelRenewalBtn');
+  const cancelNote = document.getElementById('planCancelNote');
+
+  if (!status || !title || !text) return;
+
+  if (isPremium) {
+    status.textContent = currentPlan.renovacionCancelada ? 'No renueva' : 'Activo';
+    title.textContent = 'Plan Premium';
+    text.textContent = `${currentPlan.renovacionTexto}. Disfrutá prioridad en el feed, productos ilimitados y estadísticas avanzadas.`;
+    if (cancelBtn) cancelBtn.disabled = Boolean(currentPlan.renovacionCancelada);
+    if (cancelBtn && currentPlan.renovacionCancelada) cancelBtn.textContent = 'Renovación cancelada';
+    if (cancelNote && currentPlan.renovacionCancelada) {
+      cancelNote.textContent = `Premium seguirá activo hasta ${currentPlan.expiraEn || 'terminar el periodo pagado'}.`;
+    }
+    return;
+  }
+
+  status.textContent = 'Gratis';
+  title.textContent = 'Plan Gratis';
+  text.textContent = 'Tenés hasta 10 productos activos, contacto directo y estadísticas básicas. Activá Premium cuando querás más visibilidad.';
+}
+
+async function cancelPremiumRenewal() {
+  if (!confirm('¿Querés cancelar la renovación mensual? Tu Premium seguirá activo hasta terminar el mes pagado.')) return;
+
+  const button = document.getElementById('cancelRenewalBtn');
+  if (button) {
+    button.disabled = true;
+    button.textContent = 'Cancelando...';
+  }
+
+  try {
+    const response = await fetch('billing/cancel-premium.php', {
+      method: 'POST',
+      headers: { 'Accept': 'application/json' }
+    });
+    const result = await response.json();
+
+    if (!result.ok) {
+      throw new Error(result.message || 'No se pudo cancelar la renovación.');
+    }
+
+    currentPlan.renovacionCancelada = true;
+    currentPlan.expiraEn = result.expira_en || currentPlan.expiraEn;
+    currentPlan.renovacionTexto = `Activo hasta: ${currentPlan.expiraEn || 'fin del periodo'}`;
+    applyPlanState();
+    alert(result.message || 'Renovación cancelada. Premium sigue activo hasta terminar el periodo pagado.');
+  } catch (error) {
+    alert(error.message || 'No se pudo cancelar la renovación.');
+    if (button) {
+      button.disabled = false;
+      button.textContent = 'Cancelar renovación mensual';
+    }
+  }
+}
+
 function readNotifications() {
   return new Set(JSON.parse(localStorage.getItem(NOTIF_READ_KEY) || '[]'));
 }
@@ -1290,28 +1455,59 @@ function markNotificationsRead() {
 }
 
 function renderPosts() {
-  document.getElementById('postsGrid').innerHTML = posts.map(p => `
-    <article class="post-card">
-      <img src="${p.img}" alt="Publicación de producto">
+  const grid = document.getElementById('postsGrid');
+  if (!posts.length) {
+    grid.innerHTML = `
+      <div class="empty-panel" style="grid-column:1/-1">
+        <span class="ti ti-square-plus"></span>
+        <h3>Aun no hay publicaciones</h3>
+        <p>Crea tu primer producto o servicio para empezar a aparecer en TuyoMall.</p>
+      </div>
+    `;
+    return;
+  }
+
+  grid.innerHTML = posts.map(p => {
+    const isPaused = p.status === 'pausado';
+    return `
+    <article class="post-card ${isPaused ? 'is-paused' : ''}">
+      <img src="${esc(p.img)}" alt="${esc(p.name || 'Publicación de producto')}" loading="lazy">
+      ${isPaused ? '<span class="status-chip">Pausada</span>' : ''}
       <button class="post-menu" type="button" onclick="togglePostMenu(event, ${p.id}, this)" title="Más opciones">
         <span class="ti ti-dots"></span>
       </button>
       <div class="post-options">
         <button type="button" onclick="viewPostDetails(${p.id})"><span class="ti ti-eye"></span> Ver detalles</button>
-        <button type="button" onclick="viewBusinessProfile(${p.id})"><span class="ti ti-building-store"></span> Ver perfil del negocio</button>
+        <button type="button" onclick="editProduct(${p.id})"><span class="ti ti-pencil"></span> Editar publicación</button>
+        <button type="button" onclick="setProductStatus(${p.id}, '${isPaused ? 'activate' : 'pause'}')"><span class="ti ${isPaused ? 'ti-player-play' : 'ti-player-pause'}"></span> ${isPaused ? 'Activar' : 'Pausar'}</button>
         <button type="button" onclick="sharePost(${p.id})"><span class="ti ti-share-3"></span> Compartir</button>
         <button type="button" onclick="copyPostLink(${p.id})"><span class="ti ti-link"></span> Copiar enlace</button>
-        <button type="button" class="report-action" onclick="reportPost(${p.id})"><span class="ti ti-flag"></span> Reportar</button>
+        <button type="button" class="report-action" onclick="deleteProduct(${p.id})"><span class="ti ti-trash"></span> Eliminar</button>
       </div>
       <div class="post-overlay">
         <div class="post-stats">
-          <span><span class="ti ti-heart-filled"></span>${p.likes}</span>
-          <span><span class="ti ti-bookmark"></span>${p.saves}</span>
+          <span><span class="ti ti-heart-filled"></span>${p.likes || 0}</span>
+          <span><span class="ti ti-bookmark"></span>${p.saves || 0}</span>
         </div>
-        <span class="price-chip">${p.price}</span>
+        <span class="price-chip">${esc(p.price || '')}</span>
       </div>
     </article>
-  `).join('');
+  `;
+  }).join('');
+}
+
+async function loadBusinessProducts() {
+  try {
+    const response = await fetch('api/products.php?mine=1', { headers: { 'Accept': 'application/json' } });
+    const result = await response.json();
+    if (!result.ok) return;
+    posts = result.products || [];
+    businessProfileStatus.firstProduct = posts.length > 0;
+    renderProfileCompletion();
+    renderPosts();
+  } catch (error) {
+    renderPosts();
+  }
 }
 
 function closePostMenus() {
@@ -1376,6 +1572,59 @@ function reportPost(id) {
   alert(`Gracias. Revisaremos la publicación "${post.name}".`);
 }
 
+function editProduct(id) {
+  closePostMenus();
+  const post = getPost(id);
+  if (!post) return;
+  editingPostId = id;
+  openDrawer('post');
+}
+
+function openNewPostDrawer() {
+  editingPostId = null;
+  openDrawer('post');
+}
+
+async function sendProductAction(id, action) {
+  const data = new FormData();
+  data.append('action', action);
+  data.append('producto_id', id);
+
+  const response = await fetch('api/products.php', {
+    method: 'POST',
+    body: data,
+    headers: { 'Accept': 'application/json' }
+  });
+  const result = await response.json();
+  if (!result.ok) throw new Error(result.message || 'No se pudo actualizar la publicación.');
+  await loadBusinessProducts();
+  return result;
+}
+
+async function setProductStatus(id, action) {
+  closePostMenus();
+  try {
+    const result = await sendProductAction(id, action);
+    alert(result.message || 'Publicación actualizada correctamente.');
+  } catch (error) {
+    alert(error.message || 'No se pudo actualizar la publicación.');
+  }
+}
+
+async function deleteProduct(id) {
+  closePostMenus();
+  const post = getPost(id);
+  if (!post) return;
+  if (!confirm(`¿Eliminar la publicación "${post.name}"? Esta acción no se puede deshacer.`)) return;
+
+  try {
+    const result = await sendProductAction(id, 'delete');
+    alert(result.message || 'Publicación eliminada correctamente.');
+  } catch (error) {
+    alert(error.message || 'No se pudo eliminar la publicación.');
+  }
+}
+
 function setTab(name, btn) {
   document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
   btn.classList.add('active');
@@ -1386,13 +1635,17 @@ function setTab(name, btn) {
 const drawerTemplates = {
   profile: {
     title: 'Editar perfil del negocio',
-    fields: `
-      <div class="field full"><label>Nombre del negocio</label><input value="Artesanías La Ceiba"></div>
-      <div class="field"><label>Categoría</label><select><option>Artesanías & Hogar</option><option>Alimentos</option><option>Servicios</option></select></div>
-      <div class="field"><label>Provincia</label><input value="Cartago"></div>
-      <div class="field full"><label>Descripción</label><textarea>Creamos piezas artesanales únicas con materiales naturales de nuestra tierra.</textarea></div>
-      <div class="field"><label>WhatsApp</label><input value="+506 8888-1234"></div>
-      <div class="field"><label>Instagram</label><input value="@artesanias_laceiba"></div>
+    fields: () => `
+      <div class="field full"><label>Nombre del negocio</label><input name="nombre_negocio" value="${esc(currentBusiness?.name || 'Artesanías La Ceiba')}" required></div>
+      <div class="field"><label>Tipo</label><input name="tipo" value="${esc(currentBusiness?.type || 'Artesanías & Hogar')}"></div>
+      <div class="field"><label>País</label><input name="pais" value="${esc(currentBusiness?.country || 'Costa Rica')}" required></div>
+      <div class="field"><label>Provincia / Estado</label><input name="provincia" value="${esc(currentBusiness?.province || 'Cartago')}" required></div>
+      <div class="field full"><label>Descripción</label><textarea name="descripcion">${esc(currentBusiness?.description || 'Creamos piezas artesanales únicas con materiales naturales de nuestra tierra.')}</textarea></div>
+      <div class="field"><label>WhatsApp</label><input name="whatsapp" value="${esc(currentBusiness?.whatsapp || '+506 8888-1234')}" required></div>
+      <div class="field"><label>Correo</label><input name="correo" type="email" value="${esc(currentBusiness?.email || '')}"></div>
+      <div class="field"><label>Horario</label><input name="horario" value="${esc(currentBusiness?.schedule || 'Lun - Sáb 8:00 - 18:00')}"></div>
+      <div class="field"><label>Avatar</label><input name="avatar" type="file" accept="image/*"></div>
+      <div class="field"><label>Portada</label><input name="portada" type="file" accept="image/*"></div>
     `
   },
   contact: {
@@ -1408,14 +1661,22 @@ const drawerTemplates = {
     `
   },
   post: {
-    title: 'Nueva publicación',
-    fields: `
-      <div class="field full"><label>Nombre del producto o servicio</label><input placeholder="Ej: Canasta tejida a mano"></div>
-      <div class="field"><label>Precio</label><input placeholder="₡18.000"></div>
-      <div class="field"><label>Tipo</label><select><option>Producto</option><option>Servicio</option></select></div>
-      <div class="field full"><label>Descripción</label><textarea placeholder="Contá qué hace especial esta publicación"></textarea></div>
-      <div class="field full"><label>Fotos</label><input type="file" accept="image/*" multiple></div>
-    `
+    title: () => editingPostId ? 'Editar publicación' : 'Nueva publicación',
+    fields: () => {
+      const post = editingPostId ? getPost(editingPostId) : null;
+      const type = String(post?.type || 'Producto').toLowerCase();
+      const category = categorySlug(post?.cat || '');
+      return `
+      ${editingPostId ? `<input type="hidden" name="action" value="update"><input type="hidden" name="producto_id" value="${editingPostId}">` : ''}
+      <div class="field full"><label>Nombre del producto o servicio</label><input name="nombre" value="${esc(post?.name || '')}" placeholder="Ej: Canasta tejida a mano" required></div>
+      <div class="field"><label>Precio</label><input name="precio" value="${esc(post?.price_raw || post?.price || '')}" placeholder="₡18.000"></div>
+      <div class="field"><label>Precio anterior <span class="upgrade-only">(Premium)</span></label><input name="precio_anterior" value="${esc(post?.old_price_raw || '')}" placeholder="₡22.000"></div>
+      <div class="field"><label>Tipo</label><select name="tipo"><option value="producto" ${type !== 'servicio' ? 'selected' : ''}>Producto</option><option value="servicio" ${type === 'servicio' ? 'selected' : ''}>Servicio</option></select></div>
+      <div class="field"><label>Categoría</label><select name="categoria"><option value="">Sin categoría</option><option value="alimentos" ${category === 'alimentos' ? 'selected' : ''}>Alimentos</option><option value="arte" ${category === 'arte' ? 'selected' : ''}>Arte</option><option value="moda" ${category === 'moda' ? 'selected' : ''}>Moda</option><option value="servicios" ${category === 'servicios' ? 'selected' : ''}>Servicios</option><option value="tecnologia" ${category === 'tecnologia' ? 'selected' : ''}>Tecnología</option><option value="hogar" ${category === 'hogar' ? 'selected' : ''}>Hogar</option><option value="belleza" ${category === 'belleza' ? 'selected' : ''}>Belleza</option></select></div>
+      <div class="field full"><label>Descripción</label><textarea name="descripcion" placeholder="Contá qué hace especial esta publicación">${esc(post?.description || '')}</textarea></div>
+      <div class="field full"><label>Fotos</label><input name="imagenes[]" type="file" accept="image/*" multiple></div>
+    `;
+    }
   },
   highlight: {
     title: 'Nuevo destacado',
@@ -1428,8 +1689,10 @@ const drawerTemplates = {
 
 function openDrawer(type) {
   const data = drawerTemplates[type] || drawerTemplates.profile;
-  document.getElementById('drawerTitle').textContent = data.title;
-  document.getElementById('drawerContent').innerHTML = data.fields;
+  activeDrawerType = type;
+  if (type !== 'post') editingPostId = null;
+  document.getElementById('drawerTitle').textContent = typeof data.title === 'function' ? data.title() : data.title;
+  document.getElementById('drawerContent').innerHTML = typeof data.fields === 'function' ? data.fields() : data.fields;
   document.getElementById('drawer').classList.add('open');
   document.body.style.overflow = 'hidden';
 }
@@ -1450,8 +1713,72 @@ document.addEventListener('click', () => {
 });
 document.getElementById('profileForm').addEventListener('submit', e => {
   e.preventDefault();
+  if (activeDrawerType === 'post') {
+    saveProduct(e.currentTarget);
+    return;
+  }
+  if (activeDrawerType === 'profile') {
+    saveBusinessProfile(e.currentTarget);
+    return;
+  }
   closeDrawer();
 });
+
+async function saveBusinessProfile(form) {
+  const button = form.querySelector('button[type="submit"]');
+  const originalText = button.textContent;
+  button.disabled = true;
+  button.textContent = 'Guardando...';
+
+  try {
+    const data = new FormData(form);
+    const response = await fetch('api/business.php', {
+      method: 'POST',
+      body: data,
+      headers: { 'Accept': 'application/json' }
+    });
+    const result = await response.json();
+    if (!result.ok) throw new Error(result.message || 'No se pudo guardar el perfil.');
+    applyBusinessProfile(result.business);
+    closeDrawer();
+    alert(result.message || 'Perfil actualizado correctamente.');
+  } catch (error) {
+    alert(error.message || 'No se pudo guardar el perfil.');
+  } finally {
+    button.disabled = false;
+    button.textContent = originalText;
+  }
+}
+
+async function saveProduct(form) {
+  const button = form.querySelector('button[type="submit"]');
+  const originalText = button.textContent;
+  button.disabled = true;
+  button.textContent = 'Guardando...';
+
+  try {
+    const data = new FormData(form);
+    const response = await fetch('api/products.php', {
+      method: 'POST',
+      body: data,
+      headers: { 'Accept': 'application/json' }
+    });
+    const result = await response.json();
+
+    if (!result.ok) {
+      throw new Error(result.message || 'No se pudo guardar la publicación.');
+    }
+
+    closeDrawer();
+    await loadBusinessProducts();
+    alert(result.message || 'Publicación creada correctamente.');
+  } catch (error) {
+    alert(error.message || 'No se pudo guardar la publicación.');
+  } finally {
+    button.disabled = false;
+    button.textContent = originalText;
+  }
+}
 document.addEventListener('keydown', e => {
   if (e.key === 'Escape') {
     closeDrawer();
@@ -1462,7 +1789,9 @@ document.addEventListener('keydown', e => {
 
 renderNotifications();
 renderProfileCompletion();
-renderPosts();
+applyPlanState();
+loadBusinessProfile();
+loadBusinessProducts();
 </script>
 <script src="assets/js/business-profile.js"></script>
 </body>

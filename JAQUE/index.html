@@ -544,6 +544,64 @@ body {
   color: white;
 }
 
+html.tm-dark .browser-mockup {
+  background: #101A28;
+  border: 1px solid rgba(255,255,255,0.08);
+  box-shadow: 0 28px 70px rgba(0,0,0,0.34), 0 0 0 1px rgba(255,255,255,0.04);
+}
+
+html.tm-dark .browser-bar {
+  background: #182332;
+  border-bottom-color: rgba(255,255,255,0.08);
+}
+
+html.tm-dark .browser-url {
+  background: #0B111C;
+  border-color: rgba(255,255,255,0.08);
+  color: rgba(226,232,240,0.66);
+}
+
+html.tm-dark .mkp-topbar {
+  background: #101A28;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+
+html.tm-dark .mkp-search {
+  background: rgba(255,255,255,0.08);
+  color: rgba(226,232,240,0.64);
+}
+
+html.tm-dark .mkp-cat {
+  background: #162131;
+  border-color: rgba(255,255,255,0.1);
+  color: rgba(226,232,240,0.78);
+}
+
+html.tm-dark .mkp-cat.active {
+  background: var(--coral);
+  color: white;
+  border-color: var(--coral);
+}
+
+html.tm-dark .mkp-card {
+  background: #121D2C;
+  border-color: rgba(255,255,255,0.08);
+  box-shadow: 0 12px 28px rgba(0,0,0,0.2);
+}
+
+html.tm-dark .mkp-img {
+  background: #0B111C;
+}
+
+html.tm-dark .mkp-price,
+html.tm-dark .mkp-title {
+  color: #F8FAFC;
+}
+
+html.tm-dark .mkp-seller {
+  color: rgba(203,213,225,0.68);
+}
+
 /* Floating chips around phone */
 .float-chip {
   position: absolute;
@@ -1532,7 +1590,7 @@ footer {
 <nav class="nav">
  <a href="index.html" class="nav-logo">
     <div class="logo-mark">
-        <img src="assets/img/Logo_TuyoMall.2.png" alt="Logo TuyoMall" width="70" height="70">
+        <img src="assets/img/logo-tuyomall-nav.png" alt="Logo TuyoMall" width="70" height="70">
     </div>
 
     <span class="logo-text">Tuyo<span class="logo-mall-wrap"><span>Mall</span>
@@ -1654,7 +1712,7 @@ footer {
 
         <div class="mkp-card">
           <div class="mkp-card-inner">
-            <img class="mkp-img" src="https://images.unsplash.com/photo-1513104890138-7c749659a591?w=300&h=160&fit=crop&q=80" alt="Pizza artesanal">
+            <img class="mkp-img" src="https://images.unsplash.com/photo-1513104890138-7c749659a591?w=300&h=160&fit=crop&q=80" alt="Pizza artesanal" loading="lazy">
             <div class="mkp-badge">⭐ PRO</div>
           </div>
           <div class="mkp-info">
@@ -1669,7 +1727,7 @@ footer {
 
         <div class="mkp-card">
           <div class="mkp-card-inner">
-            <img class="mkp-img" src="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=300&h=160&fit=crop&q=80" alt="Vestido">
+            <img class="mkp-img" src="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=300&h=160&fit=crop&q=80" alt="Vestido" loading="lazy">
           </div>
           <div class="mkp-info">
             <div class="mkp-price">₡18.000</div>
@@ -1683,7 +1741,7 @@ footer {
 
         <div class="mkp-card">
           <div class="mkp-card-inner">
-            <img class="mkp-img" src="https://images.unsplash.com/photo-1606722590583-6951b5ea92ad?w=300&h=160&fit=crop&q=80" alt="Artesania">
+            <img class="mkp-img" src="https://images.unsplash.com/photo-1606722590583-6951b5ea92ad?w=300&h=160&fit=crop&q=80" alt="Artesania" loading="lazy">
             <div class="mkp-badge">⭐ PRO</div>
           </div>
           <div class="mkp-info">
@@ -1698,7 +1756,7 @@ footer {
 
         <div class="mkp-card">
           <div class="mkp-card-inner">
-            <img class="mkp-img" src="https://images.unsplash.com/photo-1447933601403-0c6688de566e?w=300&h=160&fit=crop&q=80" alt="Cafe">
+            <img class="mkp-img" src="https://images.unsplash.com/photo-1447933601403-0c6688de566e?w=300&h=160&fit=crop&q=80" alt="Cafe" loading="lazy">
           </div>
           <div class="mkp-info">
             <div class="mkp-price">₡2.800</div>
@@ -1712,7 +1770,7 @@ footer {
 
         <div class="mkp-card">
           <div class="mkp-card-inner">
-            <img class="mkp-img" src="https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?w=300&h=160&fit=crop&q=80" alt="Joyeria">
+            <img class="mkp-img" src="https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?w=300&h=160&fit=crop&q=80" alt="Joyeria" loading="lazy">
           </div>
           <div class="mkp-info">
             <div class="mkp-price">₡22.000</div>
@@ -1726,7 +1784,7 @@ footer {
 
         <div class="mkp-card">
           <div class="mkp-card-inner">
-            <img class="mkp-img" src="https://images.unsplash.com/photo-1571115177098-24ec42ed204d?w=300&h=160&fit=crop&q=80" alt="Reposteria">
+            <img class="mkp-img" src="https://images.unsplash.com/photo-1571115177098-24ec42ed204d?w=300&h=160&fit=crop&q=80" alt="Reposteria" loading="lazy">
             <div class="mkp-badge">⭐ PRO</div>
           </div>
           <div class="mkp-info">
@@ -1919,7 +1977,7 @@ footer {
     <div class="footer-brand">
       <div class="footer-logo">
          <div class="logo-mark">
-        <img src="assets/img/Logo_TuyoMall.2.png" alt="Logo TuyoMall" width="70" height="70">
+        <img src="assets/img/logo-tuyomall-nav.png" alt="Logo TuyoMall" width="70" height="70">
     </div>
         <span class="footer-logo-text">Tuyo<span>Mall</span></span>
       </div>

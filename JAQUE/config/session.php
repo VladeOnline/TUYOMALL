@@ -27,6 +27,12 @@ function login_user(array $user): void
     $_SESSION['user_role'] = $user['rol'];
     $_SESSION['user_name'] = $user['nombre'];
     $_SESSION['user_email'] = $user['email'];
+
+    if (isset($user['business_id'])) {
+        $_SESSION['business_id'] = (int) $user['business_id'];
+    } else {
+        unset($_SESSION['business_id']);
+    }
 }
 
 function require_role(string $role, string $redirect = 'acceso-cliente.html'): void

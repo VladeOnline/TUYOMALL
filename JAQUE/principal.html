@@ -940,7 +940,7 @@ select {
 <nav class="topnav">
   <a href="index.html" class="nav-logo">
     <div class="nav-logo-mark">
-      <img src="assets/img/logo-tuyomall.png" alt="Logo TuyoMall">
+      <img src="assets/img/logo-tuyomall-nav.png" alt="Logo TuyoMall">
     </div>
     <div class="nav-logo-text">
       <span class="logo-tuyo">Tuyo</span><span class="logo-mall-wrap">
@@ -1288,7 +1288,7 @@ function catIcon(cat) {
   return `<span class="ti ${catIconMap[cat]||'ti-package'}" style="font-size:20px;color:var(--coral)"></span>`;
 }
 
-const allProducts = [
+let allProducts = [
   { id:1,  name:'Pizza artesanal al horno de leña',   price:'₡4.500',  cat:'Alimentos', prov:'San José',  type:'Producto', seller:'Pizzas Don Tavo',    sellerColor:'#FF6B47', sellerInit:'P', premium:true,  img:'https://images.unsplash.com/photo-1513104890138-7c749659a591?w=400&h=300&fit=crop&q=80', likes:24 },
   { id:2,  name:'Vestido boho estampado a mano',      price:'₡18.000', cat:'Moda',      prov:'Alajuela',  type:'Producto', seller:'Moda Pura Vida',      sellerColor:'#C084FC', sellerInit:'M', premium:false, img:'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=400&h=300&fit=crop&q=80', likes:11 },
   { id:3,  name:'Canasta tejida a mano en fibra',     price:'₡12.000', cat:'Arte',      prov:'Cartago',   type:'Producto', seller:'Artesanías La Ceiba', sellerColor:'#10B981', sellerInit:'A', premium:true,  img:'https://images.unsplash.com/photo-1606722590583-6951b5ea92ad?w=400&h=300&fit=crop&q=80', likes:38 },
@@ -1310,6 +1310,31 @@ let likedIds=new Set(JSON.parse(localStorage.getItem(LIKED_POSTS_KEY) || '[]')),
 
 function persistLikedPosts() {
   localStorage.setItem(LIKED_POSTS_KEY, JSON.stringify([...likedIds]));
+}
+
+async function loadPublicProducts() {
+  try {
+    const response = await fetch('api/products.php', { headers: { 'Accept': 'application/json' } });
+    const result = await response.json();
+    if (!result.ok || !Array.isArray(result.products) || result.products.length === 0) {
+      return;
+    }
+
+    allProducts = result.products.map(product => ({
+      ...product,
+      cat: product.cat || 'Servicios',
+      prov: product.prov || 'Toda LATAM',
+      seller: product.seller || 'TuyoMall',
+      sellerInit: product.sellerInit || 'T',
+      sellerColor: product.sellerColor || '#FF6B47',
+      likes: Number(product.likes || 0),
+      premium: Boolean(product.premium),
+      price: product.price || '',
+      type: product.type || 'Producto'
+    }));
+  } catch (_) {
+    // Si la BD aun no esta configurada localmente, se mantienen los productos de ejemplo.
+  }
 }
 
 function getFiltered() {
@@ -1337,7 +1362,7 @@ function storedBusinessAvatar() {
 function sellerAvatarMarkup(p) {
   const avatar = p.seller === 'Artesanías La Ceiba' ? storedBusinessAvatar() : null;
   if (avatar) {
-    return `<div class="prod-avatar" style="background:${p.sellerColor}"><img src="${avatar}" alt="${p.seller}"></div>`;
+    return `<div class="prod-avatar" style="background:${p.sellerColor}"><img src="${avatar}" alt="${p.seller}" loading="lazy"></div>`;
   }
   return `<div class="prod-avatar" style="background:${p.sellerColor}">${p.sellerInit}</div>`;
 }
@@ -1602,28 +1627,54 @@ function reportPost(id) {
   alert(`Gracias. Revisaremos la publicación "${p.name}".`);
 }
 
-function toggleLike(id,btn) {
-  const p=allProducts.find(x=>x.id===id); if(!p) return;
-  if(likedIds.has(id)) {
-    likedIds.delete(id); btn.classList.remove('liked');
-    btn.querySelector('.ti').className='ti ti-heart';
-    btn.querySelector('.action-like-count').textContent=p.likes;
-  } else {
-    likedIds.add(id); btn.classList.add('liked');
-    btn.querySelector('.ti').className='ti ti-heart-filled';
-    btn.querySelector('.action-like-count').textContent=p.likes+1;
-  }
-  persistLikedPosts();
+async function saveInteraction(id, action) {
+  const data = new FormData();
+  data.append('producto_id', id);
+  data.append('accion', action);
+  const response = await fetch('api/interactions.php', {
+    method: 'POST',
+    body: data,
+    headers: { 'Accept': 'application/json' }
+  });
+  return response.json();
 }
-function toggleSave(id,btn) {
-  if(savedIds.has(id)) {
-    savedIds.delete(id); btn.classList.remove('saved');
-    btn.querySelector('.ti').className='ti ti-bookmark';
-  } else {
-    savedIds.add(id); btn.classList.add('saved');
-    btn.querySelector('.ti').className='ti ti-bookmark-filled';
+
+async function toggleLike(id,btn) {
+  const p=allProducts.find(x=>x.id===id); if(!p) return;
+
+  try {
+    const result = await saveInteraction(id, 'like');
+    if (!result.ok) throw new Error(result.message || 'No se pudo guardar el like.');
+    p.likes = Number(result.count || p.likes);
+    if(result.active) {
+      likedIds.add(id); btn.classList.add('liked');
+      btn.querySelector('.ti').className='ti ti-heart-filled';
+    } else {
+      likedIds.delete(id); btn.classList.remove('liked');
+      btn.querySelector('.ti').className='ti ti-heart';
+    }
+    btn.querySelector('.action-like-count').textContent=p.likes;
+    persistLikedPosts();
+  } catch (error) {
+    alert(error.message || 'Inicia sesión como cliente para dar like.');
   }
-  document.getElementById('savedCount').textContent=savedIds.size;
+}
+
+async function toggleSave(id,btn) {
+  try {
+    const result = await saveInteraction(id, 'guardar');
+    if (!result.ok) throw new Error(result.message || 'No se pudo guardar la publicación.');
+    if(result.active) {
+      savedIds.add(id); btn.classList.add('saved');
+      btn.querySelector('.ti').className='ti ti-bookmark-filled';
+    } else {
+      savedIds.delete(id); btn.classList.remove('saved');
+      btn.querySelector('.ti').className='ti ti-bookmark';
+    }
+    document.getElementById('savedCount').textContent=savedIds.size;
+  } catch (error) {
+    alert(error.message || 'Inicia sesión como cliente para guardar.');
+  }
 }
 
 function openUpload() { document.getElementById('uploadModal').classList.add('open'); document.body.style.overflow='hidden'; }
@@ -1725,8 +1776,13 @@ document.addEventListener('keydown',e=>{
 });
 
 initDraggableFab();
-allProducts.sort((a,b)=>b.premium-a.premium);
-renderProducts();
+async function bootFeed() {
+  await loadPublicProducts();
+  allProducts.sort((a,b)=>b.premium-a.premium);
+  renderProducts();
+}
+
+bootFeed();
 window.addEventListener('storage', (event) => {
   if (event.key === 'tuyomall_business_avatar_v1') renderProducts();
 });
