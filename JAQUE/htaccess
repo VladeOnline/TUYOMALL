@@ -1,2 +1,4 @@
 RewriteEngine On
+AddType application/manifest+json .webmanifest
+RewriteRule ^dashboard-emprendedor/?$ /dashboard-emprendedor.php [L]
 RewriteRule ^perfil/.*$ /perfil-publico.html [L]

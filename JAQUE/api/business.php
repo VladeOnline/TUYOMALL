@@ -22,14 +22,21 @@ function public_business_payload(PDO $pdo, array $business): array
     $stmt = $pdo->prepare(
         "SELECT
             COUNT(*) AS publicaciones,
-            COALESCE((SELECT COUNT(*) FROM guardados g INNER JOIN productos p2 ON p2.id = g.producto_id WHERE p2.negocio_id = :negocio_id), 0) AS guardados,
-            COALESCE((SELECT COUNT(*) FROM metricas_eventos m WHERE m.negocio_id = :negocio_id AND m.evento = 'vista'), 0) AS vistas,
-            COALESCE((SELECT ROUND(AVG(calificacion), 1) FROM resenas r WHERE r.negocio_id = :negocio_id AND r.estado = 'aprobada'), 0) AS calificacion
+            COALESCE((SELECT COUNT(*) FROM guardados g INNER JOIN productos p2 ON p2.id = g.producto_id WHERE p2.negocio_id = :guardados_negocio_id), 0) AS guardados,
+            COALESCE((SELECT COUNT(*) FROM metricas_eventos m WHERE m.negocio_id = :vistas_negocio_id AND m.evento = 'vista'), 0) AS vistas,
+            COALESCE((SELECT COUNT(*) FROM metricas_eventos m2 WHERE m2.negocio_id = :whatsapp_negocio_id AND m2.evento = 'click_whatsapp'), 0) AS whatsapp,
+            COALESCE((SELECT ROUND(AVG(calificacion), 1) FROM resenas r WHERE r.negocio_id = :rating_negocio_id AND r.estado = 'aprobada'), 0) AS calificacion
          FROM productos p
-         WHERE p.negocio_id = :negocio_id
+         WHERE p.negocio_id = :productos_negocio_id
            AND p.estado = 'activo'"
     );
-    $stmt->execute(['negocio_id' => $businessId]);
+    $stmt->execute([
+        'guardados_negocio_id' => $businessId,
+        'vistas_negocio_id' => $businessId,
+        'whatsapp_negocio_id' => $businessId,
+        'rating_negocio_id' => $businessId,
+        'productos_negocio_id' => $businessId,
+    ]);
     $stats = $stmt->fetch() ?: [];
 
     return [
@@ -45,7 +52,7 @@ function public_business_payload(PDO $pdo, array $business): array
         'province' => $business['provincia'],
         'address' => $business['direccion'],
         'schedule' => $business['horario'],
-        'avatar' => $business['avatar_url'] ?: 'assets/img/logo-tuyomall-nav.png',
+        'avatar' => $business['avatar_url'] ?: '',
         'cover' => $business['portada_url'],
         'plan' => $plan['codigo'] ?? 'gratis',
         'isPremium' => ($plan['codigo'] ?? 'gratis') === 'premium',
@@ -54,6 +61,7 @@ function public_business_payload(PDO $pdo, array $business): array
             'posts' => (int) ($stats['publicaciones'] ?? 0),
             'views' => (int) ($stats['vistas'] ?? 0),
             'saves' => (int) ($stats['guardados'] ?? 0),
+            'whatsapp' => (int) ($stats['whatsapp'] ?? 0),
             'rating' => (float) ($stats['calificacion'] ?? 0),
         ],
     ];

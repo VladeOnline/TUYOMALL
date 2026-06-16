@@ -1,6 +1,12 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="es">
 <head>
+<link rel="icon" href="/favicon.ico?v=3" sizes="any">
+<link rel="icon" type="image/png" sizes="48x48" href="/assets/img/favicon-48.png?v=3">
+<link rel="icon" type="image/png" sizes="96x96" href="/assets/img/favicon-96.png?v=3">
+<link rel="icon" type="image/png" sizes="144x144" href="/assets/img/favicon-144.png?v=3">
+<link rel="apple-touch-icon" sizes="180x180" href="/assets/img/favicon-180.png?v=3">
+<link rel="manifest" href="/site.webmanifest?v=3">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>TuyoMall — Acceso Emprendedor</title>
@@ -243,6 +249,58 @@ select, textarea {
   transition: border-color 0.2s, box-shadow 0.2s;
   appearance: none;
 }
+
+.phone-wrap {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: center;
+  border: 1.5px solid var(--sand-2);
+  border-radius: var(--r);
+  background: var(--white);
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.phone-wrap:focus-within {
+  border-color: var(--coral);
+  box-shadow: 0 0 0 3px rgba(255,107,71,0.1);
+}
+
+.phone-prefix {
+  padding: 0 12px 0 16px;
+  color: var(--coral);
+  font-weight: 800;
+  border-right: 1px solid var(--sand-2);
+  line-height: 1;
+}
+
+.phone-wrap input[type=tel] {
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+  padding-left: 12px;
+}
+
+.phone-wrap.has-error {
+  border-color: var(--danger);
+}
+
+html.tm-dark .phone-wrap {
+  background: #0F1720;
+  border-color: rgba(255,255,255,0.12);
+}
+
+html.tm-dark .phone-prefix {
+  color: #FF8A6A;
+  border-right-color: rgba(255,255,255,0.12);
+}
+
+html.tm-dark .phone-wrap input[type=tel] {
+  color: #F8FAFC;
+}
+
+html.tm-dark .phone-wrap input[type=tel]::placeholder {
+  color: rgba(203,213,225,0.72);
+}
 select {
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%238899AA' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
   background-repeat: no-repeat;
@@ -291,10 +349,45 @@ input.error, select.error { border-color: var(--danger); }
   border-radius: var(--r); padding: 14px;
   cursor: pointer; transition: all 0.2s;
   position: relative;
+  background: var(--white);
 }
 .plan-opt:hover { border-color: var(--coral); }
-.plan-opt.selected { border-color: var(--coral); background: var(--coral-3); }
-.plan-opt.selected.gold-plan { border-color: var(--gold); background: #FFFBEB; }
+.plan-opt::after {
+  content: '';
+  position: absolute;
+  right: 12px;
+  bottom: 12px;
+  width: 18px;
+  height: 18px;
+  border-radius: 999px;
+  border: 2px solid var(--sand-2);
+  background: var(--white);
+}
+.plan-opt.selected {
+  border-color: var(--coral);
+  background: linear-gradient(135deg, #FFF1EC 0%, #FFFFFF 100%);
+  box-shadow: 0 12px 28px rgba(255,107,71,0.18);
+}
+.plan-opt.selected::after {
+  content: '✓';
+  display: grid;
+  place-items: center;
+  border-color: var(--coral);
+  background: var(--coral);
+  color: #fff;
+  font-size: 12px;
+  font-weight: 900;
+}
+.plan-opt.selected.gold-plan {
+  border-color: var(--gold);
+  background: linear-gradient(135deg, #FFF8DE 0%, #FFFFFF 100%);
+  box-shadow: 0 12px 28px rgba(240,180,41,0.2);
+}
+.plan-opt.selected.gold-plan::after {
+  border-color: var(--gold);
+  background: var(--gold);
+  color: var(--navy);
+}
 
 .plan-opt-badge {
   position: absolute; top: -10px; right: 10px;
@@ -316,6 +409,11 @@ html.tm-dark .plan-opt {
   border-color: rgba(255,255,255,0.16);
 }
 
+html.tm-dark .plan-opt::after {
+  background: #0B121A;
+  border-color: rgba(255,255,255,0.28);
+}
+
 html.tm-dark .plan-opt-name {
   color: #F8FAFC !important;
 }
@@ -325,27 +423,25 @@ html.tm-dark .plan-opt-price {
 }
 
 html.tm-dark .plan-opt.selected {
-  background: rgba(255,107,71,0.14);
-  border-color: rgba(255,107,71,0.62);
+  background: linear-gradient(135deg, rgba(255,107,71,0.28) 0%, rgba(15,23,32,0.92) 100%);
+  border-color: #FF8A6A;
+  box-shadow: 0 14px 34px rgba(255,107,71,0.22);
 }
 
 html.tm-dark .plan-opt.selected .plan-opt-price {
   color: #FF8A6A !important;
 }
 
-html.tm-dark .plan-opt.gold-plan,
 html.tm-dark .plan-opt.selected.gold-plan {
-  background: linear-gradient(135deg, #FFF7DE 0%, #FFFDF6 100%) !important;
+  background: linear-gradient(135deg, #FFF7DE 0%, #FFFDF6 100%);
   border-color: #F0B429 !important;
-  box-shadow: 0 12px 28px rgba(240,180,41,0.12);
+  box-shadow: 0 14px 34px rgba(240,180,41,0.22);
 }
 
-html.tm-dark .plan-opt.gold-plan .plan-opt-name,
 html.tm-dark .plan-opt.selected.gold-plan .plan-opt-name {
   color: #14213D !important;
 }
 
-html.tm-dark .plan-opt.gold-plan .plan-opt-price,
 html.tm-dark .plan-opt.selected.gold-plan .plan-opt-price {
   color: #92400E !important;
 }
@@ -694,12 +790,6 @@ html.tm-dark .plan-mini-desc {
         <div class="field-error" id="r-email-err">Ingresa un correo válido</div>
       </div>
 
-      <div class="field">
-        <label>WhatsApp de contacto</label>
-        <input type="tel" id="r-wa" placeholder="+506 8888 8888" oninput="clearErr(this)">
-        <div class="field-error" id="r-wa-err">Ingresa tu número de WhatsApp</div>
-      </div>
-
       <div class="field-row" data-location-group>
         <div class="field">
           <label>País</label>
@@ -710,11 +800,18 @@ html.tm-dark .plan-mini-desc {
         </div>
         <div class="field">
           <label>Provincia / Estado</label>
-          <select id="r-provincia" data-province-select onchange="clearErr(this)" disabled>
-            <option value="">Primero elegí país</option>
-          </select>
-          <div class="field-error" id="r-prov-err">Seleccioná tu provincia</div>
+          <input type="text" id="r-provincia" placeholder="Ej: San José, Jalisco, Antioquia" oninput="clearErr(this)">
+          <div class="field-error" id="r-prov-err">Escribí tu provincia o estado</div>
         </div>
+      </div>
+
+      <div class="field">
+        <label>WhatsApp de contacto</label>
+        <div class="phone-wrap" id="r-wa-wrap">
+          <span class="phone-prefix" id="r-wa-prefix">+---</span>
+          <input type="tel" id="r-wa" placeholder="8888 8888" oninput="clearErr(this)">
+        </div>
+        <div class="field-error" id="r-wa-err">Ingresa tu número de WhatsApp</div>
       </div>
 
       <div class="field">
@@ -836,6 +933,31 @@ html.tm-dark .plan-mini-desc {
 <script>
 let selectedPlan = 'free';
 
+const countryDialCodes = {
+  'Costa Rica': '+506',
+  'México': '+52',
+  'Guatemala': '+502',
+  'El Salvador': '+503',
+  'Honduras': '+504',
+  'Panamá': '+507',
+  'Colombia': '+57',
+  'Ecuador': '+593',
+  'Perú': '+51',
+  'Bolivia': '+591',
+  'Chile': '+56',
+  'Argentina': '+54',
+  'Uruguay': '+598',
+  'Paraguay': '+595',
+  'República Dominicana': '+1'
+};
+
+function updateWhatsappPrefix() {
+  const country = document.getElementById('r-pais');
+  const prefix = document.getElementById('r-wa-prefix');
+  if (!country || !prefix) return;
+  prefix.textContent = countryDialCodes[country.value] || '+---';
+}
+
 function selectPlan(plan) {
   selectedPlan = plan;
   document.getElementById('plan-free').classList.toggle('selected', plan === 'free');
@@ -862,6 +984,7 @@ function togglePass(id, icon) {
 
 function clearErr(input) {
   input.classList.remove('error');
+  if (input.id === 'r-wa') document.getElementById('r-wa-wrap')?.classList.remove('has-error');
   const error = input.closest('.field')?.querySelector('.field-error');
   if (error) error.classList.remove('show');
 }
@@ -939,9 +1062,9 @@ async function doRegister() {
   if (!apellido.value.trim()) { apellido.classList.add('error'); ok = false; }
   if (!negocio.value.trim()) { negocio.classList.add('error'); document.getElementById('r-negocio-err').classList.add('show'); ok = false; }
   if (!isEmail(email.value)) { email.classList.add('error'); document.getElementById('r-email-err').classList.add('show'); ok = false; }
-  if (!wa.value.trim()) { wa.classList.add('error'); document.getElementById('r-wa-err').classList.add('show'); ok = false; }
   if (!pais.value) { pais.classList.add('error'); document.getElementById('r-pais-err').classList.add('show'); ok = false; }
   if (!prov.value) { prov.classList.add('error'); document.getElementById('r-prov-err').classList.add('show'); ok = false; }
+  if (!wa.value.trim()) { wa.classList.add('error'); document.getElementById('r-wa-wrap')?.classList.add('has-error'); document.getElementById('r-wa-err').classList.add('show'); ok = false; }
   if (pass.value.length < 8) { pass.classList.add('error'); document.getElementById('r-pass-err').classList.add('show'); ok = false; }
   if (!terms.checked) { document.getElementById('r-terms-err').classList.add('show'); ok = false; }
   if (!ok) return;
@@ -953,7 +1076,7 @@ async function doRegister() {
     data.append('r-apellido', apellido.value.trim());
     data.append('r-negocio', negocio.value.trim());
     data.append('r-email', email.value.trim());
-    data.append('r-wa', wa.value.trim());
+    data.append('r-wa', `${countryDialCodes[pais.value] || ''} ${wa.value.trim()}`.trim());
     data.append('r-pais', pais.value);
     data.append('r-provincia', prov.value);
     data.append('r-direccion', direccion.value.trim());
@@ -990,8 +1113,9 @@ document.addEventListener('keydown', e => {
 document.getElementById('r-terms').addEventListener('change', function() {
   if (this.checked) document.getElementById('r-terms-err').classList.remove('show');
 });
+document.getElementById('r-pais')?.addEventListener('change', updateWhatsappPrefix);
+updateWhatsappPrefix();
 </script>
 
 </body>
 </html>
-

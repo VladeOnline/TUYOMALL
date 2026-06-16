@@ -1,0 +1,29 @@
+{
+  "name": "TuyoMall",
+  "short_name": "TuyoMall",
+  "icons": [
+    {
+      "src": "/assets/img/favicon-48.png?v=3",
+      "sizes": "48x48",
+      "type": "image/png"
+    },
+    {
+      "src": "/assets/img/favicon-96.png?v=3",
+      "sizes": "96x96",
+      "type": "image/png"
+    },
+    {
+      "src": "/assets/img/favicon-144.png?v=3",
+      "sizes": "144x144",
+      "type": "image/png"
+    },
+    {
+      "src": "/assets/img/favicon-180.png?v=3",
+      "sizes": "180x180",
+      "type": "image/png"
+    }
+  ],
+  "theme_color": "#FF6B47",
+  "background_color": "#0B1118",
+  "display": "standalone"
+}

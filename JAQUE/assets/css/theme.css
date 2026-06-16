@@ -195,6 +195,27 @@ html.tm-dark .field select {
   border-color: rgba(255,255,255,0.12) !important;
 }
 
+html.tm-dark select option,
+html.tm-dark .field select option,
+html.tm-dark .sort-select option {
+  background-color: #111B29 !important;
+  color: #F8FAFC !important;
+}
+
+html.tm-dark select option:checked,
+html.tm-dark .field select option:checked,
+html.tm-dark .sort-select option:checked {
+  background-color: #FF6B47 !important;
+  color: #FFFFFF !important;
+}
+
+html.tm-dark select:focus,
+html.tm-dark .field select:focus,
+html.tm-dark .sort-select:focus {
+  border-color: rgba(255,107,71,0.68) !important;
+  box-shadow: 0 0 0 3px rgba(255,107,71,0.16) !important;
+}
+
 html.tm-dark input::placeholder,
 html.tm-dark textarea::placeholder {
   color: #8A98AA !important;

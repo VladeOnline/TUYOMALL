@@ -4,24 +4,11 @@
   const inputSelector = '[data-business-avatar-input]';
   const buttonSelector = '[data-business-avatar-button]';
 
-  function storedAvatar() {
-    try {
-      return localStorage.getItem(AVATAR_KEY);
-    } catch (_) {
-      return null;
-    }
-  }
-
-  function setStoredAvatar(value) {
-    try {
-      localStorage.setItem(AVATAR_KEY, value);
-    } catch (_) {}
-  }
-
   function applyAvatar(value) {
     if (!value) return;
     document.querySelectorAll(avatarSelector).forEach((img) => {
       img.src = value;
+      img.classList.remove('is-empty');
     });
   }
 
@@ -40,7 +27,6 @@
         const result = reader.result;
         if (typeof result !== 'string') return;
         resizeAvatar(result, (resized) => {
-          setStoredAvatar(resized);
           applyAvatar(resized);
         });
       };
@@ -67,13 +53,11 @@
   }
 
   function initBusinessProfile() {
-    applyAvatar(storedAvatar());
     bindAvatarUpload();
   }
 
   window.TuyoMallBusinessProfile = {
     avatarKey: AVATAR_KEY,
-    getAvatar: storedAvatar,
     applyAvatar
   };
 
@@ -83,7 +67,4 @@
     initBusinessProfile();
   }
 
-  window.addEventListener('storage', (event) => {
-    if (event.key === AVATAR_KEY) applyAvatar(event.newValue);
-  });
 })();

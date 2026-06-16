@@ -1,6 +1,12 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
+<link rel="icon" href="/favicon.ico?v=3" sizes="any">
+<link rel="icon" type="image/png" sizes="48x48" href="/assets/img/favicon-48.png?v=3">
+<link rel="icon" type="image/png" sizes="96x96" href="/assets/img/favicon-96.png?v=3">
+<link rel="icon" type="image/png" sizes="144x144" href="/assets/img/favicon-144.png?v=3">
+<link rel="apple-touch-icon" sizes="180x180" href="/assets/img/favicon-180.png?v=3">
+<link rel="manifest" href="/site.webmanifest?v=3">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>TuyoMall — Explorar productos</title>
@@ -596,6 +602,14 @@ body.dark-mode .sidebar-right {
 
 .empty-state { text-align: center; padding: 60px 20px; display: none; }
 .empty-state.show { display: block; }
+.empty-logo {
+  width: 86px;
+  height: auto;
+  display: block;
+  margin: 0 auto 16px;
+  opacity: 0.9;
+  filter: drop-shadow(0 14px 28px rgba(255,107,71,0.18));
+}
 .empty-icon .ti { font-size: 52px; color: var(--muted); display: block; }
 .empty-title { font-family: 'Syne', sans-serif; font-size: 20px; font-weight: 700; margin: 14px 0 8px; }
 .empty-sub { font-size: 14px; color: var(--muted); }
@@ -972,7 +986,7 @@ select {
       <span class="ti ti-moon"></span>
     </button>
     <a href="dashboard-emprendedor.php" class="nav-avatar" title="Dashboard emprendedor">
-      <img data-business-avatar src="https://images.unsplash.com/photo-1606722590583-6951b5ea92ad?w=120&h=120&fit=crop&q=80" alt="Artesanías La Ceiba">
+      <img data-business-avatar alt="Mi negocio">
     </a>
   </div>
 </nav>
@@ -1155,9 +1169,9 @@ select {
     <div class="products-grid" id="productsGrid"></div>
 
     <div class="empty-state" id="emptyState">
-      <div class="empty-icon"><span class="ti ti-search-off"></span></div>
-      <h3 class="empty-title">Sin resultados</h3>
-      <p class="empty-sub">Intentá con otros filtros o términos de búsqueda</p>
+      <img class="empty-logo" src="assets/img/logo-tuyomall-nav.png" alt="TuyoMall">
+      <h3 class="empty-title">Aún no hay publicaciones</h3>
+      <p class="empty-sub">Cuando los emprendedores publiquen productos o servicios, aparecerán aquí.</p>
     </div>
 
     <button class="load-more" id="loadMoreBtn" onclick="loadMore()">
@@ -1288,25 +1302,21 @@ function catIcon(cat) {
   return `<span class="ti ${catIconMap[cat]||'ti-package'}" style="font-size:20px;color:var(--coral)"></span>`;
 }
 
-let allProducts = [
-  { id:1,  name:'Pizza artesanal al horno de leña',   price:'₡4.500',  cat:'Alimentos', prov:'San José',  type:'Producto', seller:'Pizzas Don Tavo',    sellerColor:'#FF6B47', sellerInit:'P', premium:true,  img:'https://images.unsplash.com/photo-1513104890138-7c749659a591?w=400&h=300&fit=crop&q=80', likes:24 },
-  { id:2,  name:'Vestido boho estampado a mano',      price:'₡18.000', cat:'Moda',      prov:'Alajuela',  type:'Producto', seller:'Moda Pura Vida',      sellerColor:'#C084FC', sellerInit:'M', premium:false, img:'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=400&h=300&fit=crop&q=80', likes:11 },
-  { id:3,  name:'Canasta tejida a mano en fibra',     price:'₡12.000', cat:'Arte',      prov:'Cartago',   type:'Producto', seller:'Artesanías La Ceiba', sellerColor:'#10B981', sellerInit:'A', premium:true,  img:'https://images.unsplash.com/photo-1606722590583-6951b5ea92ad?w=400&h=300&fit=crop&q=80', likes:38 },
-  { id:4,  name:'Café artesanal tostado oscuro',      price:'₡2.800',  cat:'Alimentos', prov:'San José',  type:'Producto', seller:'Café Don Pepe',       sellerColor:'#92400E', sellerInit:'C', premium:false, img:'https://images.unsplash.com/photo-1447933601403-0c6688de566e?w=400&h=300&fit=crop&q=80', likes:7 },
-  { id:5,  name:'Collar artesanal de plata 925',      price:'₡22.000', cat:'Arte',      prov:'Heredia',   type:'Producto', seller:'Joyas Tica',          sellerColor:'#6366F1', sellerInit:'J', premium:true,  img:'https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?w=400&h=300&fit=crop&q=80', likes:52 },
-  { id:6,  name:'Repostería artesanal personalizada', price:'₡3.200',  cat:'Alimentos', prov:'Alajuela',  type:'Producto', seller:'Dulces Doña Ana',     sellerColor:'#F59E0B', sellerInit:'D', premium:false, img:'https://images.unsplash.com/photo-1571115177098-24ec42ed204d?w=400&h=300&fit=crop&q=80', likes:19 },
-  { id:7,  name:'Diseño de logo profesional',         price:'₡35.000', cat:'Servicios', prov:'San José',  type:'Servicio', seller:'Logos & Marcas CR',   sellerColor:'#3B82F6', sellerInit:'L', premium:true,  img:'https://images.unsplash.com/photo-1561070791-2526d30994b5?w=400&h=300&fit=crop&q=80', likes:33 },
-  { id:8,  name:'Clases de inglés online',            price:'₡8.000',  cat:'Servicios', prov:'Heredia',   type:'Servicio', seller:'English with Ana',    sellerColor:'#EC4899', sellerInit:'E', premium:false, img:'https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=400&h=300&fit=crop&q=80', likes:5 },
-  { id:9,  name:'Muebles de madera artesanales',      price:'₡85.000', cat:'Hogar',     prov:'Cartago',   type:'Producto', seller:'Madera Viva CR',      sellerColor:'#78716C', sellerInit:'M', premium:false, img:'https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=400&h=300&fit=crop&q=80', likes:14 },
-  { id:10, name:'Reparación de celulares y tablets',  price:'₡5.000',  cat:'Tecnología',prov:'San José',  type:'Servicio', seller:'TechFix Express',     sellerColor:'#8B5CF6', sellerInit:'T', premium:false, img:'https://images.unsplash.com/photo-1601784551446-20c9e07cdbdb?w=400&h=300&fit=crop&q=80', likes:9 },
-  { id:11, name:'Arreglos florales para eventos',     price:'₡15.000', cat:'Hogar',     prov:'Heredia',   type:'Servicio', seller:'Flores del Valle',    sellerColor:'#F43F5E', sellerInit:'F', premium:true,  img:'https://images.unsplash.com/photo-1487530811015-780ef70e6cc3?w=400&h=300&fit=crop&q=80', likes:28 },
-  { id:12, name:'Maquillaje artístico profesional',   price:'₡12.000', cat:'Belleza',   prov:'San José',  type:'Servicio', seller:'Glam Studio CR',      sellerColor:'#DB2777', sellerInit:'G', premium:false, img:'https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=400&h=300&fit=crop&q=80', likes:41 },
-];
+let allProducts = [];
 
 let activeCat='', activeProvs=new Set(), activeType='', searchQ='';
 let currentView='grid', visibleCount=12;
 const LIKED_POSTS_KEY = 'tuyomall_liked_posts_v1';
 let likedIds=new Set(JSON.parse(localStorage.getItem(LIKED_POSTS_KEY) || '[]')), savedIds=new Set();
+const EMPTY_BUSINESS_AVATAR = `data:image/svg+xml,${encodeURIComponent(`
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80">
+  <rect width="80" height="80" rx="40" fill="#FFF0EC"/>
+  <circle cx="40" cy="33" r="13" fill="#CBD5E1"/>
+  <path d="M20 66c4-16 12-24 20-24s16 8 20 24" fill="#CBD5E1"/>
+  <circle cx="58" cy="58" r="14" fill="#FF6B47"/>
+  <path d="M51 58h14M58 51v14" stroke="#fff" stroke-width="4" stroke-linecap="round"/>
+</svg>
+`)}`;
 
 function persistLikedPosts() {
   localStorage.setItem(LIKED_POSTS_KEY, JSON.stringify([...likedIds]));
@@ -1316,7 +1326,8 @@ async function loadPublicProducts() {
   try {
     const response = await fetch('api/products.php', { headers: { 'Accept': 'application/json' } });
     const result = await response.json();
-    if (!result.ok || !Array.isArray(result.products) || result.products.length === 0) {
+    if (!result.ok || !Array.isArray(result.products)) {
+      allProducts = [];
       return;
     }
 
@@ -1332,9 +1343,23 @@ async function loadPublicProducts() {
       price: product.price || '',
       type: product.type || 'Producto'
     }));
-  } catch (_) {
-    // Si la BD aun no esta configurada localmente, se mantienen los productos de ejemplo.
+  } catch (error) {
+    allProducts = [];
   }
+}
+
+async function loadCurrentBusinessAvatar() {
+  const avatars = document.querySelectorAll('[data-business-avatar]');
+  avatars.forEach(img => { img.src = EMPTY_BUSINESS_AVATAR; });
+
+  try {
+    const response = await fetch('api/business.php', { headers: { 'Accept': 'application/json' } });
+    if (!response.ok) return;
+    const result = await response.json();
+    const avatar = result?.business?.avatar;
+    if (!result.ok || !avatar) return;
+    avatars.forEach(img => { img.src = avatar; });
+  } catch (_) {}
 }
 
 function getFiltered() {
@@ -1352,15 +1377,11 @@ function getFiltered() {
 const timeLabels = ['hace 2 min','hace 15 min','hace 1 h','hace 3 h','hace 5 h','hace 8 h','hace 1 d','hace 2 d','hace 3 d','hace 4 d','hace 5 d','hace 1 sem'];
 
 function storedBusinessAvatar() {
-  try {
-    return localStorage.getItem('tuyomall_business_avatar_v1');
-  } catch (_) {
-    return null;
-  }
+  return null;
 }
 
 function sellerAvatarMarkup(p) {
-  const avatar = p.seller === 'Artesanías La Ceiba' ? storedBusinessAvatar() : null;
+  const avatar = p.sellerAvatar || null;
   if (avatar) {
     return `<div class="prod-avatar" style="background:${p.sellerColor}"><img src="${avatar}" alt="${p.seller}" loading="lazy"></div>`;
   }
@@ -1446,7 +1467,7 @@ function renderSidebar() {
   const premium = allProducts.filter(p=>p.premium).slice(0,4);
   const cats    = [...new Set(allProducts.map(p=>p.cat))];
 
-  premDiv.innerHTML = premium.map((p,index)=>`
+  premDiv.innerHTML = premium.length ? premium.map((p,index)=>`
     <div class="highlight-card" style="--hl-delay:${index * 70}ms">
       <div class="hl-img">${catIcon(p.cat)}</div>
       <div class="hl-info">
@@ -1457,12 +1478,12 @@ function renderSidebar() {
         <div class="hl-pro-dot"></div>
         <div class="hl-price">${p.price}</div>
       </div>
-    </div>`).join('');
+    </div>`).join('') : '<p class="empty-sub">Los destacados aparecerán cuando haya publicaciones Premium.</p>';
 
-  tagDiv.innerHTML = cats.map(c=>`
+  tagDiv.innerHTML = cats.length ? cats.map(c=>`
     <span class="trend-tag" onclick="setCatPill(null,'${c}')">
       <span class="ti ${catIconMap[c]||'ti-tag'}"></span>${c}
-    </span>`).join('');
+    </span>`).join('') : '<p class="empty-sub">Las tendencias se forman con publicaciones reales.</p>';
 }
 
 /* ── FILTROS ── */
@@ -1777,15 +1798,13 @@ document.addEventListener('keydown',e=>{
 
 initDraggableFab();
 async function bootFeed() {
+  loadCurrentBusinessAvatar();
   await loadPublicProducts();
   allProducts.sort((a,b)=>b.premium-a.premium);
   renderProducts();
 }
 
 bootFeed();
-window.addEventListener('storage', (event) => {
-  if (event.key === 'tuyomall_business_avatar_v1') renderProducts();
-});
 </script>
 <script src="assets/js/business-profile.js"></script>
 </body>

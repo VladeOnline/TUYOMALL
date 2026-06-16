@@ -166,6 +166,7 @@ function product_row_to_api(array $row): array
         'premium' => (bool) $row['premium_boost'],
         'seller' => $row['nombre_negocio'] ?? null,
         'sellerInit' => strtoupper(substr((string) ($row['nombre_negocio'] ?? 'T'), 0, 1)),
+        'sellerAvatar' => $row['avatar_url'] ?? null,
         'sellerColor' => '#FF6B47',
         'cat' => $row['categoria'] ?? 'Servicios',
         'prov' => $row['provincia'] ?? 'Toda LATAM',
@@ -188,6 +189,7 @@ function list_products(PDO $pdo, ?int $businessId = null, bool $includeInactive 
         "SELECT
             p.*,
             n.nombre_negocio,
+            n.avatar_url,
             n.provincia,
             n.slug AS negocio_slug,
             c.nombre AS categoria,

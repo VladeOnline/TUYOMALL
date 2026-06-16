@@ -33,12 +33,6 @@
       "Atlántida": ["La Ceiba", "Tela", "El Porvenir"],
       "Comayagua": ["Comayagua", "Siguatepeque", "La Libertad"]
     },
-    "Nicaragua": {
-      "Managua": ["Managua", "Tipitapa", "Ciudad Sandino"],
-      "León": ["León", "Nagarote", "La Paz Centro"],
-      "Granada": ["Granada", "Nandaime", "Diriomo"],
-      "Matagalpa": ["Matagalpa", "Sébaco", "San Ramón"]
-    },
     "Panamá": {
       "Panamá": ["Ciudad de Panamá", "San Miguelito", "Tocumen"],
       "Panamá Oeste": ["La Chorrera", "Arraiján", "Capira"],
@@ -50,12 +44,6 @@
       "Antioquia": ["Medellín", "Envigado", "Bello", "Rionegro"],
       "Valle del Cauca": ["Cali", "Palmira", "Buenaventura"],
       "Atlántico": ["Barranquilla", "Soledad", "Malambo"]
-    },
-    "Venezuela": {
-      "Distrito Capital": ["Caracas"],
-      "Miranda": ["Chacao", "Baruta", "Los Teques", "Guatire"],
-      "Carabobo": ["Valencia", "Naguanagua", "Puerto Cabello"],
-      "Zulia": ["Maracaibo", "San Francisco", "Cabimas"]
     },
     "Ecuador": {
       "Pichincha": ["Quito", "Cayambe", "Rumiñahui"],
@@ -123,27 +111,29 @@
     const country = group.querySelector('[data-country-select]');
     const province = group.querySelector('[data-province-select]');
     const canton = group.querySelector('[data-canton-select]');
-    if (!country || !province) return;
+    if (!country) return;
 
-    fillSelect(country, Object.keys(locations), 'Seleccioná país');
+    fillSelect(country, Object.keys(locations), 'Selecciona pais');
 
     country.addEventListener('change', () => {
       const provinces = Object.keys(locations[country.value] || {});
-      fillSelect(province, provinces, 'Seleccioná provincia');
-      if (canton) fillSelect(canton, [], 'Primero elegí provincia');
-      province.disabled = provinces.length === 0;
+      if (province) fillSelect(province, provinces, 'Selecciona provincia');
+      if (canton) fillSelect(canton, [], 'Primero elegi provincia');
+      if (province) province.disabled = provinces.length === 0;
       if (canton) canton.disabled = true;
       country.classList.remove('error');
     });
 
-    province.addEventListener('change', () => {
-      const cantons = (locations[country.value] || {})[province.value] || [];
-      if (canton) {
-        fillSelect(canton, cantons, 'Seleccioná cantón / ciudad');
-        canton.disabled = cantons.length === 0;
-      }
-      province.classList.remove('error');
-    });
+    if (province) {
+      province.addEventListener('change', () => {
+        const cantons = (locations[country.value] || {})[province.value] || [];
+        if (canton) {
+          fillSelect(canton, cantons, 'Selecciona canton / ciudad');
+          canton.disabled = cantons.length === 0;
+        }
+        province.classList.remove('error');
+      });
+    }
 
     if (canton) {
       canton.addEventListener('change', () => {
