@@ -27,7 +27,7 @@ function get_business_plan(PDO $pdo, int $businessId): array
     return $stmt->fetch() ?: [
         'codigo' => 'gratis',
         'max_productos' => 10,
-        'max_imagenes_producto' => 3,
+        'max_imagenes_producto' => 1,
         'max_categorias' => 5,
         'max_etiquetas' => 5,
         'permite_cupones' => 0,
@@ -96,6 +96,87 @@ function activate_premium_subscription(
     }
 
     $pdo->beginTransaction();
+
+    $stmt = $pdo->prepare(
+        "SELECT id, expira_en
+         FROM suscripciones
+         WHERE negocio_id = :negocio_id
+           AND plan_codigo = 'premium'
+           AND estado = 'activa'
+           AND (expira_en IS NULL OR expira_en > NOW())
+         ORDER BY inicia_en DESC
+         LIMIT 1"
+    );
+    $stmt->execute(['negocio_id' => $businessId]);
+    $activeSubscription = $stmt->fetch();
+
+    if ($activeSubscription) {
+        $subscriptionId = (int) $activeSubscription['id'];
+
+        $stmt = $pdo->prepare(
+            "UPDATE suscripciones
+             SET expira_en = DATE_ADD(
+                     CASE
+                       WHEN expira_en IS NULL OR expira_en < NOW() THEN NOW()
+                       ELSE expira_en
+                     END,
+                     INTERVAL 1 MONTH
+                 ),
+                 renovacion_cancelada = 0,
+                 proveedor = :proveedor,
+                 proveedor_ref = :proveedor_ref
+             WHERE id = :id"
+        );
+        $stmt->execute([
+            'proveedor' => $provider,
+            'proveedor_ref' => $providerPaymentId,
+            'id' => $subscriptionId,
+        ]);
+
+        $stmt = $pdo->prepare(
+            "INSERT INTO pagos (
+                negocio_id,
+                suscripcion_id,
+                plan_codigo,
+                proveedor,
+                proveedor_pago_id,
+                monto,
+                moneda,
+                estado,
+                payload,
+                pagado_en
+             )
+             VALUES (
+                :negocio_id,
+                :suscripcion_id,
+                'premium',
+                :proveedor,
+                :proveedor_pago_id,
+                :monto,
+                :moneda,
+                'aprobado',
+                :payload,
+                NOW()
+             )"
+        );
+        $stmt->execute([
+            'negocio_id' => $businessId,
+            'suscripcion_id' => $subscriptionId,
+            'proveedor' => $provider,
+            'proveedor_pago_id' => $providerPaymentId,
+            'monto' => $amount,
+            'moneda' => $currency,
+            'payload' => $payload,
+        ]);
+
+        $stmt = $pdo->prepare(
+            "UPDATE negocios SET plan_codigo = 'premium' WHERE id = :negocio_id"
+        );
+        $stmt->execute(['negocio_id' => $businessId]);
+
+        $pdo->commit();
+        return;
+    }
 
     $stmt = $pdo->prepare(
         "UPDATE suscripciones
@@ -240,7 +321,7 @@ function can_create_product(PDO $pdo, int $businessId): bool
         "SELECT COUNT(*)
          FROM productos
          WHERE negocio_id = :negocio_id
-           AND estado IN ('activo', 'borrador')"
+           AND estado IN ('activo', 'borrador', 'pausado')"
     );
     $stmt->execute(['negocio_id' => $businessId]);
 
@@ -250,7 +331,7 @@ function can_create_product(PDO $pdo, int $businessId): bool
 function can_upload_product_image(PDO $pdo, int $businessId, int $productId): bool
 {
     $plan = get_business_plan($pdo, $businessId);
-    $maxImages = (int) ($plan['max_imagenes_producto'] ?? 3);
+    $maxImages = (int) ($plan['max_imagenes_producto'] ?? 1);
 
     $stmt = $pdo->prepare(
         "SELECT COUNT(*)

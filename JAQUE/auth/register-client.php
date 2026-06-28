@@ -56,5 +56,5 @@ try {
 
     json_response(['ok' => true, 'redirect' => 'principal.html']);
 } catch (Throwable $e) {
-    json_response(['ok' => false, 'message' => 'No pudimos crear la cuenta. Revisa la conexión a la base de datos.'], 500);
+    json_response(['ok' => false, 'message' => database_public_message($e, 'register-client')], 500);
 }

@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
 <link rel="icon" href="/favicon.ico?v=3" sizes="any">
@@ -430,6 +430,80 @@ button { cursor: pointer; }
   font-size: 13px;
 }
 
+.support-toast {
+  position: fixed;
+  right: 22px;
+  bottom: 22px;
+  z-index: 100;
+  width: min(390px, calc(100vw - 28px));
+  padding: 15px 48px 15px 16px;
+  border: 1px solid rgba(22, 163, 74, 0.28);
+  border-radius: var(--r-lg);
+  background: #FFFFFF;
+  color: var(--navy);
+  box-shadow: 0 18px 46px rgba(20, 33, 61, 0.2);
+  display: grid;
+  grid-template-columns: 38px 1fr;
+  gap: 12px;
+  align-items: center;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(18px);
+  transition: opacity 0.22s ease, transform 0.22s ease, visibility 0.22s;
+}
+.support-toast.show {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+.support-toast.error { border-color: rgba(255, 107, 71, 0.4); }
+.support-toast-icon {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: rgba(22, 163, 74, 0.12);
+  color: var(--green);
+  font-size: 22px;
+}
+.support-toast.error .support-toast-icon {
+  background: rgba(255, 107, 71, 0.14);
+  color: var(--coral);
+}
+.support-toast strong {
+  display: block;
+  margin-bottom: 2px;
+  font-size: 14px;
+}
+.support-toast p {
+  color: var(--slate);
+  font-size: 13px;
+  line-height: 1.45;
+}
+.support-toast-close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 30px;
+  height: 30px;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--muted);
+  font-size: 18px;
+}
+.support-toast-close:hover { background: var(--soft); color: var(--navy); }
+html.tm-dark .support-toast {
+  background: #172231;
+  color: #F8FAFC;
+  border-color: rgba(34, 197, 94, 0.35);
+  box-shadow: 0 18px 46px rgba(0, 0, 0, 0.38);
+}
+html.tm-dark .support-toast.error { border-color: rgba(255, 107, 71, 0.45); }
+html.tm-dark .support-toast p { color: #CBD5E1; }
+html.tm-dark .support-toast-close:hover { background: rgba(255,255,255,0.08); color: #FFFFFF; }
+
 @media (max-width: 1000px) {
   .hero,
   .content-grid { grid-template-columns: 1fr; }
@@ -442,10 +516,11 @@ button { cursor: pointer; }
   .hero { padding: 26px 18px; }
   .contact-form { grid-template-columns: 1fr; }
   .section-head { align-items: start; flex-direction: column; }
+  .support-toast { right: 14px; bottom: 14px; }
 }
 </style>
   <link rel="stylesheet" href="assets/css/theme.css">
-  <script src="assets/js/theme.js" defer></script>
+  <script src="assets/js/theme.js?v=20260620" defer></script>
 </head>
 <body>
 <header class="topbar">
@@ -531,7 +606,7 @@ button { cursor: pointer; }
         </article>
         <article class="faq-item" data-cat="pagos">
           <button class="faq-q" onclick="toggleFaq(this)">¿Qué incluye el plan Premium?<span class="ti ti-chevron-down"></span></button>
-          <div class="faq-a">Premium mejora la visibilidad del negocio, permite más publicaciones y destaca el perfil dentro del feed. El precio base definido es $5 al mes.</div>
+          <div class="faq-a">Premium mejora la visibilidad del negocio, permite más publicaciones y destaca el perfil dentro del feed. El precio base definido es $5 + IVA al mes.</div>
         </article>
       </div>
     </div>
@@ -598,8 +673,40 @@ button { cursor: pointer; }
   © <span id="year"></span> TuyoMall. Ayuda para clientes, emprendedores y configuración de lanzamiento.
 </footer>
 
+<aside class="support-toast" id="supportToast" role="status" aria-live="polite" aria-atomic="true">
+  <span class="support-toast-icon ti ti-circle-check" id="supportToastIcon" aria-hidden="true"></span>
+  <div>
+    <strong id="supportToastTitle">Mensaje enviado</strong>
+    <p id="supportToastMessage"></p>
+  </div>
+  <button class="support-toast-close ti ti-x" type="button" aria-label="Cerrar aviso" onclick="hideSupportToast()"></button>
+</aside>
+
 <script>
 document.getElementById('year').textContent = new Date().getFullYear();
+let supportToastTimer;
+
+function hideSupportToast() {
+  document.getElementById('supportToast')?.classList.remove('show');
+}
+
+function showSupportToast(message, type = 'success') {
+  const toast = document.getElementById('supportToast');
+  const title = document.getElementById('supportToastTitle');
+  const text = document.getElementById('supportToastMessage');
+  const icon = document.getElementById('supportToastIcon');
+  if (!toast || !title || !text || !icon) return;
+
+  const isError = type === 'error';
+  toast.classList.toggle('error', isError);
+  title.textContent = isError ? 'No pudimos enviar el mensaje' : 'Consulta enviada';
+  text.textContent = message;
+  icon.className = `support-toast-icon ti ${isError ? 'ti-alert-circle' : 'ti-circle-check'}`;
+  toast.classList.add('show');
+
+  window.clearTimeout(supportToastTimer);
+  supportToastTimer = window.setTimeout(hideSupportToast, isError ? 7000 : 5000);
+}
 
 function toggleFaq(btn) {
   btn.closest('.faq-item').classList.toggle('open');
@@ -631,9 +738,15 @@ async function sendContact(event) {
 
     form.reset();
     button.innerHTML = '<span class="ti ti-circle-check"></span> Mensaje enviado';
-    alert(result.message);
+    showSupportToast(result.message);
+    window.setTimeout(() => {
+      button.innerHTML = original;
+    }, 2500);
   } catch (error) {
-    alert(error.message || 'No pudimos enviar la consulta. Escribinos a soporte@tuyomall.com.');
+    showSupportToast(
+      error.message || 'No pudimos enviar la consulta. Escribinos a soporte@tuyomall.com.',
+      'error'
+    );
     button.innerHTML = original;
   } finally {
     button.disabled = false;

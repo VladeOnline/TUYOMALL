@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
 <link rel="icon" href="/favicon.ico?v=3" sizes="any">
@@ -290,6 +290,55 @@ input.success { border-color: var(--success); }
 }
 .field-error.show { display: block; }
 
+.form-notice {
+  display: none;
+  align-items: flex-start;
+  gap: 10px;
+  border-radius: 16px;
+  padding: 13px 15px;
+  margin-bottom: 18px;
+  border: 1px solid transparent;
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1.45;
+}
+
+.form-notice.show { display: flex; }
+.form-notice::before {
+  content: '!';
+  width: 22px;
+  height: 22px;
+  border-radius: 999px;
+  display: grid;
+  place-items: center;
+  flex: 0 0 auto;
+  font-size: 12px;
+  font-weight: 900;
+}
+
+.form-notice.error {
+  background: rgba(255,107,71,0.12);
+  border-color: rgba(255,107,71,0.34);
+  color: #FFB09D;
+}
+
+.form-notice.error::before {
+  background: var(--coral);
+  color: #fff;
+}
+
+.form-notice.success {
+  background: rgba(16,185,129,0.12);
+  border-color: rgba(16,185,129,0.34);
+  color: #8DE8C1;
+}
+
+.form-notice.success::before {
+  content: '✓';
+  background: var(--success);
+  color: #fff;
+}
+
 /* ── PASSWORD STRENGTH ────────────────────────────── */
 .strength-bar {
   display: flex; gap: 4px; margin-top: 8px;
@@ -487,7 +536,7 @@ html.tm-dark .preview-avatar {
 }
 </style>
   <link rel="stylesheet" href="assets/css/theme.css">
-  <script src="assets/js/theme.js" defer></script>
+  <script src="assets/js/theme.js?v=20260620" defer></script>
 </head>
 <body>
 
@@ -550,6 +599,8 @@ html.tm-dark .preview-avatar {
       <button class="tab active" onclick="switchTab('login', this)">Iniciar sesión</button>
       <button class="tab" onclick="switchTab('register', this)">Crear cuenta</button>
     </div>
+
+    <div class="form-notice" id="form-notice" role="status" aria-live="polite"></div>
 
     <!-- ── VIEW: LOGIN ── -->
     <div class="view active" id="view-login">
@@ -617,10 +668,8 @@ html.tm-dark .preview-avatar {
       </div>
       <div class="field">
         <label>Provincia / Estado</label>
-        <select id="r-provincia" name="r-provincia" data-province-select onchange="clearErr(this)" disabled>
-          <option value="">Primero elegí país</option>
-        </select>
-        <div class="field-error" id="r-prov-err">Seleccioná tu provincia</div>
+        <input type="text" id="r-provincia" name="r-provincia" placeholder="Ej: San José, Jalisco, Antioquia" oninput="clearErr(this)">
+        <div class="field-error" id="r-prov-err">Escribí tu provincia o estado</div>
       </div>
     </div>
 
@@ -710,6 +759,9 @@ html.tm-dark .preview-avatar {
       <p>Tuyomall no vende ni alquila la información personal del Comprador a terceros.</p>
       <h3>3. Responsabilidad de Tuyomall</h3>
       <p>Tuyomall actúa únicamente como medio de publicidad. No se hace responsable por la calidad, entrega, devolución o garantías de los productos o servicios ofrecidos por los emprendedores.</p>
+      <h3>3.1 Responsabilidad del desarrollador y proveedor técnico</h3>
+      <p>El Comprador reconoce que el desarrollador, programador, diseñador, proveedor técnico o cualquier persona que haya participado en la creación, mantenimiento o mejora de la plataforma no forma parte de las compraventas, acuerdos, entregas, pagos, garantías, reclamos o conflictos entre Compradores y emprendedores.</p>
+      <p>El desarrollador y los proveedores técnicos no serán responsables por publicaciones falsas, uso indebido de cuentas, fraudes, incumplimientos comerciales, pérdidas económicas, fallas de terceros, interrupciones del servicio, contenido cargado por usuarios o cualquier daño derivado del mal uso de la plataforma por parte de Compradores, emprendedores o terceros.</p>
       <h3>4. Conflictos con emprendedores</h3>
       <p>En caso de problemas con un pedido, el Comprador debe notificarlo a Tuyomall. Si se verifica el incumplimiento, Tuyomall puede desactivar la página del emprendedor infractor.</p>
       <h3>5. Pagos</h3>
@@ -720,7 +772,7 @@ html.tm-dark .preview-avatar {
   </div>
 </div>
 
-<script src="assets/js/latam-locations.js"></script>
+<script src="assets/js/latam-locations.js?v=6"></script>
 <script>
 // ── Tab switch ──────────────────────────────────────
 function switchTab(tab, btn) {
@@ -735,6 +787,7 @@ function switchView(view) {
   document.getElementById('view-' + view).classList.add('active');
   const tabs = document.getElementById('tabs');
   tabs.style.display = view === 'recover' ? 'none' : 'flex';
+  clearNotice();
 }
 
 // ── Toggle password visibility ──────────────────────
@@ -746,9 +799,25 @@ function togglePass(id, icon) {
 
 // ── Clear error ──────────────────────────────────────
 function clearErr(input) {
+  clearNotice();
   input.classList.remove('error');
   const error = input.closest('.field')?.querySelector('.field-error');
   if (error) error.classList.remove('show');
+}
+
+function showNotice(message, type = 'error') {
+  const notice = document.getElementById('form-notice');
+  if (!notice) return;
+  notice.textContent = message;
+  notice.className = `form-notice show ${type}`;
+  notice.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+}
+
+function clearNotice() {
+  const notice = document.getElementById('form-notice');
+  if (!notice) return;
+  notice.className = 'form-notice';
+  notice.textContent = '';
 }
 
 // ── Password strength ──────────────────────────────────────
@@ -818,7 +887,7 @@ async function doLogin() {
     const result = await postAuth('auth/login-client.php', data);
     window.location.href = result.redirect || 'principal.html';
   } catch (error) {
-    alert(error.message);
+    showNotice(error.message);
     btn.classList.remove('loading');
     btn.disabled = false;
   }
@@ -872,7 +941,12 @@ async function doRegister(event) {
     const result = await postAuth('auth/register-client.php', new FormData(document.getElementById('clientRegisterForm')));
     window.location.href = result.redirect || 'principal.html';
   } catch (error) {
-    alert(error.message);
+    if (/correo/i.test(error.message)) {
+      email.classList.add('error');
+      document.getElementById('r-email-err').textContent = error.message;
+      document.getElementById('r-email-err').classList.add('show');
+    }
+    showNotice(error.message);
     btn.classList.remove('loading');
     btn.disabled = false;
   }

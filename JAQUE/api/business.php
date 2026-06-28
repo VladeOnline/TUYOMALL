@@ -4,7 +4,7 @@ declare(strict_types=1);
 require_once __DIR__ . '/../auth/helpers.php';
 require_once __DIR__ . '/../includes/plan-rules.php';
 
-function public_business_payload(PDO $pdo, array $business): array
+function public_business_payload(PDO $pdo, array $business, bool $forOwner = false): array
 {
     $businessId = (int) $business['id'];
     $plan = get_business_plan($pdo, $businessId);
@@ -38,6 +38,12 @@ function public_business_payload(PDO $pdo, array $business): array
         'productos_negocio_id' => $businessId,
     ]);
     $stats = $stmt->fetch() ?: [];
+    $postCount = (int) ($stats['publicaciones'] ?? 0);
+    $maxProducts = $plan['max_productos'] ?? null;
+
+    if (!$forOwner && $maxProducts !== null) {
+        $postCount = min($postCount, (int) $maxProducts);
+    }
 
     return [
         'id' => $businessId,
@@ -58,7 +64,7 @@ function public_business_payload(PDO $pdo, array $business): array
         'isPremium' => ($plan['codigo'] ?? 'gratis') === 'premium',
         'contacts' => $contacts,
         'stats' => [
-            'posts' => (int) ($stats['publicaciones'] ?? 0),
+            'posts' => $postCount,
             'views' => (int) ($stats['vistas'] ?? 0),
             'saves' => (int) ($stats['guardados'] ?? 0),
             'whatsapp' => (int) ($stats['whatsapp'] ?? 0),
@@ -131,7 +137,7 @@ if ($method === 'GET') {
             json_response(['ok' => false, 'message' => 'No encontramos el negocio.'], 404);
         }
 
-        json_response(['ok' => true, 'business' => public_business_payload($pdo, $business)]);
+        json_response(['ok' => true, 'business' => public_business_payload($pdo, $business, false)]);
     }
 
     start_app_session();
@@ -146,7 +152,7 @@ if ($method === 'GET') {
         json_response(['ok' => false, 'message' => 'No encontramos tu negocio.'], 404);
     }
 
-    json_response(['ok' => true, 'business' => public_business_payload($pdo, $business)]);
+    json_response(['ok' => true, 'business' => public_business_payload($pdo, $business, true)]);
 }
 
 if ($method !== 'POST') {
@@ -226,7 +232,7 @@ try {
     json_response([
         'ok' => true,
         'message' => 'Perfil actualizado correctamente.',
-        'business' => public_business_payload($pdo, $stmt->fetch()),
+        'business' => public_business_payload($pdo, $stmt->fetch(), true),
     ]);
 } catch (Throwable $e) {
     json_response(['ok' => false, 'message' => 'No pudimos actualizar el negocio.'], 500);

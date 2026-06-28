@@ -9,7 +9,7 @@
 <link rel="manifest" href="/site.webmanifest?v=3">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>TuyoMall — Explorar productos</title>
+<title>TuyoMall - Explorar productos</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Clash+Display:wght@500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Syne:wght@400;500;600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.14.0/dist/tabler-icons.min.css">
@@ -62,7 +62,7 @@ body {
   transition: background 0.2s, color 0.2s;
 }
 
-/* ══ TOPNAV ══ */
+/* TOPNAV */
 .topnav {
   position: fixed; top: 0; left: 0; right: 0; z-index: 200;
   height: var(--nav-h);
@@ -73,7 +73,7 @@ body {
   box-shadow: 0 1px 16px rgba(20,33,61,0.05);
 }
 
-/* ══ LOGO ══ */
+/* LOGO */
 .nav-logo {
   display: flex; align-items: center; gap: 10px;
   text-decoration: none; flex-shrink: 0;
@@ -102,7 +102,7 @@ body {
   line-height: 1;
 }
 .logo-mall { color: var(--coral); }
-/* Línea cursiva SVG bajo "Mall" */
+/* Linea cursiva SVG bajo "Mall" */
 .logo-underline {
   position: absolute;
   left: 0;
@@ -137,12 +137,32 @@ body {
   line-height: 1;
 }
 
-.nav-right { display: flex; align-items: center; gap: 8px; margin-left: auto; flex-shrink: 0; }
+.nav-right,
+.nav-public-actions,
+.nav-session-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.nav-right { margin-left: auto; flex-shrink: 0; }
 .nav-btn {
   padding: 8px 18px; border-radius: 100px;
   font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 600;
   cursor: pointer; text-decoration: none; border: none; transition: all 0.2s;
   display: inline-flex; align-items: center; gap: 6px;
+}
+.nav-btn-profile {
+  padding-left: 9px;
+  gap: 8px;
+}
+.nav-btn-profile img {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  object-fit: cover;
+  background: rgba(255,255,255,0.16);
+  border: 1px solid rgba(255,255,255,0.36);
+  flex: 0 0 auto;
 }
 .btn-ghost { background: transparent; border: 1.5px solid var(--sand-2); color: var(--slate); }
 .btn-ghost:hover { border-color: var(--coral); color: var(--coral); }
@@ -156,6 +176,11 @@ body {
   overflow: hidden;
 }
 .nav-avatar img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.nav-session-actions[hidden],
+.nav-public-actions[hidden],
+.nav-avatar[hidden] {
+  display: none;
+}
 .theme-toggle {
   width: 36px; height: 36px; border-radius: 50%;
   border: 1.5px solid var(--sand-2);
@@ -193,7 +218,7 @@ body.dark-mode .sidebar-right {
   border-color: rgba(255,255,255,0.08);
 }
 
-/* ══ LAYOUT ══ */
+/* LAYOUT */
 .layout {
   display: grid;
   grid-template-columns: var(--side-w) 1fr var(--right-w);
@@ -202,7 +227,7 @@ body.dark-mode .sidebar-right {
   max-width: 1440px; margin: 0 auto;
 }
 
-/* ══ LEFT SIDEBAR ══ */
+/* LEFT SIDEBAR */
 .sidebar-left {
   padding: 18px 12px;
   position: sticky; top: var(--nav-h);
@@ -267,7 +292,7 @@ body.dark-mode .sidebar-right {
 
 .divider-line { height: 1px; background: var(--sand-2); margin: 14px 10px; }
 
-/* ══ FEED ══ */
+/* FEED */
 .feed { padding: 20px; min-height: calc(100vh - var(--nav-h)); }
 
 .feed-header {
@@ -304,16 +329,6 @@ body.dark-mode .sidebar-right {
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 24 24' fill='none' stroke='%239AA5B4' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
   background-repeat: no-repeat; background-position: right 10px center; padding-right: 28px;
 }
-.view-toggle { display: flex; background: var(--gray-l); border-radius: 8px; padding: 3px; gap: 2px; }
-.view-btn {
-  width: 30px; height: 28px; border: none;
-  background: transparent; border-radius: 6px;
-  cursor: pointer; color: var(--muted);
-  display: flex; align-items: center; justify-content: center;
-  transition: all 0.15s; font-size: 16px;
-}
-.view-btn.active { background: var(--white); color: var(--navy); box-shadow: 0 1px 4px rgba(0,0,0,0.08); }
-
 /* Category strip */
 .cat-strip {
   display: flex; gap: 8px; margin-bottom: 18px;
@@ -331,13 +346,12 @@ body.dark-mode .sidebar-right {
 .cat-pill.active { background: var(--coral); border-color: var(--coral); color: var(--white); }
 .cat-pill .ti { font-size: 14px; }
 
-/* ══ PRODUCT CARDS — estilo publicación social ══ */
+/* PRODUCT CARDS */
 .products-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
   gap: 16px;
 }
-.products-grid.list-view { grid-template-columns: 1fr; }
 
 .prod-card {
   background: var(--white);
@@ -380,6 +394,7 @@ body.dark-mode .sidebar-right {
   box-shadow: 0 4px 16px rgba(0,0,0,0.2);
   transition: transform 0.22s ease, box-shadow 0.22s ease;
   overflow: hidden;
+  text-decoration: none;
 }
 .prod-avatar img {
   width: 100%;
@@ -388,7 +403,7 @@ body.dark-mode .sidebar-right {
   display: block;
 }
 .prod-card:hover .prod-avatar { transform: scale(1.06); box-shadow: 0 8px 22px rgba(0,0,0,0.24); }
-.prod-header-info { flex: 1; min-width: 0; }
+.prod-header-info { flex: 1; min-width: 0; color: inherit; text-decoration: none; }
 .prod-seller-name {
   font-size: 12px; font-weight: 800; color: white;
   white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
@@ -537,7 +552,7 @@ body.dark-mode .sidebar-right {
 /* Acciones: me gusta, guardar, contactar */
 .prod-actions {
   display: grid;
-  grid-template-columns: auto auto minmax(0, 1fr);
+  grid-template-columns: auto auto auto minmax(0, 1fr);
   align-items: center;
   gap: 6px;
   padding: 10px 12px 8px;
@@ -557,10 +572,12 @@ body.dark-mode .sidebar-right {
 .action-btn:hover { background: var(--gray-l); }
 .action-btn.liked { color: #e55a35; }
 .action-btn.saved { color: #3B82F6; }
+.action-btn.commented { color: var(--coral); }
 .action-btn.liked .ti,
 .action-btn.saved .ti {
   animation: iconPop 0.34s cubic-bezier(.2,.8,.2,1) both;
 }
+.action-comment-count { font-size: 12px; color: var(--muted); }
 .action-like-count { font-size: 12px; color: var(--muted); }
 .action-contact {
   background: #22c55e; color: white;
@@ -581,13 +598,6 @@ body.dark-mode .sidebar-right {
   transform: translateY(-1px);
   box-shadow: 0 10px 22px rgba(34,197,94,0.22);
 }
-
-/* List view */
-.products-grid.list-view .prod-card { display: grid; grid-template-columns: 180px 1fr; }
-.products-grid.list-view .prod-img-wrap { grid-row: 1 / 4; grid-column: 1; aspect-ratio: auto; min-height: 220px; }
-.products-grid.list-view .prod-header { grid-column: 1; width: 180px; }
-.products-grid.list-view .prod-body { grid-column: 2; }
-.products-grid.list-view .prod-actions { grid-column: 2; }
 
 .load-more {
   width: 100%; padding: 13px;
@@ -614,7 +624,7 @@ body.dark-mode .sidebar-right {
 .empty-title { font-family: 'Syne', sans-serif; font-size: 20px; font-weight: 700; margin: 14px 0 8px; }
 .empty-sub { font-size: 14px; color: var(--muted); }
 
-/* ══ RIGHT SIDEBAR ══ */
+/* RIGHT SIDEBAR */
 .sidebar-right {
   padding: 18px 14px;
   position: sticky; top: var(--nav-h);
@@ -749,8 +759,8 @@ body.dark-mode .sidebar-right {
 .trend-tag .ti { font-size: 12px; }
 .trend-tag:hover { background: var(--coral-3); color: var(--coral); border-color: rgba(255,107,71,0.2); }
 
-/* ══ FAB ══ */
-/* ══ MODAL ══ */
+/* FAB */
+/* MODAL */
 .upload-fab {
   position: fixed;
   right: 26px;
@@ -775,6 +785,7 @@ body.dark-mode .sidebar-right {
   user-select: none;
   transition: background 0.18s, box-shadow 0.18s, transform 0.18s;
 }
+.upload-fab[hidden] { display: none; }
 .upload-fab .ti {
   width: 24px;
   height: 24px;
@@ -831,6 +842,200 @@ body.dark-mode .sidebar-right {
 }
 .modal-close:hover { background: var(--coral-3); color: var(--coral); }
 .modal-body { padding: 24px 28px 28px; max-height: 75vh; overflow-y: auto; }
+.auth-modal {
+  max-width: 440px;
+}
+.auth-choice-body {
+  text-align: center;
+}
+.auth-choice-icon {
+  width: 54px;
+  height: 54px;
+  border-radius: 16px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--coral-3);
+  color: var(--coral);
+  font-size: 24px;
+  margin-bottom: 14px;
+}
+.auth-choice-body h3 {
+  font-family: 'Syne', sans-serif;
+  font-size: 26px;
+  color: var(--navy);
+  margin-bottom: 8px;
+}
+.auth-choice-body p {
+  color: var(--slate);
+  line-height: 1.55;
+  margin-bottom: 20px;
+}
+.auth-choice-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+.auth-choice-actions a {
+  min-height: 48px;
+}
+body.dark-mode .auth-choice-body h3 { color: var(--white); }
+body.dark-mode .auth-choice-body p { color: var(--muted); }
+.post-detail-modal {
+  max-width: 920px;
+}
+.post-detail-body {
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(320px, 0.8fr);
+  gap: 0;
+  padding: 0;
+  max-height: min(82vh, 820px);
+  overflow: hidden;
+}
+.post-detail-media {
+  background: #050A12;
+  display: grid;
+  place-items: center;
+  min-height: 520px;
+}
+.post-detail-media img {
+  width: 100%;
+  height: 100%;
+  max-height: min(82vh, 820px);
+  object-fit: contain;
+  display: block;
+}
+.post-detail-side {
+  display: flex;
+  flex-direction: column;
+  min-height: 520px;
+  border-left: 1px solid var(--sand-2);
+}
+.post-detail-info {
+  padding: 18px;
+  border-bottom: 1px solid var(--sand-2);
+}
+.post-detail-seller {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+.post-detail-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  color: white;
+  font-weight: 900;
+}
+.post-detail-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.post-detail-seller strong,
+.comment-author {
+  display: block;
+  color: var(--navy);
+  font-size: 13px;
+  font-weight: 900;
+}
+.post-detail-seller span,
+.comment-time {
+  color: var(--muted);
+  font-size: 12px;
+}
+.post-detail-title {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  color: var(--navy);
+  font-size: 22px;
+  margin-bottom: 8px;
+}
+.post-detail-description {
+  color: var(--slate);
+  font-size: 14px;
+  line-height: 1.55;
+  white-space: pre-wrap;
+}
+.comments-list {
+  flex: 1;
+  overflow-y: auto;
+  padding: 16px 18px;
+}
+.comment-row {
+  display: grid;
+  grid-template-columns: 34px 1fr;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+.comment-avatar {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: var(--coral);
+  color: white;
+  font-size: 13px;
+  font-weight: 900;
+}
+.comment-text {
+  color: var(--slate);
+  font-size: 13px;
+  line-height: 1.45;
+  white-space: pre-wrap;
+}
+.comment-empty {
+  color: var(--muted);
+  font-size: 13px;
+  text-align: center;
+  padding: 38px 12px;
+}
+.comment-form {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 10px;
+  padding: 14px 18px;
+  border-top: 1px solid var(--sand-2);
+}
+.comment-form input {
+  min-height: 42px;
+}
+.comment-form button {
+  min-width: 96px;
+  border: none;
+  border-radius: var(--r);
+  background: var(--coral);
+  color: white;
+  font-weight: 900;
+  cursor: pointer;
+}
+body.dark-mode .post-detail-seller strong,
+body.dark-mode .comment-author,
+body.dark-mode .post-detail-title { color: var(--white); }
+body.dark-mode .post-detail-side,
+body.dark-mode .post-detail-info,
+body.dark-mode .comment-form { border-color: rgba(255,255,255,0.08); }
+body.dark-mode .post-detail-description,
+body.dark-mode .comment-text { color: var(--muted); }
+@media (max-width: 820px) {
+  .post-detail-body {
+    grid-template-columns: 1fr;
+    max-height: 88vh;
+    overflow-y: auto;
+  }
+  .post-detail-media {
+    min-height: 320px;
+    aspect-ratio: 1 / 1;
+  }
+  .post-detail-side {
+    min-height: 420px;
+    border-left: 0;
+  }
+}
 .drop-zone {
   border: 2px dashed var(--sand-2); border-radius: var(--r-lg); padding: 28px 20px;
   text-align: center; cursor: pointer; transition: all 0.2s;
@@ -868,6 +1073,51 @@ select {
 }
 .btn-publish .ti { font-size: 18px; }
 .btn-publish:hover { background: #e85a35; transform: translateY(-2px); box-shadow: 0 8px 24px rgba(255,107,71,0.35); }
+
+.toast-stack {
+  position: fixed;
+  right: 22px;
+  bottom: 22px;
+  z-index: 12000;
+  width: min(360px, calc(100vw - 28px));
+  display: grid;
+  gap: 10px;
+}
+.toast {
+  display: grid;
+  grid-template-columns: 34px 1fr auto;
+  align-items: start;
+  gap: 12px;
+  padding: 14px;
+  border-radius: 18px;
+  background: rgba(20,33,61,0.96);
+  color: white;
+  border: 1px solid rgba(255,255,255,0.12);
+  box-shadow: 0 18px 42px rgba(8,14,25,0.28), 0 0 30px rgba(255,107,71,0.16);
+  animation: toastIn 0.22s ease both;
+}
+.toast-icon {
+  width: 34px;
+  height: 34px;
+  border-radius: 12px;
+  display: grid;
+  place-items: center;
+  background: rgba(255,107,71,0.18);
+  color: var(--coral);
+  font-size: 18px;
+}
+.toast.success .toast-icon { background: rgba(34,197,94,0.18); color: #22c55e; }
+.toast.error .toast-icon { background: rgba(255,107,71,0.2); color: var(--coral); }
+.toast-title { font-weight: 800; margin-bottom: 2px; }
+.toast-text { color: rgba(255,255,255,0.78); font-size: 13px; line-height: 1.42; }
+.toast-close {
+  border: none;
+  background: transparent;
+  color: rgba(255,255,255,0.58);
+  cursor: pointer;
+  padding: 2px;
+}
+.toast-close:hover { color: white; }
 
 @keyframes postCardIn {
   from {
@@ -911,6 +1161,13 @@ select {
   0%, 46% { transform: translateX(-120%); }
   76%, 100% { transform: translateX(120%); }
 }
+@keyframes toastIn {
+  from { opacity: 0; transform: translateY(12px) scale(0.98); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+@keyframes toastOut {
+  to { opacity: 0; transform: translateY(10px) scale(0.98); }
+}
 
 @media (prefers-reduced-motion: reduce) {
   *,
@@ -923,7 +1180,7 @@ select {
   }
 }
 
-/* ══ RESPONSIVE ══ */
+/* RESPONSIVE */
 @media (max-width: 1120px) {
   .layout { grid-template-columns: var(--side-w) 1fr; }
   .sidebar-right { display: none; }
@@ -937,6 +1194,16 @@ select {
   .sort-select { flex: 1; min-width: 0; }
   .topnav { gap: 8px; padding: 0 12px; }
   .nav-logo-text { display: none; }
+  .nav-public-actions {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+  .nav-public-actions .nav-btn {
+    justify-content: center;
+    white-space: normal;
+    text-align: center;
+  }
   .field-row { grid-template-columns: 1fr; }
   .upload-fab {
     height: 48px;
@@ -946,9 +1213,10 @@ select {
 }
 </style>
   <link rel="stylesheet" href="assets/css/theme.css">
-  <script src="assets/js/theme.js" defer></script>
+  <script src="assets/js/theme.js?v=20260620" defer></script>
 </head>
 <body>
+<div class="toast-stack" id="toastStack" aria-live="polite" aria-atomic="true"></div>
 
 <!-- TOP NAV -->
 <nav class="topnav">
@@ -959,7 +1227,7 @@ select {
     <div class="nav-logo-text">
       <span class="logo-tuyo">Tuyo</span><span class="logo-mall-wrap">
         <span class="logo-mall">Mall</span>
-        <!-- Línea cursiva coral bajo "Mall" -->
+        <!-- Linea cursiva coral bajo "Mall" -->
         <svg class="logo-underline" viewBox="0 0 46 7" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
           <path d="M2 4.5 C8 1.5, 16 6.5, 23 3.5 C30 0.5, 38 6, 44 3" stroke="#FF6B47" stroke-width="2" stroke-linecap="round"/>
         </svg>
@@ -976,16 +1244,26 @@ select {
   </div>
 
   <div class="nav-right">
-    <a href="acceso-emprendedor.html" class="nav-btn btn-ghost">
-      <span class="ti ti-rocket"></span> Emprendedor
-    </a>
-    <a href="acceso-cliente.html" class="nav-btn btn-coral">
-      <span class="ti ti-login"></span> Iniciar sesión
-    </a>
+    <div class="nav-public-actions" id="navPublicActions">
+      <a href="acceso-cliente.html" class="nav-btn btn-ghost">
+        <span class="ti ti-user"></span> Iniciar sesion con cliente
+      </a>
+      <a href="acceso-emprendedor.html" class="nav-btn btn-coral">
+        <span class="ti ti-building-store"></span> Iniciar sesion con emprendedor
+      </a>
+    </div>
+    <div class="nav-session-actions" id="navSessionActions" hidden>
+      <a href="dashboard-emprendedor.php" class="nav-btn btn-coral nav-btn-profile" id="navProfileLink">
+        <img data-business-avatar alt="Mi perfil"> Ver perfil
+      </a>
+      <a href="auth/logout.php" class="nav-btn btn-ghost">
+        <span class="ti ti-logout"></span> Cerrar sesion
+      </a>
+    </div>
     <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()" title="Cambiar modo">
       <span class="ti ti-moon"></span>
     </button>
-    <a href="dashboard-emprendedor.php" class="nav-avatar" title="Dashboard emprendedor">
+    <a href="dashboard-emprendedor.php" class="nav-avatar" title="Dashboard emprendedor" hidden>
       <img data-business-avatar alt="Mi negocio">
     </a>
   </div>
@@ -998,109 +1276,34 @@ select {
   <aside class="sidebar-left">
     <div class="side-section">
       <span class="side-label">Explorar</span>
-      <button class="side-item active" onclick="setNav(this)">
+      <button class="side-item active" onclick="setNav(this,'inicio')">
         <span class="ti ti-home"></span> Inicio
       </button>
-      <button class="side-item" onclick="setNav(this)">
+      <button class="side-item" onclick="setNav(this,'destacados')">
         <span class="ti ti-star"></span> Destacados
-        <span class="side-item-count">12</span>
+        <span class="side-item-count" id="featuredCount">0</span>
       </button>
-      <button class="side-item" onclick="setNav(this)">
+      <button class="side-item" onclick="setNav(this,'recientes')">
         <span class="ti ti-clock"></span> Recientes
       </button>
-      <button class="side-item" onclick="setNav(this)">
+      <button class="side-item" onclick="setNav(this,'guardados')">
         <span class="ti ti-bookmark"></span> Guardados
         <span class="side-item-count" id="savedCount">0</span>
+      </button>
+      <button class="side-item" onclick="setNav(this,'likes')">
+        <span class="ti ti-heart"></span> Likes
+        <span class="side-item-count" id="likedCount">0</span>
       </button>
     </div>
 
     <div class="divider-line"></div>
-
-    <!-- CATEGORÍA: single select -->
-    <div class="filter-group">
-      <div class="filter-title">
-        Categoría
-        <button class="filter-clear" onclick="clearFilter('cat')">Limpiar</button>
-      </div>
-      <div id="cat-filters">
-        <div class="filter-pill active" onclick="toggleCatFilter(this,'')">
-          <div class="filter-check">✓</div> Todas
-        </div>
-        <div class="filter-pill" onclick="toggleCatFilter(this,'Alimentos')">
-          <div class="filter-check"></div>
-          <span class="ti ti-tools-kitchen-2"></span> Alimentos
-        </div>
-        <div class="filter-pill" onclick="toggleCatFilter(this,'Arte')">
-          <div class="filter-check"></div>
-          <span class="ti ti-palette"></span> Arte
-        </div>
-        <div class="filter-pill" onclick="toggleCatFilter(this,'Moda')">
-          <div class="filter-check"></div>
-          <span class="ti ti-hanger"></span> Moda
-        </div>
-        <div class="filter-pill" onclick="toggleCatFilter(this,'Servicios')">
-          <div class="filter-check"></div>
-          <span class="ti ti-briefcase"></span> Servicios
-        </div>
-        <div class="filter-pill" onclick="toggleCatFilter(this,'Tecnología')">
-          <div class="filter-check"></div>
-          <span class="ti ti-cpu"></span> Tecnología
-        </div>
-        <div class="filter-pill" onclick="toggleCatFilter(this,'Hogar')">
-          <div class="filter-check"></div>
-          <span class="ti ti-home-2"></span> Hogar
-        </div>
-        <div class="filter-pill" onclick="toggleCatFilter(this,'Belleza')">
-          <div class="filter-check"></div>
-          <span class="ti ti-sparkles"></span> Belleza
-        </div>
-      </div>
-    </div>
-
-    <!-- PROVINCIA: MULTI select — el usuario puede seleccionar varias y desmarcar individualmente -->
-    <div class="filter-group">
-      <div class="filter-title">
-        Provincia
-        <button class="filter-clear" onclick="clearFilter('prov')">Limpiar</button>
-      </div>
-      <div id="prov-filters">
-        <div class="filter-pill" onclick="toggleProvFilter(this,'San José')">
-          <div class="filter-check"></div>
-          <span class="ti ti-map-pin"></span> San José
-        </div>
-        <div class="filter-pill" onclick="toggleProvFilter(this,'Alajuela')">
-          <div class="filter-check"></div>
-          <span class="ti ti-map-pin"></span> Alajuela
-        </div>
-        <div class="filter-pill" onclick="toggleProvFilter(this,'Cartago')">
-          <div class="filter-check"></div>
-          <span class="ti ti-map-pin"></span> Cartago
-        </div>
-        <div class="filter-pill" onclick="toggleProvFilter(this,'Heredia')">
-          <div class="filter-check"></div>
-          <span class="ti ti-map-pin"></span> Heredia
-        </div>
-        <div class="filter-pill" onclick="toggleProvFilter(this,'Guanacaste')">
-          <div class="filter-check"></div>
-          <span class="ti ti-map-pin"></span> Guanacaste
-        </div>
-        <div class="filter-pill" onclick="toggleProvFilter(this,'Puntarenas')">
-          <div class="filter-check"></div>
-          <span class="ti ti-map-pin"></span> Puntarenas
-        </div>
-        <div class="filter-pill" onclick="toggleProvFilter(this,'Limón')">
-          <div class="filter-check"></div>
-          <span class="ti ti-map-pin"></span> Limón
-        </div>
-      </div>
-    </div>
 
     <!-- TIPO: single select -->
     <div class="filter-group">
       <div class="filter-title">Tipo</div>
       <div id="type-filters">
         <div class="filter-pill active" onclick="toggleTypeFilter(this,'')">
-          <div class="filter-check">✓</div> Todos
+          <div class="filter-check">&check;</div> Todos
         </div>
         <div class="filter-pill" onclick="toggleTypeFilter(this,'Producto')">
           <div class="filter-check"></div>
@@ -1112,6 +1315,14 @@ select {
         </div>
       </div>
     </div>
+
+    <div class="filter-group">
+      <div class="filter-title">
+        Subcategoria
+        <button class="filter-clear" onclick="clearFilter('cat')">Limpiar</button>
+      </div>
+      <div id="subcat-filters"></div>
+    </div>
   </aside>
 
   <!-- MAIN FEED -->
@@ -1120,26 +1331,11 @@ select {
       <div class="cat-pill active" onclick="setCatPill(this,'')">
         <span class="ti ti-layout-grid"></span> Todos
       </div>
-      <div class="cat-pill" onclick="setCatPill(this,'Alimentos')">
-        <span class="ti ti-tools-kitchen-2"></span> Alimentos
+      <div class="cat-pill" onclick="setCatPill(this,'Producto')">
+        <span class="ti ti-package"></span> Productos
       </div>
-      <div class="cat-pill" onclick="setCatPill(this,'Arte')">
-        <span class="ti ti-palette"></span> Arte
-      </div>
-      <div class="cat-pill" onclick="setCatPill(this,'Moda')">
-        <span class="ti ti-hanger"></span> Moda
-      </div>
-      <div class="cat-pill" onclick="setCatPill(this,'Servicios')">
+      <div class="cat-pill" onclick="setCatPill(this,'Servicio')">
         <span class="ti ti-briefcase"></span> Servicios
-      </div>
-      <div class="cat-pill" onclick="setCatPill(this,'Tecnología')">
-        <span class="ti ti-cpu"></span> Tecnología
-      </div>
-      <div class="cat-pill" onclick="setCatPill(this,'Hogar')">
-        <span class="ti ti-home-2"></span> Hogar
-      </div>
-      <div class="cat-pill" onclick="setCatPill(this,'Belleza')">
-        <span class="ti ti-sparkles"></span> Belleza
       </div>
     </div>
 
@@ -1152,17 +1348,9 @@ select {
         <select class="sort-select" onchange="sortProducts(this.value)">
           <option value="default">Relevancia</option>
           <option value="premium">Premium primero</option>
-          <option value="recent">Más recientes</option>
-          <option value="az">A → Z</option>
+          <option value="recent">Mas recientes</option>
+          <option value="az">A-Z</option>
         </select>
-        <div class="view-toggle">
-          <button class="view-btn active" id="gridBtn" onclick="setView('grid')" title="Cuadrícula">
-            <span class="ti ti-layout-grid"></span>
-          </button>
-          <button class="view-btn" id="listBtn" onclick="setView('list')" title="Lista">
-            <span class="ti ti-list"></span>
-          </button>
-        </div>
       </div>
     </div>
 
@@ -1170,26 +1358,26 @@ select {
 
     <div class="empty-state" id="emptyState">
       <img class="empty-logo" src="assets/img/logo-tuyomall-nav.png" alt="TuyoMall">
-      <h3 class="empty-title">Aún no hay publicaciones</h3>
-      <p class="empty-sub">Cuando los emprendedores publiquen productos o servicios, aparecerán aquí.</p>
+      <h3 class="empty-title">Aun no hay publicaciones</h3>
+      <p class="empty-sub">Cuando los emprendedores publiquen productos o servicios, apareceran aqui.</p>
     </div>
 
     <button class="load-more" id="loadMoreBtn" onclick="loadMore()">
-      <span class="ti ti-refresh"></span> Ver más publicaciones
+      <span class="ti ti-refresh"></span> Ver mas publicaciones
     </button>
   </main>
 
   <!-- RIGHT SIDEBAR -->
   <aside class="sidebar-right">
     <div class="right-section">
-      <div class="premium-banner">
+      <div class="premium-banner" id="premiumBanner">
         <div class="premium-banner-icon">
-          <span class="ti ti-rocket"></span>
+          <span class="ti ti-rocket" id="premiumBannerIcon"></span>
         </div>
-        <h4>Publicá tu negocio</h4>
-        <p>Llegá a miles de clientes con tu perfil Premium por solo $5/mes</p>
-        <a href="acceso-emprendedor.html">
-          <span class="ti ti-arrow-right"></span> Empezar ahora
+        <h4 id="premiumBannerTitle">Publica tu negocio</h4>
+        <p id="premiumBannerText">Llega a miles de clientes con tu perfil Premium por solo $5 + IVA/mes</p>
+        <a href="acceso-emprendedor.html" id="premiumBannerLink">
+          <span class="ti ti-arrow-right"></span> <span id="premiumBannerLinkText">Empezar ahora</span>
         </a>
       </div>
     </div>
@@ -1212,10 +1400,60 @@ select {
 </div>
 
 <!-- FAB -->
-<button class="upload-fab" id="uploadFab" type="button" aria-label="Publicar">
+<button class="upload-fab" id="uploadFab" type="button" aria-label="Publicar" hidden>
   <span class="ti ti-plus"></span>
   <span class="fab-label">Publicar</span>
 </button>
+
+<!-- POST DETAIL MODAL -->
+<div class="modal-overlay" id="postDetailModal">
+  <div class="modal post-detail-modal">
+    <div class="modal-header">
+      <div class="modal-header-left">
+        <div class="modal-header-icon">
+          <span class="ti ti-message-circle"></span>
+        </div>
+        <span class="modal-title">Publicacion</span>
+      </div>
+      <button class="modal-close" onclick="closePostDetail()" aria-label="Cerrar">
+        <span class="ti ti-x"></span>
+      </button>
+    </div>
+    <div class="modal-body post-detail-body" id="postDetailBody"></div>
+  </div>
+</div>
+
+<!-- AUTH MODAL -->
+<div class="modal-overlay" id="authModal">
+  <div class="modal auth-modal">
+    <div class="modal-header">
+      <div class="modal-header-left">
+        <div class="modal-header-icon">
+          <span class="ti ti-login-2"></span>
+        </div>
+        <span class="modal-title">Inicia sesi&oacute;n</span>
+      </div>
+      <button class="modal-close" onclick="closeAuthModal()" aria-label="Cerrar">
+        <span class="ti ti-x"></span>
+      </button>
+    </div>
+    <div class="modal-body auth-choice-body">
+      <div class="auth-choice-icon">
+        <span class="ti ti-heart-handshake"></span>
+      </div>
+      <h3>Elige c&oacute;mo entrar</h3>
+      <p>Para dar like, guardar publicaciones o publicar tu negocio, entra con tu cuenta de cliente o emprendedor.</p>
+      <div class="auth-choice-actions">
+        <a class="nav-btn btn-ghost" href="acceso-cliente.html">
+          <span class="ti ti-user"></span> Soy cliente
+        </a>
+        <a class="nav-btn btn-coral" href="acceso-emprendedor.html">
+          <span class="ti ti-building-store"></span> Soy emprendedor
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
 
 <!-- MODAL -->
 <div class="modal-overlay" id="uploadModal">
@@ -1225,7 +1463,7 @@ select {
         <div class="modal-header-icon">
           <span class="ti ti-camera-plus"></span>
         </div>
-        <span class="modal-title">Nueva publicación</span>
+        <span class="modal-title">Nueva publicacion</span>
       </div>
       <button class="modal-close" onclick="closeUpload()">
         <span class="ti ti-x"></span>
@@ -1237,47 +1475,45 @@ select {
            ondragleave="this.classList.remove('dragging')"
            ondrop="handleDrop(event)">
         <div class="drop-zone-icon"><span class="ti ti-camera-plus"></span></div>
-        <div class="drop-text">Arrastrá tus fotos aquí</div>
-        <div class="drop-sub">o hacé clic · JPG, PNG · máx. 3 imágenes</div>
+        <div class="drop-text">Arrastra tus fotos aqui</div>
+        <div class="drop-sub">o hace clic - JPG, PNG - 1 imagen por publicacion</div>
         <input type="file" id="fileInput" accept="image/*" multiple onchange="previewImages(this.files)">
       </div>
       <div class="img-previews" id="imgPreviews"></div>
       <div class="field">
         <label>Nombre del producto o servicio *</label>
-        <input type="text" id="up-name" placeholder="Ej: Pizza artesanal al horno de leña">
+        <input type="text" id="up-name" placeholder="Ej: Pizza artesanal al horno de lena">
       </div>
       <div class="field-row">
         <div class="field">
           <label>Precio</label>
-          <input type="text" id="up-price" placeholder="Ej: ₡4.500">
+          <input type="text" id="up-price" placeholder="Ej: CRC 4.500">
         </div>
         <div class="field">
-          <label>Categoría *</label>
-          <select id="up-cat">
-            <option value="">Seleccioná</option>
-            <option>Alimentos</option><option>Arte</option><option>Moda</option>
-            <option>Servicios</option><option>Tecnología</option><option>Hogar</option><option>Belleza</option>
+          <label>Tipo</label>
+          <select id="up-type" onchange="renderPublishSubcategories()">
+            <option value="Producto">Producto</option>
+            <option value="Servicio">Servicio</option>
           </select>
         </div>
       </div>
       <div class="field">
-        <label>Descripción</label>
-        <textarea id="up-desc" placeholder="Describí tu producto o servicio..."></textarea>
+        <label>Descripcion</label>
+        <textarea id="up-desc" placeholder="Describe tu producto o servicio..."></textarea>
       </div>
       <div class="field-row">
         <div class="field">
-          <label>Tipo</label>
-          <select id="up-type">
-            <option value="Producto">Producto</option>
-            <option value="Servicio">Servicio</option>
+          <label>Subcategoria *</label>
+          <select id="up-subcat">
+            <option value="">Selecciona</option>
           </select>
         </div>
         <div class="field">
           <label>Provincia</label>
           <select id="up-prov">
-            <option value="">Seleccioná</option>
-            <option>San José</option><option>Alajuela</option><option>Cartago</option>
-            <option>Heredia</option><option>Guanacaste</option><option>Puntarenas</option><option>Limón</option>
+            <option value="">Selecciona</option>
+            <option>San Jose</option><option>Alajuela</option><option>Cartago</option>
+            <option>Heredia</option><option>Guanacaste</option><option>Puntarenas</option><option>Limon</option>
           </select>
         </div>
       </div>
@@ -1289,25 +1525,169 @@ select {
 </div>
 
 <script>
+const subcategories = {
+  Producto: [
+    ['moda-y-ropa', 'Moda y ropa'],
+    ['calzado', 'Calzado'],
+    ['accesorios-y-joyeria', 'Accesorios y joyeria'],
+    ['belleza-y-cuidado-personal', 'Belleza y cuidado personal'],
+    ['salud-y-bienestar', 'Salud y bienestar'],
+    ['hogar-y-decoracion', 'Hogar y decoracion'],
+    ['tecnologia-y-accesorios', 'Tecnologia y accesorios'],
+    ['alimentos-y-bebidas', 'Alimentos y bebidas'],
+    ['productos-artesanales', 'Productos artesanales'],
+    ['bebes-y-ninos', 'Bebes y ninos'],
+    ['mascotas', 'Mascotas'],
+    ['papeleria-y-oficina', 'Papeleria y oficina'],
+    ['libros-e-infoproductos-fisicos', 'Libros e infoproductos fisicos'],
+    ['repuestos-y-accesorios', 'Repuestos y accesorios']
+  ],
+  Servicio: [
+    ['belleza-y-estetica', 'Belleza y estetica'],
+    ['reparaciones-y-mantenimiento', 'Reparaciones y mantenimiento'],
+    ['diseno-y-marketing', 'Diseno y marketing'],
+    ['educacion-y-clases', 'Educacion y clases'],
+    ['transporte-y-entregas', 'Transporte y entregas'],
+    ['eventos-y-fotografia', 'Eventos y fotografia'],
+    ['servicios-salud-y-bienestar', 'Salud y bienestar'],
+    ['servicios-profesionales', 'Servicios profesionales'],
+    ['tecnologia-y-soporte', 'Tecnologia y soporte'],
+    ['limpieza-y-hogar', 'Limpieza y hogar']
+  ]
+};
+
 const catIconMap = {
-  'Alimentos':  'ti-tools-kitchen-2',
-  'Arte':       'ti-palette',
-  'Moda':       'ti-hanger',
-  'Servicios':  'ti-briefcase',
-  'Tecnología': 'ti-cpu',
-  'Hogar':      'ti-home-2',
-  'Belleza':    'ti-sparkles',
+  'Moda y ropa': 'ti-hanger',
+  'Calzado': 'ti-shoe',
+  'Accesorios y joyeria': 'ti-diamond',
+  'Belleza y cuidado personal': 'ti-sparkles',
+  'Salud y bienestar': 'ti-heart',
+  'Hogar y decoracion': 'ti-home-2',
+  'Tecnologia y accesorios': 'ti-cpu',
+  'Alimentos y bebidas': 'ti-tools-kitchen-2',
+  'Productos artesanales': 'ti-palette',
+  'Bebes y ninos': 'ti-baby-carriage',
+  'Mascotas': 'ti-paw',
+  'Papeleria y oficina': 'ti-notebook',
+  'Libros e infoproductos fisicos': 'ti-book',
+  'Repuestos y accesorios': 'ti-tool',
+  'Belleza y estetica': 'ti-sparkles',
+  'Reparaciones y mantenimiento': 'ti-tools',
+  'Diseno y marketing': 'ti-brush',
+  'Educacion y clases': 'ti-school',
+  'Transporte y entregas': 'ti-truck-delivery',
+  'Eventos y fotografia': 'ti-camera',
+  'Servicios profesionales': 'ti-briefcase',
+  'Tecnologia y soporte': 'ti-device-laptop',
+  'Limpieza y hogar': 'ti-broom'
 };
 function catIcon(cat) {
   return `<span class="ti ${catIconMap[cat]||'ti-package'}" style="font-size:20px;color:var(--coral)"></span>`;
 }
 
+function esc(value) {
+  return String(value ?? '').replace(/[&<>"']/g, char => ({
+    '&': '&amp;',
+    '<': '&lt;',
+    '>': '&gt;',
+    '"': '&quot;',
+    "'": '&#39;'
+  }[char]));
+}
+
+function showToast(message, type = 'info', title = '') {
+  const stack = document.getElementById('toastStack');
+  if (!stack) return;
+  const icons = {
+    success: 'ti-circle-check',
+    error: 'ti-alert-circle',
+    info: 'ti-info-circle'
+  };
+  const titles = {
+    success: 'Listo',
+    error: 'Revisemos esto',
+    info: 'TuyoMall'
+  };
+  const toast = document.createElement('div');
+  toast.className = `toast ${type}`;
+  toast.innerHTML = `
+    <div class="toast-icon"><span class="ti ${icons[type] || icons.info}"></span></div>
+    <div>
+      <div class="toast-title">${esc(title || titles[type] || 'TuyoMall')}</div>
+      <div class="toast-text">${esc(message)}</div>
+    </div>
+    <button class="toast-close" type="button" aria-label="Cerrar"><span class="ti ti-x"></span></button>
+  `;
+  const close = () => {
+    toast.style.animation = 'toastOut 0.2s ease forwards';
+    setTimeout(() => toast.remove(), 200);
+  };
+  toast.querySelector('.toast-close')?.addEventListener('click', close);
+  stack.appendChild(toast);
+  setTimeout(close, type === 'error' ? 6200 : 4200);
+}
+
+function cleanText(value) {
+  let text = String(value ?? '');
+  const replacements = {
+    '\u00c3\u00a1': 'á',
+    '\u00c3\u00a9': 'é',
+    '\u00c3\u00ad': 'í',
+    '\u00c3\u00b3': 'ó',
+    '\u00c3\u00ba': 'ú',
+    '\u00c3\u00b1': 'ñ',
+    '\u00c3\u0081': 'Á',
+    '\u00c3\u0089': 'É',
+    '\u00c3\u008d': 'Í',
+    '\u00c3\u0093': 'Ó',
+    '\u00c3\u009a': 'Ú',
+    '\u00c3\u0091': 'Ñ',
+    '\u00c2\u00b7': '·',
+    '\u00c2\u00bf': '¿',
+    '\u00c2\u00a1': '¡',
+    '\u00c2\u00a9': '©',
+    '\u00e2\u201a\u00a1': '₡',
+    '\u00e2\u20ac\u201c': '-',
+    '\u00e2\u20ac\u201d': '-',
+    '\u00e2\u20ac\u0153': '"',
+    '\u00e2\u20ac\u009d': '"',
+    '\u00e2\u20ac\u2122': "'"
+  };
+  Object.entries(replacements).forEach(([bad, good]) => {
+    text = text.split(bad).join(good);
+  });
+  return text.replace(/\s+·\s+/g, ' · ').trim();
+}
+
+function renderPublishSubcategories() {
+  const type = document.getElementById('up-type')?.value || 'Producto';
+  const select = document.getElementById('up-subcat');
+  if (!select) return;
+  const options = subcategories[type] || subcategories.Producto;
+  select.innerHTML = '<option value="">Selecciona</option>' + options
+    .map(([slug, label]) => `<option value="${slug}">${label}</option>`)
+    .join('');
+}
+
 let allProducts = [];
 
-let activeCat='', activeProvs=new Set(), activeType='', searchQ='';
-let currentView='grid', visibleCount=12;
+let activeCat='', activeType='', searchQ='', activeExplore='inicio';
+let visibleCount=12;
+let currentSessionRole = '';
+const PRODUCT_PAGE_SIZE = 12;
+let productOffset = 0;
+let productsHasMore = true;
+let isLoadingProducts = false;
+let activePostId = null;
 const LIKED_POSTS_KEY = 'tuyomall_liked_posts_v1';
-let likedIds=new Set(JSON.parse(localStorage.getItem(LIKED_POSTS_KEY) || '[]')), savedIds=new Set();
+function readStoredIdSet(key) {
+  try {
+    return new Set(JSON.parse(localStorage.getItem(key) || '[]').map(id => Number(id)).filter(Boolean));
+  } catch (_) {
+    return new Set();
+  }
+}
+let likedIds=readStoredIdSet(LIKED_POSTS_KEY), savedIds=new Set();
 const EMPTY_BUSINESS_AVATAR = `data:image/svg+xml,${encodeURIComponent(`
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80">
   <rect width="80" height="80" rx="40" fill="#FFF0EC"/>
@@ -1322,29 +1702,65 @@ function persistLikedPosts() {
   localStorage.setItem(LIKED_POSTS_KEY, JSON.stringify([...likedIds]));
 }
 
-async function loadPublicProducts() {
+function updateExploreCounts() {
+  const featuredCount = document.getElementById('featuredCount');
+  const savedCount = document.getElementById('savedCount');
+  const likedCount = document.getElementById('likedCount');
+  if (featuredCount) featuredCount.textContent = allProducts.filter(p => p.premium || p.featured).length;
+  if (savedCount) savedCount.textContent = savedIds.size;
+  if (likedCount) likedCount.textContent = likedIds.size;
+}
+
+async function loadPublicProducts(options = {}) {
+  const reset = Boolean(options.reset);
+  if (isLoadingProducts) return;
+  if (reset) {
+    allProducts = [];
+    productOffset = 0;
+    visibleCount = PRODUCT_PAGE_SIZE;
+    productsHasMore = true;
+  }
+  if (!productsHasMore) return;
+  isLoadingProducts = true;
   try {
-    const response = await fetch('api/products.php', { headers: { 'Accept': 'application/json' } });
+    const response = await fetch(`api/products.php?limit=${PRODUCT_PAGE_SIZE}&offset=${productOffset}`, { headers: { 'Accept': 'application/json' } });
     const result = await response.json();
     if (!result.ok || !Array.isArray(result.products)) {
-      allProducts = [];
+      if (reset) allProducts = [];
       return;
     }
 
-    allProducts = result.products.map(product => ({
+    const incoming = result.products.map(product => ({
       ...product,
-      cat: product.cat || 'Servicios',
-      prov: product.prov || 'Toda LATAM',
-      seller: product.seller || 'TuyoMall',
-      sellerInit: product.sellerInit || 'T',
+      name: cleanText(product.name || ''),
+      description: cleanText(product.description || ''),
+      cat: cleanText(product.cat || 'Servicios'),
+      prov: cleanText(product.prov || 'Toda LATAM'),
+      seller: cleanText(product.seller || 'TuyoMall'),
+      sellerInit: cleanText(product.sellerInit || 'T'),
       sellerColor: product.sellerColor || '#FF6B47',
+      sellerWhatsapp: product.sellerWhatsapp || '',
       likes: Number(product.likes || 0),
       premium: Boolean(product.premium),
-      price: product.price || '',
-      type: product.type || 'Producto'
+      featured: Boolean(product.featured),
+      comments: Number(product.comments || 0),
+      price: cleanText(product.price || ''),
+      type: cleanText(product.type || 'Producto'),
+      catSlug: cleanText(product.catSlug || '')
     }));
+    const byId = new Map(allProducts.map(product => [product.id, product]));
+    incoming.forEach(product => byId.set(product.id, product));
+    allProducts = [...byId.values()];
+    productOffset += incoming.length;
+    productsHasMore = Boolean(result.pagination?.has_more);
+    likedIds = new Set(allProducts.filter(product => product.liked_by_me).map(product => product.id));
+    savedIds = new Set(allProducts.filter(product => product.saved_by_me).map(product => product.id));
+    persistLikedPosts();
+    updateExploreCounts();
   } catch (error) {
-    allProducts = [];
+    if (reset) allProducts = [];
+  } finally {
+    isLoadingProducts = false;
   }
 }
 
@@ -1362,16 +1778,99 @@ async function loadCurrentBusinessAvatar() {
   } catch (_) {}
 }
 
+async function syncNavigationSession() {
+  const publicActions = document.getElementById('navPublicActions');
+  const sessionActions = document.getElementById('navSessionActions');
+  const profileLink = document.getElementById('navProfileLink');
+  const uploadFab = document.getElementById('uploadFab');
+  const premiumBanner = document.getElementById('premiumBanner');
+  const premiumBannerIcon = document.getElementById('premiumBannerIcon');
+  const premiumBannerTitle = document.getElementById('premiumBannerTitle');
+  const premiumBannerText = document.getElementById('premiumBannerText');
+  const premiumBannerLink = document.getElementById('premiumBannerLink');
+  const premiumBannerLinkText = document.getElementById('premiumBannerLinkText');
+
+  function setPublicPremiumBanner() {
+    if (!premiumBanner) return;
+    premiumBanner.hidden = false;
+    if (premiumBannerIcon) premiumBannerIcon.className = 'ti ti-rocket';
+    if (premiumBannerTitle) premiumBannerTitle.textContent = 'Publica tu negocio';
+    if (premiumBannerText) premiumBannerText.textContent = 'Llega a miles de clientes con tu perfil Premium por solo $5 + IVA/mes';
+    if (premiumBannerLink) premiumBannerLink.href = 'acceso-emprendedor.html';
+    if (premiumBannerLinkText) premiumBannerLinkText.textContent = 'Empezar ahora';
+  }
+
+  function setBusinessPremiumBanner() {
+    if (!premiumBanner) return;
+    premiumBanner.hidden = false;
+    if (premiumBannerIcon) premiumBannerIcon.className = 'ti ti-building-store';
+    if (premiumBannerTitle) premiumBannerTitle.textContent = 'Gestiona tu negocio';
+    if (premiumBannerText) premiumBannerText.textContent = 'Actualiza tu perfil, crea publicaciones y revisa el rendimiento de tu tienda.';
+    if (premiumBannerLink) premiumBannerLink.href = 'dashboard-emprendedor.php';
+    if (premiumBannerLinkText) premiumBannerLinkText.textContent = 'Ir al panel';
+  }
+
+  try {
+    const response = await fetch('api/session.php', { headers: { 'Accept': 'application/json' } });
+    const result = await response.json();
+    const user = result?.user || {};
+
+    if (!result.ok || !result.authenticated) {
+      currentSessionRole = '';
+      if (publicActions) publicActions.hidden = false;
+      if (sessionActions) sessionActions.hidden = true;
+      if (uploadFab) uploadFab.hidden = true;
+      setPublicPremiumBanner();
+      return;
+    }
+
+    currentSessionRole = user.role || '';
+    if (publicActions) publicActions.hidden = true;
+    if (sessionActions) sessionActions.hidden = false;
+    if (uploadFab) uploadFab.hidden = user.role !== 'emprendedor';
+    if (user.role === 'emprendedor') setBusinessPremiumBanner();
+    else if (premiumBanner) premiumBanner.hidden = true;
+
+    if (profileLink) {
+      profileLink.classList.add('nav-btn-profile');
+      if (user.role === 'emprendedor') {
+        profileLink.href = 'dashboard-emprendedor.php';
+        profileLink.innerHTML = '<img data-business-avatar alt="Mi perfil"> Ver perfil';
+      } else {
+        profileLink.href = 'dashboard-cliente.php';
+        profileLink.innerHTML = '<img data-business-avatar alt="Mi cuenta"> Mi cuenta';
+      }
+    }
+  } catch (_) {
+    currentSessionRole = '';
+    if (publicActions) publicActions.hidden = false;
+    if (sessionActions) sessionActions.hidden = true;
+    if (uploadFab) uploadFab.hidden = true;
+    setPublicPremiumBanner();
+  }
+}
+
 function getFiltered() {
-  return allProducts.filter(p => {
-    const mCat   = !activeCat || p.cat === activeCat;
-    const mProv  = activeProvs.size === 0 || activeProvs.has(p.prov);
+  let products = allProducts.filter(p => {
+    const mCat   = !activeCat || p.catSlug === activeCat || p.cat === activeCat;
     const mType  = !activeType || p.type === activeType;
     const mSearch = !searchQ || p.name.toLowerCase().includes(searchQ)
                   || p.seller.toLowerCase().includes(searchQ)
                   || p.cat.toLowerCase().includes(searchQ);
-    return mCat && mProv && mType && mSearch;
+    return mCat && mType && mSearch;
   });
+
+  if (activeExplore === 'destacados') {
+    products = products.filter(p => p.premium || p.featured);
+  } else if (activeExplore === 'guardados') {
+    products = products.filter(p => savedIds.has(p.id));
+  } else if (activeExplore === 'likes') {
+    products = products.filter(p => likedIds.has(p.id));
+  } else if (activeExplore === 'recientes') {
+    products = [...products].sort((a,b) => b.id - a.id);
+  }
+
+  return products;
 }
 
 const timeLabels = ['hace 2 min','hace 15 min','hace 1 h','hace 3 h','hace 5 h','hace 8 h','hace 1 d','hace 2 d','hace 3 d','hace 4 d','hace 5 d','hace 1 sem'];
@@ -1383,9 +1882,9 @@ function storedBusinessAvatar() {
 function sellerAvatarMarkup(p) {
   const avatar = p.sellerAvatar || null;
   if (avatar) {
-    return `<div class="prod-avatar" style="background:${p.sellerColor}"><img src="${avatar}" alt="${p.seller}" loading="lazy"></div>`;
+    return `<a class="prod-avatar" href="${businessProfileUrl(p)}" style="background:${p.sellerColor}" title="Ver perfil de ${p.seller}"><img src="${avatar}" alt="${p.seller}" loading="lazy"></a>`;
   }
-  return `<div class="prod-avatar" style="background:${p.sellerColor}">${p.sellerInit}</div>`;
+  return `<a class="prod-avatar" href="${businessProfileUrl(p)}" style="background:${p.sellerColor}" title="Ver perfil de ${p.seller}">${p.sellerInit}</a>`;
 }
 
 function renderProducts() {
@@ -1395,29 +1894,46 @@ function renderProducts() {
   const loadBtn = document.getElementById('loadMoreBtn');
   const filtered = getFiltered();
   const visible  = filtered.slice(0, visibleCount);
+  updateExploreCounts();
 
-  count.textContent = `Mostrando ${visible.length} de ${filtered.length} publicación${filtered.length!==1?'es':''}`;
+  count.textContent = `Mostrando ${visible.length} publicacion${visible.length!==1?'es':''}`;
 
   if (filtered.length === 0) {
+    const emptyTitle = empty.querySelector('.empty-title');
+    const emptySub = empty.querySelector('.empty-sub');
+    const emptyCopy = {
+      destacados: ['No hay destacados todavia', 'Las publicaciones Premium o destacadas apareceran aqui.'],
+      guardados: ['Aun no guardaste publicaciones', 'Toca el icono de marcador en una publicacion para verla aqui.'],
+      likes: ['Aun no diste likes', 'Toca el corazon en una publicacion para crear tu lista de likes.'],
+      recientes: ['No hay publicaciones recientes', 'Cuando haya nuevas publicaciones apareceran aqui.'],
+      inicio: ['Aun no hay publicaciones', 'Cuando los emprendedores publiquen productos o servicios, apareceran aqui.']
+    };
+    const [title, sub] = emptyCopy[activeExplore] || emptyCopy.inicio;
+    if (emptyTitle) emptyTitle.textContent = title;
+    if (emptySub) emptySub.textContent = sub;
     grid.innerHTML=''; empty.classList.add('show'); loadBtn.style.display='none'; return;
   }
   empty.classList.remove('show');
-  loadBtn.style.display = filtered.length > visibleCount ? 'flex' : 'none';
+  loadBtn.style.display = productsHasMore ? 'flex' : 'none';
+  loadBtn.disabled = isLoadingProducts;
+  loadBtn.innerHTML = isLoadingProducts
+    ? '<span class="ti ti-loader-2"></span> Cargando...'
+    : '<span class="ti ti-refresh"></span> Ver mas publicaciones';
 
   grid.innerHTML = visible.map((p, index) => {
     const liked   = likedIds.has(p.id);
     const saved   = savedIds.has(p.id);
-    const total   = p.likes + (liked ? 1 : 0);
+    const total   = p.likes;
     const timeAgo = timeLabels[(p.id-1) % timeLabels.length];
     return `
     <div class="prod-card" style="--post-delay:${Math.min(index * 42, 360)}ms">
       <div class="prod-header">
         ${sellerAvatarMarkup(p)}
-        <div class="prod-header-info">
+        <a class="prod-header-info" href="${businessProfileUrl(p)}" title="Ver perfil de ${p.seller}">
           <div class="prod-seller-name">${p.seller}</div>
           <div class="prod-seller-meta">${p.prov} · ${timeAgo}</div>
-        </div>
-        <button class="prod-menu" onclick="togglePostMenu(event, ${p.id}, this)" title="Más opciones">
+        </a>
+        <button class="prod-menu" onclick="togglePostMenu(event, ${p.id}, this)" title="Mas opciones">
           <span class="ti ti-dots"></span>
         </button>
         <div class="post-menu">
@@ -1428,7 +1944,7 @@ function renderProducts() {
           <button class="report-action" onclick="reportPost(${p.id})"><span class="ti ti-flag"></span> Reportar</button>
         </div>
       </div>
-      <div class="prod-img-wrap">
+      <div class="prod-img-wrap" onclick="openPostDetail(${p.id})">
         <img class="prod-img" src="${p.img}" alt="${p.name}" loading="lazy"
              onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
         <div class="prod-img-placeholder" style="display:none">${catIcon(p.cat)}</div>
@@ -1436,7 +1952,7 @@ function renderProducts() {
           <span class="ti ${p.type==='Servicio'?'ti-briefcase':'ti-package'}"></span> ${p.type}
         </span>
       </div>
-      <div class="prod-body">
+      <div class="prod-body" onclick="openPostDetail(${p.id})">
         <div class="prod-caption-row">
           <div class="prod-price">${p.price}</div>
           ${p.premium ? `<span class="prod-premium-badge"><span class="ti ti-crown"></span> PRO</span>` : ''}
@@ -1448,10 +1964,14 @@ function renderProducts() {
           <span class="ti ${liked?'ti-heart-filled':'ti-heart'}"></span>
           <span class="action-like-count">${total}</span>
         </button>
+        <button class="action-btn commented" onclick="openPostDetail(${p.id})" title="Comentarios">
+          <span class="ti ti-message-circle"></span>
+          <span class="action-comment-count">${p.comments || 0}</span>
+        </button>
         <button class="action-btn ${saved?'saved':''}" onclick="toggleSave(${p.id},this)" title="Guardar">
           <span class="ti ${saved?'ti-bookmark-filled':'ti-bookmark'}"></span>
         </button>
-        <a class="action-contact" href="https://wa.me/50688027022" target="_blank" title="WhatsApp">
+        <a class="action-contact" href="${whatsappUrl(p)}" target="_blank" onclick="recordProductMetric(${p.id}, 'click_whatsapp')" title="WhatsApp">
           <span class="ti ti-brand-whatsapp"></span> WhatsApp
         </a>
       </div>
@@ -1465,7 +1985,7 @@ function renderSidebar() {
   const premDiv = document.getElementById('premiumHighlights');
   const tagDiv  = document.getElementById('trendTags');
   const premium = allProducts.filter(p=>p.premium).slice(0,4);
-  const cats    = [...new Set(allProducts.map(p=>p.cat))];
+  const cats    = [...new Map(allProducts.map(p=>[p.catSlug || p.cat, p.cat])).entries()];
 
   premDiv.innerHTML = premium.length ? premium.map((p,index)=>`
     <div class="highlight-card" style="--hl-delay:${index * 70}ms">
@@ -1478,37 +1998,43 @@ function renderSidebar() {
         <div class="hl-pro-dot"></div>
         <div class="hl-price">${p.price}</div>
       </div>
-    </div>`).join('') : '<p class="empty-sub">Los destacados aparecerán cuando haya publicaciones Premium.</p>';
+    </div>`).join('') : '<p class="empty-sub">Los destacados apareceran cuando haya publicaciones Premium.</p>';
 
-  tagDiv.innerHTML = cats.length ? cats.map(c=>`
-    <span class="trend-tag" onclick="setCatPill(null,'${c}')">
-      <span class="ti ${catIconMap[c]||'ti-tag'}"></span>${c}
+  tagDiv.innerHTML = cats.length ? cats.map(([slug, label])=>`
+    <span class="trend-tag" onclick="activeCat='${slug}';renderSubcategoryFilters();renderProducts();">
+      <span class="ti ${catIconMap[label]||'ti-tag'}"></span>${label}
     </span>`).join('') : '<p class="empty-sub">Las tendencias se forman con publicaciones reales.</p>';
 }
 
-/* ── FILTROS ── */
-function toggleCatFilter(el, val) {
-  document.querySelectorAll('#cat-filters .filter-pill').forEach(p=>{
-    p.classList.remove('active');
-    const c=p.querySelector('.filter-check'); if(c) c.textContent='';
-  });
-  el.classList.add('active');
-  const c=el.querySelector('.filter-check'); if(c) c.textContent='✓';
-  activeCat=val; syncCatPills(val); visibleCount=12; renderProducts();
+
+function subcategoryOptionsForCurrentType() {
+  if (activeType === 'Producto') return subcategories.Producto;
+  if (activeType === 'Servicio') return subcategories.Servicio;
+  return [...subcategories.Producto, ...subcategories.Servicio];
 }
 
-/* PROVINCIA: toggle individual — se puede seleccionar varias, desmarcar individualmente o con Limpiar */
-function toggleProvFilter(el, val) {
-  if (activeProvs.has(val)) {
-    activeProvs.delete(val);
-    el.classList.remove('active');
-    const c=el.querySelector('.filter-check'); if(c) c.textContent='';
-  } else {
-    activeProvs.add(val);
-    el.classList.add('active');
-    const c=el.querySelector('.filter-check'); if(c) c.textContent='✓';
-  }
-  visibleCount=12; renderProducts();
+function renderSubcategoryFilters() {
+  const wrap = document.getElementById('subcat-filters');
+  if (!wrap) return;
+  const options = subcategoryOptionsForCurrentType();
+  wrap.innerHTML = `
+    <div class="filter-pill ${activeCat === '' ? 'active' : ''}" onclick="toggleSubcategoryFilter(this,'')">
+      <div class="filter-check">${activeCat === '' ? '&check;' : ''}</div> Todas
+    </div>
+    ${options.map(([slug, label]) => `
+      <div class="filter-pill ${activeCat === slug ? 'active' : ''}" onclick="toggleSubcategoryFilter(this,'${slug}')">
+        <div class="filter-check">${activeCat === slug ? '&check;' : ''}</div>
+        <span class="ti ${catIconMap[label] || 'ti-tag'}"></span> ${label}
+      </div>
+    `).join('')}
+  `;
+}
+
+function toggleSubcategoryFilter(el, val) {
+  activeCat = val;
+  visibleCount = 12;
+  renderSubcategoryFilters();
+  renderProducts();
 }
 
 function toggleTypeFilter(el, val) {
@@ -1517,51 +2043,45 @@ function toggleTypeFilter(el, val) {
     const c=p.querySelector('.filter-check'); if(c) c.textContent='';
   });
   el.classList.add('active');
-  const c=el.querySelector('.filter-check'); if(c) c.textContent='✓';
-  activeType=val; visibleCount=12; renderProducts();
+  const c=el.querySelector('.filter-check'); if(c) c.innerHTML='&check;';
+  activeType=val;
+  activeCat='';
+  visibleCount=12;
+  syncCatPills(val);
+  renderSubcategoryFilters();
+  renderProducts();
 }
 
 function clearFilter(group) {
   if (group==='cat') {
-    document.querySelectorAll('#cat-filters .filter-pill').forEach(p=>{
-      p.classList.remove('active');
-      const c=p.querySelector('.filter-check'); if(c) c.textContent='';
-    });
-    const first=document.querySelector('#cat-filters .filter-pill:first-child');
-    first.classList.add('active');
-    const c=first.querySelector('.filter-check'); if(c) c.textContent='✓';
-    activeCat=''; syncCatPills('');
-  }
-  if (group==='prov') {
-    document.querySelectorAll('#prov-filters .filter-pill').forEach(p=>{
-      p.classList.remove('active');
-      const c=p.querySelector('.filter-check'); if(c) c.textContent='';
-    });
-    activeProvs.clear();
+    activeCat='';
+    renderSubcategoryFilters();
   }
   visibleCount=12; renderProducts();
 }
 
-function setCatPill(el, cat) {
+function setCatPill(el, type) {
   document.querySelectorAll('.cat-pill').forEach(p=>p.classList.remove('active'));
   if (el) el.classList.add('active');
-  else document.querySelectorAll('.cat-pill').forEach(p=>{
-    if(p.textContent.trim().includes(cat)) p.classList.add('active');
-  });
-  activeCat=cat; syncSidebarCat(cat); visibleCount=12; renderProducts();
+  activeType=type;
+  activeCat='';
+  syncSidebarType(type);
+  renderSubcategoryFilters();
+  visibleCount=12;
+  renderProducts();
 }
-function syncCatPills(cat) {
+function syncCatPills(type) {
   document.querySelectorAll('.cat-pill').forEach(p=>{
     const t=p.textContent.trim();
-    p.classList.toggle('active', cat===''? t.includes('Todos') : t.includes(cat));
+    p.classList.toggle('active', type===''? t.includes('Todos') : t.includes(`${type}s`));
   });
 }
-function syncSidebarCat(cat) {
-  document.querySelectorAll('#cat-filters .filter-pill').forEach(p=>{
+function syncSidebarType(type) {
+  document.querySelectorAll('#type-filters .filter-pill').forEach(p=>{
     const t=p.textContent.trim();
-    const m=cat===''? t.startsWith('Todas') : t.includes(cat);
+    const m=type===''? t.startsWith('Todos') : t.includes(type);
     p.classList.toggle('active',m);
-    const c=p.querySelector('.filter-check'); if(c) c.textContent=m?'✓':'';
+    const c=p.querySelector('.filter-check'); if(c) c.innerHTML=m?'&check;':'';
   });
 }
 
@@ -1573,17 +2093,18 @@ function sortProducts(val) {
   else allProducts.sort((a,b)=>b.premium-a.premium||a.id-b.id);
   renderProducts();
 }
-function setView(view) {
-  currentView=view;
-  document.getElementById('productsGrid').classList.toggle('list-view',view==='list');
-  document.getElementById('gridBtn').classList.toggle('active',view==='grid');
-  document.getElementById('listBtn').classList.toggle('active',view==='list');
-}
-function setNav(btn) {
+function setNav(btn, view='inicio') {
+  activeExplore = view;
+  visibleCount = 12;
   document.querySelectorAll('.side-item').forEach(b=>b.classList.remove('active'));
   btn.classList.add('active');
+  renderProducts();
 }
-function loadMore() { visibleCount+=8; renderProducts(); }
+async function loadMore() {
+  visibleCount += PRODUCT_PAGE_SIZE;
+  await loadPublicProducts();
+  renderProducts();
+}
 
 function closePostMenus() {
   document.querySelectorAll('.prod-card.menu-open').forEach(card => card.classList.remove('menu-open'));
@@ -1601,20 +2122,165 @@ function getPost(id) {
   return allProducts.find(p => p.id === id);
 }
 
+function commentTimeLabel(value) {
+  if (!value) return 'Ahora';
+  const date = new Date(String(value).replace(' ', 'T'));
+  if (Number.isNaN(date.getTime())) return 'Ahora';
+  const diff = Math.max(0, Date.now() - date.getTime());
+  const minutes = Math.floor(diff / 60000);
+  if (minutes < 1) return 'Ahora';
+  if (minutes < 60) return `hace ${minutes} min`;
+  const hours = Math.floor(minutes / 60);
+  if (hours < 24) return `hace ${hours} h`;
+  const days = Math.floor(hours / 24);
+  return `hace ${days} d`;
+}
+
+function renderComments(comments = []) {
+  const list = document.getElementById('postCommentsList');
+  if (!list) return;
+  if (!comments.length) {
+    list.innerHTML = '<div class="comment-empty">Aun no hay comentarios. Se el primero en comentar.</div>';
+    return;
+  }
+  list.innerHTML = comments.map(comment => `
+    <div class="comment-row">
+      <div class="comment-avatar">${esc(comment.initial || 'U')}</div>
+      <div>
+        <span class="comment-author">${esc(comment.name || 'Usuario TuyoMall')}</span>
+        <div class="comment-text">${esc(comment.comment || '')}</div>
+        <span class="comment-time">${commentTimeLabel(comment.created_at)}</span>
+      </div>
+    </div>
+  `).join('');
+}
+
+async function loadPostComments(id) {
+  const list = document.getElementById('postCommentsList');
+  if (list) list.innerHTML = '<div class="comment-empty">Cargando comentarios...</div>';
+  try {
+    const response = await fetch(`api/comments.php?producto_id=${id}&limit=20`, { headers: { 'Accept': 'application/json' } });
+    const result = await response.json();
+    if (!result.ok) throw new Error(result.message || 'No se pudieron cargar comentarios.');
+    renderComments(result.comments || []);
+  } catch (error) {
+    if (list) list.innerHTML = `<div class="comment-empty">${esc(error.message || 'No se pudieron cargar comentarios.')}</div>`;
+  }
+}
+
+function openPostDetail(id) {
+  closePostMenus();
+  const p = getPost(id);
+  if (!p) return;
+  recordProductMetric(id, 'vista');
+  activePostId = id;
+  const avatar = p.sellerAvatar
+    ? `<img src="${esc(p.sellerAvatar)}" alt="${esc(p.seller)}">`
+    : esc(p.sellerInit || 'T');
+  const body = document.getElementById('postDetailBody');
+  body.innerHTML = `
+    <div class="post-detail-media">
+      <img src="${esc(p.img)}" alt="${esc(p.name)}">
+    </div>
+    <div class="post-detail-side">
+      <div class="post-detail-info">
+        <div class="post-detail-seller">
+          <a class="post-detail-avatar" href="${businessProfileUrl(p)}" style="background:${esc(p.sellerColor || '#FF6B47')}">${avatar}</a>
+          <div>
+            <strong>${esc(p.seller)}</strong>
+            <span>${esc(p.prov)} · ${esc(p.type)}</span>
+          </div>
+        </div>
+        <h2 class="post-detail-title">${esc(p.name)}</h2>
+        <p class="post-detail-description">${esc(p.description || 'Esta publicacion aun no tiene descripcion.')}</p>
+      </div>
+      <div class="comments-list" id="postCommentsList"></div>
+      <form class="comment-form" id="commentForm" onsubmit="submitComment(event)">
+        <input id="commentInput" type="text" maxlength="600" placeholder="Agrega un comentario..." autocomplete="off">
+        <button type="submit">Publicar</button>
+      </form>
+    </div>
+  `;
+  document.getElementById('postDetailModal')?.classList.add('open');
+  document.body.style.overflow = 'hidden';
+  loadPostComments(id);
+}
+
+function closePostDetail() {
+  document.getElementById('postDetailModal')?.classList.remove('open');
+  activePostId = null;
+  document.body.style.overflow = '';
+}
+
+async function submitComment(event) {
+  event.preventDefault();
+  if (!activePostId) return;
+  const input = document.getElementById('commentInput');
+  const comment = input?.value.trim() || '';
+  if (!comment) return;
+
+  const data = new FormData();
+  data.append('producto_id', activePostId);
+  data.append('comentario', comment);
+
+  try {
+    const response = await fetch('api/comments.php', {
+      method: 'POST',
+      body: data,
+      headers: { 'Accept': 'application/json' }
+    });
+    const result = await response.json();
+    if (!result.ok) throw new Error(result.message || 'No se pudo comentar.');
+    if (input) input.value = '';
+    const post = getPost(activePostId);
+    if (post) post.comments = Number(post.comments || 0) + 1;
+    await loadPostComments(activePostId);
+    renderProducts();
+  } catch (error) {
+    if (needsAuthModal(error.message)) {
+      closePostDetail();
+      showAuthModal();
+    } else {
+      showToast(error.message || 'No se pudo comentar.', 'error');
+    }
+  }
+}
+
 function postUrl(id) {
-  return `${window.location.origin}${window.location.pathname}?producto=${id}`;
+  return `${window.location.origin}/p/${encodeURIComponent(id)}`;
+}
+
+function businessProfileUrl(p) {
+  if (!p) return 'perfil-publico.html';
+  if (p.business_slug) return `perfil-publico.html?business_slug=${encodeURIComponent(p.business_slug)}`;
+  if (p.business_id) return `perfil-publico.html?business_id=${encodeURIComponent(p.business_id)}`;
+  return `/p/${encodeURIComponent(p.id)}`;
+}
+
+function whatsappUrl(p) {
+  const digits = String(p?.sellerWhatsapp || '').replace(/[^0-9]/g, '');
+  return digits ? `https://wa.me/${digits}` : 'https://wa.me/50688027022';
+}
+
+function recordProductMetric(productId, eventName) {
+  const data = new FormData();
+  data.append('producto_id', productId);
+  data.append('evento', eventName);
+  fetch('api/metrics.php', {
+    method: 'POST',
+    body: data,
+    headers: { 'Accept': 'application/json' }
+  }).catch(() => {});
 }
 
 function viewDetails(id) {
   closePostMenus();
-  const p = getPost(id);
-  if (!p) return;
-  alert(`${p.name}\n${p.price}\n${p.seller} · ${p.prov}`);
+  openPostDetail(id);
 }
 
 function viewBusiness(id) {
   closePostMenus();
-  window.location.href = `perfil-publico.html?id=${id}`;
+  window.location.href = businessProfileUrl(getPost(id));
 }
 
 async function sharePost(id) {
@@ -1629,23 +2295,25 @@ async function sharePost(id) {
   };
   if (navigator.share) {
     await navigator.share(data);
+    recordProductMetric(id, 'compartir');
     return;
   }
   await navigator.clipboard.writeText(url);
-  alert('Enlace copiado para compartir.');
+  recordProductMetric(id, 'compartir');
+  showToast('Enlace copiado para compartir.', 'success', 'Copiado');
 }
 
 async function copyPostLink(id) {
   closePostMenus();
   await navigator.clipboard.writeText(postUrl(id));
-  alert('Enlace copiado.');
+  showToast('Enlace copiado.', 'success', 'Copiado');
 }
 
 function reportPost(id) {
   closePostMenus();
   const p = getPost(id);
   if (!p) return;
-  alert(`Gracias. Revisaremos la publicación "${p.name}".`);
+  showToast(`Gracias. Revisaremos la publicacion "${p.name}".`, 'info', 'Reporte recibido');
 }
 
 async function saveInteraction(id, action) {
@@ -1658,6 +2326,20 @@ async function saveInteraction(id, action) {
     headers: { 'Accept': 'application/json' }
   });
   return response.json();
+}
+
+function showAuthModal() {
+  document.getElementById('authModal')?.classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeAuthModal() {
+  document.getElementById('authModal')?.classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+function needsAuthModal(message = '') {
+  return /inicia sesion|inicia sesión|cliente o emprendedor/i.test(String(message));
 }
 
 async function toggleLike(id,btn) {
@@ -1676,15 +2358,18 @@ async function toggleLike(id,btn) {
     }
     btn.querySelector('.action-like-count').textContent=p.likes;
     persistLikedPosts();
+    updateExploreCounts();
+    if (activeExplore === 'likes' && !result.active) renderProducts();
   } catch (error) {
-    alert(error.message || 'Inicia sesión como cliente para dar like.');
+    if (needsAuthModal(error.message)) showAuthModal();
+    else showToast(error.message || 'No se pudo guardar el like.', 'error');
   }
 }
 
 async function toggleSave(id,btn) {
   try {
     const result = await saveInteraction(id, 'guardar');
-    if (!result.ok) throw new Error(result.message || 'No se pudo guardar la publicación.');
+    if (!result.ok) throw new Error(result.message || 'No se pudo guardar la publicacion.');
     if(result.active) {
       savedIds.add(id); btn.classList.add('saved');
       btn.querySelector('.ti').className='ti ti-bookmark-filled';
@@ -1692,13 +2377,33 @@ async function toggleSave(id,btn) {
       savedIds.delete(id); btn.classList.remove('saved');
       btn.querySelector('.ti').className='ti ti-bookmark';
     }
-    document.getElementById('savedCount').textContent=savedIds.size;
+    updateExploreCounts();
+    if (activeExplore === 'guardados' && !result.active) renderProducts();
   } catch (error) {
-    alert(error.message || 'Inicia sesión como cliente para guardar.');
+    if (needsAuthModal(error.message)) showAuthModal();
+    else showToast(error.message || 'No se pudo guardar la publicacion.', 'error');
   }
 }
 
-function openUpload() { document.getElementById('uploadModal').classList.add('open'); document.body.style.overflow='hidden'; }
+async function openUpload() {
+  if (currentSessionRole !== 'emprendedor') {
+    showAuthModal();
+    return;
+  }
+
+  try {
+    const response = await fetch('api/business.php', { headers: { 'Accept': 'application/json' } });
+    const result = await response.json();
+    if (!result.ok) {
+      showAuthModal();
+      return;
+    }
+    document.getElementById('uploadModal').classList.add('open');
+    document.body.style.overflow='hidden';
+  } catch (_) {
+    showAuthModal();
+  }
+}
 function closeUpload() { document.getElementById('uploadModal').classList.remove('open'); document.body.style.overflow=''; }
 function initDraggableFab() {
   const fab = document.getElementById('uploadFab');
@@ -1708,11 +2413,13 @@ function initDraggableFab() {
   let startX = 0, startY = 0, originX = 0, originY = 0, moved = false;
 
   function clampPosition(x, y) {
+    const nav = document.querySelector('.topnav');
+    const minY = (nav ? Math.ceil(nav.getBoundingClientRect().height) : 0) + margin;
     const maxX = window.innerWidth - fab.offsetWidth - margin;
     const maxY = window.innerHeight - fab.offsetHeight - margin;
     return {
       x: Math.min(Math.max(margin, x), maxX),
-      y: Math.min(Math.max(margin, y), maxY)
+      y: Math.min(Math.max(minY, y), Math.max(minY, maxY))
     };
   }
 
@@ -1780,26 +2487,58 @@ function handleDrop(e) {
   document.getElementById('dropZone').classList.remove('dragging');
   if(e.dataTransfer.files.length) previewImages(e.dataTransfer.files);
 }
-function publishProduct() {
+async function publishProduct() {
   const name=document.getElementById('up-name').value.trim();
-  const cat=document.getElementById('up-cat').value;
-  if(!name||!cat){ alert('Por favor completá el nombre y la categoría.'); return; }
-  closeUpload(); alert(`¡"${name}" publicado en el feed!`);
+  const subcat=document.getElementById('up-subcat').value;
+  if(!name||!subcat){ showToast('Por favor completa el nombre y la subcategoria.', 'error'); return; }
+
+  const data = new FormData();
+  data.append('nombre', name);
+  data.append('precio', document.getElementById('up-price').value.trim());
+  data.append('descripcion', document.getElementById('up-desc').value.trim());
+  data.append('tipo', document.getElementById('up-type').value === 'Servicio' ? 'servicio' : 'producto');
+  data.append('subcategoria', subcat);
+  Array.from(document.getElementById('fileInput').files || []).forEach(file => {
+    data.append('imagenes[]', file);
+  });
+
+  try {
+    const response = await fetch('api/products.php', {
+      method: 'POST',
+      body: data,
+      headers: { 'Accept': 'application/json' }
+    });
+    const result = await response.json();
+    if (!result.ok) throw new Error(result.message || 'No se pudo publicar.');
+    closeUpload();
+    await loadPublicProducts({reset:true});
+    renderProducts();
+  } catch (error) {
+    if (needsAuthModal(error.message)) showAuthModal();
+    else showToast(error.message || 'No se pudo publicar.', 'error');
+  }
 }
 
 document.getElementById('uploadModal').addEventListener('click',function(e){ if(e.target===this) closeUpload(); });
+document.getElementById('authModal').addEventListener('click',function(e){ if(e.target===this) closeAuthModal(); });
+document.getElementById('postDetailModal').addEventListener('click',function(e){ if(e.target===this) closePostDetail(); });
 document.addEventListener('click', closePostMenus);
 document.addEventListener('keydown',e=>{
   if(e.key==='Escape') {
+    closePostDetail();
+    closeAuthModal();
     closeUpload();
     closePostMenus();
   }
 });
 
 initDraggableFab();
+renderSubcategoryFilters();
+renderPublishSubcategories();
 async function bootFeed() {
+  await syncNavigationSession();
   loadCurrentBusinessAvatar();
-  await loadPublicProducts();
+  await loadPublicProducts({reset:true});
   allProducts.sort((a,b)=>b.premium-a.premium);
   renderProducts();
 }

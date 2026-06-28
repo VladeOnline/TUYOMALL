@@ -122,5 +122,5 @@ try {
     if (isset($pdo) && $pdo instanceof PDO && $pdo->inTransaction()) {
         $pdo->rollBack();
     }
-    json_response(['ok' => false, 'message' => 'No pudimos crear el negocio. Revisa la conexión a la base de datos.'], 500);
+    json_response(['ok' => false, 'message' => database_public_message($e, 'register-business')], 500);
 }

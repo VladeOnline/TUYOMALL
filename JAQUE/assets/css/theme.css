@@ -183,7 +183,6 @@ html.tm-dark input,
 html.tm-dark textarea,
 html.tm-dark select,
 html.tm-dark .sort-select,
-html.tm-dark .view-toggle,
 html.tm-dark .cat-pill,
 html.tm-dark .filter-check,
 html.tm-dark .faq-item,
@@ -527,8 +526,9 @@ html.tm-dark small {
 }
 
 .global-theme-toggle .theme-symbol {
-  font-size: 18px;
-  line-height: 1;
+  width: 20px;
+  height: 20px;
+  display: block;
 }
 
 @media (max-width: 720px) {
@@ -537,5 +537,274 @@ html.tm-dark small {
     bottom: 14px;
     width: 42px;
     height: 42px;
+  }
+}
+
+/* Responsive safety net for all TuyoMall pages */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  max-width: 100%;
+}
+
+body {
+  overflow-x: hidden;
+}
+
+img,
+svg,
+video,
+canvas {
+  max-width: 100%;
+}
+
+@media (max-width: 980px) {
+  .page,
+  main.page,
+  .hero,
+  .auth-layout,
+  .main-grid,
+  .content-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  .sidebar,
+  .sidebar-right {
+    width: 100% !important;
+    max-width: none !important;
+  }
+
+  .topnav,
+  .topbar-inner,
+  .nav {
+    max-width: 100%;
+  }
+
+  .plans-grid,
+  .features-grid,
+  .steps-grid,
+  .reviews-layout {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+@media (max-width: 760px) {
+  body {
+    min-width: 0 !important;
+    grid-template-columns: 1fr !important;
+  }
+
+  body:has(.left):has(.right) {
+    grid-template-columns: 1fr !important;
+  }
+
+  .left,
+  .right {
+    width: 100% !important;
+    min-width: 0 !important;
+  }
+
+  .left {
+    min-height: auto !important;
+    padding: 24px 18px !important;
+  }
+
+  .right {
+    padding: 24px 18px 86px !important;
+  }
+
+  .left h1,
+  .left h2,
+  .hero-h1,
+  h1 {
+    overflow-wrap: anywhere;
+  }
+
+  .topnav,
+  .topbar-inner {
+    height: auto !important;
+    min-height: 70px;
+    padding: 10px 14px !important;
+    gap: 10px !important;
+    flex-wrap: wrap;
+  }
+
+  .nav-search {
+    order: 3;
+    flex: 1 0 100% !important;
+    max-width: none !important;
+    width: 100% !important;
+  }
+
+  .nav-right,
+  .nav-actions,
+  .nav-public-actions,
+  .nav-session-actions {
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    gap: 8px;
+    min-width: 0;
+  }
+
+  .nav-btn,
+  .btn {
+    min-width: 0;
+    white-space: nowrap;
+  }
+
+  .layout {
+    grid-template-columns: 1fr !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+
+  .feed,
+  .page {
+    padding-left: 12px !important;
+    padding-right: 12px !important;
+  }
+
+  .feed-header,
+  .feed-controls,
+  .profile-actions,
+  .field-row,
+  .form-grid,
+  .plan-grid,
+  .auth-choice-actions {
+    grid-template-columns: 1fr !important;
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .profile-head,
+  .profile-main {
+    grid-template-columns: 1fr !important;
+    text-align: center;
+  }
+
+  .profile-meta,
+  .info-strip,
+  .title-row {
+    justify-content: center;
+  }
+
+  .stats-row {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+
+  .content-tabs,
+  .tabs {
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+
+  .content-tabs::-webkit-scrollbar,
+  .tabs::-webkit-scrollbar {
+    display: none;
+  }
+
+  .modal,
+  .modal-wide,
+  .drawer-panel,
+  .crop-panel {
+    width: calc(100vw - 20px) !important;
+    max-width: calc(100vw - 20px) !important;
+  }
+
+  .drawer {
+    justify-content: center !important;
+  }
+
+  .drawer-panel {
+    height: calc(100vh - 20px) !important;
+    margin: 10px 0;
+    border-radius: 22px;
+    padding: 18px !important;
+  }
+
+  .modal-body {
+    max-height: calc(100vh - 150px) !important;
+  }
+}
+
+@media (max-width: 520px) {
+  .products-grid,
+  .posts-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  .products-grid.list-view .prod-card {
+    grid-template-columns: 1fr !important;
+  }
+
+  .products-grid.list-view .prod-img-wrap,
+  .products-grid.list-view .prod-header,
+  .products-grid.list-view .prod-body,
+  .products-grid.list-view .prod-actions {
+    grid-column: auto !important;
+    width: auto !important;
+  }
+
+  .stats-row {
+    grid-template-columns: 1fr 1fr !important;
+  }
+
+  .nav-logo-text,
+  .logo-text {
+    font-size: 20px !important;
+  }
+
+  .brand-mark,
+  .logo-mark,
+  .nav-logo-mark {
+    width: 46px !important;
+    height: 46px !important;
+  }
+
+  .btn,
+  .nav-btn,
+  button,
+  input,
+  select,
+  textarea {
+    max-width: 100%;
+  }
+
+  .premium-lock::after {
+    white-space: normal;
+    border-radius: 18px;
+  }
+}
+
+@media (max-width: 380px) {
+  .topnav,
+  .topbar-inner,
+  .nav {
+    padding-left: 10px !important;
+    padding-right: 10px !important;
+  }
+
+  .nav-btn,
+  .btn {
+    padding-left: 12px !important;
+    padding-right: 12px !important;
+    font-size: 12px !important;
+  }
+
+  .hero-ctas,
+  .profile-actions,
+  .feed-controls {
+    gap: 8px !important;
+  }
+
+  .stat strong,
+  .price,
+  .prod-price {
+    font-size: 18px !important;
   }
 }

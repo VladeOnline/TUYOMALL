@@ -41,6 +41,9 @@ $name = post_value('nombre');
 $email = strtolower(post_value('email'));
 $rating = (int) post_value('calificacion');
 $comment = post_value('comentario');
+start_app_session();
+$userId = isset($_SESSION['user_id']) ? (int) $_SESSION['user_id'] : null;
+$role = (string) ($_SESSION['user_role'] ?? '');
 
 if ($businessId <= 0 || $name === '' || $rating < 1 || $rating > 5 || $comment === '') {
     json_response(['ok' => false, 'message' => 'Completa la resena correctamente.'], 422);
@@ -51,11 +54,16 @@ if ($email !== '' && !filter_var($email, FILTER_VALIDATE_EMAIL)) {
 }
 
 try {
-    $stmt = $pdo->prepare('SELECT id FROM negocios WHERE id = :id AND estado = "activo" LIMIT 1');
+    $stmt = $pdo->prepare('SELECT id, usuario_id FROM negocios WHERE id = :id AND estado = "activo" LIMIT 1');
     $stmt->execute(['id' => $businessId]);
+    $business = $stmt->fetch();
 
-    if (!$stmt->fetch()) {
+    if (!$business) {
         json_response(['ok' => false, 'message' => 'No encontramos el negocio.'], 404);
+    }
+
+    if ($role === 'emprendedor' && $userId && (int) $business['usuario_id'] === $userId) {
+        json_response(['ok' => false, 'message' => 'Puedes recomendar otros negocios, pero no tu propio negocio.'], 403);
     }
 
     $plan = get_business_plan($pdo, $businessId);
@@ -67,9 +75,6 @@ try {
             'upgrade_required' => true,
         ], 403);
     }
-
-    start_app_session();
-    $userId = isset($_SESSION['user_id']) ? (int) $_SESSION['user_id'] : null;
 
     $stmt = $pdo->prepare(
         "INSERT INTO resenas (

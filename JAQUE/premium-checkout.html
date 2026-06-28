@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="es-CR">
 <head>
 <link rel="icon" href="/favicon.ico?v=3" sizes="any">
@@ -10,7 +10,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Activar Premium | TuyoMall</title>
-  <meta name="description" content="Activa el Plan Premium de TuyoMall por $5 al mes y destaca tu negocio en el feed.">
+  <meta name="description" content="Activa el Plan Premium de TuyoMall por $5 + IVA al mes y destaca tu negocio en el feed.">
   <meta name="theme-color" content="#FF6B47">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -310,6 +310,13 @@
       color: var(--white);
     }
 
+    .price-big .tax-inline {
+      font-size: 18px;
+      font-weight: 800;
+      color: #CBD5E1;
+      vertical-align: middle;
+    }
+
     .price-detail {
       padding-bottom: 8px;
       color: #CBD5E1;
@@ -462,6 +469,15 @@
       background: #e55a38;
       transform: translateY(-2px);
       box-shadow: 0 18px 40px rgba(255,107,71,0.35);
+    }
+
+    .btn-pay.is-current-plan {
+      background: linear-gradient(135deg, #10B981, #0F766E);
+      box-shadow: 0 16px 32px rgba(16,185,129,0.24);
+    }
+
+    .btn-pay.is-current-plan:hover {
+      background: linear-gradient(135deg, #0EA371, #0E6A63);
     }
 
     .btn-free {
@@ -683,7 +699,7 @@
       .compare-grid > div { border-bottom: 1px solid rgba(255,255,255,0.08) !important; }
     }
   </style>
-  <script src="assets/js/theme.js" defer></script>
+  <script src="assets/js/theme.js?v=20260620" defer></script>
 </head>
 <body>
   <div class="ambient" aria-hidden="true">
@@ -736,7 +752,7 @@
       <div class="card-inner">
         <div class="plan-label"><span class="ti ti-crown"></span> Plan Premium</div>
         <div class="price-row">
-          <strong class="price-big">$5</strong>
+          <strong class="price-big">$5 <span class="tax-inline">+ IVA</span></strong>
           <div class="price-detail">
             <strong>USD</strong><br>
             <span>por mes</span>
@@ -772,9 +788,9 @@
         </div>
 
         <div class="cta-area">
-          <a href="https://www.paypal.com/ncp/payment/BYX2Z63J5ZALY" target="_blank" rel="noopener" class="btn-pay">
+          <a href="acceso-emprendedor.html?registro=1&amp;plan=premium" class="btn-pay js-premium-pay" data-paypal-url="https://www.paypal.com/ncp/payment/BYX2Z63J5ZALY">
             <span class="ti ti-credit-card"></span>
-            <span>Suscribirme por $5 / mes</span>
+            <span>Suscribirme por $5 + IVA / mes</span>
           </a>
           <a href="dashboard-emprendedor.php" class="btn-free">
             Continuar con el plan gratuito por ahora
@@ -798,7 +814,7 @@
           &iquest;El cobro es automatico cada mes?
           <span class="ti ti-chevron-down"></span>
         </button>
-        <div class="faq-a">Si. El sistema cobra $5 USD cada mes mediante PayPal hasta que decidas cancelar la suscripcion.</div>
+        <div class="faq-a">Si. El sistema cobra $5 + IVA USD cada mes mediante PayPal hasta que decidas cancelar la suscripcion.</div>
       </article>
       <article class="faq-item">
         <button class="faq-q" type="button" onclick="toggleFaq(this)">
@@ -817,6 +833,37 @@
       document.querySelectorAll('.faq-item').forEach((faq) => faq.classList.remove('open'));
       if (!isOpen) item.classList.add('open');
     }
+
+    async function protectPremiumCheckout() {
+      try {
+        const response = await fetch('api/plan-status.php', { credentials: 'same-origin' });
+        const data = await response.json();
+
+        document.querySelectorAll('.js-premium-pay').forEach((button) => {
+          if (!data.ok || !data.authenticated || !data.is_business || !data.has_business) {
+            window.location.replace('acceso-emprendedor.html?registro=1&plan=premium');
+            return;
+          }
+
+          if (!data.is_premium) {
+            button.href = button.dataset.paypalUrl;
+            button.target = '_blank';
+            button.rel = 'noopener';
+            return;
+          }
+
+          button.href = 'dashboard-emprendedor.php';
+          button.removeAttribute('target');
+          button.removeAttribute('rel');
+          button.classList.add('is-current-plan');
+          button.innerHTML = '<span class="ti ti-circle-check"></span><span>Ya tienes Premium activo</span>';
+        });
+      } catch (error) {
+        console.warn('No se pudo revisar el plan activo.', error);
+      }
+    }
+
+    protectPremiumCheckout();
   </script>
 </body>
 </html>

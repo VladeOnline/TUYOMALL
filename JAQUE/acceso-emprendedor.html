@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
 <link rel="icon" href="/favicon.ico?v=3" sizes="any">
@@ -160,6 +160,12 @@ body {
 .plan-mini-price {
   font-family: 'Clash Display', sans-serif;
   font-size: 22px; font-weight: 700; color: #FFFFFF;
+}
+.plan-mini-price .tax-inline {
+  font-size: 11px;
+  font-weight: 800;
+  color: rgba(255,255,255,0.78);
+  vertical-align: middle;
 }
 .plan-mini-price sub { font-size: 12px; font-weight: 500; color: rgba(255,255,255,0.74); }
 .plan-mini-desc { font-size: 11px; color: rgba(255,255,255,0.72); margin-top: 4px; }
@@ -340,6 +346,55 @@ input.error, select.error { border-color: var(--danger); }
   margin-top: 5px; display: none;
 }
 .field-error.show { display: block; }
+
+.form-notice {
+  display: none;
+  align-items: flex-start;
+  gap: 10px;
+  border-radius: 16px;
+  padding: 13px 15px;
+  margin-bottom: 18px;
+  border: 1px solid transparent;
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1.45;
+}
+
+.form-notice.show { display: flex; }
+.form-notice::before {
+  content: '!';
+  width: 22px;
+  height: 22px;
+  border-radius: 999px;
+  display: grid;
+  place-items: center;
+  flex: 0 0 auto;
+  font-size: 12px;
+  font-weight: 900;
+}
+
+.form-notice.error {
+  background: rgba(255,107,71,0.12);
+  border-color: rgba(255,107,71,0.34);
+  color: #FFB09D;
+}
+
+.form-notice.error::before {
+  background: var(--coral);
+  color: #fff;
+}
+
+.form-notice.success {
+  background: rgba(16,185,129,0.12);
+  border-color: rgba(16,185,129,0.34);
+  color: #8DE8C1;
+}
+
+.form-notice.success::before {
+  content: '✓';
+  background: var(--success);
+  color: #fff;
+}
 
 /* ── PLAN SELECTOR ── */
 .plan-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 14px; }
@@ -675,7 +730,7 @@ html.tm-dark .plan-mini-desc {
 }
 </style>
   <link rel="stylesheet" href="assets/css/theme.css">
-  <script src="assets/js/theme.js" defer></script>
+  <script src="assets/js/theme.js?v=20260620" defer></script>
 </head>
 <body>
 
@@ -701,7 +756,7 @@ html.tm-dark .plan-mini-desc {
       <li class="perk"><div class="perk-icon">🛒</div>Sube productos y servicios fácilmente</li>
       <li class="perk"><div class="perk-icon">💬</div>Clientes te contactan por WhatsApp</li>
       <li class="perk"><div class="perk-icon">📊</div>Estadísticas de visitas y clics</li>
-      <li class="perk"><div class="perk-icon">✨</div>Plan Premium por solo $5/mes</li>
+      <li class="perk"><div class="perk-icon">✨</div>Plan Premium por solo $5 + IVA/mes</li>
     </ul>
 
     <div class="plan-preview">
@@ -712,7 +767,7 @@ html.tm-dark .plan-mini-desc {
       </div>
       <div class="plan-mini premium">
         <div class="plan-mini-label">⭐ Premium</div>
-        <div class="plan-mini-price">$5 <sub>/mes</sub></div>
+        <div class="plan-mini-price">$5 <span class="tax-inline">+ IVA</span><sub>/mes</sub></div>
         <div class="plan-mini-desc">Ilimitado · Prioridad en feed</div>
       </div>
     </div>
@@ -729,6 +784,8 @@ html.tm-dark .plan-mini-desc {
       <button class="tab active" onclick="switchTab('login', this)">Iniciar sesión</button>
       <button class="tab" onclick="switchTab('register', this)">Registrar negocio</button>
     </div>
+
+    <div class="form-notice" id="form-notice" role="status" aria-live="polite"></div>
 
     <!-- ── VIEW: LOGIN ── -->
     <div class="view active" id="view-login">
@@ -845,7 +902,7 @@ html.tm-dark .plan-mini-desc {
           <div class="plan-opt gold-plan" id="plan-premium" onclick="selectPlan('premium')">
             <div class="plan-opt-badge">⭐ Recomendado</div>
             <div class="plan-opt-name">Premium</div>
-            <div class="plan-opt-price">$5 / mes · Más visibilidad</div>
+            <div class="plan-opt-price">$5 + IVA / mes - Mas visibilidad</div>
           </div>
         </div>
       </div>
@@ -921,34 +978,56 @@ html.tm-dark .plan-mini-desc {
       <p>Las disputas entre comprador y vendedor son responsabilidad exclusiva del Usuario. En caso de controversia con Tuyomall, se intentará solución amistosa durante 30 días antes de acudir a tribunales costarricenses.</p>
       <h3>6. Propiedad intelectual</h3>
       <p>La marca Tuyomall y su código son propiedad exclusiva de Tuyomall. El Usuario conserva la propiedad sobre su contenido, pero otorga licencia no exclusiva para su publicación en la plataforma.</p>
-      <h3 id="privacidad-emprendedores">7. Política de privacidad</h3>
+      <h3>7. Responsabilidad del desarrollador y proveedor técnico</h3>
+      <p>El Usuario reconoce que el desarrollador, programador, diseñador, proveedor técnico o cualquier persona que haya participado en la creación, mantenimiento o mejora de TuyoMall no es vendedor, comprador, intermediario financiero, transportista, garante ni parte de las relaciones comerciales entre el Usuario y sus clientes.</p>
+      <p>El Usuario asume plena responsabilidad por el contenido que publique, el uso de imágenes, la legalidad de sus productos o servicios, precios, ofertas, entregas, garantías, devoluciones, impuestos, atención al cliente y cualquier reclamo derivado de su actividad comercial.</p>
+      <p>El desarrollador y los proveedores técnicos no serán responsables por fraudes, publicaciones falsas, uso indebido de la plataforma, incumplimientos comerciales, pérdidas económicas, daños indirectos, lucro cesante, suspensión de cuentas, caídas de servicios externos, pasarelas de pago, hosting, correo, WhatsApp, navegadores, dispositivos o cualquier actuación realizada por usuarios o terceros.</p>
+      <h3 id="privacidad-emprendedores">8. Política de privacidad</h3>
       <p>Tuyomall puede recopilar datos como nombre, correo, teléfono, ubicación del negocio, información publicada y métricas de uso para operar la cuenta, mostrar el perfil público, mejorar la plataforma y brindar soporte.</p>
-      <h3>8. Ley aplicable</h3>
+      <h3>9. Ley aplicable</h3>
       <p>Este contrato se rige por la legislación de Costa Rica: Constitución Política, Código Civil, Ley 8968 (Datos), Ley 7472 (Consumidor), Ley 8454 (Firma Digital).</p>
     </div>
   </div>
 </div>
 
-<script src="assets/js/latam-locations.js"></script>
+<script src="assets/js/latam-locations.js?v=6"></script>
 <script>
 let selectedPlan = 'free';
 
+const fallbackCountries = [
+  'Costa Rica',
+  'Mexico',
+  'Guatemala',
+  'El Salvador',
+  'Honduras',
+  'Panama',
+  'Colombia',
+  'Ecuador',
+  'Peru',
+  'Bolivia',
+  'Chile',
+  'Argentina',
+  'Uruguay',
+  'Paraguay',
+  'Republica Dominicana'
+];
+
 const countryDialCodes = {
   'Costa Rica': '+506',
-  'México': '+52',
+  'Mexico': '+52',
   'Guatemala': '+502',
   'El Salvador': '+503',
   'Honduras': '+504',
-  'Panamá': '+507',
+  'Panama': '+507',
   'Colombia': '+57',
   'Ecuador': '+593',
-  'Perú': '+51',
+  'Peru': '+51',
   'Bolivia': '+591',
   'Chile': '+56',
   'Argentina': '+54',
   'Uruguay': '+598',
   'Paraguay': '+595',
-  'República Dominicana': '+1'
+  'Republica Dominicana': '+1'
 };
 
 function updateWhatsappPrefix() {
@@ -956,6 +1035,33 @@ function updateWhatsappPrefix() {
   const prefix = document.getElementById('r-wa-prefix');
   if (!country || !prefix) return;
   prefix.textContent = countryDialCodes[country.value] || '+---';
+}
+
+function ensureCountryOptions() {
+  const country = document.getElementById('r-pais');
+  if (!country || country.options.length > 1) return;
+  const countries = window.TuyoMallLocations ? Object.keys(window.TuyoMallLocations) : fallbackCountries;
+  countries.forEach((name) => {
+    const option = document.createElement('option');
+    option.value = name;
+    option.textContent = name;
+    country.appendChild(option);
+  });
+}
+
+function showNotice(message, type = 'error') {
+  const notice = document.getElementById('form-notice');
+  if (!notice) return;
+  notice.textContent = message;
+  notice.className = `form-notice show ${type}`;
+  notice.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+}
+
+function clearNotice() {
+  const notice = document.getElementById('form-notice');
+  if (!notice) return;
+  notice.className = 'form-notice';
+  notice.textContent = '';
 }
 
 function selectPlan(plan) {
@@ -974,6 +1080,7 @@ function switchView(view) {
   document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
   document.getElementById('view-' + view).classList.add('active');
   document.getElementById('tabs').style.display = view === 'recover' ? 'none' : 'flex';
+  clearNotice();
 }
 
 function togglePass(id, icon) {
@@ -983,6 +1090,7 @@ function togglePass(id, icon) {
 }
 
 function clearErr(input) {
+  clearNotice();
   input.classList.remove('error');
   if (input.id === 'r-wa') document.getElementById('r-wa-wrap')?.classList.remove('has-error');
   const error = input.closest('.field')?.querySelector('.field-error');
@@ -1038,7 +1146,7 @@ async function doLogin() {
     const result = await postAuth('auth/login-business.php', data);
     window.location.href = result.redirect || 'dashboard-emprendedor.php';
   } catch (error) {
-    alert(error.message);
+    showNotice(error.message);
     btn.classList.remove('loading');
     btn.disabled = false;
   }
@@ -1087,7 +1195,12 @@ async function doRegister() {
     const result = await postAuth('auth/register-business.php', data);
     window.location.href = result.redirect || 'dashboard-emprendedor.php';
   } catch (error) {
-    alert(error.message);
+    if (/correo/i.test(error.message)) {
+      email.classList.add('error');
+      document.getElementById('r-email-err').textContent = error.message;
+      document.getElementById('r-email-err').classList.add('show');
+    }
+    showNotice(error.message);
     btn.classList.remove('loading');
     btn.disabled = false;
   }
@@ -1114,7 +1227,16 @@ document.getElementById('r-terms').addEventListener('change', function() {
   if (this.checked) document.getElementById('r-terms-err').classList.remove('show');
 });
 document.getElementById('r-pais')?.addEventListener('change', updateWhatsappPrefix);
+ensureCountryOptions();
 updateWhatsappPrefix();
+
+const entryParams = new URLSearchParams(window.location.search);
+if (entryParams.get('registro') === '1' || entryParams.get('plan') === 'premium') {
+  const registerTab = document.querySelector('[onclick*="register"]');
+  if (registerTab) switchTab('register', registerTab);
+  else switchView('register');
+}
+if (entryParams.get('plan') === 'premium') selectPlan('premium');
 </script>
 
 </body>

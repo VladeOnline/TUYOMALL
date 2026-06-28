@@ -27,7 +27,7 @@ try {
     }
 
     login_user($user);
-    json_response(['ok' => true, 'redirect' => 'principal.html']);
+    json_response(['ok' => true, 'redirect' => 'dashboard-cliente.php']);
 } catch (Throwable $e) {
     json_response(['ok' => false, 'message' => 'No pudimos iniciar sesión. Revisa la base de datos.'], 500);
 }

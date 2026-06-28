@@ -9,18 +9,18 @@
 <link rel="manifest" href="/site.webmanifest?v=3">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>TuyoMall — Todo a un Clic</title>
+<title>TuyoMall - Todo a un Clic</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Clash+Display:wght@400;500;600;700&family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
 <style>
 
-/* ─── RESET ─────────────────────────────────────────── */
+/* RESET */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 html { scroll-behavior: smooth; }
 
-/* ─── TOKENS ─────────────────────────────────────────── */
+/* TOKENS */
 :root {
-  /* Brand palette — coral + sand + deep navy */
+  /* Brand palette - coral + sand + deep navy */
   --coral:   #FF6B47;
   --coral-2: #FF8A6A;
   --coral-3: #FFF0EC;
@@ -44,7 +44,7 @@ html { scroll-behavior: smooth; }
   --shadow-glow: 0 0 48px rgba(255,107,71,0.25);
 }
 
-/* ─── BASE ─────────────────────────────────────────── */
+/* BASE */
 body {
   font-family: 'Plus Jakarta Sans', sans-serif;
   background: var(--surface);
@@ -52,7 +52,7 @@ body {
   overflow-x: hidden;
 }
 
-/* ─── NAV ─────────────────────────────────────────── */
+/* NAV */
 .nav {
   position: fixed; top: 0; left: 0; right: 0; z-index: 999;
   display: flex; align-items: center; justify-content: space-between;
@@ -220,7 +220,7 @@ body {
 }
 .btn-navy:hover { background: var(--navy-2); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(20,33,61,0.25); }
 
-/* ─── HERO ─────────────────────────────────────────── */
+/* HERO */
 .hero {
   min-height: 100vh;
   display: grid;
@@ -385,14 +385,14 @@ body {
   align-self: stretch; margin: 4px 0;
 }
 
-/* ─── HERO RIGHT — SOCIAL PREVIEW ─────────────────── */
+/* HERO RIGHT */
 .hero-right {
   position: relative; z-index: 1;
   display: flex; align-items: center; justify-content: center;
   animation: fadeSlideUp 0.7s 0.2s ease both;
 }
 
-/* ── Marketplace mockup (browser frame) ── */
+/* Marketplace mockup */
 .browser-mockup {
   width: 320px;
   background: var(--white);
@@ -500,7 +500,7 @@ body {
 .currency-chip .flag { font-size: 13px; }
 .currency-chip .cname { color: rgba(255,255,255,0.82); font-weight: 600; }
 
-/* Product grid — 2 columns like FB Marketplace */
+/* Product grid ? 2 columns like FB Marketplace */
 .mkp-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -693,13 +693,13 @@ html.tm-dark .currency-chip .cname {
   50% { transform: translateY(-8px); }
 }
 
-/* ─── FADE ANIMATIONS ─────────────────────────────── */
+/* FADE ANIMATIONS */
 @keyframes fadeSlideUp {
   from { opacity: 0; transform: translateY(24px); }
   to   { opacity: 1; transform: translateY(0); }
 }
 
-/* ─── HOW IT WORKS ─────────────────────────────────── */
+/* HOW IT WORKS */
 .section {
   padding: 100px 80px;
   max-width: 1280px;
@@ -770,7 +770,7 @@ html.tm-dark .currency-chip .cname {
 
 .step p { font-size: 15px; color: var(--slate); line-height: 1.65; }
 
-/* ─── FEATURES ─────────────────────────────────────── */
+/* FEATURES */
 .features-section {
   background: var(--navy);
   padding: 100px 80px;
@@ -838,7 +838,7 @@ html.tm-dark .currency-chip .cname {
   line-height: 1.7;
 }
 
-/* ─── PLANS ─────────────────────────────────────────── */
+/* PLANS */
 .plans-section { padding: 100px 80px; }
 .plans-inner { max-width: 1280px; margin: 0 auto; }
 
@@ -943,6 +943,12 @@ html.tm-dark .currency-chip .cname {
 }
 
 .plan-price sub { font-size: 20px; font-weight: 400; color: var(--muted); }
+.plan-price .tax-inline {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--muted);
+  vertical-align: middle;
+}
 .plan-price .free { color: var(--coral); }
 
 .plan-tagline { font-size: 14px; color: var(--slate); margin-bottom: 28px; line-height: 1.5; }
@@ -1041,7 +1047,7 @@ html.tm-dark .currency-chip .cname {
 
 .paypal-note { font-size: 12px; color: rgba(255,255,255,0.35); text-align: center; margin-top: 12px; }
 
-/* ─── TERMS STRIP ────────────────────────────────────── */
+/* TERMS STRIP */
 .terms-strip {
   background: var(--sand);
   padding: 40px 80px;
@@ -1070,7 +1076,7 @@ html.tm-dark .currency-chip .cname {
 
 .terms-btn:hover { border-color: var(--coral); color: var(--coral); }
 
-/* ─── FOOTER ─────────────────────────────────────────── */
+/* FOOTER */
 footer {
   background: var(--navy);
   padding: 56px 80px 32px;
@@ -1161,7 +1167,7 @@ footer {
 .footer-copy a { color: rgba(255,255,255,0.5); text-decoration: none; }
 .footer-copy a:hover { color: var(--coral); }
 
-/* ─── TERMS MODAL ────────────────────────────────────── */
+/* TERMS MODAL */
 .modal-overlay {
   position: fixed; inset: 0; z-index: 9999;
   background: rgba(14,20,35,0.7);
@@ -1251,7 +1257,7 @@ footer {
   margin: 0 0 18px;
 }
 
-/* ─── SCROLL REVEAL ─────────────────────────────────── */
+/* SCROLL REVEAL */
 .reveal {
   opacity: 0;
   transform: translateY(32px);
@@ -1313,7 +1319,7 @@ footer {
   }
 }
 
-/* ─── NAV SCROLLED STATE ─────────────────────────────── */
+/* NAV SCROLLED STATE */
 .nav.scrolled {
   background: rgba(20,33,61,0.96);
   border-bottom-color: rgba(255,255,255,0.07);
@@ -1328,7 +1334,7 @@ footer {
 }
 .nav.scrolled .btn-ghost:hover { background: rgba(255,255,255,0.1); }
 
-/* ─── TRUST LINE ─────────────────────────────────────── */
+/* TRUST LINE */
 .trust-line {
   display: flex; align-items: center; gap: 0;
   margin-top: 24px;
@@ -1361,7 +1367,7 @@ footer {
   flex: 0 0 auto;
 }
 
-/* ─── CTA FINAL SECTION ──────────────────────────────── */
+/* CTA FINAL SECTION */
 .cta-final {
   background: var(--coral);
   padding: 100px 80px;
@@ -1440,7 +1446,7 @@ footer {
   flex: 0 0 auto;
 }
 
-/* ─── WHATSAPP FLOAT ─────────────────────────────────── */
+/* WHATSAPP FLOAT */
 .explore-float {
   position: fixed;
   left: 28px;
@@ -1596,6 +1602,22 @@ footer {
     background: var(--sand);
     color: var(--coral);
   }
+  html.tm-dark .nav-link,
+  body.dark-mode .nav-link,
+  html.tm-dark .nav.scrolled .nav-link,
+  body.dark-mode .nav.scrolled .nav-link {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.12);
+    color: #E5EDF7;
+  }
+  html.tm-dark .nav-link:hover,
+  body.dark-mode .nav-link:hover,
+  html.tm-dark .nav.scrolled .nav-link:hover,
+  body.dark-mode .nav.scrolled .nav-link:hover {
+    background: rgba(255,107,71,0.14);
+    border-color: rgba(255,107,71,0.36);
+    color: #FF8A6A;
+  }
   .nav-actions .btn { padding: 9px 12px; font-size: 12px; }
   .hero {
     padding: 124px 20px 48px;
@@ -1655,11 +1677,11 @@ footer {
 }
 </style>
   <link rel="stylesheet" href="assets/css/theme.css">
-  <script src="assets/js/theme.js" defer></script>
+  <script src="assets/js/theme.js?v=20260620" defer></script>
 </head>
 <body>
 
-<!-- ═══════ NAV ═══════ -->
+<!-- NAV -->
 <nav class="nav">
  <a href="index.html" class="nav-logo">
     <div class="logo-mark">
@@ -1687,12 +1709,12 @@ footer {
   </div>
 </nav>
 
-<!-- ═══════ HERO ═══════ -->
+<!-- HERO -->
 <section class="hero">
   <div class="hero-left">
     <div class="hero-eyebrow">
       <div class="eyebrow-dot"></div>
-      <span>Red social de emprendedores · Costa Rica</span>
+      <span>Red social de emprendedores · Toda LATAM</span>
     </div>
 
     <h1 class="hero-h1">
@@ -1702,7 +1724,7 @@ footer {
     </h1>
 
     <p class="hero-desc">
-      TuyoMall conecta emprendedores con clientes en un feed social. Publica tus productos y servicios — y aparecen al instante para miles de personas.
+      TuyoMall conecta emprendedores con clientes en un feed social. Publica tus productos y servicios y aparecen al instante para miles de personas.
     </p>
 
     <div class="hero-ctas">
@@ -1734,7 +1756,7 @@ footer {
       </div>
       <div class="stat-divider"></div>
       <div class="stat">
-        <span class="stat-num">$5</span>
+        <span class="stat-num">$5 + IVA</span>
         <span class="stat-lbl">Plan Premium / mes</span>
       </div>
     </div>
@@ -1793,7 +1815,7 @@ footer {
         <span class="cname">&middot; <span id="chipCountry">Costa Rica</span></span>
       </div>
 
-      <!-- Product grid — real photos via picsum -->
+      <!-- Product grid - real photos via picsum -->
       <div class="mkp-grid">
 
         <div class="mkp-card">
@@ -1802,7 +1824,7 @@ footer {
             <div class="mkp-badge">PRO</div>
           </div>
           <div class="mkp-info">
-            <div class="mkp-price">₡4.500</div>
+            <div class="mkp-price" data-price-index="0">₡4.500</div>
             <div class="mkp-title">Pizza artesanal al horno de leña</div>
             <div class="mkp-seller">
               <div class="mkp-seller-dot" style="background:#FF6B47;">P</div>
@@ -1816,7 +1838,7 @@ footer {
             <img class="mkp-img" src="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=300&h=160&fit=crop&q=80" alt="Vestido" loading="lazy">
           </div>
           <div class="mkp-info">
-            <div class="mkp-price">₡18.000</div>
+            <div class="mkp-price" data-price-index="1">₡18.000</div>
             <div class="mkp-title">Vestido boho estampado</div>
             <div class="mkp-seller">
               <div class="mkp-seller-dot" style="background:#C084FC;">M</div>
@@ -1831,7 +1853,7 @@ footer {
             <div class="mkp-badge">PRO</div>
           </div>
           <div class="mkp-info">
-            <div class="mkp-price">₡12.000</div>
+            <div class="mkp-price" data-price-index="2">₡12.000</div>
             <div class="mkp-title">Canasta tejida a mano</div>
             <div class="mkp-seller">
               <div class="mkp-seller-dot" style="background:#10B981;">A</div>
@@ -1845,7 +1867,7 @@ footer {
             <img class="mkp-img" src="https://images.unsplash.com/photo-1447933601403-0c6688de566e?w=300&h=160&fit=crop&q=80" alt="Cafe" loading="lazy">
           </div>
           <div class="mkp-info">
-            <div class="mkp-price">₡2.800</div>
+            <div class="mkp-price" data-price-index="3">₡2.800</div>
             <div class="mkp-title">Café artesanal tostado</div>
             <div class="mkp-seller">
               <div class="mkp-seller-dot" style="background:#92400E;">C</div>
@@ -1859,7 +1881,7 @@ footer {
             <img class="mkp-img" src="https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?w=300&h=160&fit=crop&q=80" alt="Joyeria" loading="lazy">
           </div>
           <div class="mkp-info">
-            <div class="mkp-price">₡22.000</div>
+            <div class="mkp-price" data-price-index="4">₡22.000</div>
             <div class="mkp-title">Collar artesanal de plata</div>
             <div class="mkp-seller">
               <div class="mkp-seller-dot" style="background:#6366F1;">J</div>
@@ -1874,7 +1896,7 @@ footer {
             <div class="mkp-badge">PRO</div>
           </div>
           <div class="mkp-info">
-            <div class="mkp-price">₡3.200</div>
+            <div class="mkp-price" data-price-index="5">₡3.200</div>
             <div class="mkp-title">Repostería artesanal</div>
             <div class="mkp-seller">
               <div class="mkp-seller-dot" style="background:#F59E0B;">D</div>
@@ -1888,7 +1910,7 @@ footer {
   </div>
 </section>
 
-<!-- ═══════ CÓMO FUNCIONA ═══════ -->
+<!-- SECTION -->
 <section class="section" id="como-funciona">
   <p class="section-eyebrow">Así de simple</p>
   <h2 class="section-title">Empieza en minutos,<br>llega a miles</h2>
@@ -1913,10 +1935,10 @@ footer {
   </div>
 </section>
 
-<!-- ═══════ FEATURES ═══════ -->
+<!-- FEATURES -->
 <section class="features-section">
   <div class="features-inner">
-    <p class="section-eyebrow">¿Por qué TuyoMall</p>
+    <p class="section-eyebrow">¿Por qué TuyoMall?</p>
     <h2 class="section-title" style="color:white; margin-bottom:16px;">Todo lo que tu negocio<br>necesita para crecer</h2>
     <p class="section-sub">Una plataforma pensada para el emprendedor latinoamericano.</p>
 
@@ -1926,7 +1948,7 @@ footer {
           <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"></circle><circle cx="12" cy="12" r="4"></circle><circle cx="12" cy="12" r="1.5"></circle></svg>
         </div>
         <h3>Feed social público</h3>
-        <p>Tus productos aparecen en el inicio de TuyoMall — visible para todos, sin registro. Como una red social pero de ventas.</p>
+        <p>Tus productos aparecen en el inicio de TuyoMall, visible para todos, sin registro. Como una red social pero de ventas.</p>
       </div>
       <div class="feat-card reveal reveal-delay-2">
         <div class="feat-icon fi-gold" aria-hidden="true">
@@ -1947,14 +1969,14 @@ footer {
           <svg viewBox="0 0 24 24"><path d="M12 3l2.2 4.6L19 9l-3.5 3.4.8 4.9-4.3-2.3-4.3 2.3.8-4.9L5 9l4.8-1.4L12 3z"></path></svg>
         </div>
         <h3>Plan Premium</h3>
-        <p>Destacate en el feed, aparece primero en búsquedas y accede a estadísticas avanzadas por solo $5/mes.</p>
+        <p>Destacate en el feed, aparece primero en búsquedas y accede a estadísticas avanzadas por solo $5 + IVA/mes.</p>
       </div>
       <div class="feat-card reveal reveal-delay-5">
         <div class="feat-icon fi-gold" aria-hidden="true">
           <svg viewBox="0 0 24 24"><path d="M12 20s6-5.8 6-10a6 6 0 1 0-12 0c0 4.2 6 10 6 10z"></path><circle cx="12" cy="10" r="2.2"></circle></svg>
         </div>
         <h3>Filtros por zona</h3>
-        <p>Los clientes filtran por provincia y cantón. Tu negocio llega a la gente correcta en el lugar correcto.</p>
+        <p>Los clientes filtran por provincia y estado. Tu negocio llega a la gente correcta en el lugar correcto.</p>
       </div>
       <div class="feat-card reveal reveal-delay-3">
         <div class="feat-icon fi-blue" aria-hidden="true">
@@ -1967,13 +1989,13 @@ footer {
   </div>
 </section>
 
-<!-- ═══════ PLANES ═══════ -->
+<!-- SECTION -->
 <section class="plans-section" id="planes">
   <div class="plans-inner">
     <div style="text-align:center; margin-bottom:64px;">
       <p class="section-eyebrow">Planes</p>
       <h2 class="section-title">Elegí cómo empezar</h2>
-      <p class="section-sub" style="margin:0 auto;">Activá el ecosistema con el plan gratis o suscribite al Premium por <strong>$5</strong> para vender y escalar.</p>
+      <p class="section-sub" style="margin:0 auto;">Activá el ecosistema con el plan gratis o suscribite al Premium por <strong>$5 + IVA</strong> para vender y escalar.</p>
     </div>
 
     <div class="plans-grid">
@@ -2000,7 +2022,7 @@ footer {
         <div class="plan-recommended">Recomendado</div>
         <p class="plan-type">Pro</p>
         <h3 class="plan-name">Plan Premium</h3>
-        <div class="plan-price">$5 <sub>/ mes</sub></div>
+        <div class="plan-price">$5 <span class="tax-inline">+ IVA</span><sub>/ mes</sub></div>
         <p class="plan-tagline">Para vender más, aparecer primero y escalar tu negocio.</p>
         <div class="plan-divider"></div>
         <ul class="plan-features">
@@ -2008,21 +2030,21 @@ footer {
           <li><div class="plan-check"></div>Múltiples botones de contacto (WA, formulario, link)</li>
           <li><div class="plan-check"></div>Cupones, descuentos y precio tachado</li>
           <li><div class="plan-check"></div>Reseñas con calificación por estrellas</li>
-          <li><div class="plan-check"></div>Destacados en feed — prioridad en búsquedas</li>
+          <li><div class="plan-check"></div>Destacados en feed - prioridad en búsquedas</li>
           <li><div class="plan-check"></div>Estadísticas avanzadas (CTR, tráfico, top productos)</li>
           <li><div class="plan-check"></div>Soporte prioritario</li>
         </ul>
-        <a href="https://www.paypal.com/ncp/payment/BYX2Z63J5ZALY" target="_blank" rel="noopener" class="plan-cta cta-solid">Suscribirme con PayPal</a>
+        <a href="acceso-emprendedor.html?registro=1&amp;plan=premium" class="plan-cta cta-solid js-premium-entry">Suscribirme con PayPal</a>
         <p class="paypal-note">El cobro se procesa vía PayPal. El precio es en USD.</p>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ═══════ CTA FINAL ═══════ -->
+<!-- CTA FINAL -->
 <section class="cta-final">
   <div class="cta-final-inner reveal">
-    <h2>¿Listo para empezar</h2>
+    <h2>¿Listo para empezar?</h2>
     <p>Únete a cientos de emprendedores que ya muestran sus productos en TuyoMall. Gratis, sin comisiones, sin complicaciones.</p>
     <div class="cta-final-btns">
       <a href="acceso-emprendedor.html" class="btn btn-white"><span class="btn-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M8 7V6a4 4 0 0 1 8 0v1" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M5 7h14l-1 13H6L5 7Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M9 12h6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span> Registrar mi negocio</a>
@@ -2036,7 +2058,7 @@ footer {
   </div>
 </section>
 
-<!-- ═══════ WHATSAPP FLOTANTE ═══════ -->
+<!-- SECTION -->
 <a href="principal.html" class="explore-float" aria-label="Explorar productos en TuyoMall">
   <span class="float-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M4 4h6v6H4V4Zm10 0h6v6h-6V4ZM4 14h6v6H4v-6Zm10 0h6v6h-6v-6Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg></span>
   <span>Ver productos</span>
@@ -2045,10 +2067,10 @@ footer {
   <svg viewBox="0 0 24 24" fill="currentColor">
     <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
   </svg>
-  <span>¿Tienes dudas</span>
+  <span>¿Tienes dudas?</span>
 </a>
 
-<!-- ═══════ TERMS STRIP ═══════ -->
+<!-- TERMS STRIP -->
 <div class="terms-strip">
   <p>Al registrarte en TuyoMall aceptás nuestras Políticas de Privacidad y Términos de Uso. Contamos con documentos separados para <strong>Compradores</strong> y <strong>Emprendedores</strong>.</p>
   <div class="terms-links">
@@ -2057,7 +2079,7 @@ footer {
   </div>
 </div>
 
-<!-- ═══════ FOOTER ═══════ -->
+<!-- FOOTER -->
 <footer>
   <div class="footer-top">
     <div class="footer-brand">
@@ -2112,15 +2134,15 @@ footer {
 
   <div class="footer-bottom">
     <p class="footer-copy">© <span id="year"></span> TuyoMall · Todos los derechos reservados · San José, Costa Rica</p>
-    <p class="footer-copy">Hecho con ️ para emprendedores latinoamericanos</p>
+    <p class="footer-copy">Hecho para emprendedores latinoamericanos</p>
   </div>
 </footer>
 
-<!-- ═══════ MODAL — TÉRMINOS COMPRADORES ═══════ -->
+<!-- MODAL -->
 <div class="modal-overlay" id="modal-compradores">
   <div class="modal">
     <div class="modal-header">
-      <span class="modal-title">Términos y Condiciones — Compradores</span>
+      <span class="modal-title">Términos y Condiciones - Compradores</span>
       <button class="modal-close" onclick="closeModal('compradores')" aria-label="Cerrar">&times;</button>
     </div>
     <div class="modal-body">
@@ -2139,6 +2161,10 @@ footer {
       <h3>3. Responsabilidad de Tuyomall</h3>
       <p>Tuyomall no tiene ninguna relación directa con las transacciones entre Compradores y emprendedores. No se hace responsable por la calidad, entrega, devolución, garantías o cualquier aspecto relacionado con los productos o servicios.</p>
 
+      <h3>3.1 Responsabilidad del desarrollador y proveedor técnico</h3>
+      <p>El Comprador reconoce que el desarrollador, programador, diseñador, proveedor técnico o cualquier persona que haya participado en la creación, mantenimiento o mejora de TuyoMall no participa como vendedor, comprador, intermediario financiero, transportista ni garante de las operaciones realizadas entre Compradores y emprendedores.</p>
+      <p>El desarrollador y los proveedores técnicos no serán responsables por publicaciones falsas, uso indebido de cuentas, fraudes, incumplimientos comerciales, pérdidas económicas, fallas de terceros, interrupciones del servicio, contenido cargado por usuarios o cualquier daño derivado del mal uso de la plataforma por parte de usuarios o terceros.</p>
+
       <h3>4. Conflictos con emprendedores</h3>
       <p>En caso de problemas con un pedido, el Comprador deberá notificarlo a Tuyomall. Si se verifica el incumplimiento por parte del emprendedor, Tuyomall se reserva el derecho de desactivar su landing page. Tuyomall no está obligado a emitir reembolsos ni a compensar al Comprador directamente.</p>
 
@@ -2151,11 +2177,11 @@ footer {
   </div>
 </div>
 
-<!-- ═══════ MODAL — TÉRMINOS EMPRENDEDORES ═══════ -->
+<!-- MODAL -->
 <div class="modal-overlay" id="modal-emprendedores">
   <div class="modal">
     <div class="modal-header">
-      <span class="modal-title">Términos y Condiciones — Emprendedores</span>
+      <span class="modal-title">Términos y Condiciones - Emprendedores</span>
       <button class="modal-close" onclick="closeModal('emprendedores')" aria-label="Cerrar">&times;</button>
     </div>
     <div class="modal-body">
@@ -2186,19 +2212,24 @@ footer {
       <h3>7. Limitación de responsabilidad</h3>
       <p>Tuyomall no será responsable por pérdidas económicas indirectas, lucro cesante, fallas técnicas de terceros ni incumplimientos entre Usuarios y clientes. La responsabilidad total de Tuyomall no excederá el monto pagado por el Usuario en los últimos tres meses de servicio.</p>
 
-      <h3 id="privacidad-emprendedores">8. Protección de datos (Ley 8968)</h3>
+      <h3>8. Responsabilidad del desarrollador y proveedor técnico</h3>
+      <p>El Usuario reconoce que el desarrollador, programador, diseñador, proveedor técnico o cualquier persona que haya participado en la creación, mantenimiento o mejora de TuyoMall no es vendedor, comprador, intermediario financiero, transportista, garante ni parte de las relaciones comerciales entre el Usuario y sus clientes.</p>
+      <p>El Usuario asume plena responsabilidad por el contenido que publique, el uso de imágenes, la legalidad de sus productos o servicios, precios, ofertas, entregas, garantías, devoluciones, impuestos, atención al cliente y cualquier reclamo derivado de su actividad comercial.</p>
+      <p>El desarrollador y los proveedores técnicos no serán responsables por fraudes, publicaciones falsas, uso indebido de la plataforma, incumplimientos comerciales, pérdidas económicas, daños indirectos, lucro cesante, suspensión de cuentas, caídas de servicios externos, pasarelas de pago, hosting, correo, WhatsApp, navegadores, dispositivos o cualquier actuación realizada por usuarios o terceros.</p>
+
+      <h3 id="privacidad-emprendedores">9. Protección de datos (Ley 8968)</h3>
       <p>El tratamiento de datos se rige por la legislación costarricense y principios internacionales: consentimiento informado, minimización de datos, seguridad razonable y derecho de acceso y rectificación.</p>
 
-      <h3>9. Propiedad intelectual</h3>
+      <h3>10. Propiedad intelectual</h3>
       <p>La marca Tuyomall, su diseño, estructura, código y software son propiedad exclusiva de Tuyomall. El Usuario conserva la propiedad sobre su contenido, pero otorga licencia no exclusiva para su publicación dentro de la plataforma.</p>
 
-      <h3>10. Ley aplicable</h3>
+      <h3>11. Ley aplicable</h3>
       <p>Este contrato se rige por la legislación de la República de Costa Rica, incluyendo: Constitución Política, Código Civil, Código de Comercio, Ley 8968 (Protección de Datos), Ley 7472 (Protección al Consumidor), Ley 7786 (Legitimación de Capitales), Ley 6683 (Derechos de Autor) y Ley 8454 (Firma Digital).</p>
     </div>
   </div>
 </div>
 
-<!-- ═══════ MODAL — TODOS LOS TÉRMINOS ═══════ -->
+<!-- MODAL -->
 <div class="modal-overlay" id="modal-todos">
   <div class="modal modal-wide">
     <div class="modal-header">
@@ -2219,13 +2250,13 @@ footer {
 </div>
 
 <script>
-  // ── Nav scroll effect ───────────────────────────────
+  // NAV
   const nav = document.querySelector('.nav');
   window.addEventListener('scroll', () => {
     nav.classList.toggle('scrolled', window.scrollY > 60);
   });
 
-  // ── Scroll reveal ────────────────────────────────────
+  // SCROLL REVEAL
   const revealEls = document.querySelectorAll('.reveal');
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
@@ -2242,9 +2273,33 @@ footer {
   const chipSymbol = document.getElementById('chipSymbol');
   const chipCode = document.getElementById('chipCode');
   const chipCountry = document.getElementById('chipCountry');
-  if (chipSymbol) chipSymbol.textContent = '\u20A1';
-  if (chipCode) chipCode.textContent = 'CRC';
-  if (chipCountry) chipCountry.textContent = 'Costa Rica';
+  const priceNodes = document.querySelectorAll('[data-price-index]');
+  const currencyMarkets = [
+    { symbol: '\u20A1', code: 'CRC', country: 'Costa Rica', prices: ['4.500', '18.000', '12.000', '2.800', '22.000', '3.200'] },
+    { symbol: 'Q', code: 'GTQ', country: 'Guatemala', prices: ['65', '260', '180', '42', '330', '48'] },
+    { symbol: '$', code: 'MXN', country: 'M\u00e9xico', prices: ['150', '620', '430', '95', '790', '115'] },
+    { symbol: '$', code: 'USD', country: 'Ecuador', prices: ['8', '34', '23', '5', '42', '6'] },
+    { symbol: 'S/', code: 'PEN', country: 'Per\u00fa', prices: ['28', '118', '82', '18', '150', '22'] },
+    { symbol: '$', code: 'UYU', country: 'Uruguay', prices: ['320', '1.280', '890', '190', '1.650', '240'] }
+  ];
+  let activeCurrencyMarket = 0;
+
+  function renderCurrencyMarket(index) {
+    const market = currencyMarkets[index % currencyMarkets.length];
+    if (chipSymbol) chipSymbol.textContent = market.symbol;
+    if (chipCode) chipCode.textContent = market.code;
+    if (chipCountry) chipCountry.textContent = market.country;
+    priceNodes.forEach((node) => {
+      const priceIndex = Number(node.dataset.priceIndex || 0);
+      node.textContent = `${market.symbol}${market.prices[priceIndex] || market.prices[0]}`;
+    });
+  }
+
+  renderCurrencyMarket(activeCurrencyMarket);
+  window.setInterval(() => {
+    activeCurrencyMarket = (activeCurrencyMarket + 1) % currencyMarkets.length;
+    renderCurrencyMarket(activeCurrencyMarket);
+  }, 4200);
 
   function initDraggableFloat(selector, storageKey) {
     const floatBtn = document.querySelector(selector);
@@ -2264,14 +2319,20 @@ footer {
       return Math.max(MARGIN, window.innerWidth - floatBtn.offsetWidth - MARGIN);
     }
 
+    function minTop() {
+      const nav = document.querySelector('.nav');
+      const navHeight = nav ? Math.ceil(nav.getBoundingClientRect().height) : 0;
+      return Math.max(MARGIN, navHeight + MARGIN);
+    }
+
     function maxTop() {
-      return Math.max(MARGIN, window.innerHeight - floatBtn.offsetHeight - MARGIN);
+      return Math.max(minTop(), window.innerHeight - floatBtn.offsetHeight - MARGIN);
     }
 
     function clampPosition(left, top) {
       return {
         left: Math.min(maxLeft(), Math.max(MARGIN, left)),
-        top: Math.min(maxTop(), Math.max(MARGIN, top))
+        top: Math.min(maxTop(), Math.max(minTop(), top))
       };
     }
 
@@ -2406,6 +2467,28 @@ footer {
       });
       document.body.style.overflow = '';
     }
+  });
+
+  document.querySelectorAll('.js-premium-entry').forEach(button => {
+    button.addEventListener('click', async event => {
+      event.preventDefault();
+      button.setAttribute('aria-busy', 'true');
+
+      try {
+        const response = await fetch('api/session.php', { credentials: 'same-origin' });
+        const data = await response.json();
+        const user = data.user || {};
+
+        if (data.authenticated && user.role === 'emprendedor' && user.business_id) {
+          window.location.href = 'premium-checkout.html';
+          return;
+        }
+      } catch (error) {
+        console.warn('No se pudo verificar la sesion antes del pago.', error);
+      }
+
+      window.location.href = 'acceso-emprendedor.html?registro=1&plan=premium';
+    });
   });
 </script>
 

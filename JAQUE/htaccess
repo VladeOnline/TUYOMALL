@@ -1,4 +1,20 @@
 RewriteEngine On
 AddType application/manifest+json .webmanifest
+
+Options -Indexes
+
+RewriteRule ^dashboard-emprendedor\.html$ /dashboard-emprendedor.php [L,QSA]
+RewriteRule ^dashboard-cliente\.html$ /dashboard-cliente.php [L,QSA]
 RewriteRule ^dashboard-emprendedor/?$ /dashboard-emprendedor.php [L]
-RewriteRule ^perfil/.*$ /perfil-publico.html [L]
+RewriteRule ^dashboard-cliente/?$ /dashboard-cliente.php [L]
+RewriteRule ^negocio/([^/]+)/?$ /perfil-publico.html?slug=$1 [L,QSA]
+RewriteRule ^perfil/([^/]+)/?$ /perfil-publico.html?slug=$1 [L,QSA]
+RewriteRule ^p/([0-9]+)/?$ /perfil-publico.html?producto=$1 [L,QSA]
+
+RewriteRule ^(config|database|includes)/ - [F,L]
+
+<FilesMatch "(\.(sql|txt|log|ini|env|bak|old|orig|save|zip|tar|gz|rar|7z|pem|key|lock)|^htaccess$|^composer\.(json|lock)$)$">
+  Require all denied
+</FilesMatch>
+
+RewriteRule "(^|/)\.(?!well-known/)" - [F,L]

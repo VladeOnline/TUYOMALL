@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="es-CR">
 <head>
 <link rel="icon" href="/favicon.ico?v=3" sizes="any">
@@ -10,7 +10,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Planes | TuyoMall</title>
-  <meta name="description" content="Compara el Plan Gratis y el Plan Premium de TuyoMall. Empieza gratis o activa Premium por $5 al mes.">
+  <meta name="description" content="Compara el Plan Gratis y el Plan Premium de TuyoMall. Empieza gratis o activa Premium por $5 + IVA al mes.">
   <meta name="theme-color" content="#FF6B47">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -341,6 +341,13 @@
       color: var(--coral);
     }
 
+    .price strong small {
+      font-size: 17px;
+      font-weight: 800;
+      color: var(--muted);
+      vertical-align: middle;
+    }
+
     .price span {
       color: var(--muted);
       font-size: 15px;
@@ -457,6 +464,15 @@
       background: #e55a38;
       transform: translateY(-2px);
       box-shadow: 0 18px 40px rgba(255,107,71,0.35);
+    }
+
+    .btn-primary.is-current-plan {
+      background: linear-gradient(135deg, #10B981, #0F766E);
+      box-shadow: 0 16px 32px rgba(16,185,129,0.24);
+    }
+
+    .btn-primary.is-current-plan:hover {
+      background: linear-gradient(135deg, #0EA371, #0E6A63);
     }
 
     .btn-secondary {
@@ -727,7 +743,7 @@
       .compare-grid > div { border-bottom: 1px solid var(--line) !important; }
     }
   </style>
-  <script src="assets/js/theme.js" defer></script>
+  <script src="assets/js/theme.js?v=20260620" defer></script>
 </head>
 <body>
   <div class="ambient" aria-hidden="true">
@@ -766,11 +782,11 @@
       <div class="hero-copy">
         <p class="eyebrow"><span class="ti ti-crown"></span> Planes TuyoMall</p>
         <h1 id="planesTitle">Elige como <span>crecer</span></h1>
-        <p class="lead">Empieza gratis y valida tu negocio. Cuando quieras vender con mas visibilidad, activa Premium por $5 al mes y destaca en el feed.</p>
+        <p class="lead">Empieza gratis y valida tu negocio. Cuando quieras vender con mas visibilidad, activa Premium por $5 + IVA al mes y destaca en el feed.</p>
       </div>
 
       <aside class="mini-panel" aria-label="Resumen rapido">
-        <strong>$5 / mes</strong>
+        <strong>$5 + IVA / mes</strong>
         <p>Premium desbloquea productos ilimitados, prioridad visual, estadisticas avanzadas y mas rutas de contacto para tus clientes.</p>
       </aside>
     </section>
@@ -803,7 +819,7 @@
         <span class="recommended"><span class="ti ti-star-filled"></span> Recomendado</span>
         <p class="plan-kicker"><span class="ti ti-crown"></span> Pro</p>
         <h2 class="plan-name" id="premiumTitle">Plan Premium</h2>
-        <div class="price"><strong>$5</strong><span>USD / mes</span></div>
+        <div class="price"><strong>$5 <small>+ IVA</small></strong><span>USD / mes</span></div>
         <p class="plan-desc">Para negocios que quieren aparecer primero, vender mas y medir mejor que esta funcionando.</p>
 
         <ul class="feature-list">
@@ -817,9 +833,9 @@
         </ul>
 
         <div class="plan-actions">
-          <a class="btn btn-primary" href="https://www.paypal.com/ncp/payment/BYX2Z63J5ZALY" target="_blank" rel="noopener">
+          <a class="btn btn-primary js-premium-pay" href="acceso-emprendedor.html?registro=1&amp;plan=premium">
             <span class="ti ti-credit-card"></span>
-            <span>Suscribirme por $5 / mes</span>
+            <span>Suscribirme por $5 + IVA / mes</span>
           </a>
           <a class="btn btn-secondary" href="premium-checkout.html">
             <span class="ti ti-info-circle"></span>
@@ -864,7 +880,7 @@
           &iquest;El cobro es mensual?
           <span class="ti ti-chevron-down"></span>
         </button>
-        <div class="faq-a">Si. El precio es de $5 USD al mes y el pago se procesa por PayPal.</div>
+        <div class="faq-a">Si. El precio es de $5 + IVA USD al mes y el pago se procesa por PayPal.</div>
       </article>
       <article class="faq-item">
         <button class="faq-q" type="button" onclick="toggleFaq(this)">
@@ -889,6 +905,35 @@
       document.querySelectorAll('.faq-item').forEach((faq) => faq.classList.remove('open'));
       if (!isOpen) item.classList.add('open');
     }
+
+    async function protectPremiumCheckout() {
+      try {
+        const response = await fetch('api/plan-status.php', { credentials: 'same-origin' });
+        const data = await response.json();
+
+        document.querySelectorAll('.js-premium-pay').forEach((button) => {
+          if (!data.ok || !data.authenticated || !data.is_business || !data.has_business) {
+            button.href = 'acceso-emprendedor.html?registro=1&plan=premium';
+            return;
+          }
+
+          if (!data.is_premium) {
+            button.href = 'premium-checkout.html';
+            return;
+          }
+
+          button.href = 'dashboard-emprendedor.php';
+          button.removeAttribute('target');
+          button.removeAttribute('rel');
+          button.classList.add('is-current-plan');
+          button.innerHTML = '<span class="ti ti-circle-check"></span><span>Ya tienes Premium activo</span>';
+        });
+      } catch (error) {
+        console.warn('No se pudo revisar el plan activo.', error);
+      }
+    }
+
+    protectPremiumCheckout();
   </script>
 </body>
 </html>

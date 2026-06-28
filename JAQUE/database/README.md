@@ -78,8 +78,8 @@ Dashboard y perfil:
 
 La base ya deja sembrados dos planes:
 
-- `gratis`: hasta 10 productos activos, 3 imagenes por producto, 5 categorias, 5 etiquetas, contacto directo y estadisticas basicas.
-- `premium`: $5 USD/mes, productos ilimitados, mas imagenes, cupones, precio tachado, resenas, multiples contactos, prioridad en feed, estadisticas avanzadas y soporte prioritario.
+- `gratis`: hasta 10 productos/publicaciones registradas, 1 imagen por publicacion, contacto directo y estadisticas basicas.
+- `premium`: $5 USD/mes, productos/publicaciones ilimitadas, cupones, precio tachado, resenas, multiples contactos, prioridad en feed, estadisticas avanzadas y soporte prioritario.
 
 El plan real no debe depender solo del boton del front. En PHP la regla debe ser:
 
@@ -94,8 +94,8 @@ El archivo `includes/plan-rules.php` deja funciones listas para usar en los prox
 
 - `get_business_plan($pdo, $businessId)`: devuelve Premium solo si hay suscripcion activa.
 - `sync_business_plan($pdo, $businessId)`: actualiza `negocios.plan_codigo` segun la suscripcion real.
-- `can_create_product($pdo, $businessId)`: bloquea nuevos productos si el plan Gratis ya llego a 10.
-- `can_upload_product_image($pdo, $businessId, $productId)`: aplica el limite de imagenes por producto.
+- `can_create_product($pdo, $businessId)`: bloquea nuevos productos si el plan Gratis ya llego a 10, contando tambien publicaciones pausadas.
+- `can_upload_product_image($pdo, $businessId, $productId)`: aplica el limite de 1 imagen por publicacion para proteger espacio.
 - `plan_allows($plan, 'cupones')`: valida funciones premium como cupones, resenas, precio tachado o estadisticas avanzadas.
 
 Endpoints conectados a estas reglas:

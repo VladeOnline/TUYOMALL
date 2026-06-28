@@ -38,6 +38,30 @@ function validate_password_or_fail(string $password): void
     }
 }
 
+function database_public_message(Throwable $error, string $context = 'database'): string
+{
+    $driverCode = $error instanceof PDOException && isset($error->errorInfo[1])
+        ? (int) $error->errorInfo[1]
+        : (int) $error->getCode();
+
+    $messages = [
+        1044 => 'El usuario de la base de datos no tiene permisos suficientes. Revisá los privilegios en cPanel.',
+        1045 => 'No pudimos conectar con MySQL. Revisá usuario y contraseña de la base de datos.',
+        1049 => 'La base de datos configurada no existe o tiene otro nombre.',
+        1054 => 'La base de datos está desactualizada: falta una columna. Importá nuevamente database/schema.sql.',
+        1062 => 'Ya existe una cuenta con ese correo.',
+        1146 => 'La base de datos está incompleta: falta una tabla. Importá nuevamente database/schema.sql.',
+        1216 => 'Falta información relacionada en la base de datos. Revisá que las tablas principales estén importadas.',
+        1217 => 'Falta información relacionada en la base de datos. Revisá que las tablas principales estén importadas.',
+        1451 => 'Falta información relacionada en la base de datos. Revisá que las tablas principales estén importadas.',
+        1452 => 'Falta información relacionada en la base de datos. Revisá que la tabla planes tenga gratis y premium.',
+    ];
+
+    error_log(sprintf('[TuyoMall:%s] %s', $context, $error->getMessage()));
+
+    return $messages[$driverCode] ?? 'No pudimos guardar la información. Revisá que la base de datos esté importada y conectada correctamente.';
+}
+
 function email_exists(PDO $pdo, string $email): bool
 {
     $stmt = $pdo->prepare('SELECT id FROM usuarios WHERE email = :email LIMIT 1');

@@ -1,0 +1,830 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mi cuenta cliente | TuyoMall</title>
+<link rel="icon" href="favicon.ico">
+<link rel="apple-touch-icon" href="assets/img/favicon-180.png">
+<link rel="manifest" href="site.webmanifest">
+<link rel="preconnect" href="https://cdn.jsdelivr.net">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+<style>
+:root {
+  --bg: #080F1B;
+  --panel: #121D2B;
+  --panel-2: #172436;
+  --line: rgba(226,232,240,0.14);
+  --text: #F8FAFC;
+  --muted: #9FB0C8;
+  --orange: #FF6B47;
+  --orange-2: #FF8A6A;
+  --green: #22C55E;
+  --shadow: 0 22px 55px rgba(0,0,0,0.34);
+  --radius: 22px;
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  min-height: 100vh;
+  background:
+    radial-gradient(circle at 78% -10%, rgba(255,107,71,0.18), transparent 28%),
+    linear-gradient(135deg, #080F1B 0%, #0B1422 55%, #0A101A 100%);
+  color: var(--text);
+}
+a { color: inherit; text-decoration: none; }
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  min-height: 74px;
+  padding: 14px clamp(18px, 5vw, 72px);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  border-bottom: 1px solid var(--line);
+  background: rgba(18,29,43,0.82);
+  backdrop-filter: blur(18px);
+}
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 900;
+  font-size: 22px;
+  line-height: 1;
+}
+.brand-mark {
+  width: 54px;
+  height: 54px;
+  display: grid;
+  place-items: center;
+}
+.brand-mark img {
+  width: 54px;
+  height: 54px;
+  object-fit: contain;
+}
+.brand-mall {
+  position: relative;
+  display: inline-block;
+  color: var(--orange);
+}
+.brand-underline {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: calc(100% + 2px);
+  display: block;
+  width: 100%;
+  height: 7px;
+  pointer-events: none;
+}
+.nav-actions { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; justify-content: flex-end; }
+.btn {
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  min-height: 44px;
+  padding: 0 18px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: rgba(8,15,27,0.55);
+  color: var(--text);
+  font-weight: 900;
+  cursor: pointer;
+  transition: transform 0.18s ease, border-color 0.18s ease, background 0.18s ease;
+}
+.btn:hover { transform: translateY(-1px); border-color: rgba(255,107,71,0.38); }
+.btn-orange { background: var(--orange); border-color: var(--orange); box-shadow: 0 18px 34px rgba(255,107,71,0.22); }
+.shell {
+  width: min(1220px, calc(100% - 32px));
+  margin: 28px auto 48px;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 340px;
+  gap: 22px;
+}
+.hero, .panel {
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: rgba(18,29,43,0.94);
+  box-shadow: var(--shadow);
+}
+.hero {
+  position: relative;
+  overflow: hidden;
+  padding: clamp(24px, 4vw, 42px);
+}
+.hero::after {
+  content: '';
+  position: absolute;
+  right: -90px;
+  top: -120px;
+  width: 300px;
+  height: 300px;
+  border-radius: 50%;
+  background: rgba(255,107,71,0.14);
+}
+.profile-row { position: relative; z-index: 1; display: flex; align-items: center; gap: 20px; }
+.avatar {
+  width: 96px;
+  height: 96px;
+  border-radius: 28px;
+  display: grid;
+  place-items: center;
+  background: linear-gradient(135deg, rgba(255,107,71,0.24), rgba(255,255,255,0.06));
+  border: 1px solid rgba(255,107,71,0.28);
+  color: var(--orange);
+  font-size: 38px;
+  font-weight: 950;
+  letter-spacing: 0;
+  text-transform: uppercase;
+}
+.hero h1 { margin: 0 0 8px; font-size: clamp(34px, 5vw, 58px); line-height: 1; letter-spacing: 0; }
+.hero p { margin: 0; color: #C8D4E5; font-size: 17px; line-height: 1.55; max-width: 680px; }
+.stats {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+  margin-top: 28px;
+}
+.stat {
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  padding: 16px;
+  background: rgba(8,15,27,0.36);
+}
+.stat .ti { color: var(--orange); font-size: 23px; }
+.stat strong { display: block; margin-top: 8px; font-size: 30px; }
+.stat span { color: var(--muted); font-weight: 800; font-size: 13px; }
+.tabs {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  margin-top: 22px;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  overflow: hidden;
+  background: rgba(8,15,27,0.42);
+}
+.tab {
+  min-height: 56px;
+  border: 0;
+  border-right: 1px solid var(--line);
+  background: transparent;
+  color: var(--muted);
+  font-weight: 950;
+  cursor: pointer;
+}
+.tab:last-child { border-right: 0; }
+.tab.active { color: var(--text); background: rgba(255,107,71,0.12); }
+.content { margin-top: 18px; }
+.tab-panel { display: none; }
+.tab-panel.active { display: block; }
+.grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+.product {
+  display: grid;
+  grid-template-columns: 118px minmax(0, 1fr);
+  min-height: 144px;
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  overflow: hidden;
+  background: rgba(18,29,43,0.72);
+}
+.product img { width: 100%; height: 100%; object-fit: cover; }
+.product-body { padding: 14px; min-width: 0; }
+.product-top { display: flex; justify-content: space-between; gap: 10px; align-items: center; margin-bottom: 8px; }
+.price { color: var(--orange-2); font-weight: 950; }
+.badge {
+  display: inline-flex;
+  gap: 5px;
+  align-items: center;
+  border-radius: 999px;
+  padding: 5px 9px;
+  background: rgba(255,107,71,0.12);
+  color: #FFD5C9;
+  font-size: 11px;
+  font-weight: 900;
+}
+.product h3 { margin: 0 0 7px; font-size: 16px; line-height: 1.25; }
+.product p { margin: 0 0 12px; color: var(--muted); font-size: 13px; line-height: 1.35; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.product-meta { display: flex; gap: 12px; flex-wrap: wrap; color: var(--muted); font-size: 12px; font-weight: 800; }
+.product-meta .ti { color: var(--orange); }
+.comment-list { display: grid; gap: 12px; }
+.comment {
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  padding: 16px;
+  background: rgba(18,29,43,0.72);
+}
+.comment strong { display: block; margin-bottom: 7px; }
+.comment p { margin: 0 0 10px; color: #D8E3F3; line-height: 1.45; }
+.comment small { color: var(--muted); font-weight: 800; }
+.empty {
+  min-height: 240px;
+  border: 1px dashed rgba(255,107,71,0.28);
+  border-radius: 22px;
+  display: grid;
+  place-items: center;
+  text-align: center;
+  padding: 28px;
+  background: rgba(255,107,71,0.04);
+}
+.empty .ti { color: var(--orange); font-size: 46px; margin-bottom: 12px; }
+.empty h3 { margin: 0 0 7px; font-size: 22px; }
+.empty p { margin: 0 0 18px; color: var(--muted); max-width: 420px; }
+.side { display: grid; gap: 18px; align-content: start; }
+.panel { padding: 22px; }
+.panel-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+.panel h2 { margin: 0; font-size: 24px; }
+.profile-list { display: grid; gap: 12px; }
+.profile-item {
+  display: grid;
+  grid-template-columns: 36px minmax(0, 1fr);
+  gap: 12px;
+  align-items: center;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--line);
+}
+.profile-item:last-child { border-bottom: 0; }
+.profile-item .ti { color: var(--orange); font-size: 22px; }
+.profile-item strong { display: block; font-size: 13px; }
+.profile-item span { color: var(--muted); font-size: 13px; overflow-wrap: anywhere; }
+.quick { display: grid; gap: 10px; }
+.modal {
+  position: fixed;
+  inset: 0;
+  z-index: 45;
+  display: none;
+  place-items: center;
+  padding: 18px;
+  background: rgba(8,15,27,0.76);
+  backdrop-filter: blur(12px);
+}
+.modal.open { display: grid; }
+.modal-panel {
+  width: min(560px, 100%);
+  border: 1px solid rgba(255,255,255,0.13);
+  border-radius: 24px;
+  background: linear-gradient(135deg, #172436, #0B1422);
+  box-shadow: var(--shadow);
+  padding: 24px;
+}
+.modal-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+  margin-bottom: 18px;
+}
+.modal-head h2 { margin: 0 0 6px; font-size: 28px; }
+.modal-head p { margin: 0; color: var(--muted); line-height: 1.45; }
+.icon-btn {
+  width: 42px;
+  height: 42px;
+  border: 1px solid rgba(255,107,71,0.34);
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: rgba(255,107,71,0.08);
+  color: var(--orange);
+  cursor: pointer;
+}
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+.field { display: grid; gap: 8px; }
+.field.full { grid-column: 1 / -1; }
+.field label { font-size: 13px; font-weight: 900; }
+.field input,
+.field select {
+  width: 100%;
+  height: 48px;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: rgba(8,15,27,0.76);
+  color: var(--text);
+  padding: 0 14px;
+  font: inherit;
+  font-weight: 700;
+}
+.field select {
+  appearance: none;
+  background-image:
+    linear-gradient(45deg, transparent 50%, var(--muted) 50%),
+    linear-gradient(135deg, var(--muted) 50%, transparent 50%);
+  background-position:
+    calc(100% - 18px) 21px,
+    calc(100% - 12px) 21px;
+  background-size: 6px 6px, 6px 6px;
+  background-repeat: no-repeat;
+  padding-right: 36px;
+}
+.field input:focus,
+.field select:focus {
+  outline: 2px solid rgba(255,107,71,0.24);
+  border-color: rgba(255,107,71,0.6);
+}
+.field select option {
+  background: #101A28;
+  color: var(--text);
+}
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 18px;
+}
+.toast-stack {
+  position: fixed;
+  right: 18px;
+  bottom: 18px;
+  z-index: 50;
+  display: grid;
+  gap: 10px;
+  width: min(360px, calc(100vw - 32px));
+}
+.toast {
+  border: 1px solid rgba(255,107,71,0.25);
+  border-radius: 17px;
+  padding: 13px 14px;
+  background: rgba(18,29,43,0.98);
+  box-shadow: var(--shadow);
+  color: var(--text);
+  font-weight: 800;
+}
+html:not(.tm-dark) {
+  --bg: #F6F8FB;
+  --panel: #FFFFFF;
+  --panel-2: #F9FBFE;
+  --line: rgba(20,33,61,0.12);
+  --text: #14213D;
+  --muted: #64748B;
+  --shadow: 0 18px 46px rgba(20,33,61,0.12);
+}
+html:not(.tm-dark) body {
+  background:
+    radial-gradient(circle at 78% -10%, rgba(255,107,71,0.13), transparent 30%),
+    linear-gradient(135deg, #FFFFFF 0%, #F6F8FB 58%, #EEF3F8 100%);
+  color: var(--text);
+}
+html:not(.tm-dark) .topbar {
+  background: rgba(255,255,255,0.88);
+  border-color: rgba(20,33,61,0.1);
+}
+html:not(.tm-dark) .hero,
+html:not(.tm-dark) .panel,
+html:not(.tm-dark) .modal-panel {
+  background: rgba(255,255,255,0.94);
+  border-color: rgba(20,33,61,0.12);
+}
+html:not(.tm-dark) .hero p,
+html:not(.tm-dark) .empty p,
+html:not(.tm-dark) .profile-item span,
+html:not(.tm-dark) .product p,
+html:not(.tm-dark) .product-meta,
+html:not(.tm-dark) .comment small,
+html:not(.tm-dark) .modal-head p {
+  color: var(--muted);
+}
+html:not(.tm-dark) .stat,
+html:not(.tm-dark) .tabs,
+html:not(.tm-dark) .product,
+html:not(.tm-dark) .comment,
+html:not(.tm-dark) .empty {
+  background: rgba(255,255,255,0.72);
+  border-color: rgba(20,33,61,0.12);
+}
+html:not(.tm-dark) .btn:not(.btn-orange),
+html:not(.tm-dark) .tab,
+html:not(.tm-dark) .icon-btn {
+  background: rgba(255,255,255,0.74);
+  color: var(--text);
+  border-color: rgba(20,33,61,0.14);
+}
+html:not(.tm-dark) .tab.active {
+  background: rgba(255,107,71,0.1);
+  color: var(--text);
+}
+html:not(.tm-dark) .field input,
+html:not(.tm-dark) .field select {
+  background: #FFFFFF;
+  color: var(--text);
+  border-color: rgba(20,33,61,0.16);
+}
+html:not(.tm-dark) .field select option {
+  background: #FFFFFF;
+  color: var(--text);
+}
+html:not(.tm-dark) .toast {
+  background: #FFFFFF;
+  color: var(--text);
+  border-color: rgba(255,107,71,0.24);
+}
+@media (max-width: 980px) {
+  .shell { grid-template-columns: 1fr; }
+  .side { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 680px) {
+  .topbar { position: relative; align-items: flex-start; }
+  .brand { font-size: 20px; }
+  .nav-actions { width: 100%; }
+  .nav-actions .btn { flex: 1; min-width: 140px; }
+  .shell { width: min(100% - 20px, 1220px); margin-top: 14px; }
+  .profile-row { align-items: flex-start; flex-direction: column; }
+  .avatar { width: 78px; height: 78px; border-radius: 22px; font-size: 34px; }
+  .stats, .grid, .side { grid-template-columns: 1fr; }
+  .tabs { grid-template-columns: 1fr; }
+  .tab { border-right: 0; border-bottom: 1px solid var(--line); }
+  .tab:last-child { border-bottom: 0; }
+  .product { grid-template-columns: 106px minmax(0, 1fr); }
+  .form-grid { grid-template-columns: 1fr; }
+  .modal-actions { flex-direction: column-reverse; }
+}
+</style>
+<link rel="stylesheet" href="assets/css/theme.css">
+<script src="assets/js/theme.js?v=20260622" defer></script>
+</head>
+<body>
+<header class="topbar">
+  <a class="brand" href="principal.html" aria-label="Ir al feed">
+    <span class="brand-mark">
+      <img src="assets/img/logo-tuyomall-nav.png" alt="Logo TuyoMall">
+    </span>
+    <span>Tuyo<span class="brand-mall">Mall
+      <svg class="brand-underline" viewBox="0 0 46 7" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+        <path d="M2 4.5 C8 1.5, 16 6.5, 23 3.5 C30 0.5, 38 6, 44 3" stroke="#FF6B47" stroke-width="2" stroke-linecap="round"/>
+      </svg>
+    </span></span>
+  </a>
+  <nav class="nav-actions">
+    <a class="btn btn-orange" href="principal.html"><span class="ti ti-layout-grid"></span> Explorar productos</a>
+    <a class="btn" href="faq-contacto.html"><span class="ti ti-help"></span> Ayuda</a>
+    <a class="btn" href="auth/logout.php"><span class="ti ti-logout"></span> Cerrar sesion</a>
+  </nav>
+</header>
+
+<main class="shell">
+  <section>
+    <article class="hero">
+      <div class="profile-row">
+        <div class="avatar" id="clientInitial">C</div>
+        <div>
+          <h1 id="clientName">Mi cuenta</h1>
+          <p>Tu espacio para volver a ver publicaciones guardadas, revisar tus likes y continuar explorando negocios locales.</p>
+        </div>
+      </div>
+      <div class="stats">
+        <div class="stat"><span class="ti ti-bookmark"></span><strong id="savedCount">0</strong><span>Guardados</span></div>
+        <div class="stat"><span class="ti ti-heart"></span><strong id="likedCount">0</strong><span>Me gusta</span></div>
+        <div class="stat"><span class="ti ti-message-circle"></span><strong id="commentCount">0</strong><span>Comentarios</span></div>
+      </div>
+    </article>
+
+    <nav class="tabs" aria-label="Secciones de cliente">
+      <button class="tab active" type="button" onclick="setTab('saved', this)"><span class="ti ti-bookmark"></span> Guardados</button>
+      <button class="tab" type="button" onclick="setTab('liked', this)"><span class="ti ti-heart"></span> Likes</button>
+      <button class="tab" type="button" onclick="setTab('comments', this)"><span class="ti ti-message-circle"></span> Comentarios</button>
+    </nav>
+
+    <section class="content">
+      <div class="tab-panel active" id="panel-saved"><div class="grid" id="savedGrid"></div></div>
+      <div class="tab-panel" id="panel-liked"><div class="grid" id="likedGrid"></div></div>
+      <div class="tab-panel" id="panel-comments"><div class="comment-list" id="commentList"></div></div>
+    </section>
+  </section>
+
+  <aside class="side">
+    <article class="panel">
+      <div class="panel-head">
+        <h2>Mis datos</h2>
+        <button class="btn" type="button" onclick="openEditModal()"><span class="ti ti-pencil"></span> Editar</button>
+      </div>
+      <div class="profile-list">
+        <div class="profile-item"><span class="ti ti-mail"></span><div><strong>Correo</strong><span id="clientEmail">-</span></div></div>
+        <div class="profile-item"><span class="ti ti-phone"></span><div><strong>Telefono</strong><span id="clientPhone">No agregado</span></div></div>
+        <div class="profile-item"><span class="ti ti-map-pin"></span><div><strong>Ubicacion</strong><span id="clientLocation">No agregada</span></div></div>
+        <div class="profile-item"><span class="ti ti-map-2"></span><div><strong>Direccion</strong><span id="clientAddress">No agregada</span></div></div>
+      </div>
+    </article>
+    <article class="panel">
+      <h2>Accesos rapidos</h2>
+      <div class="quick">
+        <a class="btn btn-orange" href="principal.html"><span class="ti ti-search"></span> Buscar productos</a>
+        <a class="btn" href="faq-contacto.html"><span class="ti ti-message-question"></span> Contactar soporte</a>
+        <a class="btn" href="sobre-nosotros.html"><span class="ti ti-building-store"></span> Sobre TuyoMall</a>
+      </div>
+    </article>
+  </aside>
+</main>
+
+<div class="toast-stack" id="toastStack" aria-live="polite"></div>
+
+<div class="modal" id="editModal" aria-hidden="true">
+  <form class="modal-panel" onsubmit="saveClientProfile(event)">
+    <div class="modal-head">
+      <div>
+        <h2>Editar mis datos</h2>
+        <p>Estos datos ayudan a personalizar tu experiencia como cliente.</p>
+      </div>
+      <button class="icon-btn" type="button" onclick="closeEditModal()" aria-label="Cerrar"><span class="ti ti-x"></span></button>
+    </div>
+    <div class="form-grid" data-location-group>
+      <div class="field">
+        <label for="editPhone">Telefono</label>
+        <input id="editPhone" name="telefono" type="tel" placeholder="+506 8888 8888" autocomplete="tel">
+      </div>
+      <div class="field">
+        <label for="editCountry">Pais</label>
+        <select id="editCountry" name="pais" autocomplete="country-name" data-country-select>
+          <option value="">Selecciona pais</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="editProvince">Provincia / Estado</label>
+        <input id="editProvince" name="provincia" placeholder="Ej: San Jose, Jalisco, Antioquia">
+      </div>
+      <div class="field full">
+        <label for="editAddress">Direccion o referencia</label>
+        <input id="editAddress" name="direccion" placeholder="Ej: Centro, 200 m norte del parque" autocomplete="street-address">
+      </div>
+    </div>
+    <div class="modal-actions">
+      <button class="btn" type="button" onclick="closeEditModal()">Cancelar</button>
+      <button class="btn btn-orange" type="submit"><span class="ti ti-device-floppy"></span> Guardar datos</button>
+    </div>
+  </form>
+</div>
+
+<script src="assets/js/latam-locations.js?v=6"></script>
+<script>
+const EMPTY_PRODUCT = 'assets/img/logo-tuyomall-nav.png';
+const DEFAULT_COUNTRY = 'Costa Rica';
+const countryDialCodes = {
+  'Costa Rica': '+506',
+  'Mexico': '+52',
+  'Guatemala': '+502',
+  'El Salvador': '+503',
+  'Honduras': '+504',
+  'Panama': '+507',
+  'Colombia': '+57',
+  'Ecuador': '+593',
+  'Peru': '+51',
+  'Bolivia': '+591',
+  'Chile': '+56',
+  'Argentina': '+54',
+  'Uruguay': '+598',
+  'Paraguay': '+595',
+  'Republica Dominicana': '+1'
+};
+let clientProfile = {};
+let activePhonePrefix = countryDialCodes[DEFAULT_COUNTRY];
+
+function esc(value) {
+  return String(value ?? '').replace(/[&<>"']/g, char => ({
+    '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;'
+  }[char]));
+}
+
+function showToast(message) {
+  const stack = document.getElementById('toastStack');
+  const toast = document.createElement('div');
+  toast.className = 'toast';
+  toast.textContent = message;
+  stack.appendChild(toast);
+  setTimeout(() => toast.remove(), 4200);
+}
+
+function initialsFromName(name) {
+  const parts = String(name || '')
+    .trim()
+    .split(/\s+/)
+    .filter(Boolean);
+
+  if (!parts.length) return 'C';
+  if (parts.length === 1) return parts[0].slice(0, 2).toUpperCase();
+  return `${parts[0][0]}${parts[parts.length - 1][0]}`.toUpperCase();
+}
+
+function setTab(name, btn) {
+  document.querySelectorAll('.tab').forEach(tab => tab.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.tab-panel').forEach(panel => panel.classList.remove('active'));
+  document.getElementById(`panel-${name}`).classList.add('active');
+}
+
+function productUrl(product) {
+  return `p/${encodeURIComponent(product.id)}`;
+}
+
+function businessUrl(product) {
+  return product.businessSlug ? `negocio/${encodeURIComponent(product.businessSlug)}` : `perfil-publico.html?business_id=${product.businessId}`;
+}
+
+function whatsappUrl(product) {
+  const digits = String(product.sellerWhatsapp || '').replace(/[^0-9]/g, '');
+  return digits ? `https://wa.me/${digits}` : '#';
+}
+
+function setSelectValue(select, value) {
+  if (!select) return;
+  const normalized = String(value || '').trim();
+  if (!normalized) {
+    select.value = '';
+    return;
+  }
+  const exists = [...select.options].some(option => option.value === normalized);
+  if (!exists) {
+    const option = document.createElement('option');
+    option.value = normalized;
+    option.textContent = normalized;
+    select.appendChild(option);
+  }
+  select.value = normalized;
+}
+
+function getDialCode(country) {
+  return countryDialCodes[country] || '';
+}
+
+function updatePhoneByCountry({ force = false } = {}) {
+  const country = document.getElementById('editCountry');
+  const phone = document.getElementById('editPhone');
+  if (!country || !phone) return;
+
+  const prefix = getDialCode(country.value);
+  if (!prefix) {
+    phone.placeholder = '+--- 8888 8888';
+    activePhonePrefix = '';
+    return;
+  }
+
+  phone.placeholder = `${prefix} 8888 8888`;
+  const current = phone.value.trim();
+  const hasOnlyOldPrefix = current === activePhonePrefix;
+  const canReplacePrefix = activePhonePrefix && current.startsWith(`${activePhonePrefix} `);
+
+  if (force && !current) {
+    phone.value = `${prefix} `;
+  } else if (hasOnlyOldPrefix) {
+    phone.value = `${prefix} `;
+  } else if (canReplacePrefix) {
+    phone.value = `${prefix}${current.slice(activePhonePrefix.length)}`;
+  } else if (!current) {
+    phone.value = `${prefix} `;
+  }
+
+  activePhonePrefix = prefix;
+}
+
+function emptyState(title, text, icon = 'ti-bookmark') {
+  return `
+    <div class="empty">
+      <div>
+        <span class="ti ${icon}"></span>
+        <h3>${title}</h3>
+        <p>${text}</p>
+        <a class="btn btn-orange" href="principal.html"><span class="ti ti-layout-grid"></span> Explorar productos</a>
+      </div>
+    </div>
+  `;
+}
+
+function productMarkup(product) {
+  return `
+    <article class="product">
+      <a href="${productUrl(product)}"><img src="${esc(product.img || EMPTY_PRODUCT)}" alt="${esc(product.name)}"></a>
+      <div class="product-body">
+        <div class="product-top">
+          <span class="price">${esc(product.price || 'Consultar')}</span>
+          ${product.premium ? '<span class="badge"><span class="ti ti-crown"></span> PRO</span>' : ''}
+        </div>
+        <h3><a href="${productUrl(product)}">${esc(product.name)}</a></h3>
+        <p>${esc(product.description || product.subcategory || 'Publicacion de TuyoMall')}</p>
+        <div class="product-meta">
+          <a href="${businessUrl(product)}"><span class="ti ti-building-store"></span> ${esc(product.seller)}</a>
+          <span><span class="ti ti-heart"></span> ${product.likes || 0}</span>
+          <span><span class="ti ti-message-circle"></span> ${product.comments || 0}</span>
+          <a href="${whatsappUrl(product)}"><span class="ti ti-brand-whatsapp"></span> WhatsApp</a>
+        </div>
+      </div>
+    </article>
+  `;
+}
+
+function renderProducts(id, products, emptyTitle, emptyText, emptyIcon) {
+  const grid = document.getElementById(id);
+  if (!products.length) {
+    grid.outerHTML = emptyState(emptyTitle, emptyText, emptyIcon);
+    return;
+  }
+  grid.innerHTML = products.map(productMarkup).join('');
+}
+
+function renderComments(comments) {
+  const list = document.getElementById('commentList');
+  if (!comments.length) {
+    list.innerHTML = emptyState('Aun no comentaste', 'Cuando comentes una publicacion, la vas a ver aqui.', 'ti-message-circle');
+    return;
+  }
+  list.innerHTML = comments.map(comment => `
+    <article class="comment">
+      <strong><a href="p/${encodeURIComponent(comment.productId)}">${esc(comment.product)}</a></strong>
+      <p>${esc(comment.comment)}</p>
+      <small>${esc(comment.business)} - ${esc(comment.createdAt)}</small>
+    </article>
+  `).join('');
+}
+
+async function loadDashboard() {
+  try {
+    const response = await fetch('api/client-dashboard.php', { headers: { 'Accept': 'application/json' } });
+    const result = await response.json();
+    if (!result.ok) throw new Error(result.message || 'No pudimos cargar tu cuenta.');
+
+    const user = result.user || {};
+    clientProfile = user;
+    const stats = result.stats || {};
+    const displayName = user.name || 'Cliente TuyoMall';
+    document.getElementById('clientName').textContent = displayName;
+    document.getElementById('clientInitial').textContent = initialsFromName(displayName);
+    document.getElementById('clientEmail').textContent = user.email || '-';
+    document.getElementById('clientPhone').textContent = user.phone || 'No agregado';
+    document.getElementById('clientLocation').textContent = [user.province, user.country].filter(Boolean).join(', ') || 'No agregada';
+    document.getElementById('clientAddress').textContent = user.address || 'No agregada';
+    document.getElementById('savedCount').textContent = stats.guardados || 0;
+    document.getElementById('likedCount').textContent = stats.likes || 0;
+    document.getElementById('commentCount').textContent = stats.comentarios || 0;
+
+    renderProducts('savedGrid', result.saved || [], 'Aun no guardaste publicaciones', 'Toca el icono de guardar en el feed para armar tu lista.', 'ti-bookmark');
+    renderProducts('likedGrid', result.liked || [], 'Aun no diste likes', 'Toca el corazon en una publicacion para recordar lo que te gusto.', 'ti-heart');
+    renderComments(result.comments || []);
+  } catch (error) {
+    showToast(error.message || 'No pudimos cargar el dashboard.');
+  }
+}
+
+function openEditModal() {
+  document.getElementById('editPhone').value = clientProfile.phone || '';
+  setSelectValue(document.getElementById('editCountry'), clientProfile.country || DEFAULT_COUNTRY);
+  document.getElementById('editProvince').value = clientProfile.province || '';
+  document.getElementById('editAddress').value = clientProfile.address || '';
+  activePhonePrefix = getDialCode(document.getElementById('editCountry').value) || activePhonePrefix;
+  updatePhoneByCountry({ force: !clientProfile.phone });
+  document.getElementById('editModal').classList.add('open');
+  document.getElementById('editModal').setAttribute('aria-hidden', 'false');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeEditModal() {
+  document.getElementById('editModal').classList.remove('open');
+  document.getElementById('editModal').setAttribute('aria-hidden', 'true');
+  document.body.style.overflow = '';
+}
+
+async function saveClientProfile(event) {
+  event.preventDefault();
+  const data = new FormData(event.currentTarget);
+
+  try {
+    const response = await fetch('api/client-dashboard.php', {
+      method: 'POST',
+      body: data,
+      headers: { 'Accept': 'application/json' }
+    });
+    const result = await response.json();
+    if (!result.ok) throw new Error(result.message || 'No pudimos guardar tus datos.');
+    closeEditModal();
+    showToast(result.message || 'Datos actualizados.');
+    await loadDashboard();
+  } catch (error) {
+    showToast(error.message || 'No pudimos guardar tus datos.');
+  }
+}
+
+document.getElementById('editModal').addEventListener('click', (event) => {
+  if (event.target.id === 'editModal') closeEditModal();
+});
+
+document.addEventListener('keydown', (event) => {
+  if (event.key === 'Escape') closeEditModal();
+});
+
+document.getElementById('editCountry')?.addEventListener('change', () => {
+  updatePhoneByCountry();
+});
+
+loadDashboard();
+</script>
+</body>
+</html>

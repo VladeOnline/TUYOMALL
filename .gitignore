@@ -1,0 +1,8 @@
+# Credenciales y configuraciones locales
+JAQUE/La BD de tuyomall y el usuario con acces.txt
+JAQUE/config/database.local.php
+JAQUE/config/mail.local.php
+
+# Paquetes de despliegue y herramientas temporales
+*.zip
+repair-mojibake.js

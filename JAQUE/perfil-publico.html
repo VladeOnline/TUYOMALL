@@ -1,6 +1,7 @@
 ﻿<!DOCTYPE html>
 <html lang="es">
 <head>
+<base href="/">
 <link rel="icon" href="/favicon.ico?v=3" sizes="any">
 <link rel="icon" type="image/png" sizes="48x48" href="/assets/img/favicon-48.png?v=3">
 <link rel="icon" type="image/png" sizes="96x96" href="/assets/img/favicon-96.png?v=3">
@@ -9,8 +10,8 @@
 <link rel="manifest" href="/site.webmanifest?v=3">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Artesanías La Ceiba | TuyoMall</title>
-<meta name="description" content="Perfil público de Artesanías La Ceiba en TuyoMall.">
+<title>Perfil publico | TuyoMall</title>
+<meta name="description" content="Perfil publico de negocio en TuyoMall.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Clash+Display:wght@500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.14.0/dist/tabler-icons.min.css">
@@ -155,6 +156,51 @@ button { font: inherit; cursor: pointer; }
   color: white;
   border-color: #22C55E;
 }
+.premium-lock {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--r);
+}
+.premium-lock-content {
+  transition: filter 0.2s ease, opacity 0.2s ease;
+}
+.plan-free .premium-lock {
+  min-height: 140px;
+  border: 1px solid rgba(255,107,71,0.22);
+  background: rgba(255,107,71,0.04);
+}
+.plan-free .premium-lock .premium-lock-content {
+  filter: blur(3px);
+  opacity: 0.34;
+  pointer-events: none;
+  user-select: none;
+}
+.plan-free .premium-lock::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  background: linear-gradient(135deg, rgba(20,33,61,0.70), rgba(8,15,27,0.88));
+  backdrop-filter: blur(2px);
+}
+.plan-free .premium-lock::after {
+  content: attr(data-premium-label);
+  position: absolute;
+  z-index: 3;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: max-content;
+  max-width: calc(100% - 28px);
+  padding: 9px 13px;
+  border-radius: 999px;
+  background: var(--coral);
+  color: white;
+  box-shadow: 0 14px 32px rgba(255,107,71,0.32);
+  font-size: 12px;
+  font-weight: 900;
+  text-align: center;
+}
 
 .page {
   max-width: 1440px;
@@ -170,9 +216,13 @@ button { font: inherit; cursor: pointer; }
   border-radius: var(--r-lg);
   box-shadow: 0 10px 34px rgba(20,33,61,0.05);
 }
-.profile-panel { overflow: hidden; }
+.profile-panel {
+  overflow: visible;
+  position: relative;
+}
 .cover {
-  height: 92px;
+  height: 190px;
+  border-radius: var(--r-lg) var(--r-lg) 0 0;
   background:
     linear-gradient(180deg, rgba(20,33,61,0.08), rgba(20,33,61,0.24)),
     url('https://images.unsplash.com/photo-1602874801006-e26e88ed23e1?w=1400&h=500&fit=crop&q=80');
@@ -180,13 +230,14 @@ button { font: inherit; cursor: pointer; }
   background-position: center;
 }
 .profile-body {
-  padding: 0 28px 22px;
+  padding: 0 28px 26px;
 }
 .profile-main {
   display: grid;
   grid-template-columns: 148px minmax(0, 1fr);
   gap: 24px;
-  margin-top: -34px;
+  margin-top: -56px;
+  align-items: start;
 }
 .biz-avatar {
   width: 148px;
@@ -197,9 +248,17 @@ button { font: inherit; cursor: pointer; }
   object-fit: cover;
   background: var(--navy);
   box-shadow: 0 10px 30px rgba(20,33,61,0.15);
+  display: block;
+  position: relative;
+  z-index: 2;
+}
+.biz-avatar.is-empty {
+  object-fit: contain;
+  padding: 28px;
+  background: #F8FAFC;
 }
 .profile-info {
-  padding-top: 38px;
+  padding-top: 68px;
 }
 .title-row {
   display: flex;
@@ -224,6 +283,11 @@ button { font: inherit; cursor: pointer; }
   display: inline-flex;
   align-items: center;
   gap: 5px;
+}
+.badge.is-hidden,
+.verified.is-hidden,
+.highlights.is-hidden {
+  display: none !important;
 }
 .verified {
   width: 24px;
@@ -340,6 +404,141 @@ button { font: inherit; cursor: pointer; }
   border: 3px solid white;
   object-fit: cover;
 }
+.highlight {
+  border: none;
+  background: transparent;
+  cursor: pointer;
+}
+.story-viewer {
+  position: fixed;
+  inset: 0;
+  z-index: 180;
+  display: none;
+  place-items: center;
+  background: rgba(3,7,13,0.92);
+  color: white;
+}
+.story-viewer.open { display: grid; }
+.story-frame {
+  position: relative;
+  width: min(440px, 100vw);
+  height: min(760px, 100vh);
+  overflow: hidden;
+  background: #050A12;
+  box-shadow: 0 28px 90px rgba(0,0,0,0.46);
+}
+.story-frame::before {
+  content: '';
+  position: absolute;
+  inset: 0 0 auto;
+  height: 165px;
+  z-index: 2;
+  pointer-events: none;
+  background: linear-gradient(180deg, rgba(0,0,0,0.72), rgba(0,0,0,0.42) 48%, transparent);
+}
+.story-frame::after {
+  content: '';
+  position: absolute;
+  inset: auto 0 0;
+  height: 140px;
+  z-index: 2;
+  pointer-events: none;
+  background: linear-gradient(0deg, rgba(0,0,0,0.52), transparent);
+}
+.story-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.story-top {
+  position: absolute;
+  left: 14px;
+  right: 14px;
+  top: 14px;
+  z-index: 4;
+}
+.story-progress {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 14px;
+}
+.story-progress span {
+  flex: 1;
+  height: 3px;
+  border-radius: 999px;
+  overflow: hidden;
+  background: rgba(255,255,255,0.36);
+}
+.story-progress span::before {
+  content: '';
+  display: block;
+  width: var(--story-fill, 0%);
+  height: 100%;
+  background: white;
+}
+.story-progress span:not(.active):not(.done)::before {
+  display: none;
+}
+.story-progress span.done::before { --story-fill: 100%; }
+.story-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-shadow: 0 2px 12px rgba(0,0,0,0.82);
+}
+.story-head img {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  border: 2px solid white;
+  object-fit: cover;
+}
+.story-head strong { display: block; font-size: 14px; }
+.story-head small {
+  display: block;
+  color: rgba(255,255,255,0.88);
+  font-size: 12px;
+}
+.story-close {
+  margin-left: auto;
+  width: 34px;
+  height: 34px;
+  border: 0;
+  border-radius: 50%;
+  background: rgba(0,0,0,0.58);
+  color: white;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+}
+.story-zone {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  z-index: 3;
+  width: 50%;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+}
+.story-zone.prev { left: 0; }
+.story-zone.next { right: 0; }
+.story-caption {
+  position: absolute;
+  left: 18px;
+  right: 18px;
+  bottom: 28px;
+  z-index: 4;
+  width: fit-content;
+  max-width: calc(100% - 36px);
+  padding: 9px 12px;
+  border-radius: 12px;
+  background: rgba(0,0,0,0.56);
+  color: white;
+  font-weight: 800;
+  line-height: 1.35;
+}
 .tabs {
   margin-top: 18px;
   display: grid;
@@ -376,6 +575,19 @@ button { font: inherit; cursor: pointer; }
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 10px;
+}
+.empty-state {
+  grid-column: 1 / -1;
+  min-height: 180px;
+  border: 1px dashed var(--line);
+  border-radius: var(--r-lg);
+  display: grid;
+  place-items: center;
+  color: var(--muted);
+  font-weight: 800;
+  text-align: center;
+  padding: 24px;
+  background: rgba(255,255,255,0.04);
 }
 .post-card {
   position: relative;
@@ -644,6 +856,103 @@ html.tm-dark .post-options .report-action:hover {
   font-weight: 700;
 }
 
+html.tm-dark body {
+  background: #080F1B;
+  color: #F8FAFC;
+}
+html.tm-dark .topbar {
+  background: rgba(18,29,43,0.94);
+  border-bottom-color: rgba(255,255,255,0.10);
+}
+html.tm-dark .nav-links a {
+  color: #CBD5E1;
+}
+html.tm-dark .nav-links a:hover {
+  background: rgba(255,255,255,0.06);
+  color: #FFFFFF;
+}
+html.tm-dark .btn {
+  background: rgba(8,15,27,0.58);
+  color: #F8FAFC;
+  border-color: rgba(255,255,255,0.14);
+}
+html.tm-dark .btn-coral {
+  background: var(--coral);
+  border-color: var(--coral);
+}
+html.tm-dark .panel,
+html.tm-dark .side-panel {
+  background: #121D2B;
+  border-color: rgba(255,255,255,0.12);
+  box-shadow: 0 20px 50px rgba(0,0,0,0.24);
+}
+html.tm-dark .contact-card {
+  background: linear-gradient(145deg, #13203A, #101A2A);
+}
+html.tm-dark .profile-panel {
+  background: #121D2B;
+}
+html.tm-dark .cover {
+  background:
+    linear-gradient(180deg, rgba(8,15,27,0.22), rgba(8,15,27,0.72)),
+    url('https://images.unsplash.com/photo-1602874801006-e26e88ed23e1?w=1400&h=500&fit=crop&q=80');
+  background-size: cover;
+  background-position: center;
+}
+html.tm-dark .title-row h1,
+html.tm-dark .side-panel h2,
+html.tm-dark .tab-btn,
+html.tm-dark .contact-row strong,
+html.tm-dark .review small,
+html.tm-dark .info-list strong {
+  color: #F8FAFC;
+}
+html.tm-dark .profile-meta,
+html.tm-dark .bio,
+html.tm-dark .info-strip,
+html.tm-dark .stat span,
+html.tm-dark .review p,
+html.tm-dark .contact-row small,
+html.tm-dark .info-list div,
+html.tm-dark .empty-state {
+  color: #CBD5E1;
+}
+html.tm-dark .stats-row,
+html.tm-dark .stat,
+html.tm-dark .profile-actions,
+html.tm-dark .content-tabs,
+html.tm-dark .tab-panel,
+html.tm-dark .contact-row,
+html.tm-dark .review,
+html.tm-dark .info-list div {
+  border-color: rgba(255,255,255,0.12);
+}
+html.tm-dark .meta-pill {
+  background: rgba(255,107,71,0.14);
+  color: #FFE1D8;
+  border-color: rgba(255,107,71,0.28);
+}
+html.tm-dark .biz-avatar {
+  background-color: #0B1422;
+  border-color: rgba(255,255,255,0.92);
+}
+html.tm-dark .post-card {
+  background: #0F1826;
+  border-color: rgba(255,255,255,0.12);
+}
+html.tm-dark .empty-state,
+html.tm-dark .review-form,
+html.tm-dark .info-list div {
+  background: rgba(8,15,27,0.35);
+}
+html.tm-dark .review-form input,
+html.tm-dark .review-form textarea,
+html.tm-dark .review-form select {
+  background: #08111D;
+  color: #F8FAFC;
+  border-color: rgba(255,255,255,0.14);
+}
+
 @media (max-width: 1120px) {
   .page { grid-template-columns: 1fr; }
 }
@@ -652,9 +961,9 @@ html.tm-dark .post-options .report-action:hover {
   .nav-links { display: none; }
   .nav-actions .btn:not(.btn-coral) { display: none; }
   .page { padding: 14px 12px 36px; }
-  .cover { height: 88px; }
-  .profile-body { padding: 0 14px 18px; }
-  .profile-main { grid-template-columns: 1fr; gap: 10px; text-align: center; margin-top: -42px; }
+  .cover { height: 130px; }
+  .profile-body { padding: 0 14px 20px; }
+  .profile-main { grid-template-columns: 1fr; gap: 12px; text-align: center; margin-top: -48px; }
   .profile-info { padding-top: 0; }
   .biz-avatar { width: 124px; height: 124px; margin: 0 auto; }
   .title-row,
@@ -696,11 +1005,63 @@ html.tm-dark .post-options .report-action:hover {
   font-family: 'DM Sans', system-ui, sans-serif;
   letter-spacing: 0;
 }
+.toast-stack {
+  position: fixed;
+  right: 22px;
+  bottom: 22px;
+  z-index: 12000;
+  width: min(360px, calc(100vw - 28px));
+  display: grid;
+  gap: 10px;
+}
+.toast {
+  display: grid;
+  grid-template-columns: 34px 1fr auto;
+  align-items: start;
+  gap: 12px;
+  padding: 14px;
+  border-radius: 18px;
+  background: rgba(20,33,61,0.96);
+  color: white;
+  border: 1px solid rgba(255,255,255,0.12);
+  box-shadow: 0 18px 42px rgba(8,14,25,0.28), 0 0 30px rgba(255,107,71,0.16);
+  animation: toastIn 0.22s ease both;
+}
+.toast-icon {
+  width: 34px;
+  height: 34px;
+  border-radius: 12px;
+  display: grid;
+  place-items: center;
+  background: rgba(255,107,71,0.18);
+  color: var(--coral);
+  font-size: 18px;
+}
+.toast.success .toast-icon { background: rgba(34,197,94,0.18); color: #22c55e; }
+.toast.error .toast-icon { background: rgba(255,107,71,0.2); color: var(--coral); }
+.toast-title { font-weight: 800; margin-bottom: 2px; }
+.toast-text { color: rgba(255,255,255,0.78); font-size: 13px; line-height: 1.42; }
+.toast-close {
+  border: none;
+  background: transparent;
+  color: rgba(255,255,255,0.58);
+  cursor: pointer;
+  padding: 2px;
+}
+.toast-close:hover { color: white; }
+@keyframes toastIn {
+  from { opacity: 0; transform: translateY(12px) scale(0.98); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+@keyframes toastOut {
+  to { opacity: 0; transform: translateY(10px) scale(0.98); }
+}
 </style>
   <link rel="stylesheet" href="assets/css/theme.css">
-  <script src="assets/js/theme.js" defer></script>
+  <script src="assets/js/theme.js?v=20260620" defer></script>
 </head>
 <body>
+<div class="toast-stack" id="toastStack" aria-live="polite" aria-atomic="true"></div>
 <header class="topbar">
   <div class="topbar-inner">
     <a class="brand" href="principal.html">
@@ -720,7 +1081,7 @@ html.tm-dark .post-options .report-action:hover {
     </nav>
     <div class="nav-actions">
       <button class="btn" onclick="shareProfile()"><span class="ti ti-share-3"></span> Compartir</button>
-      <a class="btn btn-coral" href="acceso-cliente.html"><span class="ti ti-login"></span> Entrar</a>
+      <a class="btn btn-coral" id="loginAction" href="acceso-cliente.html"><span class="ti ti-login"></span> Iniciar sesion</a>
     </div>
   </div>
 </header>
@@ -731,31 +1092,31 @@ html.tm-dark .post-options .report-action:hover {
       <div class="cover"></div>
       <div class="profile-body">
         <div class="profile-main">
-          <img class="biz-avatar" data-business-avatar src="https://images.unsplash.com/photo-1606722590583-6951b5ea92ad?w=400&h=400&fit=crop&q=80" alt="Artesanías La Ceiba">
+          <img class="biz-avatar is-empty" data-business-avatar alt="Logo del negocio">
           <div class="profile-info">
             <div class="title-row">
-              <h1>Artesanías La Ceiba</h1>
-              <span class="badge"><span class="ti ti-crown"></span> PRO</span>
-              <span class="verified"><span class="ti ti-check"></span></span>
+              <h1>Negocio TuyoMall</h1>
+              <span class="badge is-hidden"><span class="ti ti-crown"></span> PRO</span>
+              <span class="verified is-hidden"><span class="ti ti-check"></span></span>
             </div>
             <div class="profile-meta">
               <span><span class="ti ti-map-pin"></span> Cartago, Costa Rica</span>
-              <span class="meta-pill"><span class="ti ti-palette"></span> Artesanías & Hogar</span>
+              <span class="meta-pill"><span class="ti ti-palette"></span> Artesanias & Hogar</span>
             </div>
             <div class="stats-row">
               <div class="stat"><span class="ti ti-layout-grid"></span><div><strong>12</strong><span>publicaciones</span></div></div>
               <div class="stat"><span class="ti ti-eye"></span><div><strong>548</strong><span>vistas</span></div></div>
               <div class="stat"><span class="ti ti-bookmark"></span><div><strong>86</strong><span>guardados</span></div></div>
-              <div class="stat"><span class="ti ti-star"></span><div><strong>4.9</strong><span>calificación</span></div></div>
+          <div class="stat"><span class="ti ti-star"></span><div><strong>4.9</strong><span>calificacion</span></div></div>
             </div>
             <p class="bio">
-              <strong>Piezas artesanales únicas</strong> creadas con materiales naturales de nuestra tierra.
-              Trabajamos canastas, decoración y regalos personalizados hechos a mano en Costa Rica.
+            <strong>Piezas artesanales unicas</strong> creadas con materiales naturales de nuestra tierra.
+            Trabajamos canastas, decoracion y regalos personalizados hechos a mano en Costa Rica.
             </p>
             <div class="info-strip">
-              <span><span class="ti ti-clock"></span> Lun - Sáb 8:00 - 18:00</span>
+            <span><span class="ti ti-clock"></span> Lun - Sab 8:00 - 18:00</span>
               <span><span class="ti ti-circle-filled" style="color:var(--green)"></span> Responde en minutos</span>
-              <span><span class="ti ti-truck"></span> Envíos a todo el país</span>
+            <span><span class="ti ti-truck"></span> Envios a todo el pais</span>
             </div>
             <div class="profile-actions">
               <a class="btn btn-green" href="https://wa.me/50688881234" target="_blank"><span class="ti ti-brand-whatsapp"></span> Contactar por WhatsApp</a>
@@ -765,56 +1126,53 @@ html.tm-dark .post-options .report-action:hover {
           </div>
         </div>
       </div>
-      <div class="highlights" aria-label="Destacados">
-        <div class="highlight"><div class="highlight-img"><img src="https://images.unsplash.com/photo-1606722590583-6951b5ea92ad?w=160&h=160&fit=crop&q=80" alt="" loading="lazy"></div>Canastas</div>
-        <div class="highlight"><div class="highlight-img"><img src="https://images.unsplash.com/photo-1602874801006-e26e88ed23e1?w=160&h=160&fit=crop&q=80" alt="" loading="lazy"></div>Talleres</div>
-        <div class="highlight"><div class="highlight-img"><img src="https://images.unsplash.com/photo-1607082348824-0a96f2a4b9da?w=160&h=160&fit=crop&q=80" alt="" loading="lazy"></div>Envíos</div>
-        <div class="highlight"><div class="highlight-img"><img src="https://images.unsplash.com/photo-1598300042247-d088f8ab3a91?w=160&h=160&fit=crop&q=80" alt="" loading="lazy"></div>Reseñas</div>
-      </div>
+      <div class="highlights is-hidden" id="profileHighlights" aria-label="Destacados"></div>
     </article>
 
     <nav class="tabs">
       <button class="tab-btn active" data-tab-target="products" onclick="setPublicTab('products', this)"><span class="ti ti-layout-grid"></span> Productos</button>
-      <button class="tab-btn" data-tab-target="reviews" onclick="setPublicTab('reviews', this)"><span class="ti ti-message-star"></span> Reseñas</button>
-      <button class="tab-btn" data-tab-target="info" onclick="setPublicTab('info', this)"><span class="ti ti-info-circle"></span> Información</button>
+      <button class="tab-btn" data-tab-target="reviews" onclick="setPublicTab('reviews', this)"><span class="ti ti-message-star"></span> Resenas</button>
+      <button class="tab-btn" data-tab-target="info" onclick="setPublicTab('info', this)"><span class="ti ti-info-circle"></span> Informacion</button>
     </nav>
     <section class="panel post-shell">
       <div class="tab-panel active" id="tab-products">
         <div class="posts-grid" id="postsGrid"></div>
       </div>
       <div class="tab-panel" id="tab-reviews">
-        <div class="reviews-layout">
-          <div>
-            <h2>Reseñas del negocio</h2>
-            <div class="review-list" id="reviewsList"></div>
+        <div class="premium-lock" data-premium-label="Premium desbloquea resenas">
+          <div class="premium-lock-content reviews-layout">
+            <div>
+              <h2>Resenas del negocio</h2>
+              <div class="review-list" id="reviewsList"></div>
+            </div>
+            <form class="review-form" id="reviewForm">
+              <h3>Deja tu resena</h3>
+              <p>Tu opinion ayuda a otros clientes a confiar en este negocio.</p>
+              <label for="reviewName">Nombre</label>
+              <input id="reviewName" placeholder="Tu nombre" required>
+              <label for="reviewRating">Calificacion</label>
+              <select id="reviewRating">
+                <option value="5">5 estrellas</option>
+                <option value="4">4 estrellas</option>
+                <option value="3">3 estrellas</option>
+                <option value="2">2 estrellas</option>
+                <option value="1">1 estrella</option>
+              </select>
+              <label for="reviewText">Resena</label>
+              <textarea id="reviewText" placeholder="Conta como fue tu experiencia" required></textarea>
+              <button class="btn btn-coral" type="submit">Publicar resena</button>
+            </form>
           </div>
-          <form class="review-form" id="reviewForm">
-            <h3>Dejá tu reseña</h3>
-            <p>Tu opinión ayuda a otros clientes a confiar en este negocio.</p>
-            <label for="reviewName">Nombre</label>
-            <input id="reviewName" placeholder="Tu nombre" required>
-            <label for="reviewRating">Calificación</label>
-            <select id="reviewRating">
-              <option value="5">5 estrellas</option>
-              <option value="4">4 estrellas</option>
-              <option value="3">3 estrellas</option>
-              <option value="2">2 estrellas</option>
-              <option value="1">1 estrella</option>
-            </select>
-            <label for="reviewText">Reseña</label>
-            <textarea id="reviewText" placeholder="Contá cómo fue tu experiencia" required></textarea>
-            <button class="btn btn-coral" type="submit">Publicar reseña</button>
-          </form>
         </div>
       </div>
       <div class="tab-panel" id="tab-info">
         <div class="info-panel">
-          <h3>Información del negocio</h3>
-          <p>Piezas artesanales únicas creadas con materiales naturales de nuestra tierra. Trabajamos canastas, decoración y regalos personalizados hechos a mano en Costa Rica.</p>
+          <h3>Informacion del negocio</h3>
+          <p>Piezas artesanales unicas creadas con materiales naturales de nuestra tierra. Trabajamos canastas, decoracion y regalos personalizados hechos a mano en Costa Rica.</p>
           <div class="info-list">
-            <div><strong>Horario:</strong> Lun - Sáb 8:00 - 18:00</div>
-            <div><strong>Ubicación:</strong> Cartago, Costa Rica</div>
-            <div><strong>Categoría:</strong> Artesanías & Hogar</div>
+            <div><strong>Horario:</strong> Lun - Sab 8:00 - 18:00</div>
+            <div><strong>Ubicacion:</strong> Cartago, Costa Rica</div>
+            <div><strong>Categoria:</strong> Artesanias & Hogar</div>
           </div>
         </div>
       </div>
@@ -823,8 +1181,8 @@ html.tm-dark .post-options .report-action:hover {
 
   <aside class="sidebar">
     <article class="panel side-panel contact-card">
-      <h2>¿Te interesa algo?</h2>
-      <p>Contactá directo con el negocio. TuyoMall no cobra comisión ni procesa pagos.</p>
+      <h2>Te interesa algo?</h2>
+      <p>Contacta directo con el negocio. TuyoMall no cobra comision ni procesa pagos.</p>
       <a class="btn btn-green" href="https://wa.me/50688881234" target="_blank"><span class="ti ti-brand-whatsapp"></span> Escribir por WhatsApp</a>
       <button class="btn btn-coral" onclick="shareProfile()"><span class="ti ti-share-3"></span> Compartir perfil</button>
     </article>
@@ -834,43 +1192,122 @@ html.tm-dark .post-options .report-action:hover {
       <div class="contact-row"><span class="ti ti-brand-whatsapp"></span><div><strong>WhatsApp</strong><small>+506 8888-1234</small></div></div>
       <div class="contact-row"><span class="ti ti-mail"></span><div><strong>Correo</strong><small>hola@artesaniaslaceiba.cr</small></div></div>
       <div class="contact-row"><span class="ti ti-brand-instagram"></span><div><strong>Instagram</strong><small>@artesanias_laceiba</small></div></div>
-      <div class="contact-row"><span class="ti ti-map-pin"></span><div><strong>Ubicación</strong><small>Cartago, Costa Rica</small></div></div>
+      <div class="contact-row"><span class="ti ti-map-pin"></span><div><strong>Ubicacion</strong><small>Cartago, Costa Rica</small></div></div>
     </article>
 
     <article class="panel side-panel">
-      <h2>Reseñas recientes</h2>
-      <div id="sidebarReviews"></div>
-      <button class="btn btn-coral" type="button" onclick="openReviewForm()"><span class="ti ti-message-star"></span> Escribir reseña</button>
+      <h2>Resenas recientes</h2>
+      <div class="premium-lock" data-premium-label="Premium desbloquea resenas">
+        <div class="premium-lock-content">
+          <div id="sidebarReviews"></div>
+          <button class="btn btn-coral" type="button" onclick="openReviewForm()"><span class="ti ti-message-star"></span> Escribir resena</button>
+        </div>
+      </div>
     </article>
   </aside>
 </main>
 
+<div class="story-viewer" id="storyViewer" aria-hidden="true">
+  <div class="story-frame">
+    <img class="story-image" id="storyImage" alt="Destacado">
+    <div class="story-top">
+      <div class="story-progress" id="storyProgress"></div>
+      <div class="story-head">
+        <img id="storyAvatar" alt="">
+        <div>
+          <strong id="storyTitle">Destacado</strong>
+          <small id="storyCounter">1 de 1</small>
+        </div>
+        <button class="story-close" type="button" onclick="closeHighlightStory()" aria-label="Cerrar"><span class="ti ti-x"></span></button>
+      </div>
+    </div>
+    <button class="story-zone prev" type="button" onclick="prevHighlightStory()" aria-label="Anterior"></button>
+    <button class="story-zone next" type="button" onclick="nextHighlightStory()" aria-label="Siguiente"></button>
+    <div class="story-caption" id="storyCaption"></div>
+  </div>
+</div>
+
 <script>
 const LIKED_POSTS_KEY = 'tuyomall_liked_posts_v1';
-const REVIEWS_KEY = 'tuyomall_public_reviews_artesanias_v1';
+const REVIEWS_KEY_PREFIX = 'tuyomall_public_reviews_';
+const HIGHLIGHTS_KEY_PREFIX = 'tuyomall_business_highlights_v2_';
 let currentBusiness = null;
 let publicReviews = [];
+let publicHighlights = [];
+let storyHighlightIndex = 0;
+let storyImageIndex = 0;
+let storyTimer = null;
+let storyProgressTimer = null;
+let storyStartedAt = 0;
+const EMPTY_AVATAR = 'data:image/svg+xml;utf8,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120"%3E%3Crect width="120" height="120" rx="60" fill="%23F8FAFC"/%3E%3Ccircle cx="60" cy="45" r="17" fill="%23CBD5E1"/%3E%3Cpath d="M30 98c5-20 17-31 30-31s25 11 30 31" fill="%23CBD5E1"/%3E%3C/svg%3E';
 
-let posts = [
-  { id:3, img:'https://images.unsplash.com/photo-1606722590583-6951b5ea92ad?w=600&h=600&fit=crop&q=80', price:'₡18.000', likes:42, saves:11 },
-  { id:101, img:'https://images.unsplash.com/photo-1513519245088-0e12902e5a38?w=600&h=600&fit=crop&q=80', price:'₡22.500', likes:35, saves:7 },
-  { id:102, img:'https://images.unsplash.com/photo-1514228742587-6b1558fcca3d?w=600&h=600&fit=crop&q=80', price:'₡9.000', likes:28, saves:5 },
-  { id:103, img:'https://images.unsplash.com/photo-1587132137056-bfbf0166836e?w=600&h=600&fit=crop&q=80', price:'₡15.000', likes:31, saves:8 },
-  { id:5, img:'https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?w=600&h=600&fit=crop&q=80', price:'₡12.000', likes:19, saves:3 },
-  { id:104, img:'https://images.unsplash.com/photo-1590736969955-71cc94901144?w=600&h=600&fit=crop&q=80', price:'₡28.000', likes:27, saves:6 }
-];
+let posts = [];
 
-const defaultReviews = [
-  { name:'María C.', rating:5, text:'Producto hermoso y muy buena atención por WhatsApp.' },
-  { name:'José R.', rating:5, text:'La canasta llegó rápido y se nota el trabajo artesanal.' },
-  { name:'Andrea M.', rating:4, text:'Muy recomendado para regalos personalizados.' }
-];
+const defaultReviews = [];
 
 function esc(value) {
   return String(value ?? '')
     .replaceAll('&', '&amp;')
     .replaceAll('<', '&lt;')
     .replaceAll('>', '&gt;');
+}
+
+function showToast(message, type = 'info', title = '') {
+  const stack = document.getElementById('toastStack');
+  if (!stack) return;
+  const icons = {
+    success: 'ti-circle-check',
+    error: 'ti-alert-circle',
+    info: 'ti-info-circle'
+  };
+  const titles = {
+    success: 'Listo',
+    error: 'Revisemos esto',
+    info: 'TuyoMall'
+  };
+  const toast = document.createElement('div');
+  toast.className = `toast ${type}`;
+  toast.innerHTML = `
+    <div class="toast-icon"><span class="ti ${icons[type] || icons.info}"></span></div>
+    <div>
+      <div class="toast-title">${esc(title || titles[type] || 'TuyoMall')}</div>
+      <div class="toast-text">${esc(message)}</div>
+    </div>
+    <button class="toast-close" type="button" aria-label="Cerrar"><span class="ti ti-x"></span></button>
+  `;
+  const close = () => {
+    toast.style.animation = 'toastOut 0.2s ease forwards';
+    setTimeout(() => toast.remove(), 200);
+  };
+  toast.querySelector('.toast-close')?.addEventListener('click', close);
+  stack.appendChild(toast);
+  setTimeout(close, type === 'error' ? 6200 : 4200);
+}
+
+function cleanText(value) {
+  let text = String(value ?? '');
+  const replacements = {
+    '\u00c3\u00a1': '\u00e1',
+    '\u00c3\u00a9': '\u00e9',
+    '\u00c3\u00ad': '\u00ed',
+    '\u00c3\u00b3': '\u00f3',
+    '\u00c3\u00ba': '\u00fa',
+    '\u00c3\u00b1': '\u00f1',
+    '\u00c3\u0081': '\u00c1',
+    '\u00c3\u0089': '\u00c9',
+    '\u00c3\u008d': '\u00cd',
+    '\u00c3\u0093': '\u00d3',
+    '\u00c3\u009a': '\u00da',
+    '\u00c3\u0091': '\u00d1',
+    '\u00c2\u00b7': '\u00b7',
+    '\u00c2\u00bf': '\u00bf',
+    '\u00c2\u00a1': '\u00a1',
+    '\u00e2\u201a\u00a1': '\u20a1'
+  };
+  Object.entries(replacements).forEach(([bad, good]) => {
+    text = text.split(bad).join(good);
+  });
+  return text.replace(/\s+\u00b7\s+/g, ' \u00b7 ').trim();
 }
 
 function queryValue(...keys) {
@@ -882,18 +1319,50 @@ function queryValue(...keys) {
   return '';
 }
 
+function storageSlug(value) {
+  return String(value || '')
+    .toLowerCase()
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-|-$/g, '');
+}
+
+function publicHighlightsKey() {
+  const owner = currentBusiness?.id || currentBusiness?.slug || currentBusiness?.name;
+  return owner ? `${HIGHLIGHTS_KEY_PREFIX}${storageSlug(owner)}` : '';
+}
+
 function applyPublicBusiness(business) {
   if (!business) return;
+  business = {
+    ...business,
+    name: cleanText(business.name),
+    description: cleanText(business.description),
+    province: cleanText(business.province),
+    country: cleanText(business.country),
+    type: cleanText(business.type),
+    email: cleanText(business.email)
+  };
   currentBusiness = business;
   document.title = `${business.name} | TuyoMall`;
+  document.querySelector('meta[name="description"]')?.setAttribute('content', `Perfil publico de ${business.name || 'un negocio'} en TuyoMall.`);
+  document.body.classList.toggle('plan-premium', Boolean(business.isPremium));
+  document.body.classList.toggle('plan-free', !business.isPremium);
+  document.querySelector('.badge')?.classList.toggle('is-hidden', !business.isPremium);
+  document.querySelector('.verified')?.classList.toggle('is-hidden', !business.isPremium);
   document.querySelector('.title-row h1').textContent = business.name || 'Negocio TuyoMall';
   document.querySelector('.profile-meta').innerHTML = `
-    <span><span class="ti ti-map-pin"></span> ${esc(business.province || '')}, ${esc(business.country || '')}</span>
+    <span><span class="ti ti-map-pin"></span> ${esc([business.province, business.country].filter(Boolean).join(', ') || 'Ubicacion pendiente')}</span>
     <span class="meta-pill"><span class="ti ti-building-store"></span> ${esc(business.type || 'Negocio local')}</span>
   `;
   document.querySelector('.bio').innerHTML = `<strong>${esc(business.name || 'Este negocio')}</strong> ${esc(business.description || 'Aun no ha agregado una descripcion publica.')}`;
   const avatar = document.querySelector('.biz-avatar');
-  if (avatar && business.avatar) avatar.src = business.avatar;
+  if (avatar) {
+    avatar.src = business.avatar || EMPTY_AVATAR;
+    avatar.classList.toggle('is-empty', !business.avatar);
+    avatar.alt = business.name ? `Logo de ${business.name}` : 'Logo del negocio';
+  }
   const cover = document.querySelector('.cover');
   if (cover && business.cover) cover.style.backgroundImage = `linear-gradient(180deg, rgba(20,33,61,0.08), rgba(20,33,61,0.24)), url('${business.cover}')`;
   const stats = business.stats || {};
@@ -903,11 +1372,160 @@ function applyPublicBusiness(business) {
   if (statEls[2]) statEls[2].textContent = stats.saves ?? 0;
   if (statEls[3]) statEls[3].textContent = stats.rating || '0.0';
   const whatsapp = business.whatsapp ? business.whatsapp.replace(/[^0-9]/g, '') : '';
-  document.querySelector('.contact-card .btn-green')?.setAttribute('href', whatsapp ? `https://wa.me/${whatsapp}` : '#');
+  document.querySelectorAll('.btn-green[href^="https://wa.me"], .contact-card .btn-green').forEach((link) => {
+    link.setAttribute('href', whatsapp ? `https://wa.me/${whatsapp}` : '#');
+    link.onclick = () => recordBusinessMetric('click_whatsapp');
+  });
+  const contactRows = document.querySelectorAll('.contact-row small');
+  if (contactRows[0]) contactRows[0].textContent = business.whatsapp || 'Pendiente';
+  if (contactRows[1]) contactRows[1].textContent = business.email || 'Pendiente';
+  const instagram = Array.isArray(business.contacts)
+    ? business.contacts.find(item => item.tipo === 'instagram')
+    : null;
+  const instagramRow = document.querySelectorAll('.contact-row')[2];
+  if (instagramRow) {
+    instagramRow.style.display = instagram ? '' : 'none';
+    const small = instagramRow.querySelector('small');
+    if (small && instagram) small.textContent = instagram.valor;
+  }
+  if (contactRows[3]) contactRows[3].textContent = [business.province, business.country].filter(Boolean).join(', ') || 'Pendiente';
+  renderPublicHighlights(loadStoredPublicHighlights());
+  recordBusinessMetric('perfil');
+}
+
+function recordBusinessMetric(eventName) {
+  if (!currentBusiness?.id) return;
+  const data = new FormData();
+  data.append('negocio_id', currentBusiness.id);
+  data.append('evento', eventName);
+  fetch('api/metrics.php', {
+    method: 'POST',
+    body: data,
+    headers: { 'Accept': 'application/json' }
+  }).catch(() => {});
+}
+
+function loadStoredPublicHighlights() {
+  const key = publicHighlightsKey();
+  if (!key) return [];
+  try {
+    const saved = JSON.parse(localStorage.getItem(key) || '[]');
+    return Array.isArray(saved)
+      ? saved.filter(item => Array.isArray(item.images) && item.images.length)
+      : [];
+  } catch (_) {
+    return [];
+  }
+}
+
+function renderPublicHighlights(items = []) {
+  const container = document.getElementById('profileHighlights');
+  if (!container) return;
+  publicHighlights = items;
+  if (!items.length) {
+    container.classList.add('is-hidden');
+    container.innerHTML = '';
+    return;
+  }
+  container.classList.remove('is-hidden');
+  container.innerHTML = items.map((item, index) => {
+    const images = item.images || (item.img ? [item.img] : []);
+    const preview = images[0] || EMPTY_AVATAR;
+    return `
+    <button class="highlight" type="button" onclick="openHighlightStory(${index})">
+      <div class="highlight-img"><img src="${esc(preview)}" alt="" loading="lazy"></div>
+      ${esc(item.name || item.title || 'Destacado')}
+    </button>
+  `;
+  }).join('');
+}
+
+function currentStoryHighlight() {
+  return publicHighlights[storyHighlightIndex] || null;
+}
+
+function stopStoryTimers() {
+  clearTimeout(storyTimer);
+  clearInterval(storyProgressTimer);
+  storyTimer = null;
+  storyProgressTimer = null;
+}
+
+function renderHighlightStory() {
+  const highlight = currentStoryHighlight();
+  const images = highlight?.images || (highlight?.img ? [highlight.img] : []);
+  const image = images[storyImageIndex] || images[0];
+  if (!highlight || !image) return;
+
+  const progress = document.getElementById('storyProgress');
+  document.getElementById('storyImage').src = image;
+  document.getElementById('storyTitle').textContent = highlight.name || highlight.title || 'Destacado';
+  document.getElementById('storyCaption').textContent = highlight.name || highlight.title || '';
+  document.getElementById('storyCounter').textContent = `${storyImageIndex + 1} de ${images.length}`;
+  document.getElementById('storyAvatar').src = currentBusiness?.avatar || images[0] || EMPTY_AVATAR;
+  progress.innerHTML = images.map((_, index) => {
+    const state = index < storyImageIndex ? 'done' : (index === storyImageIndex ? 'active' : '');
+    return `<span class="${state}" style="--story-fill:${index === storyImageIndex ? '0%' : ''}"></span>`;
+  }).join('');
+
+  document.getElementById('storyViewer').classList.add('open');
+  document.getElementById('storyViewer').setAttribute('aria-hidden', 'false');
+  document.body.style.overflow = 'hidden';
+  startStoryProgress();
+}
+
+function startStoryProgress() {
+  stopStoryTimers();
+  storyStartedAt = Date.now();
+  const duration = 3000;
+  storyProgressTimer = setInterval(() => {
+    const active = document.querySelector('#storyProgress span.active');
+    if (!active) return;
+    const percent = Math.min(100, ((Date.now() - storyStartedAt) / duration) * 100);
+    active.style.setProperty('--story-fill', `${percent}%`);
+  }, 60);
+  storyTimer = setTimeout(() => nextHighlightStory(), duration);
+}
+
+function openHighlightStory(index, imageIndex = 0) {
+  const highlight = publicHighlights[index];
+  const images = highlight?.images || (highlight?.img ? [highlight.img] : []);
+  if (!images.length) return;
+  storyHighlightIndex = index;
+  storyImageIndex = imageIndex;
+  renderHighlightStory();
+}
+
+function nextHighlightStory() {
+  const highlight = currentStoryHighlight();
+  const images = highlight?.images || (highlight?.img ? [highlight.img] : []);
+  if (!images.length) return closeHighlightStory();
+  if (storyImageIndex < images.length - 1) {
+    storyImageIndex += 1;
+    renderHighlightStory();
+    return;
+  }
+  closeHighlightStory();
+}
+
+function prevHighlightStory() {
+  if (storyImageIndex > 0) {
+    storyImageIndex -= 1;
+    renderHighlightStory();
+    return;
+  }
+  startStoryProgress();
+}
+
+function closeHighlightStory() {
+  stopStoryTimers();
+  document.getElementById('storyViewer')?.classList.remove('open');
+  document.getElementById('storyViewer')?.setAttribute('aria-hidden', 'true');
+  document.body.style.overflow = '';
 }
 
 async function loadPublicBusiness() {
-  const slug = queryValue('slug');
+  const slug = queryValue('slug', 'business_slug');
   const businessId = queryValue('business_id');
   const productId = queryValue('producto', 'id');
   const params = new URLSearchParams();
@@ -915,10 +1533,9 @@ async function loadPublicBusiness() {
   else if (businessId) params.set('id', businessId);
   else if (productId) params.set('producto_id', productId);
 
-  if (!params.toString()) return;
-
   try {
-    const response = await fetch(`api/business.php?${params.toString()}`, { headers: { 'Accept': 'application/json' } });
+    const endpoint = params.toString() ? `api/business.php?${params.toString()}` : 'api/business.php';
+    const response = await fetch(endpoint, { headers: { 'Accept': 'application/json' } });
     const result = await response.json();
     if (!result.ok) return;
     applyPublicBusiness(result.business);
@@ -935,9 +1552,9 @@ async function loadPublicProducts() {
     if (!result.ok) return;
     posts = (result.products || []).map(product => ({
       id: product.id,
-      name: product.name,
+      name: cleanText(product.name),
       img: product.img,
-      price: product.price,
+      price: cleanText(product.price),
       likes: Number(product.likes || 0),
       saves: Number(product.saves || 0)
     }));
@@ -952,9 +1569,9 @@ async function loadPublicReviews() {
     const result = await response.json();
     if (!result.ok) return;
     publicReviews = (result.reviews || []).map(review => ({
-      name: review.nombre_publico,
+      name: cleanText(review.nombre_publico),
       rating: Number(review.calificacion || 5),
-      text: review.comentario
+      text: cleanText(review.comentario)
     }));
     renderReviews();
   } catch (_) {}
@@ -970,12 +1587,17 @@ function saveLiked(set) {
 
 function renderPosts() {
   const liked = likedSet();
-  document.getElementById('postsGrid').innerHTML = posts.map(p => {
+  const grid = document.getElementById('postsGrid');
+  if (!posts.length) {
+    grid.innerHTML = '<div class="empty-state">Este negocio aun no ha publicado productos.</div>';
+    return;
+  }
+  grid.innerHTML = posts.map(p => {
     const isLiked = liked.has(p.id);
     return `
       <article class="post-card">
         <img src="${p.img}" alt="Producto publicado" loading="lazy">
-        <button class="post-menu" type="button" onclick="togglePostMenu(event, ${p.id}, this)" title="Más opciones">
+        <button class="post-menu" type="button" onclick="togglePostMenu(event, ${p.id}, this)" title="Mas opciones">
           <span class="ti ti-dots"></span>
         </button>
         <div class="post-options">
@@ -1018,7 +1640,7 @@ async function togglePublicLike(id) {
     if (result.active) liked.add(id);
     else liked.delete(id);
   } catch (error) {
-    alert(error.message || 'Inicia sesión como cliente para dar like.');
+    showToast(error.message || 'Inicia sesion para dar like.', 'error');
   }
   saveLiked(liked);
   renderPosts();
@@ -1041,19 +1663,19 @@ function getPost(id) {
 }
 
 function postUrl(id) {
-  return `${window.location.origin}${window.location.pathname}?producto=${id}`;
+  return `${window.location.origin}/p/${encodeURIComponent(id)}`;
 }
 
 function viewPostDetails(id) {
   closePostMenus();
   const post = getPost(id);
   if (!post) return;
-  alert(`Producto publicado\n${post.price}\nArtesanías La Ceiba`);
+  showToast(`${post.price} - ${currentBusiness?.name || 'TuyoMall'}`, 'info', post.name || 'Producto publicado');
 }
 
 function viewBusinessProfile(id) {
   closePostMenus();
-  window.location.href = `perfil-publico.html?producto=${id}`;
+  window.location.href = `/p/${encodeURIComponent(id)}`;
 }
 
 async function sharePost(id) {
@@ -1061,8 +1683,8 @@ async function sharePost(id) {
   const post = getPost(id);
   if (!post) return;
   const data = {
-    title: 'Producto de Artesanías La Ceiba',
-    text: `Mirá este producto en TuyoMall: ${post.price}`,
+    title: `Producto de ${currentBusiness?.name || 'TuyoMall'}`,
+    text: `Mira este producto en TuyoMall: ${post.price}`,
     url: postUrl(id)
   };
   if (navigator.share) {
@@ -1070,22 +1692,26 @@ async function sharePost(id) {
     return;
   }
   await navigator.clipboard.writeText(data.url);
-  alert('Enlace copiado para compartir.');
+  showToast('Enlace copiado para compartir.', 'success', 'Copiado');
 }
 
 async function copyPostLink(id) {
   closePostMenus();
   await navigator.clipboard.writeText(postUrl(id));
-  alert('Enlace copiado.');
+  showToast('Enlace copiado.', 'success', 'Copiado');
 }
 
 function reportPost(id) {
   closePostMenus();
-  alert('Gracias. Revisaremos esta publicación.');
+  showToast('Gracias. Revisaremos esta publicacion.', 'info', 'Reporte recibido');
+}
+
+function reviewsStorageKey() {
+  return `${REVIEWS_KEY_PREFIX}${currentBusiness?.id || 'general'}`;
 }
 
 function savedReviews() {
-  return JSON.parse(localStorage.getItem(REVIEWS_KEY) || '[]');
+  return JSON.parse(localStorage.getItem(reviewsStorageKey()) || '[]');
 }
 
 function allReviews() {
@@ -1093,8 +1719,8 @@ function allReviews() {
 }
 
 function stars(rating) {
-  const value = Number(rating);
-  return '★'.repeat(value) + '☆'.repeat(5 - value);
+  const value = Math.max(0, Math.min(5, Math.round(Number(rating) || 0)));
+  return '\u2605'.repeat(value) + '\u2606'.repeat(5 - value);
 }
 
 function reviewMarkup(review) {
@@ -1103,8 +1729,9 @@ function reviewMarkup(review) {
 
 function renderReviews() {
   const reviews = allReviews();
-  document.getElementById('reviewsList').innerHTML = reviews.map(reviewMarkup).join('');
-  document.getElementById('sidebarReviews').innerHTML = reviews.slice(0, 3).map(reviewMarkup).join('');
+  const empty = '<div class="empty-state">Este negocio aun no tiene resenas.</div>';
+  document.getElementById('reviewsList').innerHTML = reviews.length ? reviews.map(reviewMarkup).join('') : empty;
+  document.getElementById('sidebarReviews').innerHTML = reviews.length ? reviews.slice(0, 3).map(reviewMarkup).join('') : empty;
 }
 
 function setPublicTab(name, btn) {
@@ -1129,17 +1756,22 @@ function saveProfile(btn) {
 }
 
 async function shareProfile() {
+  const url = currentBusiness?.slug
+    ? `${window.location.origin}/negocio/${encodeURIComponent(currentBusiness.slug)}`
+    : window.location.href;
   const data = {
-    title: 'Artesanías La Ceiba en TuyoMall',
-    text: 'Mirá este negocio en TuyoMall',
-    url: window.location.href
+    title: `${currentBusiness?.name || 'Negocio'} en TuyoMall`,
+    text: 'Mira este negocio en TuyoMall',
+    url
   };
   if (navigator.share) {
     await navigator.share(data);
+    recordBusinessMetric('compartir');
     return;
   }
-  await navigator.clipboard.writeText(window.location.href);
-  alert('Enlace copiado.');
+  await navigator.clipboard.writeText(url);
+  recordBusinessMetric('compartir');
+  showToast('Enlace copiado.', 'success', 'Copiado');
 }
 
 document.getElementById('reviewForm').addEventListener('submit', async (event) => {
@@ -1158,32 +1790,67 @@ document.getElementById('reviewForm').addEventListener('submit', async (event) =
     const response = await fetch('api/reviews.php', { method: 'POST', body: data, headers: { 'Accept': 'application/json' } });
     const result = await response.json();
     if (!result.ok) {
-      alert(result.message || 'No pudimos guardar la reseña.');
+      showToast(result.message || 'No pudimos guardar la resena.', 'error');
       return;
     }
-    alert(result.message || 'Gracias. Tu reseña quedó pendiente de revisión.');
+    showToast(result.message || 'Gracias. Tu resena quedo pendiente de revision.', 'success', 'Resena enviada');
   } else {
     const reviews = savedReviews();
     reviews.unshift({ name, rating, text });
-    localStorage.setItem(REVIEWS_KEY, JSON.stringify(reviews));
-    alert('Gracias por dejar tu reseña.');
+    localStorage.setItem(reviewsStorageKey(), JSON.stringify(reviews));
+    showToast('Gracias por dejar tu resena.', 'success', 'Resena enviada');
   }
   event.target.reset();
   renderReviews();
 });
 
 document.addEventListener('click', closePostMenus);
+document.getElementById('storyViewer')?.addEventListener('click', event => {
+  if (event.target.id === 'storyViewer') closeHighlightStory();
+});
 document.addEventListener('keydown', (event) => {
+  if (document.getElementById('storyViewer')?.classList.contains('open')) {
+    if (event.key === 'Escape') closeHighlightStory();
+    if (event.key === 'ArrowRight') nextHighlightStory();
+    if (event.key === 'ArrowLeft') prevHighlightStory();
+    return;
+  }
   if (event.key === 'Escape') closePostMenus();
 });
 
 window.addEventListener('storage', (event) => {
   if (event.key === LIKED_POSTS_KEY) renderPosts();
-  if (event.key === REVIEWS_KEY) renderReviews();
+  if (event.key === reviewsStorageKey()) renderReviews();
 });
+
+async function syncPublicSessionAction() {
+  const loginAction = document.getElementById('loginAction');
+  if (!loginAction) return;
+
+  try {
+    const response = await fetch('api/session.php', { headers: { 'Accept': 'application/json' } });
+    const result = await response.json();
+    if (result?.ok && result?.authenticated) {
+      loginAction.hidden = false;
+      if (result.user?.role === 'emprendedor') {
+        loginAction.href = 'dashboard-emprendedor.php';
+        loginAction.innerHTML = '<span class="ti ti-user-circle"></span> Ver dashboard';
+      } else {
+        loginAction.href = 'principal.html';
+        loginAction.innerHTML = '<span class="ti ti-layout-grid"></span> Ver productos';
+      }
+      return;
+    }
+  } catch (_) {}
+
+  loginAction.hidden = false;
+  loginAction.href = 'acceso-cliente.html';
+  loginAction.innerHTML = '<span class="ti ti-login"></span> Iniciar sesi\u00f3n';
+}
 
 renderPosts();
 renderReviews();
+syncPublicSessionAction();
 loadPublicBusiness();
 </script>
 <script src="assets/js/business-profile.js"></script>
