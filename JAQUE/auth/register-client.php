@@ -54,7 +54,7 @@ try {
     ];
     login_user($user);
 
-    json_response(['ok' => true, 'redirect' => 'principal.html']);
+    json_response(['ok' => true, 'redirect' => 'https://tuyomall.com/principal.html']);
 } catch (Throwable $e) {
     json_response(['ok' => false, 'message' => database_public_message($e, 'register-client')], 500);
 }

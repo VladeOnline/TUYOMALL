@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
 <base href="/">
@@ -12,6 +12,17 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Perfil publico | TuyoMall</title>
 <meta name="description" content="Perfil publico de negocio en TuyoMall.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="TuyoMall">
+<meta property="og:title" content="TuyoMall | Negocio">
+<meta property="og:description" content="Conoce este negocio en TuyoMall.">
+<meta property="og:url" content="/">
+<meta property="og:image" content="/assets/img/logo-tuyomall.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="TuyoMall | Negocio">
+<meta name="twitter:description" content="Conoce este negocio en TuyoMall.">
+<meta name="twitter:image" content="/assets/img/logo-tuyomall.png">
+<link rel="canonical" href="/">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Clash+Display:wght@500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.14.0/dist/tabler-icons.min.css">
@@ -780,6 +791,23 @@ html.tm-dark .post-options .report-action:hover {
   border: 1px solid var(--line);
   border-radius: var(--r-sm);
 }
+.payment-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.payment-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 6px 10px;
+  background: white;
+  color: var(--navy);
+  font-size: 12px;
+  font-weight: 800;
+}
 
 .sidebar {
   display: flex;
@@ -1064,7 +1092,7 @@ html.tm-dark .review-form select {
 <div class="toast-stack" id="toastStack" aria-live="polite" aria-atomic="true"></div>
 <header class="topbar">
   <div class="topbar-inner">
-    <a class="brand" href="principal.html">
+    <a class="brand" href="/">
       <span class="brand-mark">
         <img src="assets/img/logo-tuyomall-nav.png" alt="Logo TuyoMall">
       </span>
@@ -1075,7 +1103,7 @@ html.tm-dark .review-form select {
       </span></span>
     </a>
     <nav class="nav-links">
-      <a href="principal.html">Feed</a>
+      <a href="https://tuyomall.com/principal.html">Feed</a>
       <a href="planes.html">Planes</a>
       <a href="faq-contacto.html">Ayuda</a>
     </nav>
@@ -1171,9 +1199,11 @@ html.tm-dark .review-form select {
           <p>Piezas artesanales unicas creadas con materiales naturales de nuestra tierra. Trabajamos canastas, decoracion y regalos personalizados hechos a mano en Costa Rica.</p>
           <div class="info-list">
             <div><strong>Horario:</strong> Lun - Sab 8:00 - 18:00</div>
-            <div><strong>Ubicacion:</strong> Cartago, Costa Rica</div>
-            <div><strong>Categoria:</strong> Artesanias & Hogar</div>
-          </div>
+              <div><strong>Ubicacion:</strong> Cartago, Costa Rica</div>
+              <div><strong>Categoria:</strong> Artesanias & Hogar</div>
+              <div><strong>Metodos de pago:</strong> Efectivo, transferencia y SINPE Movil</div>
+              <div><strong>Reserva previa:</strong> No requiere reserva previa</div>
+            </div>
         </div>
       </div>
     </section>
@@ -1342,11 +1372,14 @@ function applyPublicBusiness(business) {
     province: cleanText(business.province),
     country: cleanText(business.country),
     type: cleanText(business.type),
-    email: cleanText(business.email)
+    email: cleanText(business.email),
+    paymentMethods: Array.isArray(business.paymentMethods) ? business.paymentMethods.map(cleanText) : [],
+    requiresReservation: Boolean(business.requiresReservation)
   };
   currentBusiness = business;
-  document.title = `${business.name} | TuyoMall`;
+  document.title = businessShareTitle();
   document.querySelector('meta[name="description"]')?.setAttribute('content', `Perfil publico de ${business.name || 'un negocio'} en TuyoMall.`);
+  updateShareMeta();
   document.body.classList.toggle('plan-premium', Boolean(business.isPremium));
   document.body.classList.toggle('plan-free', !business.isPremium);
   document.querySelector('.badge')?.classList.toggle('is-hidden', !business.isPremium);
@@ -1357,6 +1390,15 @@ function applyPublicBusiness(business) {
     <span class="meta-pill"><span class="ti ti-building-store"></span> ${esc(business.type || 'Negocio local')}</span>
   `;
   document.querySelector('.bio').innerHTML = `<strong>${esc(business.name || 'Este negocio')}</strong> ${esc(business.description || 'Aun no ha agregado una descripcion publica.')}`;
+  const infoStrip = document.querySelector('.info-strip');
+  if (infoStrip) {
+    infoStrip.innerHTML = `
+      <span><span class="ti ti-clock"></span> ${esc(scheduleDisplay(business.schedule) || 'Horario pendiente')}</span>
+      <span><span class="ti ti-circle-filled" style="color:var(--green)"></span> Responde en minutos</span>
+      <span><span class="ti ti-credit-card"></span> ${esc(paymentMethodsText(business.paymentMethods) || 'Metodos de pago pendientes')}</span>
+      <span><span class="ti ti-calendar-check"></span> ${esc(reservationText(business))}</span>
+    `;
+  }
   const avatar = document.querySelector('.biz-avatar');
   if (avatar) {
     avatar.src = business.avatar || EMPTY_AVATAR;
@@ -1389,8 +1431,43 @@ function applyPublicBusiness(business) {
     if (small && instagram) small.textContent = instagram.valor;
   }
   if (contactRows[3]) contactRows[3].textContent = [business.province, business.country].filter(Boolean).join(', ') || 'Pendiente';
+  renderBusinessInfoPanel(business);
   renderPublicHighlights(loadStoredPublicHighlights());
   recordBusinessMetric('perfil');
+}
+
+function scheduleDisplay(value = '') {
+  const text = String(value || '').trim();
+  return text ? text.replace(/\s*-\s*/, ' - ') : '';
+}
+
+function paymentMethodsText(methods = []) {
+  return Array.isArray(methods) && methods.length ? methods.join(', ') : '';
+}
+
+function reservationText(business = currentBusiness) {
+  return business?.requiresReservation ? 'Requiere reserva previa' : 'No requiere reserva previa';
+}
+
+function renderPaymentTags(methods = []) {
+  if (!Array.isArray(methods) || !methods.length) return 'Pendiente';
+  return `<div class="payment-tags">${methods.map(method => `<span class="payment-tag"><span class="ti ti-credit-card"></span> ${esc(method)}</span>`).join('')}</div>`;
+}
+
+function renderBusinessInfoPanel(business) {
+  const panel = document.querySelector('#tab-info .info-panel');
+  if (!panel) return;
+  panel.innerHTML = `
+    <h3>Informacion del negocio</h3>
+    <p>${esc(business.description || 'Este negocio aun no ha agregado una descripcion publica.')}</p>
+    <div class="info-list">
+      <div><strong>Horario:</strong> ${esc(scheduleDisplay(business.schedule) || 'Pendiente')}</div>
+      <div><strong>Ubicacion:</strong> ${esc([business.province, business.country].filter(Boolean).join(', ') || 'Pendiente')}</div>
+      <div><strong>Categoria:</strong> ${esc(business.type || 'Negocio local')}</div>
+      <div><strong>Metodos de pago:</strong> ${renderPaymentTags(business.paymentMethods)}</div>
+      <div><strong>Reserva previa:</strong> ${esc(reservationText(business))}</div>
+    </div>
+  `;
 }
 
 function recordBusinessMetric(eventName) {
@@ -1662,8 +1739,46 @@ function getPost(id) {
   return posts.find(post => post.id === id);
 }
 
-function postUrl(id) {
-  return `${window.location.origin}/p/${encodeURIComponent(id)}`;
+function publicOrigin() {
+  return /(^|\.)tuyomall\.com$/i.test(window.location.hostname)
+    ? 'https://tuyomall.com'
+    : window.location.origin;
+}
+
+function businessShareUrl() {
+  return currentBusiness?.slug
+    ? `${publicOrigin()}/negocio/${encodeURIComponent(currentBusiness.slug)}`
+    : window.location.href;
+}
+
+function postUrl() {
+  return businessShareUrl();
+}
+
+function businessShareTitle() {
+  return `TuyoMall | ${currentBusiness?.name || 'Negocio'}`;
+}
+
+function setHeadValue(selector, attr, value) {
+  const tag = document.querySelector(selector);
+  if (tag) tag.setAttribute(attr, value);
+}
+
+function updateShareMeta() {
+  const title = businessShareTitle();
+  const description = currentBusiness?.description
+    ? currentBusiness.description
+    : `Conoce ${currentBusiness?.name || 'este negocio'} en TuyoMall.`;
+  const url = businessShareUrl();
+  const image = currentBusiness?.cover || currentBusiness?.avatar || '/assets/img/logo-tuyomall.png';
+
+  setHeadValue('meta[property="og:title"]', 'content', title);
+  setHeadValue('meta[property="og:description"]', 'content', description);
+  setHeadValue('meta[property="og:url"]', 'content', url);
+  setHeadValue('meta[property="og:image"]', 'content', image);
+  setHeadValue('meta[name="twitter:title"]', 'content', title);
+  setHeadValue('meta[name="twitter:description"]', 'content', description);
+  setHeadValue('meta[name="twitter:image"]', 'content', image);
 }
 
 function viewPostDetails(id) {
@@ -1675,7 +1790,7 @@ function viewPostDetails(id) {
 
 function viewBusinessProfile(id) {
   closePostMenus();
-  window.location.href = `/p/${encodeURIComponent(id)}`;
+  window.location.href = businessShareUrl();
 }
 
 async function sharePost(id) {
@@ -1683,8 +1798,8 @@ async function sharePost(id) {
   const post = getPost(id);
   if (!post) return;
   const data = {
-    title: `Producto de ${currentBusiness?.name || 'TuyoMall'}`,
-    text: `Mira este producto en TuyoMall: ${post.price}`,
+    title: `TuyoMall | ${currentBusiness?.name || 'Negocio'}`,
+    text: `Conoce ${currentBusiness?.name || 'este negocio'} en TuyoMall`,
     url: postUrl(id)
   };
   if (navigator.share) {
@@ -1698,7 +1813,7 @@ async function sharePost(id) {
 async function copyPostLink(id) {
   closePostMenus();
   await navigator.clipboard.writeText(postUrl(id));
-  showToast('Enlace copiado.', 'success', 'Copiado');
+  showToast('Enlace del negocio copiado.', 'success', 'Copiado');
 }
 
 function reportPost(id) {
@@ -1756,12 +1871,10 @@ function saveProfile(btn) {
 }
 
 async function shareProfile() {
-  const url = currentBusiness?.slug
-    ? `${window.location.origin}/negocio/${encodeURIComponent(currentBusiness.slug)}`
-    : window.location.href;
+  const url = businessShareUrl();
   const data = {
-    title: `${currentBusiness?.name || 'Negocio'} en TuyoMall`,
-    text: 'Mira este negocio en TuyoMall',
+    title: businessShareTitle(),
+    text: `Mira ${currentBusiness?.name || 'este negocio'} en TuyoMall`,
     url
   };
   if (navigator.share) {
@@ -1836,7 +1949,7 @@ async function syncPublicSessionAction() {
         loginAction.href = 'dashboard-emprendedor.php';
         loginAction.innerHTML = '<span class="ti ti-user-circle"></span> Ver dashboard';
       } else {
-        loginAction.href = 'principal.html';
+        loginAction.href = 'https://tuyomall.com/principal.html';
         loginAction.innerHTML = '<span class="ti ti-layout-grid"></span> Ver productos';
       }
       return;

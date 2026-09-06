@@ -46,7 +46,7 @@ body {
   grid-template-columns: 1fr 1fr;
 }
 
-/* ── LEFT PANEL — dark coral accent ── */
+/* -- LEFT PANEL — dark coral accent -- */
 .left {
   background: linear-gradient(160deg, #1A0F08 0%, var(--navy) 55%, #0D1A30 100%);
   min-height: 100vh;
@@ -176,7 +176,7 @@ body {
   font-size: 12px; color: rgba(255,255,255,0.2);
 }
 
-/* ── RIGHT PANEL ── */
+/* -- RIGHT PANEL -- */
 .right {
   display: flex; align-items: center; justify-content: center;
   padding: 40px 52px; min-height: 100vh; overflow-y: auto;
@@ -193,7 +193,7 @@ body {
   align-items: flex-start;
 }
 
-/* ── TABS ── */
+/* -- TABS -- */
 .tabs {
   display: flex;
   background: var(--gray-l);
@@ -215,7 +215,7 @@ body {
   box-shadow: 0 2px 8px rgba(20,33,61,0.1);
 }
 
-/* ── FORM VIEWS ── */
+/* -- FORM VIEWS -- */
 .view { display: none; }
 .view.active { display: block; }
 
@@ -229,7 +229,7 @@ body {
   margin-bottom: 24px; line-height: 1.5;
 }
 
-/* ── FIELDS ── */
+/* -- FIELDS -- */
 .field { margin-bottom: 14px; }
 .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
 .field-row .field { margin-bottom: 0; }
@@ -396,7 +396,7 @@ input.error, select.error { border-color: var(--danger); }
   color: #fff;
 }
 
-/* ── PLAN SELECTOR ── */
+/* -- PLAN SELECTOR -- */
 .plan-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 14px; }
 
 .plan-opt {
@@ -505,7 +505,7 @@ html.tm-dark .plan-opt-badge {
   color: #14213D !important;
 }
 
-/* ── PASSWORD STRENGTH ── */
+/* -- PASSWORD STRENGTH -- */
 .strength-bar {
   display: flex; gap: 4px; margin-top: 8px;
 }
@@ -518,7 +518,7 @@ html.tm-dark .plan-opt-badge {
 .strength-seg.strong { background: var(--success); }
 .strength-label { font-size: 11px; color: var(--muted); margin-top: 4px; text-align: right; }
 
-/* ── CHECKBOX ── */
+/* -- CHECKBOX -- */
 .check-wrap {
   display: flex; align-items: flex-start; gap: 10px;
   margin-bottom: 16px;
@@ -533,7 +533,7 @@ html.tm-dark .plan-opt-badge {
 .check-error { font-size: 12px; color: var(--danger); margin-top: -8px; margin-bottom: 12px; display: none; }
 .check-error.show { display: block; }
 
-/* ── FORGOT ── */
+/* -- FORGOT -- */
 .forgot {
   display: block; text-align: right;
   font-size: 13px; color: var(--coral);
@@ -544,7 +544,7 @@ html.tm-dark .plan-opt-badge {
 }
 .forgot:hover { text-decoration: underline; }
 
-/* ── SUBMIT BTN ── */
+/* -- SUBMIT BTN -- */
 .btn-submit {
   width: 100%; padding: 14px;
   background: var(--coral); color: var(--white);
@@ -568,7 +568,7 @@ html.tm-dark .plan-opt-badge {
 .btn-submit.loading .spinner { display: block; }
 .btn-submit.loading .btn-text { display: none; }
 
-/* ── BACK BTN ── */
+/* -- BACK BTN -- */
 .back-btn {
   display: inline-flex; align-items: center; gap: 6px;
   background: none; border: none;
@@ -578,7 +578,7 @@ html.tm-dark .plan-opt-badge {
 }
 .back-btn:hover { text-decoration: underline; }
 
-/* ── SUCCESS BOX ── */
+/* -- SUCCESS BOX -- */
 .success-box {
   display: none;
   background: #ECFDF5; border: 1px solid rgba(16,185,129,0.25);
@@ -589,7 +589,7 @@ html.tm-dark .plan-opt-badge {
 .success-box.show { display: block; }
 .success-box .s-icon { font-size: 28px; margin-bottom: 8px; display: block; }
 
-/* ── SWITCH LINK ── */
+/* -- SWITCH LINK -- */
 .switch-link {
   text-align: center; font-size: 13px;
   color: var(--muted); margin-top: 20px;
@@ -597,7 +597,7 @@ html.tm-dark .plan-opt-badge {
 .switch-link a { color: var(--coral); font-weight: 600; text-decoration: none; cursor: pointer; }
 .switch-link a:hover { text-decoration: underline; }
 
-/* ── MODAL ── */
+/* -- MODAL -- */
 .modal-overlay {
   position: fixed; inset: 0; z-index: 9999;
   background: rgba(14,20,35,0.65); backdrop-filter: blur(8px);
@@ -652,7 +652,7 @@ html.tm-dark .plan-mini-desc {
   color: rgba(226,232,240,0.86) !important;
 }
 
-/* ── RESPONSIVE ── */
+/* -- RESPONSIVE -- */
 @media (max-width: 860px) {
   body {
     grid-template-columns: minmax(190px, 40%) 1fr;
@@ -734,7 +734,7 @@ html.tm-dark .plan-mini-desc {
 </head>
 <body>
 
-<!-- ══ LEFT PANEL ══ -->
+<!-- == LEFT PANEL == -->
 <div class="left">
   <a href="index.html" class="left-logo">
     <div class="logo-mark">
@@ -756,7 +756,7 @@ html.tm-dark .plan-mini-desc {
       <li class="perk"><div class="perk-icon">🛒</div>Sube productos y servicios fácilmente</li>
       <li class="perk"><div class="perk-icon">💬</div>Clientes te contactan por WhatsApp</li>
       <li class="perk"><div class="perk-icon">📊</div>Estadísticas de visitas y clics</li>
-      <li class="perk"><div class="perk-icon">✨</div>Plan Premium por solo $5 + IVA/mes</li>
+      <li class="perk"><div class="perk-icon">✨</div>Plan Premium por solo $10 + IVA/mes</li>
     </ul>
 
     <div class="plan-preview">
@@ -767,7 +767,7 @@ html.tm-dark .plan-mini-desc {
       </div>
       <div class="plan-mini premium">
         <div class="plan-mini-label">⭐ Premium</div>
-        <div class="plan-mini-price">$5 <span class="tax-inline">+ IVA</span><sub>/mes</sub></div>
+        <div class="plan-mini-price">$10 <span class="tax-inline">+ IVA</span><sub>/mes</sub></div>
         <div class="plan-mini-desc">Ilimitado · Prioridad en feed</div>
       </div>
     </div>
@@ -776,7 +776,7 @@ html.tm-dark .plan-mini-desc {
   <div class="left-footer">© 2026 TuyoMall · Todos los derechos reservados</div>
 </div>
 
-<!-- ══ RIGHT PANEL ══ -->
+<!-- == RIGHT PANEL == -->
 <div class="right">
   <div class="form-box">
 
@@ -787,7 +787,7 @@ html.tm-dark .plan-mini-desc {
 
     <div class="form-notice" id="form-notice" role="status" aria-live="polite"></div>
 
-    <!-- ── VIEW: LOGIN ── -->
+    <!-- -- VIEW: LOGIN -- -->
     <div class="view active" id="view-login">
       <h1 class="form-title">Hola, emprendedor 👋</h1>
       <p class="form-sub">Accede a tu panel de negocio</p>
@@ -819,7 +819,7 @@ html.tm-dark .plan-mini-desc {
       </div>
     </div>
 
-    <!-- ── VIEW: REGISTER ── -->
+    <!-- -- VIEW: REGISTER -- -->
     <div class="view" id="view-register">
       <h1 class="form-title">Registrá tu negocio 🚀</h1>
       <p class="form-sub">Gratis, listo en 2 minutos</p>
@@ -902,7 +902,7 @@ html.tm-dark .plan-mini-desc {
           <div class="plan-opt gold-plan" id="plan-premium" onclick="selectPlan('premium')">
             <div class="plan-opt-badge">⭐ Recomendado</div>
             <div class="plan-opt-name">Premium</div>
-            <div class="plan-opt-price">$5 + IVA / mes - Mas visibilidad</div>
+            <div class="plan-opt-price">$10 + IVA / mes - Mas visibilidad</div>
           </div>
         </div>
       </div>
@@ -925,7 +925,7 @@ html.tm-dark .plan-mini-desc {
       </div>
     </div>
 
-    <!-- ── VIEW: RECOVER ── -->
+    <!-- -- VIEW: RECOVER -- -->
     <div class="view" id="view-recover">
       <button class="back-btn" onclick="switchView('login')">← Volver al inicio de sesión</button>
       <h1 class="form-title">Recuperar contraseña 🔑</h1>
@@ -952,7 +952,7 @@ html.tm-dark .plan-mini-desc {
   </div>
 </div>
 
-<!-- ══ MODAL TÉRMINOS EMPRENDEDORES ══ -->
+<!-- == MODAL TÉRMINOS EMPRENDEDORES == -->
 <div class="modal-overlay" id="modal-emprendedores">
   <div class="modal">
     <div class="modal-header">

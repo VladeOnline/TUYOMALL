@@ -58,6 +58,8 @@ function public_business_payload(PDO $pdo, array $business, bool $forOwner = fal
         'province' => $business['provincia'],
         'address' => $business['direccion'],
         'schedule' => $business['horario'],
+        'paymentMethods' => business_payment_methods_from_storage($business['metodos_pago'] ?? null),
+        'requiresReservation' => (int) ($business['requiere_reserva'] ?? 0) === 1,
         'avatar' => $business['avatar_url'] ?: '',
         'cover' => $business['portada_url'],
         'plan' => $plan['codigo'] ?? 'gratis',
@@ -71,6 +73,64 @@ function public_business_payload(PDO $pdo, array $business, bool $forOwner = fal
             'rating' => (float) ($stats['calificacion'] ?? 0),
         ],
     ];
+}
+
+function business_payment_method_labels(): array
+{
+    return [
+        'efectivo' => 'Efectivo',
+        'transferencia' => 'Transferencia',
+        'sinpe_movil' => 'SINPE Movil',
+        'tarjeta' => 'Tarjeta',
+        'paypal' => 'PayPal',
+    ];
+}
+
+function business_payment_methods_from_storage(?string $value): array
+{
+    $value = trim((string) $value);
+
+    if ($value === '') {
+        return [];
+    }
+
+    $decoded = json_decode($value, true);
+    if (!is_array($decoded)) {
+        return [];
+    }
+
+    return array_values(array_filter(array_map('strval', $decoded), static function (string $item): bool {
+        return trim($item) !== '';
+    }));
+}
+
+function business_payment_methods_to_storage(): ?string
+{
+    $allowed = business_payment_method_labels();
+    $rawMethods = $_POST['metodos_pago'] ?? [];
+
+    if (!is_array($rawMethods)) {
+        $rawMethods = [$rawMethods];
+    }
+
+    $methods = [];
+    foreach ($rawMethods as $method) {
+        $method = trim((string) $method);
+        if (isset($allowed[$method]) && !in_array($allowed[$method], $methods, true)) {
+            $methods[] = $allowed[$method];
+        }
+    }
+
+    $other = trim((string) ($_POST['metodo_pago_otro'] ?? ''));
+    if ($other !== '') {
+        $other = strip_tags($other);
+        $other = function_exists('mb_substr') ? mb_substr($other, 0, 60) : substr($other, 0, 60);
+        if (!in_array($other, $methods, true)) {
+            $methods[] = $other;
+        }
+    }
+
+    return $methods ? json_encode($methods, JSON_UNESCAPED_UNICODE) : null;
 }
 
 function upload_business_asset(string $field, int $businessId): ?string
@@ -182,6 +242,8 @@ $country = post_value('pais') ?: (string) $business['pais'];
 $province = post_value('provincia') ?: (string) $business['provincia'];
 $address = post_value('direccion') ?: null;
 $schedule = post_value('horario') ?: null;
+$paymentMethods = business_payment_methods_to_storage();
+$requiresReservation = isset($_POST['requiere_reserva']) && (string) $_POST['requiere_reserva'] === '1' ? 1 : 0;
 $avatar = upload_business_asset('avatar', $businessId) ?: $business['avatar_url'];
 $cover = upload_business_asset('portada', $businessId) ?: $business['portada_url'];
 
@@ -206,6 +268,8 @@ try {
              provincia = :provincia,
              direccion = :direccion,
              horario = :horario,
+             metodos_pago = :metodos_pago,
+             requiere_reserva = :requiere_reserva,
              avatar_url = :avatar_url,
              portada_url = :portada_url
          WHERE id = :id"
@@ -221,6 +285,8 @@ try {
         'provincia' => $province,
         'direccion' => $address,
         'horario' => $schedule,
+        'metodos_pago' => $paymentMethods,
+        'requiere_reserva' => $requiresReservation,
         'avatar_url' => $avatar,
         'portada_url' => $cover,
         'id' => $businessId,

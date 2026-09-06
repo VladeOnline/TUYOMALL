@@ -2,7 +2,7 @@
 declare(strict_types=1);
 
 require_once __DIR__ . '/../auth/helpers.php';
-require_once __DIR__ . '/../config/paypal.php';
+require_once __DIR__ . '/../includes/paypal-config.php';
 require_once __DIR__ . '/../includes/plan-rules.php';
 
 require_post();

@@ -79,7 +79,7 @@ Dashboard y perfil:
 La base ya deja sembrados dos planes:
 
 - `gratis`: hasta 10 productos/publicaciones registradas, 1 imagen por publicacion, contacto directo y estadisticas basicas.
-- `premium`: $5 USD/mes, productos/publicaciones ilimitadas, cupones, precio tachado, resenas, multiples contactos, prioridad en feed, estadisticas avanzadas y soporte prioritario.
+- `premium`: $10 USD/mes, productos/publicaciones ilimitadas, cupones, precio tachado, resenas, multiples contactos, prioridad en feed, estadisticas avanzadas y soporte prioritario.
 
 El plan real no debe depender solo del boton del front. En PHP la regla debe ser:
 

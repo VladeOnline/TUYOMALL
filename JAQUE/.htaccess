@@ -1,13 +1,14 @@
 Options -Indexes
 RewriteEngine On
+AddType application/manifest+json .webmanifest
 
 # Si alguien intenta abrir HTML privado directo, obligamos a pasar por PHP,
 # donde se valida la sesion correspondiente.
 RewriteRule ^dashboard-emprendedor\.html$ dashboard-emprendedor.php [L,QSA]
 RewriteRule ^dashboard-cliente\.html$ dashboard-cliente.php [L,QSA]
-RewriteRule ^negocio/([^/]+)/?$ perfil-publico.html?slug=$1 [L,QSA]
-RewriteRule ^perfil/([^/]+)/?$ perfil-publico.html?slug=$1 [L,QSA]
-RewriteRule ^p/([0-9]+)/?$ perfil-publico.html?producto=$1 [L,QSA]
+RewriteRule ^negocio/([^/]+)/?$ perfil-publico.php?slug=$1 [L,QSA]
+RewriteRule ^perfil/([^/]+)/?$ perfil-publico.php?slug=$1 [L,QSA]
+RewriteRule ^p/([0-9]+)/?$ perfil-publico.php?producto=$1 [L,QSA]
 RewriteRule ^dashboard-emprendedor/?$ dashboard-emprendedor.php [L,QSA]
 RewriteRule ^dashboard-cliente/?$ dashboard-cliente.php [L,QSA]
 

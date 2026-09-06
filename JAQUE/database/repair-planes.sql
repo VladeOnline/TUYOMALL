@@ -43,7 +43,7 @@ INSERT INTO planes (
   'premium',
   'Plan Premium',
   'Productos ilimitados, prioridad visual, resenas y estadisticas avanzadas.',
-  5.00,
+  10.00,
   NULL,
   1,
   20,

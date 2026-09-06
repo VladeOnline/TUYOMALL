@@ -1543,6 +1543,114 @@ html.tm-dark .post-options .report-action:hover {
   border-color: var(--coral);
   box-shadow: 0 0 0 3px rgba(255,107,71,0.1);
 }
+.check-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+}
+.payment-methods-field {
+  border: 1px solid rgba(255,107,71,0.22);
+  border-radius: var(--r-lg);
+  padding: 12px;
+  background: rgba(255,107,71,0.06);
+}
+.payment-methods-head {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  margin-bottom: 10px;
+}
+.payment-methods-head label {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+}
+.payment-methods-head .ti {
+  color: var(--coral);
+  font-size: 17px;
+}
+.single-check-field {
+  border: 1px solid var(--line);
+  border-radius: var(--r);
+  background: var(--sand);
+  min-height: 42px;
+  padding: 10px 12px;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  color: var(--navy);
+  font-size: 12px;
+  font-weight: 800;
+}
+.single-check-field input {
+  width: 17px;
+  min-height: 17px;
+  accent-color: var(--coral);
+}
+.single-check-field:has(input:checked) {
+  border-color: rgba(255,107,71,0.55);
+  background: var(--coral-2);
+  color: var(--coral);
+}
+.check-option {
+  min-height: 42px;
+  border: 1px solid var(--line);
+  border-radius: var(--r);
+  background: var(--sand);
+  padding: 10px 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--navy);
+  font-size: 12px;
+  font-weight: 800;
+}
+.check-option input {
+  width: 16px;
+  min-height: 16px;
+  accent-color: var(--coral);
+}
+.check-option:has(input:checked) {
+  border-color: rgba(255,107,71,0.55);
+  background: var(--coral-2);
+  color: var(--coral);
+}
+.payment-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  border: 1px solid var(--line);
+  background: var(--sand);
+  border-radius: 999px;
+  padding: 4px 9px;
+  color: var(--navy);
+  font-size: 12px;
+  font-weight: 800;
+}
+html.tm-dark .payment-methods-field {
+  background: rgba(255,107,71,0.08);
+  border-color: rgba(255,255,255,0.12);
+}
+html.tm-dark .check-option {
+  background: #0B1420;
+  border-color: rgba(255,255,255,0.12);
+  color: #F8FAFC;
+}
+html.tm-dark .single-check-field {
+  background: #0B1420;
+  border-color: rgba(255,255,255,0.12);
+  color: #F8FAFC;
+}
+html.tm-dark .check-option:has(input:checked) {
+  background: rgba(255,107,71,0.16);
+  border-color: rgba(255,107,71,0.52);
+  color: #FFB199;
+}
+html.tm-dark .single-check-field:has(input:checked) {
+  background: rgba(255,107,71,0.16);
+  border-color: rgba(255,107,71,0.52);
+  color: #FFB199;
+}
 
 @media (max-width: 1120px) {
   .page { grid-template-columns: 1fr; }
@@ -1574,6 +1682,7 @@ html.tm-dark .post-options .report-action:hover {
   .tab-btn span { display: none; }
   .posts-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .form-grid { grid-template-columns: 1fr; }
+  .check-grid { grid-template-columns: 1fr; }
   .toast-stack {
     left: 14px;
     right: 14px;
@@ -1629,7 +1738,7 @@ html.tm-dark .post-options .report-action:hover {
 <body>
 <header class="topbar">
   <div class="topbar-inner">
-    <a class="brand" href="principal.html">
+    <a class="brand" href="https://tuyomall.com/principal.html">
       <span class="brand-mark">
         <img src="assets/img/logo-tuyomall-nav.png" alt="Logo TuyoMall">
       </span>
@@ -1640,7 +1749,7 @@ html.tm-dark .post-options .report-action:hover {
       </span></span>
     </a>
     <nav class="topnav">
-      <a href="principal.html">Feed</a>
+      <a href="https://tuyomall.com/principal.html">Feed</a>
       <a href="planes.html">Planes</a>
       <a href="faq-contacto.html">Ayuda</a>
     </nav>
@@ -1964,6 +2073,8 @@ const businessProfileStatus = {
   basicInfo: false,
   description: false,
   schedule: false,
+  paymentMethods: false,
+  reservation: false,
   socialLinks: false,
   firstProduct: false
 };
@@ -2097,6 +2208,36 @@ function scheduleParts(value = '') {
 function scheduleDisplay(value = '') {
   const parts = scheduleParts(value);
   return parts.start && parts.end ? `${parts.start} - ${parts.end}` : cleanText(value || '');
+}
+
+function paymentMethodOptions(selected = []) {
+  const selectedSet = new Set((selected || []).map(item => String(item).toLowerCase()));
+  const options = [
+    ['efectivo', 'Efectivo'],
+    ['transferencia', 'Transferencia'],
+    ['sinpe_movil', 'SINPE Movil'],
+    ['tarjeta', 'Tarjeta'],
+    ['paypal', 'PayPal']
+  ];
+  return options.map(([value, label]) => `
+    <label class="check-option">
+      <input type="checkbox" name="metodos_pago[]" value="${value}" ${selectedSet.has(label.toLowerCase()) ? 'checked' : ''}>
+      <span>${label}</span>
+    </label>
+  `).join('');
+}
+
+function customPaymentMethod(methods = []) {
+  const known = new Set(['efectivo', 'transferencia', 'sinpe movil', 'tarjeta', 'paypal']);
+  return (methods || []).find(item => !known.has(String(item).toLowerCase())) || '';
+}
+
+function paymentMethodsText(methods = []) {
+  return Array.isArray(methods) && methods.length ? methods.join(', ') : '';
+}
+
+function reservationText(business = currentBusiness) {
+  return business?.requiresReservation ? 'Requiere reserva previa' : 'No requiere reserva previa';
 }
 
 function drawCoverCrop() {
@@ -2327,8 +2468,11 @@ function applyBusinessProfile(business) {
   }
   if (infoStrip) {
     const visibleSchedule = scheduleDisplay(business.schedule);
+    const paymentText = paymentMethodsText(business.paymentMethods);
     infoStrip.innerHTML = `
       <span><span class="ti ti-clock"></span> ${visibleSchedule || 'Horario pendiente'}</span>
+      <span><span class="ti ti-credit-card"></span> ${esc(paymentText || 'Metodos de pago pendientes')}</span>
+      <span><span class="ti ti-calendar-check"></span> ${reservationText(business)}</span>
       <span><span class="ti ti-circle-filled" style="color:var(--green)"></span> Perfil activo</span>
       <span><span class="ti ti-link"></span> tuyomall.com/negocio/${business.slug || 'mi-negocio'}</span>
     `;
@@ -2356,6 +2500,8 @@ function applyBusinessProfile(business) {
   businessProfileStatus.basicInfo = Boolean(business.name && business.whatsapp && business.country && business.province);
   businessProfileStatus.description = Boolean(business.description);
   businessProfileStatus.schedule = Boolean(business.schedule);
+  businessProfileStatus.paymentMethods = Array.isArray(business.paymentMethods) && business.paymentMethods.length > 0;
+  businessProfileStatus.reservation = true;
   businessProfileStatus.socialLinks = Array.isArray(business.contacts) && business.contacts.length > 0;
   renderProfileCompletion();
   businessHighlights = loadStoredHighlights();
@@ -2772,6 +2918,16 @@ const profileChecklistItems = [
   {
     key: 'schedule',
     label: 'Horario de atencion',
+    action: 'profile'
+  },
+  {
+    key: 'paymentMethods',
+    label: 'Metodos de pago',
+    action: 'profile'
+  },
+  {
+    key: 'reservation',
+    label: 'Reserva previa',
     action: 'profile'
   },
   {
@@ -3264,8 +3420,24 @@ function getSavedPost(id) {
   return savedPosts.find(post => post.id === id);
 }
 
-function postUrl(id) {
-  return `${window.location.origin}/p/${encodeURIComponent(id)}`;
+function publicOrigin() {
+  return /(^|\.)tuyomall\.com$/i.test(window.location.hostname)
+    ? 'https://tuyomall.com'
+    : window.location.origin;
+}
+
+function businessUrlForPost(post) {
+  const slug = cleanText(post?.business_slug || post?.businessSlug || post?.sellerSlug || currentBusiness?.slug || '');
+  if (slug) return `${publicOrigin()}/negocio/${encodeURIComponent(slug)}`;
+
+  const businessId = post?.business_id || post?.businessId || currentBusiness?.id || '';
+  if (businessId) return `${publicOrigin()}/perfil-publico.html?business_id=${encodeURIComponent(businessId)}`;
+
+  return `${publicOrigin()}/principal.html`;
+}
+
+function postUrl(id, post = null) {
+  return businessUrlForPost(post || getPost(id) || getSavedPost(id));
 }
 
 function viewPostDetails(id) {
@@ -3284,7 +3456,7 @@ function viewSavedDetails(id) {
 
 function viewBusinessProfile(id) {
   closePostMenus();
-  window.location.href = `/p/${encodeURIComponent(id)}`;
+  window.location.href = postUrl(id);
 }
 
 async function sharePost(id) {
@@ -3294,7 +3466,7 @@ async function sharePost(id) {
   const data = {
     title: post.name,
     text: `${post.name} de ${currentBusiness?.name || 'Mi negocio'} en TuyoMall`,
-    url: postUrl(id)
+    url: postUrl(id, post)
   };
   if (navigator.share) {
     await navigator.share(data);
@@ -3311,7 +3483,7 @@ async function shareSavedPost(id) {
   const data = {
     title: post.name,
     text: `${post.name} de ${post.seller || 'un negocio'} en TuyoMall`,
-    url: postUrl(id)
+    url: postUrl(id, post)
   };
   if (navigator.share) {
     await navigator.share(data);
@@ -3323,14 +3495,14 @@ async function shareSavedPost(id) {
 
 async function copyPostLink(id) {
   closePostMenus();
-  await navigator.clipboard.writeText(postUrl(id));
-  showToast('Enlace copiado.', 'success', 'Copiado');
+  await navigator.clipboard.writeText(postUrl(id, getPost(id)));
+  showToast('Enlace del negocio copiado.', 'success', 'Copiado');
 }
 
 async function copySavedPostLink(id) {
   closePostMenus();
-  await navigator.clipboard.writeText(postUrl(id));
-  showToast('Enlace copiado.', 'success', 'Copiado');
+  await navigator.clipboard.writeText(postUrl(id, getSavedPost(id)));
+  showToast('Enlace del negocio copiado.', 'success', 'Copiado');
 }
 
 async function removeSavedPost(id) {
@@ -3446,6 +3618,24 @@ const drawerTemplates = {
       <div class="field full"><label>Descripcion</label><textarea name="descripcion">${esc(currentBusiness?.description || '')}</textarea></div>
       <div class="field"><label>WhatsApp</label><input name="whatsapp" value="${esc(currentBusiness?.whatsapp || '')}" required></div>
       <div class="field"><label>Correo</label><input name="correo" type="email" value="${esc(currentBusiness?.email || '')}"></div>
+      <div class="field full payment-methods-field">
+        <div class="payment-methods-head">
+          <label><span class="ti ti-credit-card"></span> Metodos de pago aceptados</label>
+          <small class="field-help">Selecciona las formas en que tus clientes pueden pagar.</small>
+        </div>
+        <div class="check-grid">
+          ${paymentMethodOptions(currentBusiness?.paymentMethods || [])}
+        </div>
+      </div>
+      <div class="field full"><label>Otro metodo de pago</label><input name="metodo_pago_otro" value="${esc(customPaymentMethod(currentBusiness?.paymentMethods || []))}" placeholder="Ej: link de pago, deposito, cuotas"></div>
+      <div class="field full">
+        <label>Reserva previa</label>
+        <label class="single-check-field">
+          <input type="checkbox" name="requiere_reserva" value="1" ${currentBusiness?.requiresReservation ? 'checked' : ''}>
+          <span>Este negocio requiere reserva previa</span>
+        </label>
+        <small class="field-help">Si no lo marcas, se mostrara que el cliente puede contactar sin reserva previa.</small>
+      </div>
       <div class="field">
         <label>Apertura (24 h)</label>
         <input name="horario_inicio" type="time" step="900" value="${esc(hours.start)}">
@@ -3685,6 +3875,17 @@ async function saveAvatarFile(file) {
   data.append('provincia', currentBusiness.province || '');
   data.append('direccion', currentBusiness.address || '');
   data.append('horario', currentBusiness.schedule || '');
+  if (currentBusiness.requiresReservation) {
+    data.append('requiere_reserva', '1');
+  }
+  (currentBusiness.paymentMethods || []).forEach((method) => {
+    const normalized = String(method).toLowerCase().replace(/\s+/g, '_');
+    if (['efectivo', 'transferencia', 'sinpe_movil', 'tarjeta', 'paypal'].includes(normalized)) {
+      data.append('metodos_pago[]', normalized);
+    } else {
+      data.append('metodo_pago_otro', method);
+    }
+  });
   data.append('avatar', file);
 
   const response = await fetch('api/business.php', {

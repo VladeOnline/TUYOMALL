@@ -47,7 +47,7 @@ body {
   grid-template-columns: 1fr 1fr;
 }
 
-/* ── LEFT PANEL ────────────────────────────── */
+/* -- LEFT PANEL ------------------------------ */
 .left {
   background: var(--navy);
   min-height: 100vh;
@@ -169,7 +169,7 @@ body {
   font-size: 12px; color: rgba(255,255,255,0.2);
 }
 
-/* ── RIGHT PANEL ────────────────────────────── */
+/* -- RIGHT PANEL ------------------------------ */
 .right {
   display: flex; align-items: center; justify-content: center;
   padding: 40px 52px; min-height: 100vh; overflow-y: auto;
@@ -185,7 +185,7 @@ body {
   align-items: flex-start;
 }
 
-/* ── TABS ────────────────────────────── */
+/* -- TABS ------------------------------ */
 .tabs {
   display: flex;
   background: var(--gray-l);
@@ -207,7 +207,7 @@ body {
   box-shadow: 0 2px 8px rgba(20,33,61,0.1);
 }
 
-/* ── FORM VIEWS ────────────────────────────── */
+/* -- FORM VIEWS ------------------------------ */
 .view { display: none; }
 .view.active { display: block; }
 
@@ -221,7 +221,7 @@ body {
   margin-bottom: 28px; line-height: 1.5;
 }
 
-/* ── FIELDS ────────────────────────────── */
+/* -- FIELDS ------------------------------ */
 .field { margin-bottom: 16px; }
 .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 0; }
 .field-row .field { margin-bottom: 0; }
@@ -339,7 +339,7 @@ input.success { border-color: var(--success); }
   color: #fff;
 }
 
-/* ── PASSWORD STRENGTH ────────────────────────────── */
+/* -- PASSWORD STRENGTH ------------------------------ */
 .strength-bar {
   display: flex; gap: 4px; margin-top: 8px;
 }
@@ -356,7 +356,7 @@ input.success { border-color: var(--success); }
   margin-top: 4px; text-align: right;
 }
 
-/* ── CHECKBOX ────────────────────────────── */
+/* -- CHECKBOX ------------------------------ */
 .check-wrap {
   display: flex; align-items: flex-start; gap: 10px;
   margin-bottom: 20px;
@@ -378,7 +378,7 @@ input.success { border-color: var(--success); }
 }
 .check-error.show { display: block; }
 
-/* ── FORGOT ────────────────────────────── */
+/* -- FORGOT ------------------------------ */
 .forgot {
   display: block; text-align: right;
   font-size: 13px; color: var(--coral);
@@ -390,7 +390,7 @@ input.success { border-color: var(--success); }
 }
 .forgot:hover { text-decoration: underline; }
 
-/* ── SUBMIT BTN ────────────────────────────── */
+/* -- SUBMIT BTN ------------------------------ */
 .btn-submit {
   width: 100%; padding: 14px;
   background: var(--coral); color: var(--white);
@@ -419,7 +419,7 @@ input.success { border-color: var(--success); }
 .btn-submit.loading .spinner { display: block; }
 .btn-submit.loading .btn-text { display: none; }
 
-/* ── DIVIDER ────────────────────────────── */
+/* -- DIVIDER ------------------------------ */
 .divider {
   display: flex; align-items: center; gap: 12px;
   margin: 20px 0; color: var(--muted); font-size: 12px;
@@ -428,7 +428,7 @@ input.success { border-color: var(--success); }
   content: ''; flex: 1; height: 1px; background: var(--sand-2);
 }
 
-/* ── SWITCH LINK ────────────────────────────── */
+/* -- SWITCH LINK ------------------------------ */
 .switch-link {
   text-align: center; font-size: 13px;
   color: var(--muted); margin-top: 20px;
@@ -439,7 +439,7 @@ input.success { border-color: var(--success); }
 }
 .switch-link a:hover { text-decoration: underline; }
 
-/* ── BACK LINK ────────────────────────────── */
+/* -- BACK LINK ------------------------------ */
 .back-btn {
   display: inline-flex; align-items: center; gap: 6px;
   background: none; border: none;
@@ -449,7 +449,7 @@ input.success { border-color: var(--success); }
 }
 .back-btn:hover { text-decoration: underline; }
 
-/* ── SUCCESS BOX ────────────────────────────── */
+/* -- SUCCESS BOX ------------------------------ */
 .success-box {
   display: none;
   background: #ECFDF5; border: 1px solid rgba(16,185,129,0.25);
@@ -460,7 +460,7 @@ input.success { border-color: var(--success); }
 .success-box.show { display: block; }
 .success-box .s-icon { font-size: 28px; margin-bottom: 8px; display: block; }
 
-/* ── MODAL ────────────────────────────── */
+/* -- MODAL ------------------------------ */
 .modal-overlay {
   position: fixed; inset: 0; z-index: 9999;
   background: rgba(14,20,35,0.65);
@@ -514,7 +514,7 @@ html.tm-dark .preview-avatar {
   color: #FFFFFF !important;
 }
 
-/* ── RESPONSIVE ────────────────────────────── */
+/* -- RESPONSIVE ------------------------------ */
 @media (max-width: 860px) {
   body { grid-template-columns: 1fr; }
   .left { display: none; }
@@ -540,9 +540,9 @@ html.tm-dark .preview-avatar {
 </head>
 <body>
 
-<!-- ══ LEFT PANEL ══ -->
+<!-- == LEFT PANEL == -->
 <div class="left">
-  <a href="index.html" class="left-logo">
+  <a href="/" class="left-logo">
      <div class="logo-mark">
         <img src="assets/img/logo-tuyomall-nav.png" alt="Logo TuyoMall" width="70" height="70">
     </div>
@@ -550,7 +550,7 @@ html.tm-dark .preview-avatar {
   </a>
 
   <div class="left-body">
-    <div class="left-badge"><span>🛍️ Para Clientes</span></div>
+    <div class="left-badge"><span>🛍 Para Clientes</span></div>
 
     <h2>Descubre lo mejor del<br><em>emprendimiento</em> local</h2>
 
@@ -590,7 +590,7 @@ html.tm-dark .preview-avatar {
   <div class="left-footer">© 2026 TuyoMall · Todos los derechos reservados</div>
 </div>
 
-<!-- ══ RIGHT PANEL ══ -->
+<!-- == RIGHT PANEL == -->
 <div class="right">
   <div class="form-box">
 
@@ -602,7 +602,7 @@ html.tm-dark .preview-avatar {
 
     <div class="form-notice" id="form-notice" role="status" aria-live="polite"></div>
 
-    <!-- ── VIEW: LOGIN ── -->
+    <!-- -- VIEW: LOGIN -- -->
     <div class="view active" id="view-login">
       <h1 class="form-title">Bienvenido de vuelta 👋</h1>
       <p class="form-sub">Ingresa a tu cuenta para explorar</p>
@@ -634,7 +634,7 @@ html.tm-dark .preview-avatar {
       </div>
     </div>
 
-    <!-- ── VIEW: REGISTER ── -->
+    <!-- -- VIEW: REGISTER -- -->
    <div class="view" id="view-register">
   <h1 class="form-title">Crea tu cuenta gratis ✨</h1>
   <p class="form-sub">Solo toma un momento</p>
@@ -717,7 +717,7 @@ html.tm-dark .preview-avatar {
     ¿Ya tienes cuenta? <a onclick="switchTab('login', document.querySelectorAll('.tab')[0])">Inicia sesión</a>
   </div>
 </div>
-    <!-- ── VIEW: RECOVER ── -->
+    <!-- -- VIEW: RECOVER -- -->
     <div class="view" id="view-recover">
       <button class="back-btn" onclick="switchView('login')">← Volver al inicio de sesión</button>
       <h1 class="form-title">Recuperar contraseña 🔑</h1>
@@ -744,7 +744,7 @@ html.tm-dark .preview-avatar {
   </div>
 </div>
 
-<!-- ══ MODAL TÉRMINOS COMPRADORES ══ -->
+<!-- == MODAL TÉRMINOS COMPRADORES == -->
 <div class="modal-overlay" id="modal-compradores">
   <div class="modal">
     <div class="modal-header">
@@ -774,14 +774,14 @@ html.tm-dark .preview-avatar {
 
 <script src="assets/js/latam-locations.js?v=6"></script>
 <script>
-// ── Tab switch ──────────────────────────────────────
+// -- Tab switch --------------------------------------
 function switchTab(tab, btn) {
   document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
   btn.classList.add('active');
   switchView(tab);
 }
 
-// ── View switch ──────────────────────────────────────
+// -- View switch --------------------------------------
 function switchView(view) {
   document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
   document.getElementById('view-' + view).classList.add('active');
@@ -790,14 +790,14 @@ function switchView(view) {
   clearNotice();
 }
 
-// ── Toggle password visibility ──────────────────────
+// -- Toggle password visibility ----------------------
 function togglePass(id, icon) {
   const input = document.getElementById(id);
   if (input.type === 'password') { input.type = 'text'; icon.textContent = 'Ocultar'; }
   else { input.type = 'password'; icon.textContent = 'Ver'; }
 }
 
-// ── Clear error ──────────────────────────────────────
+// -- Clear error --------------------------------------
 function clearErr(input) {
   clearNotice();
   input.classList.remove('error');
@@ -820,7 +820,7 @@ function clearNotice() {
   notice.textContent = '';
 }
 
-// ── Password strength ──────────────────────────────────────
+// -- Password strength --------------------------------------
 function checkStrength(val) {
   const segs = [document.getElementById('seg1'), document.getElementById('seg2'),
                 document.getElementById('seg3'), document.getElementById('seg4')];
@@ -844,7 +844,7 @@ function checkStrength(val) {
   lbl.style.color = clrs[score];
 }
 
-// ── Validate email ──────────────────────────────────────
+// -- Validate email --------------------------------------
 function isEmail(v) { return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v); }
 
 async function postAuth(url, data) {
@@ -860,7 +860,7 @@ async function postAuth(url, data) {
   return payload;
 }
 
-// ── Login ──────────────────────────────────────
+// -- Login --------------------------------------
 async function doLogin() {
   let ok = true;
   const email = document.getElementById('l-email');
@@ -885,7 +885,7 @@ async function doLogin() {
     data.append('email', email.value.trim());
     data.append('password', pass.value);
     const result = await postAuth('auth/login-client.php', data);
-    window.location.href = result.redirect || 'principal.html';
+    window.location.href = result.redirect || 'https://tuyomall.com/principal.html';
   } catch (error) {
     showNotice(error.message);
     btn.classList.remove('loading');
@@ -893,7 +893,7 @@ async function doLogin() {
   }
 }
 
-// ── Register ──────────────────────────────────────
+// -- Register --------------------------------------
 async function doRegister(event) {
   if (event) event.preventDefault();
   let ok = true;
@@ -939,7 +939,7 @@ async function doRegister(event) {
   btn.classList.add('loading'); btn.disabled = true;
   try {
     const result = await postAuth('auth/register-client.php', new FormData(document.getElementById('clientRegisterForm')));
-    window.location.href = result.redirect || 'principal.html';
+    window.location.href = result.redirect || 'https://tuyomall.com/principal.html';
   } catch (error) {
     if (/correo/i.test(error.message)) {
       email.classList.add('error');
@@ -952,7 +952,7 @@ async function doRegister(event) {
   }
 }
 
-// ── Recover ──────────────────────────────────────
+// -- Recover --------------------------------------
 function doRecover() {
   const email = document.getElementById('rec-email');
   const btn   = document.getElementById('btn-recover');
@@ -969,7 +969,7 @@ function doRecover() {
   }, 1000);
 }
 
-// ── Modal ──────────────────────────────────────
+// -- Modal --------------------------------------
 function openModal(type) {
   document.getElementById('modal-' + type).classList.add('open');
   document.body.style.overflow = 'hidden';
@@ -991,7 +991,7 @@ document.addEventListener('keydown', e => {
   }
 });
 
-// ── Clear errors on checkbox change ──────────────────
+// -- Clear errors on checkbox change ------------------
 document.getElementById('r-terms').addEventListener('change', function() {
   if (this.checked) document.getElementById('r-terms-err').classList.remove('show');
 });

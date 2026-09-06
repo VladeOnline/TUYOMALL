@@ -2,7 +2,7 @@
 declare(strict_types=1);
 
 require_once __DIR__ . '/../config/database.php';
-require_once __DIR__ . '/../config/paypal.php';
+require_once __DIR__ . '/../includes/paypal-config.php';
 require_once __DIR__ . '/../includes/plan-rules.php';
 
 function paypal_json_response(array $payload, int $status = 200): void
@@ -170,7 +170,7 @@ try {
     $amount = (float) (
         $resource['amount']['value']
         ?? $resource['purchase_units'][0]['amount']['value']
-        ?? 5.00
+        ?? 10.00
     );
     $currency = (string) (
         $resource['amount']['currency_code']
